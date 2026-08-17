@@ -34,7 +34,7 @@ VOICE_AND_LANGUAGE.md
 VISUAL_DIRECTION.md
 ~~~
 
-Esta direção ainda está em review. Não é implementação da identidade visual final e não deve alterar o posicionamento, a Master Brand, o Descriptor, a categoria institucional ou qualquer decisão aprovada nas fontes superiores.
+Esta direção está aprovada como regra visual canônica. Sua implementação executável é registrada nas camadas subordinadas e não altera o posicionamento, a Master Brand, o Descriptor, a categoria institucional ou qualquer decisão aprovada nas fontes superiores.
 
 ## Direction Character
 
@@ -1588,4 +1588,4 @@ e:
 visual_direction_status: approved
 ~~~
 
-Esta direção ainda será analisada e aprovada pelo fundador antes de se tornar canônica.
+Esta direção foi analisada e aprovada pelo fundador e permanece como fonte canônica da camada visual.

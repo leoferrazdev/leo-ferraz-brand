@@ -18,7 +18,7 @@ depends_on:
 
 Este documento registra o resultado da exploração tipográfica da marca Leo Ferraz após validação técnica, comparação visual e revisão do fundador.
 
-O estado review significa que a decisão foi registrada para auditoria humana nesta etapa. Este documento ainda não promove a decisão para approved e não cria uma implementação final.
+O estado `approved` significa que a decisão tipográfica foi validada e pode ser utilizada como fonte canônica. A implementação subordinada é registrada em `TYPOGRAPHY_IMPLEMENTATION.md`.
 
 ## Selected Typography System
 
@@ -419,4 +419,4 @@ Este documento não define:
 - wordmark;
 - paleta.
 
-A decisão tipográfica registrada aqui permanece em review até auditoria e promoção formal posteriores.
+A decisão tipográfica registrada aqui está aprovada; sua implementação executável é mantida nas camadas subordinadas do sistema.

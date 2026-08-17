@@ -135,13 +135,19 @@ Site I18n Routing:
 not_defined
 
 Font Loading Strategy:
-not_defined
+Astro Fonts API
+
+Font Source:
+local npm Fontsource packages
+
+Remote Font Requests:
+disabled
 
 Design Tokens:
-not_created
+approved
 
 Site Stage:
-foundation
+brand_system_v1.0.0
 ```
 
 ```text
@@ -218,6 +224,6 @@ Possíveis usos futuros: projects, build logs, articles e experiments. Nenhuma c
 ## Pontes de implementação
 
 - `site_i18n_routing: not_defined` — não há roteamento i18n nesta versão.
-- `font_loading_strategy: not_defined` — IBM Plex Sans e IBM Plex Mono são declaradas com fallbacks; nenhum binário foi adicionado.
+- `font_loading_strategy: Astro Fonts API` — IBM Plex Sans e IBM Plex Mono são resolvidas por pacotes Fontsource locais, sem requests de fonte remotos.
 - Media queries mínimas no CSS são `implementation bridge`, não breakpoints canônicos.
 - `dist/` é gerado pelo build, ignorado pelo Git e proibido como fonte de edição manual.

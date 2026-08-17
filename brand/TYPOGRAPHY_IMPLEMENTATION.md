@@ -152,10 +152,10 @@ The selected sizes are the approved base scale. Responsive mappings remain open 
 
 ```text
 typography_tokens:
-not_created
+implemented in DESIGN_TOKENS.md
 ```
 
-No definitive typography token API or CSS custom-property scale is created in this stage.
+The definitive typography token API is maintained in `tokens/tokens.json` and emitted to the generated CSS layer.
 
 ## Review implementation
 

@@ -49,6 +49,26 @@ Os documentos canônicos serão adicionados progressivamente dentro de `/brand`.
 
 Os valores técnicos derivados serão armazenados principalmente em `/tokens`.
 
+## Hierarquia final da Brand System
+
+```text
+brand/BRAND_SYSTEM.md
+→ system entry point
+
+brand/*.md
+→ canonical human-readable rules
+
+tokens/tokens.json
+→ machine-readable values
+
+src/components/brand/
+→ approved implementation primitives
+```
+
+Não inventar valores de marca quando existir um token ou regra aprovada.
+
+Produtos podem possuir identidades independentes. A Master Brand enquadra os produtos; ela não os absorve visualmente.
+
 ## Regra para lacunas
 
 Quando uma decisão necessária ainda não estiver definida:

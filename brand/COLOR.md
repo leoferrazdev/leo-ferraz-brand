@@ -18,7 +18,7 @@ depends_on:
 
 # Color
 
-Este documento registra a decisão cromática humana em estado review.
+Este documento registra a decisão cromática humana em estado `approved`.
 
 O sistema selecionado para auditoria posterior é:
 
@@ -27,7 +27,7 @@ Selected Color System:
 Precision / Product
 ~~~
 
-Os valores abaixo são selected candidate values. Ainda não são tokens, CSS variables ou especificação cromática canônica aprovada.
+Os valores abaixo são os valores cromáticos aprovados. Sua codificação machine-readable e sua folha CSS derivada estão em `tokens/tokens.json` e `src/generated/tokens.css`.
 
 ## Arquitetura Cromática
 
@@ -38,7 +38,7 @@ Precision Blue Primary Technology Accent
 +
 Contextual Violet Experimental Accent
 +
-Semantic Colors — still open
+Semantic Colors — state communication only
 ~~~
 
 ## Neutral Foundation
@@ -80,24 +80,15 @@ Não transformar AI = purple em regra automática.
 
 ~~~text
 Semantic Color System:
-not_defined
+state communication only
 
-Success: not_defined
-Warning: not_defined
-Error: not_defined
-Info: not_defined
+Success: #79D6A2
+Warning: #E7B866
+Error: #F07F8C
+Info: #7DD3FC
 ~~~
 
-Os valores:
-
-~~~text
-#79D6A2
-#E7B866
-#F07F8C
-#7DD3FC
-~~~
-
-permanecem somente como semantic_candidates em COLOR_OPTIONS.md e no specimen visual. Não fazem parte do core selecionado.
+Esses valores existem exclusivamente para comunicação de estado. Não substituem o Primary Technology Accent, não são decorativos e não definem uma nova direção cromática.
 
 ## One Dominant Accent
 
@@ -223,7 +214,6 @@ Nenhuma decisão de escala, weights by role, line-height ou tracking é criada a
 
 Permanecem abertos:
 
-- semantic colors;
 - light mode;
 - interaction mappings;
 - hover mappings;
@@ -239,19 +229,14 @@ Permanecem abertos:
 - chart colors;
 - data visualization colors;
 - product-specific colors;
-- color tokens;
-- CSS variables;
-- componentes;
-- templates;
-- Design System.
 
-## Valores não são tokens ainda
+## Codificação dos valores
 
-> Selected color values are not yet Design Tokens.
+> Approved color values are encoded as Design Tokens downstream.
 
-Os labels atuais descrevem funções para documentação. Não foram criados nomes como --color-bg-primary, --lf-blue-500, color.brand.accent ou equivalentes como sistema oficial.
+Os nomes machine-readable oficiais estão em `tokens/tokens.json`; `src/generated/tokens.css` é somente derivado e não é fonte canônica.
 
-A arquitetura de tokens será definida posteriormente.
+Componentes executáveis consomem a folha gerada sem criar novos valores cromáticos.
 
 ## Evidência Histórica
 
@@ -270,4 +255,4 @@ color_status: approved
 status: approved
 ~~~
 
-Este documento ainda aguarda auditoria e promoção formal posterior.
+Este documento está aprovado; a implementação executável é mantida nas camadas subordinadas do sistema.

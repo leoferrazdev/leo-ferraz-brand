@@ -120,16 +120,17 @@ The historical exploration recorded possible generic SaaS/system character as th
 
 ```text
 wordmark_minimum_size:
-not_defined
+18px
 
 utility_mark_minimum_size:
-not_defined
+16px × 16px
 
 signature_clear_space:
-not_defined
+wordmark: 0.5em
+utility mark: 0.25em
 ```
 
-Minimum size and clear space remain open decisions and must not be invented in production work.
+Minimum size and clear space are approved signature constraints and are encoded in `tokens/tokens.json`.
 
 ## Assets and Projection
 
@@ -161,7 +162,7 @@ light_mode:
 not_defined
 
 tokens:
-not_created
+implemented in DESIGN_TOKENS.md
 ```
 
 No other open brand decision is resolved by this document.

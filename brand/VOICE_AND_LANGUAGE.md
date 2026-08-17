@@ -15,7 +15,7 @@ depends_on:
 
 Este documento operacionaliza a linguagem da marca Leo Ferraz sem alterar as decisões superiores registradas em `BRAND_FOUNDATION.md` e `BRAND_ARCHITECTURE.md`.
 
-O estado `review` indica que esta é a primeira especificação detalhada da voz da marca e que o documento ainda passará por revisão humana antes de se tornar canônico.
+O estado `approved` indica que esta especificação detalhada da voz da marca pode ser utilizada como regra canônica.
 
 ## Princípio Verbal Central
 

@@ -586,10 +586,10 @@ Não criar nesta etapa:
 ## Status
 
 ~~~text
-typography_status: review
+typography_status: approved
 ~~~
 
-As opções permanecem em exploração controlada e aguardam revisão visual humana.
+As opções permanecem preservadas como histórico de exploração concluída. A opção selecionada é `Plex Product System`; as demais estão explicitamente marcadas como `not_selected`.
 
 ## Decision
 

@@ -16,7 +16,7 @@ depends_on:
 
 # Visual Implementation
 
-Este documento é uma camada canônica subordinada para as regras de implementação visual necessárias ao Brand System v1. Ele não substitui as fontes superiores e não cria Design Tokens, Component System, templates ou composição final do website.
+Este documento é uma camada canônica subordinada para as regras de implementação visual necessárias ao Brand System v1. Ele não substitui as fontes superiores; os tokens e componentes executáveis são mantidos nos artefatos subordinados correspondentes.
 
 ## Princípio da consolidação
 
@@ -565,16 +565,16 @@ Esta camada não cria:
 
 ```text
 Design Tokens:
-not_created
+implemented in DESIGN_TOKENS.md
 
 Component System:
-not_created
+implemented in src/components/brand/
 
 Templates:
 not_created
 
 DESIGN_SYSTEM.md:
-not_created
+approved
 
 Final Website Composition:
 not_created

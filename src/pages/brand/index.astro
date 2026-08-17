@@ -13,20 +13,20 @@ import BrandStack from '../../components/brand/BrandStack.astro';
 import '../../styles/global.css';
 
 const swatches = [
-  ['Background', '#0D1117'],
-  ['Surface 1', '#151B24'],
-  ['Surface 2', '#1D2632'],
-  ['Border', '#2A3543'],
-  ['Border Strong', '#405064'],
-  ['Primary Text', '#F3F6FA'],
-  ['Secondary Text', '#B7C2CE'],
-  ['Muted Text', '#7F8B99'],
-  ['Disabled / Low-emphasis', '#596574'],
-  ['Accent', '#4DA3FF'],
-  ['Accent Strong', '#86C5FF'],
-  ['Accent Subtle', '#0F2E4C'],
-  ['Experimental Accent', '#9B8CFF'],
-  ['Experimental Subtle', '#252044'],
+  ['Background', '#0D1117', '--lf-color-background'],
+  ['Surface 1', '#151B24', '--lf-color-surface-1'],
+  ['Surface 2', '#1D2632', '--lf-color-surface-2'],
+  ['Border', '#2A3543', '--lf-color-border-default'],
+  ['Border Strong', '#405064', '--lf-color-border-strong'],
+  ['Primary Text', '#F3F6FA', '--lf-color-text-primary'],
+  ['Secondary Text', '#B7C2CE', '--lf-color-text-secondary'],
+  ['Muted Text', '#7F8B99', '--lf-color-text-muted'],
+  ['Disabled / Low-emphasis', '#596574', '--lf-color-text-disabled'],
+  ['Accent', '#4DA3FF', '--lf-color-accent-primary'],
+  ['Accent Strong', '#86C5FF', '--lf-color-accent-strong'],
+  ['Accent Subtle', '#0F2E4C', '--lf-color-accent-subtle'],
+  ['Experimental Accent', '#9B8CFF', '--lf-color-experimental-primary'],
+  ['Experimental Subtle', '#252044', '--lf-color-experimental-subtle'],
 ];
 
 const typographyScale = [
@@ -54,9 +54,14 @@ const typographyScale = [
 
   <main id="content" class="shell-width brandbook-shell">
     <section class="brandbook-intro" aria-labelledby="brandbook-title">
-      <p class="eyebrow">Living Brandbook</p>
-      <h1 id="brandbook-title">Approved foundations</h1>
+      <p class="eyebrow">Leo Ferraz Brand System</p>
+      <h1 id="brandbook-title">v1.0.0 — Approved</h1>
       <p class="intro-copy">Uma projeção pública das decisões aprovadas do sistema de marca.</p>
+      <dl class="brandbook-release-status" aria-label="Brand System release status">
+        <div><dt>Version</dt><dd>1.0.0</dd></div>
+        <div><dt>Status</dt><dd>Approved</dd></div>
+        <div><dt>System</dt><dd>Executable Brand System</dd></div>
+      </dl>
     </section>
 
     <div class="brandbook-grid">
@@ -118,15 +123,15 @@ const typographyScale = [
         <h2 id="color-title">Color</h2>
         <p class="system-label">Precision / Product</p>
         <div class="swatch-grid">
-          {swatches.map(([name, value]) => (
+          {swatches.map(([name, value, token]) => (
             <div class="swatch-item">
-              <span class="swatch" style={`background: ${value}`}></span>
+              <span class="swatch" style={`background: var(${token})`}></span>
               <span class="swatch-name">{name}</span>
               <code>{value}</code>
             </div>
           ))}
         </div>
-        <p class="open-note">Semantic colors and light mode remain not defined.</p>
+        <p class="open-note">Semantic colors are state communication only; light mode remains deferred.</p>
       </section>
 
       <section class="brand-section brand-section-wide" aria-labelledby="foundations-title">
@@ -205,7 +210,7 @@ const typographyScale = [
       <section class="brand-section brand-section-wide" aria-labelledby="roles-title">
         <p class="section-index">09</p>
         <h2 id="roles-title">Structural Roles</h2>
-        <p class="system-label">pre-token implementation</p>
+        <p class="system-label">token-derived implementation</p>
         <div class="public-role-grid">
           <div><h3>Spacing</h3><p>4 · 8 · 12 · 16 · 24 · 32 · 48 · 64</p><small>4–16 local · 24–32 blocks · 48–64 sections</small></div>
           <div><h3>Radius</h3><p>0 · 4px · 8px</p><small>Pills functional only · maximum 8px</small></div>
@@ -263,6 +268,10 @@ const typographyScale = [
 
 <style>
   .brand-system-public-container { background: var(--lf-color-surface-1); }
+  .brandbook-release-status { display: flex; flex-wrap: wrap; gap: var(--lf-spacing-block-content); margin: 0; padding-block: var(--lf-spacing-inline-standard); border-block: var(--lf-border-width-standard) solid var(--lf-color-border-default); }
+  .brandbook-release-status div { display: grid; gap: var(--lf-spacing-micro); }
+  .brandbook-release-status dt { color: var(--lf-color-text-muted); font-family: var(--lf-font-family-mono); font-size: var(--lf-type-label-size-large); letter-spacing: var(--lf-type-label-tracking); text-transform: uppercase; }
+  .brandbook-release-status dd { margin: 0; color: var(--lf-color-text-primary); font-family: var(--lf-font-family-mono); font-size: var(--lf-type-metadata-size-large); font-weight: var(--lf-type-metadata-weight); }
   .brand-system-public-header { display: grid; gap: var(--lf-spacing-block-content); grid-template-columns: minmax(0, 1fr) minmax(16rem, 1fr); align-items: end; }
   .brand-system-public-header p { margin: 0; color: var(--lf-color-text-secondary); line-height: var(--lf-type-body-line-height); }
   .brand-system-public-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--lf-spacing-block-content); }

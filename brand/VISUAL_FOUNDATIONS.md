@@ -16,7 +16,7 @@ depends_on:
 
 # Visual Foundations
 
-Este documento registra o sistema estrutural selecionado após comparação visual humana. O documento permanece em review até auditoria própria e não cria tokens canônicos.
+Este documento registra o sistema estrutural selecionado após comparação visual humana. O documento está aprovado como fonte de decisão; seus valores são codificados nas camadas de tokens e componentes subordinadas.
 
 ## Selected Visual Foundations System
 
@@ -289,11 +289,11 @@ Permanecem indefinidos:
 - animation timing;
 - component-specific geometry.
 
-## Valores ainda não são tokens
+## Codificação dos valores
 
-> Selected structural values are not yet Design Tokens.
+> Approved structural values are encoded as Design Tokens downstream.
 
-Não foram criados spacing tokens, radius tokens, shadow tokens, grid tokens ou effect tokens. Também não foram criados componentes definitivos, templates ou Design System.
+Spacing, radius, shadow e grid tokens são mantidos em `tokens/tokens.json`; os componentes aprovados são mantidos em `src/components/brand/`. Glow continua sem token.
 
 ## Escopo preservado
 
@@ -304,7 +304,7 @@ Typography Scale:
 not_defined
 
 Tokens:
-not_created
+downstream in DESIGN_TOKENS.md
 
 Logo:
 not_created
