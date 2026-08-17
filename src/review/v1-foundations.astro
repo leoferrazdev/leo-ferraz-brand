@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const breakpoints = [
+  ['Small', '< 768px', '4 columns', '16px gutter', '16px outer'],
+  ['Medium', '768–1199px', '6 columns', '16px gutter', '24px outer'],
+  ['Large', '>= 1200px', '10 columns', '16px gutter', '32px outer'],
+];
+
+const semanticColors = [
+  ['Success', '#79D6A2'],
+  ['Warning', '#E7B866'],
+  ['Error', '#F07F8C'],
+  ['Info', '#7DD3FC'],
+];
+
+const typeScale = [
+  ['Display', '58 / 50 / 40px · 500', 'foundation-type-display', 'Leo Ferraz'],
+  ['H1', '46 / 40 / 34px · 500', 'foundation-type-h1', 'Building with AI'],
+  ['H2', '30 / 28 / 26px · 500', 'foundation-type-h2', 'AI-Native Product Lab'],
+  ['H3', '21 / 20 / 20px · 500', 'foundation-type-h3', 'REAL PRODUCT ARTIFACT'],
+  ['Body', '17 / 17 / 16px · 400', 'foundation-type-body', 'Construindo produtos reais com IA.'],
+  ['Mono', '12px · 500', 'foundation-type-mono', 'PROJECT 003 · BUILDING · VERSION 0.3'],
+];
+
+const spacingRoles = [
+  ['Micro', '4px', 'local relationships'],
+  ['Compact inline', '8px', 'metadata groups'],
+  ['Standard inline', '12px', 'compact labels'],
+  ['Component', '12 / 16 / 24px', 'component padding roles'],
+  ['Composition', '24 / 32 / 48 / 64px', 'blocks and sections'],
+];
+---
+
+<BaseLayout
+  title="V1 Visual Foundations Review — Leo Ferraz"
+  description="Development-only validation specimen for Brand System v1 visual implementation foundations."
+>
+  <main class="foundation-review-page" id="content">
+    <header class="foundation-review-header">
+      <div>
+        <p class="kicker">V1 FOUNDATIONS REVIEW</p>
+        <h1>Deterministic implementation specimen</h1>
+        <p class="foundation-review-intro">Validation specimen for responsive typography, grid, semantic state and structural roles.</p>
+      </div>
+      <div class="foundation-review-status">
+        <span>LOCAL DEVELOPMENT ONLY</span>
+        <span>NO TOKENS · NO COMPONENTS</span>
+      </div>
+    </header>
+
+    <section class="foundation-review-panel" aria-labelledby="grid-title">
+      <div class="foundation-review-panel-heading">
+        <p class="kicker">01 / RESPONSIVE SYSTEM</p>
+        <h2 id="grid-title">Persistent structure, contextual visibility</h2>
+      </div>
+      <div class="foundation-breakpoint-table">
+        {breakpoints.map(([name, range, columns, gutter, margin]) => (
+          <div class="foundation-breakpoint-row">
+            <strong>{name}</strong>
+            <span>{range}</span>
+            <span>{columns}</span>
+            <span>{gutter}</span>
+            <span>{margin}</span>
+          </div>
+        ))}
+      </div>
+      <div class="foundation-grid-stage">
+        <div class="foundation-grid-visual" aria-label="Construction Grid specimen">
+          {Array.from({ length: 10 }).map((_, index) => <span>{String(index + 1).padStart(2, '0')}</span>)}
+        </div>
+        <p class="foundation-review-note">Construction Grid · 10 / 6 / 4 columns by breakpoint · 16px gutter · contextual visibility</p>
+      </div>
+      <div class="foundation-container-demo">
+        <span>PRIMARY COMPOSITION CONTAINER</span>
+        <strong>100% width · 1440px max · centered</strong>
+      </div>
+    </section>
+
+    <section class="foundation-review-panel" aria-labelledby="type-review-title">
+      <div class="foundation-review-panel-heading">
+        <p class="kicker">02 / RESPONSIVE TYPOGRAPHY</p>
+        <h2 id="type-review-title">Plex Product System</h2>
+      </div>
+      <div class="foundation-type-specimen">
+        {typeScale.map(([role, value, className, sample]) => (
+          <div class="foundation-type-row">
+            <div class="foundation-type-meta"><span>{role}</span><code>{value}</code></div>
+            <p class={className}>{sample}</p>
+          </div>
+        ))}
+      </div>
+      <p class="foundation-review-note">IBM Plex Sans + IBM Plex Mono · ratios and tracking remain constant across breakpoints · fluid typography: not required</p>
+    </section>
+
+    <section class="foundation-review-panel" aria-labelledby="color-review-title">
+      <div class="foundation-review-panel-heading">
+        <p class="kicker">03 / SEMANTIC COLORS</p>
+        <h2 id="color-review-title">State only</h2>
+      </div>
+      <div class="foundation-semantic-grid">
+        {semanticColors.map(([name, value]) => (
+          <div class="foundation-semantic-item">
+            <span class="foundation-semantic-swatch" style={`background: ${value}`}></span>
+            <strong>{name}</strong>
+            <code>{value}</code>
+            <small>semantic / state only</small>
+          </div>
+        ))}
+      </div>
+      <p class="foundation-review-note">Primary Technology Accent #4DA3FF remains institutional. No semantic color is decorative.</p>
+    </section>
+
+    <section class="foundation-review-panel" aria-labelledby="roles-review-title">
+      <div class="foundation-review-panel-heading">
+        <p class="kicker">04 / STRUCTURAL ROLES</p>
+        <h2 id="roles-review-title">Spacing, radius, borders and shadow</h2>
+      </div>
+      <div class="foundation-role-grid">
+        <div>
+          <h3>Spacing</h3>
+          {spacingRoles.map(([role, value, use]) => <p><span>{role}</span><code>{value}</code><small>{use}</small></p>)}
+        </div>
+        <div>
+          <h3>Radius</h3>
+          <p><span>0px</span><small>structural / editorial</small></p>
+          <p><span>4px</span><small>controls / compact functional</small></p>
+          <p><span>8px</span><small>cards / artifacts / surfaces</small></p>
+          <p><span>pills</span><small>functional only</small></p>
+        </div>
+        <div>
+          <h3>Borders</h3>
+          <p><span>1px</span><code>#2A3543</code><small>default separation</small></p>
+          <p><span>2px</span><code>#405064</code><small>strong emphasis</small></p>
+        </div>
+        <div>
+          <h3>Shadow</h3>
+          <p><span>default</span><strong>none</strong><small>surface + border + spacing first</small></p>
+          <p><span>exception</span><code>0 10px 24px -18px rgba(0,0,0,.65)</code><small>floating / overlay-like only</small></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="foundation-review-panel" aria-labelledby="signature-review-title">
+      <div class="foundation-review-panel-heading">
+        <p class="kicker">05 / SIGNATURE USAGE</p>
+        <h2 id="signature-review-title">Pure / Editorial</h2>
+      </div>
+      <div class="foundation-signature-stage">
+        <div class="foundation-clear-space-box">
+          <span class="foundation-clear-space-label">0.5em clear space</span>
+          <p>Leo Ferraz</p>
+        </div>
+        <div class="foundation-utility-box">
+          <span class="foundation-clear-space-label">16px × 16px minimum digital box</span>
+          <strong>LF</strong>
+        </div>
+      </div>
+      <p class="foundation-review-note">Primary Wordmark minimum: 18px · LF clear space: 0.25em minimum · monochrome survival required · accent dependency none</p>
+    </section>
+
+    <footer class="foundation-review-footer">
+      <p>Development-only validation specimen.</p>
+      <p>Glow: not part of Brand System v1 · Motion: deferred · opacity scale: not created.</p>
+    </footer>
+  </main>
+</BaseLayout>

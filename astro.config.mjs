@@ -13,6 +13,10 @@ const typographyReviewDevOnly = {
           pattern: '/brand/review/signature/',
           entrypoint: './src/review/signature.astro',
         });
+        injectRoute({
+          pattern: '/brand/review/v1-foundations/',
+          entrypoint: './src/review/v1-foundations.astro',
+        });
       }
     },
   },
