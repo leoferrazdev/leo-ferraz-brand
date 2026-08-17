@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "tokens:validate": "node scripts/validate-tokens.mjs",
+    "tokens:build": "node scripts/build-tokens.mjs",
+    "dev": "npm run tokens:validate && npm run tokens:build && astro dev",
+    "build": "npm run tokens:validate && npm run tokens:build && astro build",
     "preview": "astro preview"
   },
   "engines": {

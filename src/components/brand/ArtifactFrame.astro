@@ -1,0 +1,22 @@
+---
+interface Props {
+  elevated?: boolean;
+  class?: string;
+}
+
+const { elevated = false, class: className = '' } = Astro.props;
+const classes = ['artifact-frame', elevated && 'artifact-frame--elevated', className].filter(Boolean).join(' ');
+---
+
+<div class={classes} data-elevated={elevated}><slot /></div>
+
+<style>
+  .artifact-frame {
+    background: var(--lf-color-surface-1);
+    border: var(--lf-border-width-standard) solid var(--lf-border-color-standard);
+    border-radius: var(--lf-radius-artifact);
+    box-shadow: var(--lf-shadow-default);
+  }
+
+  .artifact-frame--elevated { box-shadow: var(--lf-shadow-exceptional); }
+</style>

@@ -1,0 +1,42 @@
+---
+interface Props {
+  value: string | number;
+  label: string;
+  context?: string;
+  class?: string;
+}
+
+const { value, label, context, class: className = '' } = Astro.props;
+const classes = ['brand-metric', className].filter(Boolean).join(' ');
+---
+
+<div class={classes}>
+  <strong>{value}</strong>
+  <span>{label}</span>
+  {context ? <small>{context}</small> : null}
+</div>
+
+<style>
+  .brand-metric {
+    display: inline-grid;
+    gap: var(--lf-spacing-micro);
+  }
+
+  .brand-metric strong {
+    color: var(--lf-color-text-primary);
+    font-family: var(--lf-font-family-sans);
+    font-size: var(--lf-type-h2-size-large);
+    font-weight: var(--lf-type-h2-weight);
+    line-height: var(--lf-type-h2-line-height);
+  }
+
+  .brand-metric span,
+  .brand-metric small {
+    color: var(--lf-color-text-secondary);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    line-height: var(--lf-type-label-line-height);
+  }
+
+  .brand-metric small { color: var(--lf-color-text-muted); }
+</style>

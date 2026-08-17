@@ -1,0 +1,22 @@
+---
+interface Props {
+  gap?: 'micro' | 'compact' | 'standard' | 'content' | 'major' | 'section' | 'major-section';
+  class?: string;
+}
+
+const { gap = 'standard', class: className = '' } = Astro.props;
+const classes = ['brand-stack', `brand-stack--${gap}`, className].filter(Boolean).join(' ');
+---
+
+<div class={classes}><slot /></div>
+
+<style>
+  .brand-stack { display: grid; }
+  .brand-stack--micro { gap: var(--lf-spacing-micro); }
+  .brand-stack--compact { gap: var(--lf-spacing-inline-compact); }
+  .brand-stack--standard { gap: var(--lf-spacing-inline-standard); }
+  .brand-stack--content { gap: var(--lf-spacing-block-content); }
+  .brand-stack--major { gap: var(--lf-spacing-block-major); }
+  .brand-stack--section { gap: var(--lf-spacing-section-standard); }
+  .brand-stack--major-section { gap: var(--lf-spacing-section-major); }
+</style>

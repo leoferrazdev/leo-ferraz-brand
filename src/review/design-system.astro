@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandContainer from '../components/brand/BrandContainer.astro';
+import BrandSection from '../components/brand/BrandSection.astro';
+import BrandSignature from '../components/brand/BrandSignature.astro';
+import ArtifactFrame from '../components/brand/ArtifactFrame.astro';
+import EvidenceBlock from '../components/brand/EvidenceBlock.astro';
+import Metric from '../components/brand/Metric.astro';
+import StatusLabel from '../components/brand/StatusLabel.astro';
+import BrandStack from '../components/brand/BrandStack.astro';
+
+const mockMetrics = [
+  ['1,204', 'USERS', 'MOCK DATA'],
+  ['30', 'DAYS', 'MOCK DATA'],
+  ['18%', 'CONVERSION', 'MOCK DATA'],
+];
+---
+
+<BaseLayout
+  title="Design System Review — Leo Ferraz"
+  description="Development-only review route for the executable Leo Ferraz design system."
+>
+  <main class="design-system-review" id="content">
+    <BrandContainer>
+      <header class="review-header">
+        <p class="review-kicker">DESIGN SYSTEM REVIEW</p>
+        <h1>Executable brand foundations</h1>
+        <p class="review-intro">Core components rendered from the approved machine-readable token layer.</p>
+        <div class="review-flags" aria-label="Review status">
+          <span>LOCAL DEVELOPMENT ONLY</span>
+          <span>MOCK DATA</span>
+          <span>NO FINAL PRODUCT UI</span>
+        </div>
+      </header>
+
+      <BrandSection spacing="major">
+        <div class="review-section-heading">
+          <p class="review-kicker">01 / SIGNATURE VARIANTS</p>
+          <h2>One identity, contextual expressions</h2>
+        </div>
+        <div class="signature-grid">
+          <div class="review-panel"><span class="panel-label">WORDMARK</span><BrandSignature /></div>
+          <div class="review-panel"><span class="panel-label">DESCRIPTOR</span><BrandSignature variant="descriptor" /></div>
+          <div class="review-panel"><span class="panel-label">INSTITUTIONAL</span><BrandSignature variant="institutional" /></div>
+          <div class="review-panel"><span class="panel-label">UTILITY · SECONDARY ONLY</span><BrandSignature variant="utility" /></div>
+        </div>
+      </BrandSection>
+
+      <BrandSection spacing="standard">
+        <div class="review-section-heading">
+          <p class="review-kicker">02 / PRODUCT ARTIFACT</p>
+          <h2>Core structural components</h2>
+        </div>
+        <ArtifactFrame>
+          <BrandStack gap="content" class="artifact-content">
+            <div class="artifact-heading"><span class="panel-label">REAL PRODUCT ARTIFACT</span><StatusLabel variant="info" label="BUILDING" /></div>
+            <h3>Construction evidence, not decoration.</h3>
+            <p class="review-copy">A surface for real output, with borders and spacing carrying hierarchy before effects.</p>
+            <EvidenceBlock state="BUILDING" version="0.3" commit="a91f51" metadata="MOCK DATA" />
+          </BrandStack>
+        </ArtifactFrame>
+      </BrandSection>
+
+      <BrandSection spacing="standard">
+        <div class="review-section-heading">
+          <p class="review-kicker">03 / EVIDENCE AND METRICS</p>
+          <h2>Facts stay legible</h2>
+        </div>
+        <div class="evidence-panel review-panel">
+          <EvidenceBlock state="BUILDING" version="0.3" commit="a91f51" metadata="MOCK DATA" />
+          <div class="metric-grid">
+            {mockMetrics.map(([value, label, context]) => <Metric value={value} label={label} context={context} />)}
+          </div>
+        </div>
+      </BrandSection>
+
+      <BrandSection spacing="standard">
+        <div class="review-section-heading">
+          <p class="review-kicker">04 / FUNCTIONAL STATES</p>
+          <h2>Semantic color remains state-only</h2>
+        </div>
+        <div class="state-row" aria-label="Semantic status label examples">
+          <StatusLabel variant="neutral" label="NEUTRAL" />
+          <StatusLabel variant="success" label="SUCCESS" />
+          <StatusLabel variant="warning" label="WARNING" />
+          <StatusLabel variant="error" label="ERROR" />
+          <StatusLabel variant="info" label="INFO" />
+        </div>
+        <p class="review-note">MOCK DATA · Status labels are functional signals, not decorative color fields.</p>
+      </BrandSection>
+
+      <BrandSection spacing="standard">
+        <div class="review-section-heading">
+          <p class="review-kicker">05 / TOKEN-ONLY COMPOSITION</p>
+          <h2>Spacing roles remain explicit</h2>
+        </div>
+        <div class="stack-grid">
+          {(['micro', 'compact', 'standard', 'content', 'major', 'section', 'major-section'] as const).map((gap) => (
+            <div class="review-panel"><span class="panel-label">BRAND STACK · {gap}</span><BrandStack gap={gap}><span class="stack-sample">MOCK CONTENT</span><span class="stack-sample">TOKEN GAP</span></BrandStack></div>
+          ))}
+        </div>
+      </BrandSection>
+
+      <footer class="review-footer">
+        <p>Review route is development-only and is not included in the static production output.</p>
+        <p>Source: <code>brand/*.md</code> · Implementation: <code>tokens/tokens.json</code> · Generated CSS: <code>src/generated/tokens.css</code></p>
+      </footer>
+    </BrandContainer>
+  </main>
+</BaseLayout>
+
+<style>
+  .design-system-review { min-height: 100vh; background: var(--lf-color-background); }
+  .review-header { display: grid; gap: var(--lf-spacing-inline-standard); padding-block: var(--lf-spacing-section-major) var(--lf-spacing-block-major); border-bottom: var(--lf-border-width-strong) solid var(--lf-border-color-strong); }
+  .review-kicker, .panel-label { color: var(--lf-color-accent-primary); font-family: var(--lf-font-family-mono); font-size: var(--lf-type-label-size-large); font-weight: var(--lf-type-label-weight); letter-spacing: var(--lf-type-label-tracking); line-height: var(--lf-type-label-line-height); text-transform: uppercase; }
+  .review-header h1, .review-section-heading h2 { margin: 0; color: var(--lf-color-text-primary); font-family: var(--lf-font-family-sans); font-weight: var(--lf-type-h1-weight); line-height: var(--lf-type-h1-line-height); letter-spacing: var(--lf-type-h1-tracking); }
+  .review-header h1 { font-size: var(--lf-type-h1-size-large); }
+  .review-section-heading h2 { font-size: var(--lf-type-h2-size-large); }
+  .review-intro, .review-copy, .review-note, .review-footer { color: var(--lf-color-text-secondary); }
+  .review-intro, .review-copy { max-width: 62ch; font-size: var(--lf-type-body-size-large); line-height: var(--lf-type-body-line-height); }
+  .review-flags, .state-row { display: flex; flex-wrap: wrap; gap: var(--lf-spacing-inline-compact); }
+  .review-flags span { padding: var(--lf-spacing-micro) var(--lf-spacing-inline-compact); border: var(--lf-border-width-standard) solid var(--lf-border-color-standard); color: var(--lf-color-text-muted); font-family: var(--lf-font-family-mono); font-size: var(--lf-type-label-size-large); letter-spacing: var(--lf-type-label-tracking); }
+  .review-section-heading { display: grid; gap: var(--lf-spacing-micro); margin-bottom: var(--lf-spacing-block-content); }
+  .signature-grid, .stack-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lf-spacing-block-content); }
+  .review-panel { display: grid; gap: var(--lf-spacing-inline-standard); padding: var(--lf-spacing-block-content); border: var(--lf-border-width-standard) solid var(--lf-border-color-standard); background: var(--lf-color-surface-1); }
+  .review-panel > .brand-signature { min-height: 7rem; align-content: start; }
+  .artifact-content { padding: var(--lf-spacing-block-major); }
+  .artifact-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--lf-spacing-inline-standard); }
+  .artifact-content h3 { margin: 0; color: var(--lf-color-text-primary); font-size: var(--lf-type-h2-size-large); line-height: var(--lf-type-h2-line-height); }
+  .evidence-panel { gap: var(--lf-spacing-block-content); }
+  .metric-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--lf-spacing-block-content); }
+  .review-note, .review-footer { font-size: var(--lf-type-body-small-size-large); line-height: var(--lf-type-body-small-line-height); }
+  .stack-sample { display: block; padding: var(--lf-spacing-inline-compact); border-left: var(--lf-border-width-strong) solid var(--lf-border-color-strong); color: var(--lf-color-text-secondary); font-family: var(--lf-font-family-mono); font-size: var(--lf-type-label-size-large); }
+  .review-footer { display: grid; gap: var(--lf-spacing-micro); padding-block: var(--lf-spacing-section-standard); border-top: var(--lf-border-width-standard) solid var(--lf-border-color-standard); }
+  code { color: var(--lf-color-text-primary); font-family: var(--lf-font-family-mono); }
+
+  @media (max-width: 767px) {
+    .signature-grid, .stack-grid, .metric-grid { grid-template-columns: 1fr; }
+    .review-header h1 { font-size: var(--lf-type-h1-size-small); }
+    .review-section-heading h2 { font-size: var(--lf-type-h2-size-small); }
+    .artifact-content { padding: var(--lf-spacing-block-content); }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .review-header h1 { font-size: var(--lf-type-h1-size-medium); }
+    .review-section-heading h2 { font-size: var(--lf-type-h2-size-medium); }
+  }
+</style>

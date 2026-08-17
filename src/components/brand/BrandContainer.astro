@@ -1,0 +1,27 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const classes = ['brand-container', className].filter(Boolean).join(' ');
+---
+
+<div class={classes}><slot /></div>
+
+<style>
+  .brand-container {
+    width: 100%;
+    max-width: var(--lf-container-max);
+    margin-inline: auto;
+    padding-inline: var(--lf-grid-large-outer);
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .brand-container { padding-inline: var(--lf-grid-medium-outer); }
+  }
+
+  @media (max-width: 767px) {
+    .brand-container { padding-inline: var(--lf-grid-small-outer); }
+  }
+</style>

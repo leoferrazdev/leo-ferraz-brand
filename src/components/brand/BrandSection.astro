@@ -1,0 +1,20 @@
+---
+interface Props {
+  spacing?: 'standard' | 'major';
+  class?: string;
+}
+
+const { spacing = 'standard', class: className = '' } = Astro.props;
+const classes = ['brand-section-core', `brand-section-core--${spacing}`, className].filter(Boolean).join(' ');
+---
+
+<section class={classes}><slot /></section>
+
+<style>
+  .brand-section-core {
+    width: 100%;
+  }
+
+  .brand-section-core--standard { padding-block: var(--lf-spacing-section-standard); }
+  .brand-section-core--major { padding-block: var(--lf-spacing-section-major); }
+</style>

@@ -1,0 +1,37 @@
+---
+interface Props {
+  variant?: 'neutral' | 'success' | 'warning' | 'error' | 'info';
+  label?: string;
+  class?: string;
+}
+
+const { variant = 'neutral', label, class: className = '' } = Astro.props;
+const classes = ['status-label', `status-label--${variant}`, className].filter(Boolean).join(' ');
+const text = label ?? variant.toUpperCase();
+---
+
+<span class={classes} data-variant={variant}>{text}</span>
+
+<style>
+  .status-label {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: var(--lf-type-label-size-large);
+    padding: var(--lf-spacing-micro) var(--lf-spacing-inline-compact);
+    border: var(--lf-border-width-standard) solid currentColor;
+    border-radius: var(--lf-radius-control);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    font-weight: var(--lf-type-label-weight);
+    letter-spacing: var(--lf-type-label-tracking);
+    line-height: var(--lf-type-label-line-height);
+    text-transform: uppercase;
+  }
+
+  .status-label--neutral { color: var(--lf-color-text-secondary); }
+  .status-label--success { color: var(--lf-color-state-success); }
+  .status-label--warning { color: var(--lf-color-state-warning); }
+  .status-label--error { color: var(--lf-color-state-error); }
+  .status-label--info { color: var(--lf-color-state-info); }
+</style>

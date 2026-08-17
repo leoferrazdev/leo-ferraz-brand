@@ -1,0 +1,57 @@
+---
+interface Props {
+  state?: string;
+  version?: string;
+  commit?: string;
+  metadata?: string;
+  class?: string;
+}
+
+const { state, version, commit, metadata, class: className = '' } = Astro.props;
+const facts = [
+  ['state', state],
+  ['version', version],
+  ['commit', commit],
+  ['metadata', metadata],
+].filter(([, value]) => value !== undefined && value !== '');
+const classes = ['evidence-block', className].filter(Boolean).join(' ');
+---
+
+<div class={classes} aria-label="Technical evidence">
+  {facts.map(([label, value]) => <span class="evidence-block__fact"><small>{label}</small><strong>{value}</strong></span>)}
+  <slot />
+</div>
+
+<style>
+  .evidence-block {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--lf-spacing-inline-standard) var(--lf-spacing-inline-compact);
+    align-items: baseline;
+    padding: var(--lf-spacing-component-standard);
+    border-block: var(--lf-border-width-standard) solid var(--lf-border-color-standard);
+    color: var(--lf-color-text-secondary);
+    font-family: var(--lf-font-family-mono);
+  }
+
+  .evidence-block__fact {
+    display: inline-grid;
+    gap: var(--lf-spacing-micro);
+  }
+
+  .evidence-block small {
+    color: var(--lf-color-text-muted);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+    line-height: var(--lf-type-label-line-height);
+    text-transform: uppercase;
+  }
+
+  .evidence-block strong {
+    color: var(--lf-color-text-primary);
+    font-size: var(--lf-type-metadata-size-large);
+    font-weight: var(--lf-type-metadata-weight);
+    line-height: var(--lf-type-metadata-line-height);
+    letter-spacing: var(--lf-type-metadata-tracking);
+  }
+</style>

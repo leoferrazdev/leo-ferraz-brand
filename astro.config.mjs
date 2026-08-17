@@ -17,6 +17,10 @@ const typographyReviewDevOnly = {
           pattern: '/brand/review/v1-foundations/',
           entrypoint: './src/review/v1-foundations.astro',
         });
+        injectRoute({
+          pattern: '/brand/review/design-system/',
+          entrypoint: './src/review/design-system.astro',
+        });
       }
     },
   },

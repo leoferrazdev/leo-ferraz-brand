@@ -2,6 +2,14 @@
 // Canonical source: brand/*.md
 // This page is an executable/public projection of approved decisions.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BrandContainer from '../../components/brand/BrandContainer.astro';
+import BrandSection from '../../components/brand/BrandSection.astro';
+import BrandSignature from '../../components/brand/BrandSignature.astro';
+import ArtifactFrame from '../../components/brand/ArtifactFrame.astro';
+import EvidenceBlock from '../../components/brand/EvidenceBlock.astro';
+import Metric from '../../components/brand/Metric.astro';
+import StatusLabel from '../../components/brand/StatusLabel.astro';
+import BrandStack from '../../components/brand/BrandStack.astro';
 import '../../styles/global.css';
 
 const swatches = [
@@ -205,6 +213,45 @@ const typographyScale = [
           <div><h3>Effects</h3><p>Shadow: none by default<br />Glow: not part of Brand System v1</p><small>Exceptional elevation only · glow deferred</small></div>
         </div>
       </section>
+
+      <section class="brand-section brand-section-wide brand-system-public" aria-labelledby="design-system-title">
+        <p class="section-index">10</p>
+        <h2 id="design-system-title">Design System</h2>
+        <p class="system-label">Executable / token-driven</p>
+        <BrandContainer class="brand-system-public-container">
+          <BrandSection spacing="standard">
+            <div class="brand-system-public-header">
+              <BrandSignature variant="institutional" />
+              <p>Core components project approved brand decisions into reusable Astro primitives.</p>
+            </div>
+            <div class="brand-system-public-grid">
+              <ArtifactFrame>
+                <BrandStack gap="content">
+                  <StatusLabel variant="info" label="BUILDING" />
+                  <strong>REAL PRODUCT ARTIFACT</strong>
+                  <EvidenceBlock state="BUILDING" version="0.3" commit="a91f51" metadata="CANONICAL MOCK" />
+                </BrandStack>
+              </ArtifactFrame>
+              <div class="brand-system-public-evidence">
+                <EvidenceBlock state="APPROVED" version="0.1.0" commit="tokens" metadata="MACHINE-READABLE" />
+                <div class="brand-system-public-metrics">
+                  <Metric value="4–8" label="RADIUS" context="CANONICAL" />
+                  <Metric value="10" label="GRID COLUMNS" context="LARGE" />
+                  <Metric value="1440" label="CONTAINER MAX" context="PIXELS" />
+                </div>
+              </div>
+            </div>
+            <div class="brand-system-public-states" aria-label="Semantic states">
+              <StatusLabel variant="neutral" label="NEUTRAL" />
+              <StatusLabel variant="success" label="SUCCESS" />
+              <StatusLabel variant="warning" label="WARNING" />
+              <StatusLabel variant="error" label="ERROR" />
+              <StatusLabel variant="info" label="INFO" />
+            </div>
+          </BrandSection>
+        </BrandContainer>
+        <p class="open-note">Canonical documentation: <code>brand/*.md</code> · Machine-readable implementation: <code>tokens/tokens.json</code>.</p>
+      </section>
     </div>
 
     <footer class="brandbook-footer">
@@ -213,3 +260,18 @@ const typographyScale = [
     </footer>
   </main>
 </BaseLayout>
+
+<style>
+  .brand-system-public-container { background: var(--lf-color-surface-1); }
+  .brand-system-public-header { display: grid; gap: var(--lf-spacing-block-content); grid-template-columns: minmax(0, 1fr) minmax(16rem, 1fr); align-items: end; }
+  .brand-system-public-header p { margin: 0; color: var(--lf-color-text-secondary); line-height: var(--lf-type-body-line-height); }
+  .brand-system-public-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--lf-spacing-block-content); }
+  .brand-system-public-grid > * { min-width: 0; }
+  .brand-system-public-evidence { display: grid; align-content: start; gap: var(--lf-spacing-block-content); }
+  .brand-system-public-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--lf-spacing-inline-standard); }
+  .brand-system-public-states { display: flex; flex-wrap: wrap; gap: var(--lf-spacing-inline-compact); }
+  @media (max-width: 767px) {
+    .brand-system-public-header, .brand-system-public-grid { grid-template-columns: 1fr; }
+    .brand-system-public-metrics { grid-template-columns: 1fr; }
+  }
+</style>

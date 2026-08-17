@@ -1,0 +1,68 @@
+---
+interface Props {
+  variant?: 'wordmark' | 'descriptor' | 'institutional' | 'utility';
+  class?: string;
+}
+
+const { variant = 'wordmark', class: className = '' } = Astro.props;
+const classes = ['brand-signature', `brand-signature--${variant}`, className].filter(Boolean).join(' ');
+---
+
+<div class={classes} data-variant={variant}>
+  {variant === 'utility' ? (
+    <span class="brand-signature__utility" aria-label="Leo Ferraz secondary utility mark">LF</span>
+  ) : (
+    <span class="brand-signature__name">Leo Ferraz</span>
+  )}
+  {variant === 'descriptor' || variant === 'institutional' ? <span class="brand-signature__descriptor">Building with AI</span> : null}
+  {variant === 'institutional' ? <span class="brand-signature__category">AI-Native Product Lab</span> : null}
+</div>
+
+<style>
+  .brand-signature {
+    display: inline-grid;
+    justify-items: start;
+    gap: var(--lf-spacing-inline-compact);
+    color: var(--lf-color-text-primary);
+  }
+
+  .brand-signature__name {
+    font-family: var(--lf-font-family-sans);
+    font-size: var(--lf-type-display-size-large);
+    font-weight: var(--lf-type-display-weight);
+    letter-spacing: var(--lf-type-display-tracking);
+    line-height: var(--lf-type-display-line-height);
+  }
+
+  .brand-signature__descriptor,
+  .brand-signature__category {
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-code-size-large);
+    font-weight: var(--lf-type-code-weight);
+    line-height: var(--lf-type-code-line-height);
+  }
+
+  .brand-signature__descriptor { color: var(--lf-color-text-secondary); }
+  .brand-signature__category { color: var(--lf-color-experimental-primary); }
+
+  .brand-signature--utility {
+    gap: 0;
+  }
+
+  .brand-signature__utility {
+    color: var(--lf-color-text-primary);
+    font-family: var(--lf-font-family-sans);
+    font-size: var(--lf-signature-utility-mark-minimum-box);
+    font-weight: var(--lf-signature-wordmark-weight);
+    letter-spacing: var(--lf-signature-wordmark-tracking);
+    line-height: 1;
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .brand-signature__name { font-size: var(--lf-type-display-size-medium); }
+  }
+
+  @media (max-width: 767px) {
+    .brand-signature__name { font-size: var(--lf-type-display-size-small); }
+  }
+</style>
