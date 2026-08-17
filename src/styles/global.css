@@ -408,6 +408,75 @@ code {
   line-height: 1.6;
 }
 
+.signature-public-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.signature-public-grid > div {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #2A3543;
+}
+
+.signature-public-label,
+.signature-public-spec {
+  color: #7F8B99;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.signature-public-label {
+  margin-bottom: 32px;
+}
+
+.signature-public-spec {
+  margin-bottom: 0;
+  color: #B7C2CE;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.signature-wordmark {
+  margin-bottom: 8px;
+  color: #F3F6FA;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.signature-descriptor {
+  margin-bottom: 16px;
+  color: #B7C2CE;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 1rem;
+}
+
+.signature-category {
+  margin-bottom: 0;
+  color: #9B8CFF;
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.75rem;
+}
+
+.signature-utility {
+  margin-bottom: 16px;
+  color: #F3F6FA;
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.signature-public-utility .open-note {
+  margin-bottom: 0;
+}
+
 .brandbook-footer {
   display: flex;
   justify-content: space-between;
@@ -431,7 +500,8 @@ code {
 
   .brandbook-grid,
   .swatch-grid,
-  .foundation-grid {
+  .foundation-grid,
+  .signature-public-grid {
     grid-template-columns: 1fr;
   }
 

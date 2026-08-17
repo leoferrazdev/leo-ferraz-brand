@@ -1,0 +1,396 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const options = [
+  {
+    id: 'A',
+    name: 'PURE / EDITORIAL',
+    descriptor: 'direct · editorial · founder-led · minimal · timeless',
+    treatment: 'IBM Plex Sans Medium · descriptor as a separate mono line',
+    tracking: '-0.035em · signature candidate only',
+    structure: 'name first · no marker · pure typography',
+    strength: 'direct name recognition without visual dependency',
+    risk: 'can become neutral or under-designed in sparse contexts',
+    mono: 'PASS · name remains legible in one color',
+    small: 'MEDIUM · name-only compact form stays readable',
+    artifact: 'HIGH · the signature stays quiet above the artifact',
+  },
+  {
+    id: 'B',
+    name: 'STRUCTURED / PRODUCT',
+    descriptor: 'modular · precise · product-oriented · technical restraint',
+    treatment: 'Sans name + Mono metadata · functional border relation',
+    tracking: '-0.030em · signature candidate only',
+    structure: 'baseline · alignment · spacing · one functional rule',
+    strength: 'clear coexistence with evidence and product documentation',
+    risk: 'can read as a generic product system if the rule decorates',
+    mono: 'PASS · rule is not needed for the name to survive',
+    small: 'MEDIUM · the rule is reduced before the name',
+    artifact: 'HIGH · structure frames without absorbing the artifact',
+  },
+  {
+    id: 'C',
+    name: 'SIGNATURE / SYSTEM',
+    descriptor: 'distinct · compact · systematic · recognizable · controlled',
+    treatment: 'Sans + Mono contrast · small structural marker only',
+    tracking: '-0.025em · signature candidate only',
+    structure: 'marker · micro-label · compact relation to descriptor',
+    strength: 'repeatable construction at compact functional sizes',
+    risk: 'can become overly system-like if metadata dominates the name',
+    mono: 'PASS · marker is removed in the monochrome specimen',
+    small: 'MEDIUM · marker stays secondary at compact sizes',
+    artifact: 'MEDIUM · marker requires restraint near a product artifact',
+  },
+];
+
+const sizes = [
+  ['LARGE', 'large'],
+  ['MEDIUM', 'medium'],
+  ['SMALL', 'small'],
+  ['VERY SMALL', 'very-small'],
+];
+
+const riskRows = [
+  ['Generic Personal Brand', ['low · name-led', 'low · structure adds specificity', 'low · repeatable system']],
+  ['Corporate', ['low · human name', 'medium · rule can formalize', 'medium · metadata can institutionalize']],
+  ['Developer Tool', ['low · editorial surface', 'medium · technical structure', 'medium · mono contrast']],
+  ['AI Startup', ['low · no AI symbol', 'low · evidence over promise', 'low · controlled marker']],
+  ['SaaS', ['medium · neutral sans', 'medium · product framing', 'medium · system language']],
+  ['Creator Brand', ['low · builder-led name', 'low · product context', 'low · artifact context']],
+  ['Over-designed', ['low · minimal', 'medium · rule stays functional', 'medium · marker stays quiet']],
+  ['Under-designed', ['medium · sparse context', 'low · structural relation', 'low · signature construction']],
+  ['Artifact Compatibility', ['high · stays subordinate', 'high · frames without absorbing', 'medium · marker needs restraint']],
+  ['Editorial Compatibility', ['high · direct reading', 'high · modular reading', 'medium · compact system tone']],
+  ['Small-size Legibility', ['medium · name only', 'medium · rule may compress', 'medium · marker may compete']],
+  ['Website Compatibility', ['high · flexible', 'high · modular', 'high · compact utility']],
+  ['Social Compatibility', ['high · clear profile name', 'high · structured lockup', 'medium · crop needs testing']],
+  ['Deterministic Reproduction', ['high · text and CSS', 'high · layout rules', 'high · text, CSS and marker']],
+  ['Long-Term Durability', ['high · low trend dependency', 'high · structural foundation', 'medium · marker needs governance']],
+];
+---
+
+<BaseLayout
+  title="Signature Review — Leo Ferraz"
+  description="Local-only comparison of deterministic Master Brand signature options."
+>
+  <main class="signature-page" id="content">
+    <header class="signature-header">
+      <p class="kicker">SIGNATURE REVIEW</p>
+      <div class="status-row">
+        <span>LOCAL DEVELOPMENT ONLY</span>
+        <span>NOT CANONICAL</span>
+        <span>NOT FOR PRODUCTION</span>
+      </div>
+      <h1>How can the name identify the builder without competing with the product?</h1>
+      <p class="intro">A deterministic comparison of three wordmark territories using identical content, shared foundations and no illustrative symbol.</p>
+      <div class="foundations" aria-label="Shared canonical foundations">
+        <span>Typography <b>Product / Editorial</b></span>
+        <span>Color <b>Precision / Product</b></span>
+        <span>Structure <b>Modular / Product</b></span>
+      </div>
+    </header>
+
+    <section class="identity-strip" aria-label="Shared identity content">
+      <div><span class="mono label">MASTER BRAND</span><strong>Leo Ferraz</strong></div>
+      <div><span class="mono label">DESCRIPTOR</span><strong>Building with AI</strong></div>
+      <div><span class="mono label">CATEGORY</span><strong>AI-Native Product Lab</strong></div>
+      <div><span class="mono label">HANDLE / DOMAIN</span><strong>@leoferrazdev · leoferraz.dev</strong></div>
+    </section>
+
+    <section class="options" aria-label="Three signature options">
+      {options.map((option) => (
+        <article class={`option option-${option.id.toLowerCase()}`} aria-labelledby={`option-${option.id}`}>
+          <header class="option-heading">
+            <div class="option-code mono">OPTION {option.id}</div>
+            <h2 id={`option-${option.id}`}>{option.name}</h2>
+            <p>{option.descriptor}</p>
+          </header>
+
+          <section class="lockup-section">
+            <p class="mono label">LOCKUPS · SAME CONTENT</p>
+            <div class="lockup-grid">
+              <div class="lockup-card">
+                <span class="mono lockup-label">PRIMARY · HORIZONTAL</span>
+                <div class="lockup horizontal"><span class="wordmark">Leo Ferraz</span></div>
+              </div>
+              <div class="lockup-card">
+                <span class="mono lockup-label">WITH DESCRIPTOR · HORIZONTAL</span>
+                <div class="lockup horizontal descriptor-lockup"><span class="wordmark">Leo Ferraz</span><span class="descriptor">Building with AI</span></div>
+              </div>
+              <div class="lockup-card">
+                <span class="mono lockup-label">INSTITUTIONAL · STACKED</span>
+                <div class="lockup stacked"><span class="wordmark">Leo Ferraz</span><span class="descriptor">Building with AI</span><span class="category">AI-Native Product Lab</span></div>
+              </div>
+              <div class="lockup-card">
+                <span class="mono lockup-label">COMPACT · NAME ONLY</span>
+                <div class="lockup compact"><span class="wordmark">Leo Ferraz</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="scale-section">
+            <p class="mono label">REAL-SCALE TEST · REVIEW VIEWPORT</p>
+            <div class="scale-row">
+              {sizes.map(([label, size]) => (
+                <div class={`scale-item ${size}`}>
+                  <span class="mono scale-label">{label}</span>
+                  <span class="scale-wordmark">Leo Ferraz</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section class="context-section">
+            <div class="context-block">
+              <p class="mono label">ARTIFACT FIRST · SIGNATURE ABOVE ARTIFACT</p>
+              <div class="artifact-signature"><span class="wordmark">Leo Ferraz</span><span class="descriptor">Building with AI</span></div>
+              <div class="artifact"><span>REAL PRODUCT ARTIFACT</span></div>
+            </div>
+            <div class="context-block editorial-context">
+              <p class="mono label">EDITORIAL CONTEXT</p>
+              <div class="editorial-signature"><span class="wordmark">Leo Ferraz</span><span class="descriptor">Building with AI</span></div>
+              <p>CONSTRUINDO PRODUTOS REAIS COM IA.</p>
+            </div>
+            <div class="context-block metadata-context">
+              <p class="mono label">METADATA CONTEXT</p>
+              <div class="metadata-signature"><span class="wordmark">Leo Ferraz</span><span class="descriptor">Building with AI</span></div>
+              <div class="metadata-lines mono"><span>PROJECT 003</span><span>BUILDING</span><span>VERSION 0.3</span></div>
+            </div>
+          </section>
+
+          <section class="assessment-section">
+            <p class="mono label">CANDIDATE ASSESSMENT</p>
+            <dl>
+              <div><dt>construction</dt><dd>{option.structure}</dd></div>
+              <div><dt>wordmark weight</dt><dd>{option.treatment}</dd></div>
+              <div><dt>tracking candidate</dt><dd>{option.tracking}</dd></div>
+              <div><dt>descriptor treatment</dt><dd>{option.descriptor}</dd></div>
+              <div><dt>principal strength</dt><dd>{option.strength}</dd></div>
+              <div><dt>principal risk</dt><dd>{option.risk}</dd></div>
+            </dl>
+            <div class="assessment-notes">
+              <span><b>MONOCHROME</b>{option.mono}</span>
+              <span><b>SMALL-SIZE LEGIBILITY</b>{option.small}</span>
+              <span><b>ARTIFACT COMPATIBILITY</b>{option.artifact}</span>
+            </div>
+          </section>
+        </article>
+      ))}
+    </section>
+
+    <section class="monogram-section" aria-labelledby="monogram-title">
+      <header>
+        <p class="kicker">MONOGRAM NECESSITY TEST</p>
+        <h2 id="monogram-title">Does the brand require a monogram for functional contexts?</h2>
+        <p>Functional comparison only. No letterform is redrawn and no symbol is introduced.</p>
+      </header>
+      <div class="monogram-options">
+        {options.map((option) => (
+          <div class={`monogram-card option-${option.id.toLowerCase()}`}>
+            <p class="mono label">OPTION {option.id} · MONOGRAM CANDIDATE — NOT A DECISION</p>
+            <div class="monogram-grid">
+              <div><span class="mono">NO MONOGRAM</span><strong class="empty-mark">—</strong></div>
+              <div><span class="mono">PLAIN L</span><strong class="candidate-letter">L</strong></div>
+              <div><span class="mono">PLAIN LF</span><strong class="candidate-letter">LF</strong></div>
+              <div><span class="mono">TEXT-ONLY</span><strong class="text-candidate">Leo Ferraz</strong></div>
+            </div>
+            <div class="crop-tests">
+              {[16, 32, 48, 64].map((px) => (
+                <div class="crop-test">
+                  <span class="mono">{px}px</span>
+                  <div class="crop-square"><strong style={`font-size: ${Math.max(8, Math.round(px * 0.42))}px`}>LF</strong></div>
+                  <div class="crop-circle"><strong style={`font-size: ${Math.max(8, Math.round(px * 0.42))}px`}>LF</strong></div>
+                </div>
+              ))}
+            </div>
+            <p class="mono crop-note">square crop · circular crop · browser shortcut · small social identity marker</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="risk-section" aria-labelledby="risk-title">
+      <header>
+        <p class="kicker">RISK MATRIX</p>
+        <h2 id="risk-title">Short observations for human review.</h2>
+        <p>Low, medium and high are descriptive review ratings, not status labels.</p>
+      </header>
+      <div class="risk-table-wrap">
+        <table>
+          <thead><tr><th>Criterion</th><th>Pure / Editorial</th><th>Structured / Product</th><th>Signature / System</th></tr></thead>
+          <tbody>
+            {riskRows.map(([criterion, values]) => <tr><th scope="row">{criterion}</th>{values.map((value) => <td>{value}</td>)}</tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="review-questions" aria-labelledby="questions-title">
+      <p class="kicker">FOUNDER REVIEW QUESTIONS</p>
+      <h2 id="questions-title">Human comparison remains open.</h2>
+      <ol>
+        <li>Which signature feels most like Leo Ferraz?</li>
+        <li>Which system feels like a builder rather than a creator/influencer brand?</li>
+        <li>Which option feels technical without looking like a software company logo?</li>
+        <li>Which option gives products the greatest visual priority?</li>
+        <li>Which option works best next to real screenshots and artifacts?</li>
+        <li>Which option works best with Product / Editorial typography?</li>
+        <li>Which option survives without accent color?</li>
+        <li>Which option feels least dependent on trends?</li>
+        <li>Which option is easiest for agents to reproduce deterministically?</li>
+        <li>Does the brand actually require a monogram?</li>
+        <li>If a monogram is needed, is LF sufficient as a secondary utility mark?</li>
+      </ol>
+    </section>
+
+    <footer class="signature-footer">
+      <p class="mono">SIGNATURE STATUS: REVIEW · SELECTED OPTION: NONE · MONOGRAM DECISION: NOT_DEFINED</p>
+      <p class="mono">NO GLOW · NO GRADIENT · NO DECORATIVE SHADOW · NO ABSTRACT SYMBOL · NO CLIENT JAVASCRIPT</p>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(:root) {
+    --sig-bg: #0D1117;
+    --sig-surface: #151B24;
+    --sig-surface-2: #1D2632;
+    --sig-border: #2A3543;
+    --sig-border-strong: #405064;
+    --sig-text: #F3F6FA;
+    --sig-secondary: #B7C2CE;
+    --sig-muted: #7F8B99;
+    --sig-accent: #4DA3FF;
+    --sig-accent-subtle: #0F2E4C;
+    --sig-violet: #9B8CFF;
+  }
+
+  :global(html) { background: var(--sig-bg); color: var(--sig-text); font-family: var(--font-ibm-plex-sans), sans-serif; }
+  :global(body) { min-width: 320px; margin: 0; background: var(--sig-bg); color: var(--sig-text); }
+  :global(a) { color: var(--sig-accent); }
+  :global(.skip-link) { position: absolute; top: 12px; left: 12px; }
+  :global(.mono) { font-family: var(--font-ibm-plex-mono), monospace; }
+
+  .signature-page { width: min(100% - 48px, 1500px); margin: 0 auto; padding: 48px 0 64px; }
+  .signature-header { max-width: 980px; padding-bottom: 32px; border-bottom: 1px solid var(--sig-border); }
+  .kicker, .label { margin: 0 0 12px; color: var(--sig-accent); font-family: var(--font-ibm-plex-mono), monospace; font-size: 11px; letter-spacing: .11em; }
+  .status-row { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 26px; color: var(--sig-muted); font-family: var(--font-ibm-plex-mono), monospace; font-size: 10px; letter-spacing: .075em; }
+  .signature-header h1 { max-width: 880px; margin: 0 0 20px; font-size: clamp(2.3rem, 5vw, 4.4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; }
+  .intro { max-width: 760px; margin: 0 0 24px; color: var(--sig-secondary); font-size: 17px; line-height: 1.55; }
+  .foundations { display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--sig-muted); font-family: var(--font-ibm-plex-mono), monospace; font-size: 12px; }
+  .foundations span { display: grid; gap: 4px; }
+  .foundations b { color: var(--sig-text); font-weight: 500; }
+  .identity-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; padding: 20px; background: var(--sig-surface); border: 1px solid var(--sig-border); }
+  .identity-strip div { display: grid; gap: 8px; min-width: 0; }
+  .identity-strip strong { min-height: 2.7em; color: var(--sig-text); font-size: 14px; font-weight: 500; line-height: 1.35; }
+  .options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-top: 32px; }
+  .option { min-width: 0; overflow: hidden; background: var(--sig-surface); border: 1px solid var(--sig-border); }
+  .option-heading, .lockup-section, .scale-section, .context-section, .assessment-section { padding: 24px; }
+  .option-heading { min-height: 148px; border-bottom: 1px solid var(--sig-border); }
+  .option-code { margin-bottom: 16px; color: var(--sig-muted); font-size: 11px; letter-spacing: .1em; }
+  .option-heading h2 { margin: 0 0 10px; font-size: 1.45rem; font-weight: 500; letter-spacing: -.02em; }
+  .option-heading p { margin: 0; color: var(--sig-secondary); font-size: 13px; line-height: 1.45; }
+  .lockup-section, .scale-section, .context-section, .assessment-section { border-bottom: 1px solid var(--sig-border); }
+  .lockup-grid { display: grid; gap: 12px; }
+  .lockup-card { min-width: 0; padding: 16px; background: var(--sig-surface-2); border: 1px solid var(--sig-border); }
+  .lockup-label, .scale-label { display: block; margin-bottom: 16px; color: var(--sig-muted); font-size: 10px; letter-spacing: .06em; }
+  .lockup { min-width: 0; color: var(--sig-text); }
+  .wordmark { display: block; font-size: 27px; font-weight: 500; letter-spacing: var(--signature-tracking); line-height: 1.02; white-space: nowrap; }
+  .descriptor, .category { display: block; color: var(--sig-secondary); font-family: var(--font-ibm-plex-mono), monospace; font-size: 11px; font-weight: 500; letter-spacing: .04em; line-height: 1.34; }
+  .horizontal { display: flex; align-items: baseline; flex-wrap: wrap; gap: 14px; }
+  .stacked { display: grid; gap: 8px; }
+  .stacked .category { color: var(--sig-violet); }
+  .compact .wordmark { font-size: 17px; }
+  .scale-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .scale-item { min-width: 0; padding: 12px 10px; background: var(--sig-surface-2); border: 1px solid var(--sig-border); }
+  .scale-label { margin-bottom: 12px; font-size: 9px; }
+  .scale-wordmark { display: block; overflow: hidden; color: var(--sig-text); font-weight: 500; letter-spacing: var(--signature-tracking); line-height: 1; white-space: nowrap; }
+  .large .scale-wordmark { font-size: 22px; }
+  .medium .scale-wordmark { font-size: 17px; }
+  .small .scale-wordmark { font-size: 13px; }
+  .very-small .scale-wordmark { font-size: 10px; }
+  .context-section { display: grid; gap: 16px; }
+  .context-block { min-width: 0; }
+  .artifact-signature, .editorial-signature, .metadata-signature { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .artifact-signature .wordmark, .metadata-signature .wordmark { font-size: 15px; }
+  .editorial-signature .wordmark { font-size: 20px; }
+  .artifact { display: grid; place-items: center; min-height: 210px; background: var(--sig-bg); border: 1px solid var(--sig-border-strong); color: var(--sig-muted); font-family: var(--font-ibm-plex-mono), monospace; font-size: 11px; letter-spacing: .06em; }
+  .editorial-context { padding-top: 16px; border-top: 1px solid var(--sig-border); }
+  .editorial-context > p:last-child { max-width: 92%; margin: 0; color: var(--sig-text); font-size: 24px; font-weight: 500; letter-spacing: -.02em; line-height: 1.18; }
+  .metadata-context { padding-top: 16px; border-top: 1px solid var(--sig-border); }
+  .metadata-lines { display: grid; gap: 4px; color: var(--sig-secondary); font-size: 11px; line-height: 1.34; }
+  .metadata-lines span:first-child { color: var(--sig-accent); }
+  .assessment-section dl { margin: 0; }
+  .assessment-section dl div { display: grid; gap: 6px; padding: 12px 0; border-bottom: 1px solid var(--sig-border); }
+  .assessment-section dt { color: var(--sig-muted); font-family: var(--font-ibm-plex-mono), monospace; font-size: 10px; letter-spacing: .06em; }
+  .assessment-section dd { margin: 0; color: var(--sig-secondary); font-size: 13px; line-height: 1.4; }
+  .assessment-notes { display: grid; gap: 12px; margin-top: 20px; color: var(--sig-secondary); font-family: var(--font-ibm-plex-mono), monospace; font-size: 10px; line-height: 1.45; }
+  .assessment-notes span { display: grid; gap: 4px; }
+  .assessment-notes b { color: var(--sig-violet); font-weight: 500; letter-spacing: .06em; }
+
+  .option-a { --signature-tracking: -.035em; --signature-radius: 0; }
+  .option-a .lockup-card { border-radius: var(--signature-radius); }
+  .option-a .descriptor-lockup { gap: 18px; }
+  .option-a .descriptor-lockup::before { content: ''; width: 1px; height: 14px; background: var(--sig-border-strong); }
+  .option-b { --signature-tracking: -.030em; --signature-radius: 4px; }
+  .option-b .lockup-card { border-radius: var(--signature-radius); }
+  .option-b .horizontal { padding-bottom: 10px; border-bottom: 1px solid var(--sig-border-strong); }
+  .option-b .descriptor-lockup { justify-content: space-between; gap: 10px; }
+  .option-b .descriptor-lockup .descriptor { color: var(--sig-accent); }
+  .option-c { --signature-tracking: -.025em; --signature-radius: 8px; }
+  .option-c .lockup-card { border-radius: var(--signature-radius); }
+  .option-c .lockup-card:first-child { border-left: 2px solid var(--sig-accent); }
+  .option-c .wordmark::before { content: 'LF / '; color: var(--sig-accent); font-family: var(--font-ibm-plex-mono), monospace; font-size: .42em; letter-spacing: .04em; vertical-align: .18em; }
+  .option-c .compact .wordmark::before { content: ''; }
+  .option-c .descriptor { color: var(--sig-violet); }
+
+  .monogram-section, .risk-section, .review-questions { margin-top: 32px; padding: 32px; background: var(--sig-surface); border: 1px solid var(--sig-border); }
+  .monogram-section header, .risk-section header { max-width: 880px; margin-bottom: 24px; }
+  .monogram-section h2, .risk-section h2, .review-questions h2 { margin: 0 0 12px; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.08; }
+  .monogram-section header p:last-child, .risk-section header p:last-child { margin: 0; color: var(--sig-secondary); line-height: 1.55; }
+  .monogram-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .monogram-card { min-width: 0; padding: 20px; background: var(--sig-surface-2); border: 1px solid var(--sig-border); }
+  .monogram-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .monogram-grid > div { display: grid; place-items: center; gap: 12px; min-height: 120px; padding: 12px; background: var(--sig-bg); border: 1px solid var(--sig-border); text-align: center; }
+  .monogram-grid span { color: var(--sig-muted); font-size: 9px; letter-spacing: .06em; }
+  .candidate-letter, .empty-mark { color: var(--sig-text); font-size: 42px; font-weight: 500; letter-spacing: -.03em; }
+  .text-candidate { color: var(--sig-text); font-size: 16px; font-weight: 500; }
+  .crop-tests { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+  .crop-test { display: grid; justify-items: center; gap: 8px; color: var(--sig-muted); font-size: 9px; }
+  .crop-square, .crop-circle { display: grid; place-items: center; width: 64px; height: 64px; background: var(--sig-bg); border: 1px solid var(--sig-border-strong); color: var(--sig-text); }
+  .crop-circle { border-radius: 50%; }
+  .crop-square strong, .crop-circle strong { font-family: var(--font-ibm-plex-sans), sans-serif; font-weight: 500; }
+  .crop-note { margin: 16px 0 0; color: var(--sig-muted); font-size: 9px; line-height: 1.45; }
+  .risk-table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { min-width: 190px; padding: 12px; border-bottom: 1px solid var(--sig-border); text-align: left; vertical-align: top; line-height: 1.4; }
+  th { color: var(--sig-text); font-weight: 500; }
+  thead th { color: var(--sig-accent); font-family: var(--font-ibm-plex-mono), monospace; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+  tbody th { min-width: 170px; color: var(--sig-muted); font-family: var(--font-ibm-plex-mono), monospace; font-size: 10px; font-weight: 400; }
+  td { color: var(--sig-secondary); }
+  .review-questions ol { display: grid; gap: 12px; max-width: 900px; margin: 0; padding-left: 24px; color: var(--sig-secondary); line-height: 1.5; }
+  .review-questions li::marker { color: var(--sig-accent); font-family: var(--font-ibm-plex-mono), monospace; }
+  .signature-footer { display: grid; gap: 8px; padding-top: 24px; color: var(--sig-muted); font-size: 10px; line-height: 1.45; }
+  .signature-footer p { margin: 0; }
+
+  @media (max-width: 1180px) {
+    .options, .monogram-options { grid-template-columns: 1fr; }
+    .option { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .option-heading, .assessment-section { grid-column: 1 / -1; }
+  }
+  @media (max-width: 760px) {
+    .signature-page { width: min(100% - 32px, 1500px); padding-top: 32px; }
+    .identity-strip { grid-template-columns: 1fr 1fr; }
+    .option { display: block; }
+    .option-heading, .lockup-section, .scale-section, .context-section, .assessment-section { padding: 20px; }
+    .scale-row { grid-template-columns: 1fr 1fr; }
+    .monogram-section, .risk-section, .review-questions { padding: 20px; }
+    .crop-square, .crop-circle { width: 56px; height: 56px; }
+  }
+  @media (max-width: 500px) {
+    .identity-strip { grid-template-columns: 1fr; }
+    .horizontal { display: grid; gap: 8px; }
+    .option-a .descriptor-lockup::before { display: none; }
+    .monogram-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
