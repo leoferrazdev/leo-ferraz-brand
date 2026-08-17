@@ -103,8 +103,11 @@ public_html
 Initial Deployment Method:
 manual static deployment
 
+Current Deployment Method:
+GitHub Actions static deployment
+
 GitHub Deployment Integration:
-not_used
+GitHub Actions
 
 Production Status:
 deployed
@@ -114,7 +117,7 @@ Initial Public Routes:
 /brand/
 
 deployment_automation:
-not_defined
+push main → npm ci → npm run build → FTPS dist/ → public_html/
 
 Runtime Server:
 not_required
