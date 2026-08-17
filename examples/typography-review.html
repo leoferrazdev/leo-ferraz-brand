@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Typography Review — Mock Content</title>
+    <meta name="description" content="Controlled typography comparison for Leo Ferraz. Mock content only.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Source+Code+Pro:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        color-scheme: dark;
+        --page: #0d0d0d;
+        --surface: #151515;
+        --surface-strong: #1c1c1c;
+        --ink: #f1f1ed;
+        --muted: #9c9c96;
+        --faint: #686862;
+        --line: #30302d;
+        --line-strong: #4a4a45;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--page);
+      }
+
+      body {
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font-family: system-ui, sans-serif;
+        line-height: 1.5;
+      }
+
+      main {
+        width: min(1480px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 42px 0 72px;
+      }
+
+      .page-header {
+        display: grid;
+        gap: 12px;
+        margin-bottom: 36px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 28px;
+      }
+
+      .eyebrow,
+      .label,
+      .meta,
+      .status,
+      .option-details,
+      .technical,
+      .metric-label {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.72rem;
+      }
+
+      h1 {
+        max-width: 900px;
+        margin: 0;
+        font-size: clamp(2.5rem, 7vw, 6.8rem);
+        line-height: 0.94;
+        letter-spacing: -0.065em;
+        font-weight: 700;
+      }
+
+      .intro {
+        max-width: 680px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .review-note {
+        width: fit-content;
+        margin: 4px 0 0;
+        border: 1px solid var(--line-strong);
+        padding: 8px 10px;
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        align-items: start;
+      }
+
+      .option {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: var(--surface);
+      }
+
+      .option-header {
+        display: grid;
+        gap: 10px;
+        border-bottom: 1px solid var(--line);
+        padding: 24px;
+      }
+
+      .option-header h2 {
+        margin: 0;
+        font-size: clamp(1.7rem, 3vw, 2.8rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .option-details {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.66rem;
+        line-height: 1.8;
+        letter-spacing: 0.05em;
+      }
+
+      .option-a .brand,
+      .option-a .editorial,
+      .option-a .option-header h2 {
+        font-family: "IBM Plex Sans", system-ui, sans-serif;
+      }
+
+      .option-a .technical,
+      .option-a .status,
+      .option-a .meta,
+      .option-a .metric-label {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+      }
+
+      .option-b .brand,
+      .option-b .editorial,
+      .option-b .option-header h2 {
+        font-family: "Source Sans 3", system-ui, sans-serif;
+      }
+
+      .option-b .technical,
+      .option-b .status,
+      .option-b .meta,
+      .option-b .metric-label {
+        font-family: "Source Code Pro", ui-monospace, monospace;
+      }
+
+      .density {
+        display: grid;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        padding: 26px 24px 30px;
+      }
+
+      .density:last-child {
+        border-bottom: 0;
+      }
+
+      .label {
+        color: var(--faint);
+        font-size: 0.65rem;
+      }
+
+      .brand {
+        margin: 0;
+        font-size: clamp(2.3rem, 5vw, 5.6rem);
+        line-height: 0.95;
+        letter-spacing: -0.065em;
+        font-weight: 600;
+      }
+
+      .descriptor {
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.5rem);
+      }
+
+      .context-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .context-grid section {
+        display: grid;
+        gap: 4px;
+      }
+
+      .context-label {
+        color: var(--faint);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .context-value {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .bio,
+      .manifesto,
+      .body-sample {
+        margin: 0;
+        color: var(--muted);
+        white-space: pre-line;
+      }
+
+      .editorial {
+        margin: 0;
+      }
+
+      .headline {
+        max-width: 620px;
+        font-size: clamp(2rem, 5vw, 5rem);
+        line-height: 0.95;
+        letter-spacing: -0.065em;
+        font-weight: 700;
+      }
+
+      .build-headline {
+        max-width: 560px;
+        font-size: clamp(1.6rem, 3vw, 3.1rem);
+        line-height: 1;
+        letter-spacing: -0.05em;
+        font-weight: 600;
+      }
+
+      .failure {
+        margin: 0;
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+        font-weight: 500;
+      }
+
+      .artifact {
+        display: grid;
+        min-height: 132px;
+        place-items: center;
+        border: 1px dashed var(--line-strong);
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-align: center;
+      }
+
+      .state-stack {
+        display: grid;
+        gap: 2px;
+        width: fit-content;
+        color: var(--ink);
+        font-size: 1.1rem;
+        line-height: 1.15;
+      }
+
+      .status {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .metric {
+        display: grid;
+        gap: 7px;
+        border-top: 1px solid var(--line-strong);
+        padding-top: 10px;
+      }
+
+      .metric-value {
+        font-size: clamp(1.1rem, 2vw, 1.7rem);
+        line-height: 1;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .metric-label {
+        color: var(--faint);
+        font-size: 0.58rem;
+        line-height: 1.2;
+      }
+
+      .technical {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.7;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .footnote {
+        margin: 24px 0 0;
+        color: var(--faint);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 920px) {
+        .comparison {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        main {
+          width: min(100% - 24px, 1480px);
+          padding-top: 24px;
+        }
+
+        .option-header,
+        .density {
+          padding-left: 17px;
+          padding-right: 17px;
+        }
+
+        .metrics {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <p class="eyebrow">Leo Ferraz · controlled exploration · review only</p>
+        <h1>TYPOGRAPHY REVIEW — MOCK CONTENT</h1>
+        <p class="intro">This page compares two typography systems using identical content. Numbers, commits, states and results are test content only and do not represent real Leo Ferraz outcomes.</p>
+        <p class="review-note">NO FINAL FONT · NO BRAND COLOR · NO GLOW · NO PUBLIC ASSET</p>
+      </header>
+
+      <section class="comparison" aria-label="Typography options">
+        <article class="option option-a">
+          <header class="option-header">
+            <p class="eyebrow">OPTION A · INTERNAL SYSTEM NAME</p>
+            <h2>Plex Product System</h2>
+            <p class="option-details">Brand / Display + UI / Body: IBM Plex Sans<br>Technical / Mono: IBM Plex Mono<br>Fallback: system-ui + ui-monospace</p>
+          </header>
+
+          <section class="density">
+            <p class="label">LOW DENSITY</p>
+            <p class="brand">Leo Ferraz</p>
+            <p class="descriptor">Building with AI.</p>
+          </section>
+
+          <section class="density">
+            <p class="label">MEDIUM DENSITY</p>
+            <div class="context-grid">
+              <section>
+                <span class="context-label">Master Brand</span>
+                <p class="context-value brand">Leo Ferraz</p>
+              </section>
+              <section>
+                <span class="context-label">Descriptor</span>
+                <p class="context-value">Building with AI</p>
+              </section>
+              <section>
+                <span class="context-label">Institutional</span>
+                <p class="context-value">AI-Native Product Lab</p>
+              </section>
+              <section>
+                <span class="context-label">Bio</span>
+                <p class="bio">Building real products with AI.
+SaaS · Apps · Games · Experiments
+Documenting the journey.</p>
+              </section>
+              <section>
+                <span class="context-label">Manifesto</span>
+                <p class="manifesto">Building with AI. Documenting what happens.</p>
+              </section>
+            </div>
+            <p class="editorial headline">I BUILT THIS.</p>
+            <p class="editorial build-headline">30 Days After Launch</p>
+            <p class="failure">This didn't work.</p>
+            <div class="artifact">REAL PRODUCT ARTIFACT</div>
+            <div class="state-stack status">PROJECT 003<br>BUILDING<br>VERSION 0.3</div>
+          </section>
+
+          <section class="density">
+            <p class="label">HIGH DENSITY</p>
+            <div class="metrics">
+              <div class="metric"><span class="metric-value">1,204</span><span class="metric-label">USERS</span></div>
+              <div class="metric"><span class="metric-value">30</span><span class="metric-label">DAYS</span></div>
+              <div class="metric"><span class="metric-value">18%</span><span class="metric-label">RETENTION</span></div>
+              <div class="metric"><span class="metric-value">a91f51</span><span class="metric-label">COMMIT</span></div>
+            </div>
+            <p class="technical">AI-Native Product Lab
+Idea → Build → Ship → Measure → Learn → Repeat
+SHIPPED ≠ SUCCESSFUL
+1,204 USERS
+30 DAYS
+18%
+commit a91f51
+v0.3.0
+build();
+ship();
+measure();</p>
+            <p class="technical">1,204 USERS
+30 DAYS
+18%
+$417 MRR
+v0.3.0
+BUILD 027</p>
+            <p class="technical">0 1 2 3 4 5 6 7 8 9</p>
+            <p class="technical">{}
+[]
+()
+<>
+/
+\
+→
+≠
++
+=
+#
+@
+:
+;
+.
+_
+-
+%
+$</p>
+            <p class="technical">0 O
+1 l I</p>
+            <p class="body-sample">Construção · Experimentação · Evidência
+Inteligência artificial · Métricas · Validação
+Próxima versão · Não funcionou.
+O produto é a prova.</p>
+          </section>
+        </article>
+
+        <article class="option option-b">
+          <header class="option-header">
+            <p class="eyebrow">OPTION B · INTERNAL SYSTEM NAME</p>
+            <h2>Source Editorial System</h2>
+            <p class="option-details">Brand / Display + UI / Body: Source Sans 3<br>Technical / Mono: Source Code Pro<br>Fallback: system-ui + ui-monospace</p>
+          </header>
+
+          <section class="density">
+            <p class="label">LOW DENSITY</p>
+            <p class="brand">Leo Ferraz</p>
+            <p class="descriptor">Building with AI.</p>
+          </section>
+
+          <section class="density">
+            <p class="label">MEDIUM DENSITY</p>
+            <div class="context-grid">
+              <section>
+                <span class="context-label">Master Brand</span>
+                <p class="context-value brand">Leo Ferraz</p>
+              </section>
+              <section>
+                <span class="context-label">Descriptor</span>
+                <p class="context-value">Building with AI</p>
+              </section>
+              <section>
+                <span class="context-label">Institutional</span>
+                <p class="context-value">AI-Native Product Lab</p>
+              </section>
+              <section>
+                <span class="context-label">Bio</span>
+                <p class="bio">Building real products with AI.
+SaaS · Apps · Games · Experiments
+Documenting the journey.</p>
+              </section>
+              <section>
+                <span class="context-label">Manifesto</span>
+                <p class="manifesto">Building with AI. Documenting what happens.</p>
+              </section>
+            </div>
+            <p class="editorial headline">I BUILT THIS.</p>
+            <p class="editorial build-headline">30 Days After Launch</p>
+            <p class="failure">This didn't work.</p>
+            <div class="artifact">REAL PRODUCT ARTIFACT</div>
+            <div class="state-stack status">PROJECT 003<br>BUILDING<br>VERSION 0.3</div>
+          </section>
+
+          <section class="density">
+            <p class="label">HIGH DENSITY</p>
+            <div class="metrics">
+              <div class="metric"><span class="metric-value">1,204</span><span class="metric-label">USERS</span></div>
+              <div class="metric"><span class="metric-value">30</span><span class="metric-label">DAYS</span></div>
+              <div class="metric"><span class="metric-value">18%</span><span class="metric-label">RETENTION</span></div>
+              <div class="metric"><span class="metric-value">a91f51</span><span class="metric-label">COMMIT</span></div>
+            </div>
+            <p class="technical">AI-Native Product Lab
+Idea → Build → Ship → Measure → Learn → Repeat
+SHIPPED ≠ SUCCESSFUL
+1,204 USERS
+30 DAYS
+18%
+commit a91f51
+v0.3.0
+build();
+ship();
+measure();</p>
+            <p class="technical">1,204 USERS
+30 DAYS
+18%
+$417 MRR
+v0.3.0
+BUILD 027</p>
+            <p class="technical">0 1 2 3 4 5 6 7 8 9</p>
+            <p class="technical">{}
+[]
+()
+<>
+/
+\
+→
+≠
++
+=
+#
+@
+:
+;
+.
+_
+-
+%
+$</p>
+            <p class="technical">0 O
+1 l I</p>
+            <p class="body-sample">Construção · Experimentação · Evidência
+Inteligência artificial · Métricas · Validação
+Próxima versão · Não funcionou.
+O produto é a prova.</p>
+          </section>
+        </article>
+      </section>
+
+      <p class="footnote">The page is a human review tool only. No candidate is approved here. External webfonts are loaded for comparison when available; the documented fallback stacks remain the deterministic fallback.</p>
+    </main>
+  </body>
+</html>
