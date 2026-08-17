@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color Review — Mock Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html { background: #0D1117; }
+    body { margin: 0; background: #0D1117; color: #F3F6FA; font-family: "IBM Plex Sans", sans-serif; }
+    .shell { width: min(1800px, calc(100% - 36px)); margin: 0 auto; padding: 28px 0 60px; }
+    .topbar { display: grid; gap: 10px; border-bottom: 1px solid #2A3543; padding-bottom: 24px; margin-bottom: 18px; }
+    .kicker, .mono, .label, .section-title, .hex, .signal, .meta, .contrast-label, .micro { font-family: "IBM Plex Mono", monospace; }
+    .kicker { color: #7F8B99; font-size: 11px; letter-spacing: .12em; }
+    h1 { margin: 0; max-width: 1000px; color: #F3F6FA; font-size: clamp(30px, 4.5vw, 66px); line-height: .95; letter-spacing: -.055em; }
+    .intro { max-width: 880px; margin: 0; color: #B7C2CE; font-size: 15px; line-height: 1.55; }
+    .notice { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 3px; }
+    .notice span { border: 1px solid #405064; padding: 7px 9px; color: #B7C2CE; font: 10px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+    .option { min-width: 0; overflow: hidden; background: var(--bg); border: 1px solid var(--border); }
+    .option-header { display: grid; gap: 8px; padding: 18px; background: var(--surface1); border-bottom: 1px solid var(--border); }
+    .option-title { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .option-title h2 { margin: 0; color: var(--text); font-size: 24px; line-height: 1; letter-spacing: -.035em; }
+    .option-id { color: var(--muted); font: 11px "IBM Plex Mono", monospace; letter-spacing: .1em; }
+    .meta { margin: 0; color: var(--secondary); font-size: 10px; line-height: 1.55; letter-spacing: .05em; text-transform: uppercase; }
+    .section { padding: 18px; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: 0; }
+    .section-title { margin: 0 0 12px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+    .swatches { display: grid; gap: 7px; }
+    .swatch-group { display: grid; gap: 6px; margin-bottom: 8px; }
+    .group-name { margin: 0 0 2px; color: var(--secondary); font: 11px "IBM Plex Mono", monospace; }
+    .swatch { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 8px; min-height: 27px; }
+    .swatch-dot { width: 18px; height: 18px; border: 1px solid var(--border-strong); }
+    .swatch-name { color: var(--text); font-size: 12px; }
+    .hex { color: var(--muted); font-size: 10px; }
+    .application { display: grid; gap: 16px; }
+    .brand-line { display: grid; gap: 5px; }
+    .brand { margin: 0; color: var(--text); font-size: clamp(30px, 3.2vw, 48px); line-height: .95; letter-spacing: -.06em; font-weight: 600; }
+    .descriptor { margin: 0; color: var(--secondary); font-size: 17px; }
+    .category { margin: 0; color: var(--muted); font: 11px "IBM Plex Mono", monospace; letter-spacing: .05em; }
+    .headline-wrap { display: grid; gap: 9px; border-top: 1px solid var(--border); padding-top: 15px; }
+    .headline { margin: 0; color: var(--text); font-size: clamp(26px, 2.8vw, 42px); line-height: .96; letter-spacing: -.052em; font-weight: 700; }
+    .subheadline { margin: 0; color: var(--secondary); font-size: 18px; line-height: 1.05; font-weight: 600; }
+    .failure { margin: 0; color: var(--text); font-size: 17px; font-weight: 500; }
+    .bio { margin: 0; color: var(--secondary); white-space: pre-line; font-size: 13px; line-height: 1.45; }
+    .artifact { display: grid; min-height: 116px; place-items: center; border: 1px dashed var(--border-strong); color: var(--muted); font: 11px "IBM Plex Mono", monospace; letter-spacing: .1em; text-align: center; }
+    .evidence { display: grid; gap: 10px; padding: 12px; border: 1px solid var(--border); background: var(--surface1); }
+    .state-line { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .state { color: var(--text); font: 12px "IBM Plex Mono", monospace; }
+    .state-accent { color: var(--accent); }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    .metric { display: grid; gap: 5px; border-top: 1px solid var(--border-strong); padding-top: 7px; }
+    .metric-value { color: var(--text); font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .metric-label { color: var(--muted); font: 9px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .signals { display: grid; gap: 10px; border-top: 1px solid var(--border); padding-top: 14px; }
+    .signal-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .signal { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border: 1px solid var(--border-strong); color: var(--secondary); font-size: 10px; letter-spacing: .08em; }
+    .signal.active, .signal.selected { border-color: var(--accent); color: var(--accent-strong); }
+    .link { color: var(--accent-strong); font: 11px "IBM Plex Mono", monospace; text-decoration: underline; text-underline-offset: 3px; }
+    .marker { width: 8px; height: 8px; background: var(--accent); }
+    .progress { width: 100%; height: 5px; border: 1px solid var(--border-strong); background: var(--surface2); }
+    .progress span { display: block; width: 58%; height: 100%; background: var(--accent); }
+    .test-cta { width: fit-content; border: 1px solid var(--accent); background: transparent; color: var(--accent-strong); padding: 8px 10px; font: 10px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .experimental { color: var(--experimental); font: 10px "IBM Plex Mono", monospace; letter-spacing: .1em; }
+    .contrast-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .contrast-item { display: grid; gap: 3px; border-top: 1px solid var(--border); padding-top: 7px; }
+    .contrast-label { color: var(--muted); font-size: 9px; letter-spacing: .03em; }
+    .contrast-value { color: var(--text); font: 12px "IBM Plex Mono", monospace; }
+    .footnote { margin: 18px 0 0; color: #7F8B99; font: 10px "IBM Plex Mono", monospace; line-height: 1.5; }
+    @media (max-width: 1180px) { .comparison { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .shell { width: min(100% - 22px, 1800px); padding-top: 18px; } .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="kicker">COLOR REVIEW — MOCK CONTENT — HUMAN REVIEW ARTIFACT</div>
+    <h1>Three candidate color systems in the same product context.</h1>
+    <p class="intro">No option is selected. Layout, content, typography, hierarchy and density are equivalent. Only color values vary. All values are candidate values, not canonical tokens.</p>
+    <div class="notice"><span>NO CANONICAL TOKENS</span><span>NO GLOW</span><span>NO GRADIENTS</span><span>NO LOGO</span><span>IBM PLEX ONLY</span><span>TYPE SIZES ARE REVIEW-ONLY</span></div>
+  </header>
+  <section id="comparison" class="comparison"></section>
+  <p class="footnote">Color must not be the only state carrier. Future state communication should combine color with label and, when necessary, shape or icon. Mock evidence is not real evidence.</p>
+</main>
+<script>
+var options = [
+  { id: "OPTION A", name: "Precision / Product", mood: "graphite · cold · controlled", colors: { bg: "#0D1117", surface1: "#151B24", surface2: "#1D2632", border: "#2A3543", borderStrong: "#405064", text: "#F3F6FA", secondary: "#B7C2CE", muted: "#7F8B99", disabled: "#596574", accent: "#4DA3FF", accentStrong: "#86C5FF", accentSubtle: "#0F2E4C", experimental: "#9B8CFF", experimentalSubtle: "#252044", success: "#79D6A2", warning: "#E7B866", error: "#F07F8C", info: "#7DD3FC" } },
+  { id: "OPTION B", name: "Digital / Builder", mood: "blue-black · energetic · present", colors: { bg: "#0B1118", surface1: "#111C25", surface2: "#182936", border: "#263B4A", borderStrong: "#3D596A", text: "#F0F8FC", secondary: "#A9C1CE", muted: "#76919E", disabled: "#526C77", accent: "#37B8E6", accentStrong: "#70D8F3", accentSubtle: "#0C303C", experimental: "#A588FA", experimentalSubtle: "#2C224B", success: "#78D6A6", warning: "#E8B965", error: "#F27F8E", info: "#7DDCF4" } },
+  { id: "OPTION C", name: "Lab / Experimental", mood: "deep cool · sophisticated · experimental", colors: { bg: "#101018", surface1: "#171725", surface2: "#202039", border: "#34344D", borderStrong: "#4C4D70", text: "#F5F5FB", secondary: "#BFC0D0", muted: "#898BA1", disabled: "#5D5F73", accent: "#5EA6FF", accentStrong: "#96C8FF", accentSubtle: "#1B3153", experimental: "#B18CFF", experimentalSubtle: "#35234D", success: "#7AD7A6", warning: "#E8BA6B", error: "#F48191", info: "#83C6FF" } }
+];
+function rgb(hex) { var n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function lum(hex) { return rgb(hex).map(function(v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce(function(s, v, i) { return s + v * [0.2126, 0.7152, 0.0722][i]; }, 0); }
+function contrast(a, b) { var x = lum(a), y = lum(b); return ((Math.max(x, y) + .05) / (Math.min(x, y) + .05)).toFixed(2) + ":1"; }
+function swatch(label, value) { return '<div class="swatch"><span class="swatch-dot" style="background:' + value + '"></span><span class="swatch-name">' + label + '</span><span class="hex">' + value + '</span></div>'; }
+function group(title, rows) { return '<div class="swatch-group"><p class="group-name">' + title + '</p>' + rows.map(function(row) { return swatch(row[0], row[1]); }).join("") + '</div>'; }
+function render(option) {
+  var c = option.colors, article = document.createElement("article");
+  article.className = "option";
+  Object.keys(c).forEach(function(key) { article.style.setProperty("--" + key.replace(/[A-Z]/g, function(m) { return "-" + m.toLowerCase(); }), c[key]); });
+  article.innerHTML =
+    '<header class="option-header"><div class="option-title"><h2>' + option.name + '</h2><span class="option-id">' + option.id + '</span></div><p class="meta">candidate values · no canonical decision<br>' + option.mood + '</p></header>' +
+    '<section class="section"><p class="section-title">Neutral Foundation · swatches</p><div class="swatches">' +
+    group("Neutral Foundation", [["Background", c.bg], ["Surface 1", c.surface1], ["Surface 2", c.surface2], ["Border", c.border], ["Border Strong", c.borderStrong], ["Primary Text", c.text], ["Secondary Text", c.secondary], ["Muted Text", c.muted], ["Disabled / Low-emphasis", c.disabled]]) +
+    group("Primary Technology Accent", [["Accent", c.accent], ["Accent Strong / Hover", c.accentStrong], ["Accent Subtle", c.accentSubtle]]) +
+    group("Contextual Experimental Accent", [["Experimental Accent", c.experimental], ["Experimental Subtle", c.experimentalSubtle]]) +
+    group("Semantic Candidates", [["Success", c.success], ["Warning", c.warning], ["Error", c.error], ["Info", c.info]]) +
+    '</div></section>' +
+    '<section class="section"><p class="section-title">Application · same content and density</p><div class="application">' +
+    '<div class="brand-line"><p class="brand">Leo Ferraz</p><p class="descriptor">Building with AI</p><p class="category">AI-Native Product Lab</p></div>' +
+    '<div class="headline-wrap"><p class="headline">CONSTRUÍ UM PRODUTO COM IA.</p><p class="subheadline">30 DIAS DEPOIS DO LANÇAMENTO</p><p class="failure">ISSO NÃO FUNCIONOU.</p></div>' +
+    '<p class="bio">Construindo produtos reais com IA.\nSaaS · Apps · Jogos · Experimentos\nDocumentando a jornada.</p>' +
+    '<div class="artifact">REAL PRODUCT ARTIFACT</div>' +
+    '<div class="evidence"><div class="state-line"><span class="state">PROJECT 003</span><span class="state state-accent">BUILDING</span><span class="state">VERSION 0.3</span></div><div class="metrics"><div class="metric"><span class="metric-value">1,204 USERS</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">30 DAYS</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">18%</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">a91f51</span><span class="metric-label">MOCK COMMIT</span></div></div><span class="state">commit a91f51</span></div>' +
+    '<div class="signals"><div class="signal-row"><span class="signal active">ACTIVE</span><span class="signal selected">SELECTED</span><a class="link" href="#comparison">LINK</a><span class="marker"></span><span class="micro">MARKER</span></div><div class="progress" aria-label="mock progress"><span></span></div><div class="signal-row"><button class="test-cta" type="button">CTA DE TESTE</button><span class="experimental">EXPERIMENT · AI CONTEXT</span></div></div>' +
+    '</div></section>' +
+    '<section class="section"><p class="section-title">Contrast preview · candidate values</p><div class="contrast-grid">' +
+    '<div class="contrast-item"><span class="contrast-label">Primary / Background</span><span class="contrast-value">' + contrast(c.text, c.bg) + '</span></div>' +
+    '<div class="contrast-item"><span class="contrast-label">Secondary / Background</span><span class="contrast-value">' + contrast(c.secondary, c.bg) + '</span></div>' +
+    '<div class="contrast-item"><span class="contrast-label">Muted / Background</span><span class="contrast-value">' + contrast(c.muted, c.bg) + '</span></div>' +
+    '<div class="contrast-item"><span class="contrast-label">Accent / Background</span><span class="contrast-value">' + contrast(c.accent, c.bg) + '</span></div>' +
+    '<div class="contrast-item"><span class="contrast-label">Accent / Surface 1</span><span class="contrast-value">' + contrast(c.accent, c.surface1) + '</span></div>' +
+    '<div class="contrast-item"><span class="contrast-label">Accent Strong / Background</span><span class="contrast-value">' + contrast(c.accentStrong, c.bg) + '</span></div>' +
+    '</div></section>';
+  return article;
+}
+options.forEach(function(option) { document.getElementById("comparison").appendChild(render(option)); });
+</script>
+</body>
+</html>
