@@ -8,6 +8,30 @@ Este repositório governa a identidade da marca Leo Ferraz.
 
 Agentes implementam decisões aprovadas; não inventam silenciosamente decisões ausentes.
 
+## Idioma de Comunicação
+
+Antes de gerar copy voltada ao público, resolver:
+
+1. canal;
+2. locale de comunicação;
+3. se o termo solicitado é invariante ou localizável.
+
+Se houver copy canônica de canal em `brand/LANGUAGE_ARCHITECTURE.md`, utilizá-la exatamente.
+
+Não improvisar bios canônicas alternativas.
+
+Não traduzir:
+
+- `Leo Ferraz`;
+- `Building with AI`;
+- `AI-Native Product Lab`;
+- `@leoferrazdev`;
+- `leoferraz.dev`.
+
+Não inferir que toda comunicação da marca deve ser em inglês.
+
+Não inferir que toda comunicação deve ser em português.
+
 ## Estados
 
 ```text

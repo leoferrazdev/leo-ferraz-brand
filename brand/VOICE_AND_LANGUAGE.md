@@ -1,13 +1,14 @@
 ---
 document: VOICE_AND_LANGUAGE
 brand: Leo Ferraz
-version: 1.0.0
+version: 1.1.0
 status: approved
 authority: Leo Ferraz
-language_architecture: english-first
+language_architecture: channel-based
 depends_on:
   - BRAND_FOUNDATION.md
   - BRAND_ARCHITECTURE.md
+  - LANGUAGE_ARCHITECTURE.md
 ---
 
 # Voice and Language
@@ -546,15 +547,28 @@ Não transformar essa frase em bio canônica ou slogan.
 
 É apenas uma referência de uso institucional.
 
-## English-first
+## Global Brand. Localized Communication.
 
-```text
-language_architecture: english-first
-```
+~~~yaml
+brand_identity_language: English
+primary_content_language: pt-BR
+global_technical_language: English
+localization_model: channel-based
+language_policy: Global Brand. Localized Communication.
+~~~
 
-Os elementos institucionais canônicos permanecem em inglês.
+Esta é uma política interna do Brand System. A identidade institucional permanece estável e a comunicação se adapta ao contexto, canal, audiência e conteúdo.
 
-Entretanto, conteúdo pode ser produzido em português do Brasil.
+Regras operacionais:
+
+- institutional identity terms may remain English;
+- public communication follows channel/content locale;
+- PT-BR must sound natural, not like literal translation;
+- English must sound natural, not translated from Portuguese;
+- one piece should have one predominant language;
+- canonical translations must be reused exactly.
+
+Conteúdo em PT-BR não constitui uma segunda identidade verbal. Conteúdo em inglês não é obrigatório para toda a marca.
 
 ## Conteúdo em Português do Brasil
 
@@ -571,7 +585,7 @@ Não transformar o conteúdo em português em uma segunda identidade verbal.
 
 A personalidade deve permanecer equivalente entre os idiomas.
 
-## Termos que Permanecem Canônicos em Inglês
+## Termos Institucionais Invariantes
 
 Preservar:
 
@@ -579,18 +593,13 @@ Preservar:
 Leo Ferraz
 Building with AI
 AI-Native Product Lab
-Build
-Build Log
-Experiment
-Product
-Shipped
-SaaS
-Apps
-Games
-Experiments
+@leoferrazdev
+leoferraz.dev
 ```
 
 Não criar traduções institucionais alternativas para substituir esses termos sem aprovação.
+
+Termos editoriais como Build, Build Log, Experiment, Product, Shipped, Building e Results podem ser localizados conforme o contexto e não são automaticamente invariantes.
 
 ## Frases Canônicas
 
@@ -863,7 +872,8 @@ como mecanismo de entusiasmo.
 13. Utilizar primeira pessoa somente quando existir base factual fornecida.
 14. Quando faltar informação, registrar a lacuna.
 15. Preservar frases canônicas literalmente.
-16. Respeitar a arquitetura `english-first`.
+16. Respeitar a arquitetura `Global Brand. Localized Communication.` e resolver o locale pelo canal e conteúdo.
+17. Reutilizar exatamente as traduções canônicas registradas em `LANGUAGE_ARCHITECTURE.md`.
 
 ## O que este Documento Não Define
 

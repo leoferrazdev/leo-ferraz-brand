@@ -1,11 +1,12 @@
 ---
 document: BRAND_ARCHITECTURE
 brand: Leo Ferraz
-version: 1.0.0
+version: 1.1.0
 status: approved
 authority: Leo Ferraz
 depends_on:
   - BRAND_FOUNDATION.md
+  - LANGUAGE_ARCHITECTURE.md
 ---
 
 # Brand Architecture
@@ -274,6 +275,23 @@ Ela pode incluir:
 - decisões.
 
 Esses formatos não são produtos obrigatórios.
+
+## Relação entre Master Brand, Display Name, Channel e Locale
+
+A arquitetura de idioma resolve a apresentação da mesma Master Brand por canal. Canais não são submarcas.
+
+~~~text
+Master Brand:
+Leo Ferraz
+
+Preferred localized-channel display name:
+Leo Ferraz | Building with AI
+
+GitHub display name:
+Leo Ferraz
+~~~
+
+O display name contextual pode permanecer em inglês mesmo quando o locale predominante do conteúdo do canal for `pt-BR`. O locale governa a comunicação; não substitui os termos institucionais invariantes.
 
 ## Relação com Canais
 

@@ -1,10 +1,16 @@
 ---
 document: BRAND_FOUNDATION
 brand: Leo Ferraz
-version: 1.0.0
+version: 1.1.0
 status: approved
-language_architecture: english-first
+brand_identity_language: English
+primary_content_language: pt-BR
+global_technical_language: English
+localization_model: channel-based
+language_policy: Global Brand. Localized Communication.
 authority: Leo Ferraz
+depends_on:
+  - LANGUAGE_ARCHITECTURE.md
 ---
 
 # Brand Foundation
@@ -239,33 +245,46 @@ IA não deve ser apresentada automaticamente como:
 - prova de qualidade;
 - promessa de enriquecimento.
 
-## Orientação Internacional
+## Arquitetura Linguística
 
-```yaml
-language_architecture: english-first
-```
+~~~yaml
+brand_identity_language: English
+primary_content_language: pt-BR
+global_technical_language: English
+localization_model: channel-based
+language_policy: Global Brand. Localized Communication.
+~~~
 
-A identidade institucional da marca deve nascer preparada para atuação global.
+A política é:
 
-Os seguintes elementos permanecem em inglês como termos canônicos:
+~~~text
+Global Brand. Localized Communication.
+~~~
 
-```text
+A identidade institucional da marca possui termos globais estáveis em inglês. A comunicação pública é resolvida pelo contexto, canal, audiência e conteúdo, sem exigir que todo conteúdo seja publicado em inglês.
+
+Os seguintes elementos permanecem como termos institucionais invariantes:
+
+~~~text
+Leo Ferraz
 Building with AI
 AI-Native Product Lab
-Build
-Build Log
-Experiment
-Product
-Shipped
-SaaS
-Apps
-Games
-Experiments
-```
+@leoferrazdev
+leoferraz.dev
+~~~
 
-Isso não impede a produção de conteúdos em português do Brasil.
+Conteúdo editorial e comunicacional pode ser localizado. Termos editoriais como Build, Build Log, Experiment, Product e Shipped não são automaticamente termos institucionais invariantes.
 
-Idioma do conteúdo e idioma da arquitetura da marca são decisões diferentes.
+Consulte `LANGUAGE_ARCHITECTURE.md` para a resolução por canal, display names, bios e descrições oficiais.
+
+Isso substitui a regra genérica anterior `english-first` sem alterar a Master Brand, o descriptor, a categoria institucional ou os demais elementos fundacionais.
+
+Idioma da identidade e idioma da comunicação são decisões diferentes.
+
+~~~text
+The identity remains stable.
+The communication adapts to the audience.
+~~~
 
 ## Perspectiva de Longo Prazo
 
