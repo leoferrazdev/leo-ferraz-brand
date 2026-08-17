@@ -20,6 +20,19 @@ const swatches = [
   ['Experimental Accent', '#9B8CFF'],
   ['Experimental Subtle', '#252044'],
 ];
+
+const typographyScale = [
+  ['Display', '58px / 500', 'type-display', 'Leo Ferraz'],
+  ['H1', '46px / 500', 'type-h1', 'Building with AI'],
+  ['H2', '30px / 500', 'type-h2', 'AI-Native Product Lab'],
+  ['H3', '21px / 500', 'type-h3', 'Construindo produtos reais com IA.'],
+  ['Body Large', '20px / 400', 'type-body-large', 'SaaS · Apps · Jogos · Experimentos'],
+  ['Body', '17px / 400', 'type-body', 'Documentando a jornada.'],
+  ['Body Small', '14px / 400', 'type-body-small', 'Da ideia ao produto.'],
+  ['Metadata', '12px / 500', 'type-metadata', 'PROJECT 003 · BUILDING · VERSION 0.3'],
+  ['Label', '11px / 500', 'type-label', 'APPROVED TYPOGRAPHY'],
+  ['Code / Mono', '12px / 500', 'type-code', 'commit a91f51 · 1,204 USERS · 18%'],
+];
 ---
 
 <BaseLayout
@@ -63,11 +76,33 @@ const swatches = [
       <section class="brand-section" aria-labelledby="type-title">
         <p class="section-index">03</p>
         <h2 id="type-title">Typography</h2>
+        <p class="system-label">Product / Editorial</p>
         <div class="type-specimen">
           <p class="type-sans">IBM Plex Sans</p>
           <p class="type-mono">IBM Plex Mono</p>
         </div>
-        <p class="open-note">Scale, weights by role, line-height, tracking and loading strategy remain open.</p>
+        <div class="typography-scale" aria-label="Approved typography scale">
+          {typographyScale.map(([role, value, className, sample]) => (
+            <div class="type-level">
+              <div class="type-level-meta">
+                <span class="type-role">{role}</span>
+                <code>{value}</code>
+              </div>
+              <p class={className}>{sample}</p>
+            </div>
+          ))}
+        </div>
+        <div class="typography-details">
+          <div>
+            <h3>Line Heights</h3>
+            <p>Display 1.02 · Headings 1.18 · Body 1.55 · Small 1.40 · Mono 1.34</p>
+          </div>
+          <div>
+            <h3>Tracking</h3>
+            <p>Display -0.035em · Labels +0.075em · Metadata +0.040em · Mono +0.010em</p>
+          </div>
+        </div>
+        <p class="open-note">Font delivery: self-hosted at build output.</p>
       </section>
 
       <section class="brand-section brand-section-wide" aria-labelledby="color-title">
