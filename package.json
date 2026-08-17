@@ -1,0 +1,16 @@
+{
+  "name": "leo-ferraz-brand",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "engines": {
+    "node": ">=22.19.0 <23"
+  },
+  "devDependencies": {
+    "astro": "7.2.2"
+  }
+}

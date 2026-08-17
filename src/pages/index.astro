@@ -1,0 +1,34 @@
+---
+// site_stage: foundation
+// This is an initial public web shell, not the final editorial homepage.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
+---
+
+<BaseLayout
+  title="Leo Ferraz — Building with AI"
+  description="Construindo produtos reais com IA."
+>
+  <header class="site-header shell-width">
+    <a class="wordmark-text" href="/">Leo Ferraz</a>
+    <span class="header-descriptor">Building with AI</span>
+  </header>
+
+  <main id="content" class="shell-width home-shell">
+    <section class="hero-block" aria-labelledby="home-title">
+      <p class="eyebrow">Building with AI</p>
+      <h1 id="home-title">Leo Ferraz</h1>
+      <p class="hero-descriptor">Building with AI</p>
+      <div class="bio-block">
+        <p>Construindo produtos reais com IA.</p>
+        <p>SaaS · Apps · Jogos · Experimentos</p>
+        <p>Documentando a jornada.</p>
+      </div>
+      <p class="category-label">AI-Native Product Lab</p>
+    </section>
+
+    <nav class="quiet-navigation" aria-label="Navegação principal">
+      <a href="/brand/">Brand System</a>
+    </nav>
+  </main>
+</BaseLayout>

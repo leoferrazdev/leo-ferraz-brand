@@ -1,0 +1,108 @@
+---
+// Canonical source: brand/*.md
+// This page is an executable/public projection of approved decisions.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/global.css';
+
+const swatches = [
+  ['Background', '#0D1117'],
+  ['Surface 1', '#151B24'],
+  ['Surface 2', '#1D2632'],
+  ['Border', '#2A3543'],
+  ['Border Strong', '#405064'],
+  ['Primary Text', '#F3F6FA'],
+  ['Secondary Text', '#B7C2CE'],
+  ['Muted Text', '#7F8B99'],
+  ['Disabled / Low-emphasis', '#596574'],
+  ['Accent', '#4DA3FF'],
+  ['Accent Strong', '#86C5FF'],
+  ['Accent Subtle', '#0F2E4C'],
+  ['Experimental Accent', '#9B8CFF'],
+  ['Experimental Subtle', '#252044'],
+];
+---
+
+<BaseLayout
+  title="Living Brandbook — Leo Ferraz"
+  description="Decisões aprovadas do sistema de marca Leo Ferraz."
+>
+  <header class="site-header shell-width">
+    <a class="wordmark-text" href="/">Leo Ferraz</a>
+    <a class="header-link" href="/">Home</a>
+  </header>
+
+  <main id="content" class="shell-width brandbook-shell">
+    <section class="brandbook-intro" aria-labelledby="brandbook-title">
+      <p class="eyebrow">Living Brandbook</p>
+      <h1 id="brandbook-title">Approved foundations</h1>
+      <p class="intro-copy">Uma projeção pública das decisões aprovadas do sistema de marca.</p>
+    </section>
+
+    <div class="brandbook-grid">
+      <section class="brand-section" aria-labelledby="identity-title">
+        <p class="section-index">01</p>
+        <h2 id="identity-title">Identity</h2>
+        <div class="identity-list">
+          <p class="identity-master">Leo Ferraz</p>
+          <p class="identity-descriptor">Building with AI</p>
+          <p class="identity-category">AI-Native Product Lab</p>
+        </div>
+      </section>
+
+      <section class="brand-section" aria-labelledby="language-title">
+        <p class="section-index">02</p>
+        <h2 id="language-title">Language</h2>
+        <p class="policy-label">Policy</p>
+        <p class="policy-copy">Global Brand. Localized Communication.</p>
+        <dl class="definition-list">
+          <div><dt>Primary content</dt><dd>pt-BR</dd></div>
+          <div><dt>Global technical</dt><dd>English</dd></div>
+        </dl>
+      </section>
+
+      <section class="brand-section" aria-labelledby="type-title">
+        <p class="section-index">03</p>
+        <h2 id="type-title">Typography</h2>
+        <div class="type-specimen">
+          <p class="type-sans">IBM Plex Sans</p>
+          <p class="type-mono">IBM Plex Mono</p>
+        </div>
+        <p class="open-note">Scale, weights by role, line-height, tracking and loading strategy remain open.</p>
+      </section>
+
+      <section class="brand-section brand-section-wide" aria-labelledby="color-title">
+        <p class="section-index">04</p>
+        <h2 id="color-title">Color</h2>
+        <p class="system-label">Precision / Product</p>
+        <div class="swatch-grid">
+          {swatches.map(([name, value]) => (
+            <div class="swatch-item">
+              <span class="swatch" style={`background: ${value}`}></span>
+              <span class="swatch-name">{name}</span>
+              <code>{value}</code>
+            </div>
+          ))}
+        </div>
+        <p class="open-note">Semantic colors and light mode remain not defined.</p>
+      </section>
+
+      <section class="brand-section brand-section-wide" aria-labelledby="foundations-title">
+        <p class="section-index">05</p>
+        <h2 id="foundations-title">Visual Foundations</h2>
+        <p class="system-label">Modular / Product</p>
+        <div class="foundation-grid">
+          <div><h3>Spacing</h3><p>4 · 8 · 12 · 16 · 24 · 32 · 48 · 64</p></div>
+          <div><h3>Grid</h3><p>10 columns<br />16px gutter<br />32px outer</p></div>
+          <div><h3>Radius</h3><p>0 · 4px · 8px</p></div>
+          <div><h3>Borders</h3><p>1px · 2px</p></div>
+          <div><h3>Glow</h3><p>off by default</p></div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="brandbook-footer">
+      <p>Canonical source: <code>brand/*.md</code></p>
+      <p>This page is an executable/public projection of approved decisions.</p>
+    </footer>
+  </main>
+</BaseLayout>
