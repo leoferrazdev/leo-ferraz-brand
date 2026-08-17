@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visual Foundations Review — Mock Content</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0D1117;
+      --surface-1: #151B24;
+      --surface-2: #1D2632;
+      --border: #2A3543;
+      --border-strong: #405064;
+      --text: #F3F6FA;
+      --secondary: #B7C2CE;
+      --muted: #7F8B99;
+      --accent: #4DA3FF;
+      --experimental: #9B8CFF;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: "IBM Plex Sans", sans-serif; }
+    .shell { width: min(1960px, calc(100% - 36px)); margin: 0 auto; padding: 28px 0 64px; }
+    .topbar { display: grid; gap: 11px; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 18px; }
+    .kicker, .mono, .label, .section-title, .value, .state, .option-id, .meta, .card-kicker, .grid-caption { font-family: "IBM Plex Mono", monospace; }
+    .kicker { color: var(--muted); font-size: 11px; letter-spacing: .12em; }
+    h1 { max-width: 1040px; margin: 0; font-size: clamp(31px, 4.2vw, 64px); line-height: .95; letter-spacing: -.055em; }
+    .intro { max-width: 900px; margin: 0; color: var(--secondary); font-size: 15px; line-height: 1.55; }
+    .notices { display: flex; flex-wrap: wrap; gap: 8px; }
+    .notice { border: 1px solid var(--border-strong); padding: 7px 9px; color: var(--secondary); font: 10px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+    .system { min-width: 0; overflow: hidden; background: var(--bg); border: 1px solid var(--border); }
+    .system--a { --space-unit: 4px; --panel-gap: 12px; --outer: 24px; --radius: 2px; --border-width: 1px; --shadow: none; --glow: none; --grid-columns: 8; --grid-gutter: 12px; }
+    .system--b { --space-unit: 4px; --panel-gap: 16px; --outer: 32px; --radius: 8px; --border-width: 1px; --shadow: 0 10px 24px -18px rgba(0,0,0,.65); --glow: none; --grid-columns: 10; --grid-gutter: 16px; }
+    .system--c { --space-unit: 4px; --panel-gap: 20px; --outer: 48px; --radius: 10px; --border-width: 1px; --shadow: 0 16px 32px -26px rgba(0,0,0,.75); --glow: 0 0 0 3px rgba(77,163,255,.10); --grid-columns: 6; --grid-gutter: 20px; }
+    .system-header { display: grid; gap: 9px; padding: 18px; background: var(--surface-1); border-bottom: var(--border-width) solid var(--border); }
+    .option-title { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    h2 { margin: 0; font-size: 23px; line-height: 1; letter-spacing: -.04em; }
+    .option-id { color: var(--muted); font-size: 10px; letter-spacing: .12em; }
+    .meta { margin: 0; color: var(--secondary); font-size: 10px; line-height: 1.55; letter-spacing: .04em; text-transform: uppercase; }
+    .candidate-values { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px 12px; border-top: var(--border-width) solid var(--border); padding-top: 12px; }
+    .value-row { display: grid; gap: 3px; min-width: 0; }
+    .value-label { color: var(--muted); font: 9px "IBM Plex Mono", monospace; letter-spacing: .04em; text-transform: uppercase; }
+    .value { color: var(--secondary); font-size: 10px; line-height: 1.35; overflow-wrap: anywhere; }
+    .system-body { display: grid; gap: var(--panel-gap); padding: var(--outer); }
+    .context { display: grid; gap: var(--panel-gap); }
+    .section-title { margin: 0; color: var(--muted); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .hero { display: grid; gap: calc(var(--space-unit) * 2); min-height: 172px; align-content: start; padding: calc(var(--space-unit) * 2); border-top: var(--border-width) solid var(--border); }
+    .brand { margin: 0; font-size: clamp(30px, 3.2vw, 48px); line-height: .94; letter-spacing: -.06em; font-weight: 600; }
+    .descriptor { margin: 0; color: var(--secondary); font-size: 17px; }
+    .headline { margin: 0; color: var(--text); font-size: clamp(25px, 2.7vw, 40px); line-height: .97; letter-spacing: -.052em; font-weight: 700; }
+    .artifact-frame { display: grid; gap: calc(var(--space-unit) * 3); }
+    .artifact { display: grid; min-height: 134px; place-items: center; border: var(--border-width) dashed var(--border-strong); border-radius: var(--radius); background: var(--surface-1); color: var(--muted); font: 11px "IBM Plex Mono", monospace; letter-spacing: .1em; text-align: center; box-shadow: var(--shadow); }
+    .grid-figure { display: grid; gap: 7px; }
+    .grid-visual { position: relative; display: grid; grid-template-columns: repeat(var(--grid-columns), minmax(0,1fr)); gap: var(--grid-gutter); min-height: 54px; padding: 9px; border: var(--border-width) solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .grid-column { min-height: 36px; border-left: 1px solid rgba(64,80,100,.28); }
+    .grid-column:first-child { border-left: 0; }
+    .grid-caption { color: var(--muted); font-size: 9px; line-height: 1.35; }
+    .evidence { display: grid; gap: calc(var(--space-unit) * 3); padding: calc(var(--space-unit) * 3); border: var(--border-width) solid var(--border); border-radius: var(--radius); background: var(--surface-1); box-shadow: var(--shadow); }
+    .state-line, .signal-row { display: flex; flex-wrap: wrap; gap: calc(var(--space-unit) * 2); align-items: center; }
+    .state { color: var(--text); font-size: 11px; }
+    .state-accent { color: var(--accent); }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: calc(var(--space-unit) * 2); }
+    .metric { display: grid; gap: 4px; border-top: var(--border-width) solid var(--border-strong); padding-top: 7px; }
+    .metric-value { color: var(--text); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .metric-label { color: var(--muted); font: 8px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .signals { display: grid; gap: calc(var(--space-unit) * 2); border-top: var(--border-width) solid var(--border); padding-top: calc(var(--space-unit) * 3); }
+    .signal { display: inline-flex; align-items: center; min-height: 23px; padding: 0 calc(var(--space-unit) * 2); border: var(--border-width) solid var(--border-strong); border-radius: var(--radius); color: var(--secondary); font: 10px "IBM Plex Mono", monospace; letter-spacing: .07em; }
+    .signal.active, .signal.selected { border-color: var(--accent); color: var(--accent); box-shadow: var(--glow); }
+    .link { color: var(--accent); font: 10px "IBM Plex Mono", monospace; text-decoration: underline; text-underline-offset: 3px; }
+    .marker { width: 8px; height: 8px; background: var(--accent); }
+    .test-cta { width: fit-content; border: var(--border-width) solid var(--accent); border-radius: var(--radius); background: transparent; color: var(--accent); padding: 7px 9px; font: 10px "IBM Plex Mono", monospace; letter-spacing: .07em; }
+    .experimental { color: var(--experimental); font: 10px "IBM Plex Mono", monospace; letter-spacing: .08em; }
+    .density-stack { display: grid; gap: var(--panel-gap); }
+    .density { display: grid; gap: calc(var(--space-unit) * 2); }
+    .density-sample { display: grid; gap: calc(var(--space-unit) * 2); border-left: var(--border-width) solid var(--border-strong); padding-left: calc(var(--space-unit) * 3); }
+    .low-sample { min-height: 100px; align-content: center; }
+    .low-sample .low-title { margin: 0; color: var(--text); font-size: 25px; line-height: 1; }
+    .low-sample .low-subtitle { margin: 0; color: var(--secondary); font-size: 15px; }
+    .medium-sample { min-height: 160px; }
+    .medium-sample p { margin: 0; color: var(--secondary); font-size: 12px; line-height: 1.45; }
+    .high-sample { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; }
+    .high-item { border-top: var(--border-width) solid var(--border); padding-top: 6px; }
+    .high-item strong { display: block; color: var(--text); font: 12px "IBM Plex Mono", monospace; }
+    .high-item span { color: var(--muted); font: 8px "IBM Plex Mono", monospace; }
+    .cards { display: grid; gap: calc(var(--space-unit) * 3); }
+    .candidate-card { display: grid; gap: calc(var(--space-unit) * 2); padding: calc(var(--space-unit) * 3); border: var(--border-width) solid var(--border); border-radius: var(--radius); background: var(--surface-2); box-shadow: var(--shadow); }
+    .card-kicker { color: var(--muted); font-size: 9px; letter-spacing: .1em; }
+    .card-title { margin: 0; color: var(--text); font-size: 18px; line-height: 1; }
+    .card-copy { margin: 0; color: var(--secondary); font-size: 11px; line-height: 1.4; }
+    .card-footer { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font: 9px "IBM Plex Mono", monospace; }
+    .boundary-note { margin: 0; color: var(--muted); font: 9px "IBM Plex Mono", monospace; line-height: 1.45; }
+    .footer { margin: 20px 0 0; color: var(--muted); font: 10px "IBM Plex Mono", monospace; line-height: 1.5; }
+    @media (max-width: 1250px) { .comparison { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .shell { width: min(100% - 22px, 1960px); padding-top: 18px; } .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); } .candidate-values { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="kicker">VISUAL FOUNDATIONS REVIEW — MOCK CONTENT</div>
+    <h1>Three structural systems in the same product context.</h1>
+    <p class="intro">A comparação mantém conteúdo, tipo, cor, dimensões gerais, hierarquia e dados mock constantes. Somente fundamentos estruturais variam. Nenhuma opção representa uma decisão.</p>
+    <div class="notices">
+      <span class="notice">STRUCTURAL VALUES ARE CANDIDATES</span>
+      <span class="notice">TYPE SIZES ARE REVIEW-ONLY</span>
+      <span class="notice">NO FINAL DESIGN TOKENS</span>
+      <span class="notice">PRECISION / PRODUCT COLOR SYSTEM</span>
+    </div>
+  </header>
+  <section class="comparison" id="comparison"></section>
+  <p class="footer">Grid visibility: contextual · grid structure: persistent candidate · glow: off by default · all cards, framing and spacing values are review-only.</p>
+</main>
+<script>
+  var systems = [
+    { cls: "system--a", id: "OPTION A", name: "Precision / Structural", mood: "tighter · precise · low-radius · border-led · minimal elevation · technical", values: [
+      ["spacing base", "4px"], ["spacing scale", "4 · 8 · 12 · 16 · 24 · 32 · 48"],
+      ["construction grid", "8 columns"], ["gutter / outer", "12px / 24px"],
+      ["radius", "0 · 2px · 4px"], ["border width", "1px; strong 2px"],
+      ["shadow candidate", "none"], ["glow candidate", "none; off by default"]
+    ] },
+    { cls: "system--b", id: "OPTION B", name: "Modular / Product", mood: "balanced · modular · moderate spacing · moderate radius · versatile", values: [
+      ["spacing base", "4px"], ["spacing scale", "4 · 8 · 12 · 16 · 24 · 32 · 48 · 64"],
+      ["construction grid", "10 columns"], ["gutter / outer", "16px / 32px"],
+      ["radius", "0 · 4px · 8px"], ["border width", "1px; strong 2px"],
+      ["shadow candidate", "0 10px 24px -18px rgba(0,0,0,.65)"], ["glow candidate", "none; off by default"]
+    ] },
+    { cls: "system--c", id: "OPTION C", name: "Lab / Spatial", mood: "spatial · negative space · softer geometry · deeper hierarchy · controlled experimental", values: [
+      ["spacing base", "4px"], ["spacing scale", "4 · 8 · 16 · 24 · 32 · 48 · 64 · 96"],
+      ["construction grid", "6 columns"], ["gutter / outer", "20px / 48px"],
+      ["radius", "0 · 6px · 10px"], ["border width", "1px; strong 2px"],
+      ["shadow candidate", "0 16px 32px -26px rgba(0,0,0,.75)"], ["glow candidate", "functional only; accent / 10%"]
+    ] }
+  ];
+  var text = {
+    brand: "Leo Ferraz",
+    descriptor: "Building with AI",
+    headline: "CONSTRUÍ UM PRODUTO COM IA.",
+    artifact: "REAL PRODUCT ARTIFACT",
+    project: "PROJECT 003",
+    building: "BUILDING",
+    version: "VERSION 0.3",
+    users: "1,204 USERS",
+    days: "30 DAYS",
+    percent: "18%",
+    commit: "commit a91f51"
+  };
+  function gridMarkup(columns) {
+    var out = "";
+    for (var i = 0; i < columns; i++) out += '<span class="grid-column"></span>';
+    return out;
+  }
+  function valueMarkup(values) {
+    return values.map(function(row) {
+      return '<div class="value-row"><span class="value-label">' + row[0] + '</span><span class="value">' + row[1] + '</span></div>';
+    }).join("");
+  }
+  function render(system, index) {
+    var article = document.createElement("article");
+    article.className = "system " + system.cls;
+    article.innerHTML =
+      '<header class="system-header">' +
+        '<div class="option-title"><h2>' + system.name + '</h2><span class="option-id">' + system.id + '</span></div>' +
+        '<p class="meta">' + system.mood + '</p>' +
+        '<div class="candidate-values">' + valueMarkup(system.values) + '</div>' +
+      '</header>' +
+      '<div class="system-body">' +
+        '<section class="context"><p class="section-title">A · Brand / Hero · low density</p><div class="hero">' +
+          '<p class="brand">' + text.brand + '</p><p class="descriptor">' + text.descriptor + '</p><p class="headline">' + text.headline + '</p>' +
+        '</div></section>' +
+        '<section class="context"><p class="section-title">B · Artifact framing · artifact-first</p><div class="artifact-frame">' +
+          '<div class="artifact">' + text.artifact + '</div>' +
+          '<div class="grid-figure"><div class="grid-visual">' + gridMarkup(index === 0 ? 8 : index === 1 ? 10 : 6) + '</div><span class="grid-caption">Construction Grid Candidate · visible representation · low contrast · structural · secondary</span></div>' +
+        '</div></section>' +
+        '<section class="context"><p class="section-title">C · Evidence · medium density</p><div class="evidence">' +
+          '<div class="state-line"><span class="state">' + text.project + '</span><span class="state state-accent">' + text.building + '</span><span class="state">' + text.version + '</span></div>' +
+          '<div class="metrics"><div class="metric"><span class="metric-value">' + text.users + '</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">' + text.days + '</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">' + text.percent + '</span><span class="metric-label">MOCK</span></div><div class="metric"><span class="metric-value">a91f51</span><span class="metric-label">MOCK COMMIT</span></div></div>' +
+          '<span class="state">' + text.commit + ' · MOCK EVIDENCE</span>' +
+        '</div></section>' +
+        '<section class="context"><p class="section-title">D · Modular UI · functional specimens · high density</p><div class="signals">' +
+          '<div class="signal-row"><span class="signal active">ACTIVE</span><span class="signal selected">SELECTED</span><span class="link">LINK</span><span class="marker"></span><span class="state">MARKER</span></div>' +
+          '<div class="signal-row"><button class="test-cta" type="button">CTA DE TESTE</button><span class="experimental">EXPERIMENT</span></div>' +
+        '</div></section>' +
+        '<section class="density-stack">' +
+          '<div class="density"><p class="section-title">Low density test</p><div class="density-sample low-sample"><p class="low-title">' + text.brand + '</p><p class="low-subtitle">' + text.descriptor + '.</p></div></div>' +
+          '<div class="density"><p class="section-title">Medium density test</p><div class="density-sample medium-sample"><p>' + text.headline + '</p><div class="artifact">REAL PRODUCT ARTIFACT</div><span class="state">PROJECT 003 · BUILDING · VERSION 0.3</span><p>Mock content documenting a product artifact with evidence and metadata.</p></div></div>' +
+          '<div class="density"><p class="section-title">High density test</p><div class="density-sample high-sample"><div class="high-item"><strong>1,204</strong><span>USERS · MOCK</span></div><div class="high-item"><strong>30</strong><span>DAYS · MOCK</span></div><div class="high-item"><strong>18%</strong><span>RATE · MOCK</span></div><div class="high-item"><strong>a91f51</strong><span>COMMIT · MOCK</span></div><div class="high-item"><strong>ACTIVE</strong><span>FUNCTIONAL STATE</span></div><div class="high-item"><strong>EXPERIMENT</strong><span>CONTEXTUAL STATE</span></div></div></div>' +
+        '</section>' +
+        '<section class="cards"><p class="section-title">Candidate framing · not components</p>' +
+          '<div class="candidate-card"><span class="card-kicker">PRODUCT CARD CANDIDATE · MOCK</span><h3 class="card-title">Real product artifact</h3><p class="card-copy">A neutral host for an independent product identity, screenshot or build surface.</p><div class="card-footer"><span>BUILDING</span><span>VERSION 0.3</span></div></div>' +
+          '<div class="candidate-card"><span class="card-kicker">EVIDENCE CARD CANDIDATE · MOCK</span><h3 class="card-title">Evidence before decoration</h3><p class="card-copy">Metadata, state and measurable signals remain legible without dramatic elevation.</p><div class="card-footer"><span>1,204 USERS</span><span>' + text.commit + '</span></div></div>' +
+        '</section>' +
+        '<p class="boundary-note">What is intentionally absent: no decorative glow, no large shadows, no excessive rounding, no ornamental lines, no images, no logo, no monogram.</p>' +
+      '</div>';
+    return article;
+  }
+  systems.forEach(function(system, index) { document.getElementById("comparison").appendChild(render(system, index)); });
+</script>
+</body>
+</html>
+
+
