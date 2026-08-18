@@ -388,6 +388,26 @@
       "status": "approved"
     },
     {
+      "id": "leo-ferraz-wordmark-only-dark-512",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "signature_variant": "wordmark-only",
+      "width": 512,
+      "height": 213,
+      "dimensions": "512x213",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "upload or composition; name-only signature on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-dark-512.png",
+      "status": "approved"
+    },
+    {
       "id": "leo-ferraz-wordmark-512",
       "platform": "all",
       "role": "legacy compatibility alias",
@@ -448,6 +468,26 @@
       "status": "approved"
     },
     {
+      "id": "leo-ferraz-wordmark-only-dark-1024",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "signature_variant": "wordmark-only",
+      "width": 1024,
+      "height": 426,
+      "dimensions": "1024x426",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "upload or composition; name-only signature on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-dark-1024.png",
+      "status": "approved"
+    },
+    {
       "id": "leo-ferraz-wordmark-1024",
       "platform": "all",
       "role": "legacy compatibility alias",
@@ -505,6 +545,26 @@
       },
       "usage": "upload or composition; name-only signature",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-2048.png",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-only-dark-2048",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "signature_variant": "wordmark-only",
+      "width": 2048,
+      "height": 851,
+      "dimensions": "2048x851",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "upload or composition; name-only signature on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-dark-2048.png",
       "status": "approved"
     },
     {

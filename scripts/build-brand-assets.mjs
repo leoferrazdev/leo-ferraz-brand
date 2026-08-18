@@ -5,6 +5,13 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { create as createFont } from 'fontkitten';
 
+// Deterministic build: single-threaded rasterization removes the run-to-run
+// anti-aliasing variance that multi-threaded libvips otherwise introduces on
+// the same SVG input, which previously made brand-assets/deterministic.sha256
+// change between identical builds.
+sharp.concurrency(1);
+sharp.cache(false);
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const exportsRoot = path.join(root, 'brand-assets', 'exports');
 const publicExportsRoot = path.join(root, 'public', 'brand-assets', 'exports');
@@ -219,7 +226,10 @@ async function writeSvg(relative, svg) {
 }
 
 async function writePng(relative, svg, width, height, { fit = 'contain' } = {}) {
-  const buffer = await sharp(Buffer.from(svg)).resize(width, height, { fit, background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer();
+  const buffer = await sharp(Buffer.from(svg))
+    .resize(width, height, { fit, background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png({ compressionLevel: 9, effort: 10, adaptiveFiltering: false, palette: false })
+    .toBuffer();
   await writeBuffer(relative, buffer);
   return buffer;
 }
@@ -391,6 +401,8 @@ async function main() {
   for (const size of [512, 1024, 2048]) {
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, wordmarkOnly.svg, size, Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width));
     register({ id: `leo-ferraz-wordmark-only-${size}`, platform: 'all', role: 'wordmark-only export', relative: `day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, width: size, height: Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width), format: 'PNG', transparency: true, usage: 'upload or composition; name-only signature', signatureVariant: 'wordmark-only' });
+    await writePng(`day-1/01-profile/leo-ferraz-wordmark-only-dark-${size}.png`, wordmarkOnlyDark.svg, size, Math.ceil(size * wordmarkOnlyDark.height / wordmarkOnlyDark.width));
+    register({ id: `leo-ferraz-wordmark-only-dark-${size}`, platform: 'all', role: 'wordmark-only export', relative: `day-1/01-profile/leo-ferraz-wordmark-only-dark-${size}.png`, width: size, height: Math.ceil(size * wordmarkOnlyDark.height / wordmarkOnlyDark.width), format: 'PNG', transparency: true, usage: 'upload or composition; name-only signature on light backgrounds', signatureVariant: 'wordmark-only' });
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-${size}.png`, primaryLockup.svg, size, Math.ceil(size * primaryLockup.height / primaryLockup.width));
     register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * primaryLockup.height / primaryLockup.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg', signatureVariant: 'primary-lockup' });
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, wordmarkUnderline.svg, size, Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width));
@@ -468,7 +480,7 @@ async function main() {
     ['day-1/05-youtube/youtube-thumbnail-1280x720', 1280, 720, 'YouTube thumbnail template', 'BUILDING WITH AI', symbol],
     ['day-1/05-youtube/youtube-thumbnail-master-3840x2160', 3840, 2160, 'YouTube thumbnail master', 'BUILDING WITH AI', symbol],
     ['day-1/04-social/instagram-reels-cover-420x654', 420, 654, 'Instagram Reels cover crop', 'AO VIVO', symbol],
-    ['day-1/04-social/social-square-1080x1080', 1080, 1080, 'Social square template', 'REAL PRODUCT ARTIFACT', wordmarkOnly, { headlineSize: 64 }],
+    ['day-1/04-social/social-square-1080x1080', 1080, 1080, 'Social square template', content.liveExample, wordmarkOnly, { headlineSize: 64 }],
     ['day-1/06-web/open-graph-1200x630', 1200, 630, 'Open Graph default', content.bio[0], descriptor, { artifact: content.bio[1], headlineSize: 42, showState: false, showDescriptor: false }],
   ];
   for (const [base, width, height, role, headline, signatureAsset, options = {}] of socialSpecs) {

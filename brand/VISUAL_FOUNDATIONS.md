@@ -1,7 +1,7 @@
 ---
 document: VISUAL_FOUNDATIONS
 brand: Leo Ferraz
-version: 0.1.0
+version: 0.2.0
 status: approved
 authority: Leo Ferraz
 decision_basis: founder_visual_review
@@ -12,6 +12,8 @@ depends_on:
   - TYPOGRAPHY.md
   - COLOR.md
   - VISUAL_FOUNDATIONS_OPTIONS.md
+changelog:
+  - "0.2.0: Responsive grid, breakpoints and container max-width formally approved — closing a gap where tokens.json and the executable site had already implemented these values while this document still listed them as not_defined."
 ---
 
 # Visual Foundations
@@ -85,8 +87,7 @@ Outer Margin:
 ~~~text
 grid_structure: persistent
 grid_visibility: contextual
-responsive_grid:
-not_defined
+responsive_grid: approved
 ~~~
 
 Todas as composições devem possuir estrutura. O grid não precisa estar visualmente exposto. Linhas visíveis pertencem ao contexto editorial/visual e não são obrigação permanente.
@@ -102,7 +103,23 @@ secondary
 
 Nunca deve se tornar perspective, Tron, cyberpunk, glowing floor ou decorative technology texture.
 
-Não são definidos breakpoints, colunas mobile/tablet, gutters responsivos, margens responsivas ou container max-width.
+### Responsive Grid
+
+~~~text
+Breakpoints:
+Small   < 768px
+Medium  768–1199px
+Large   >= 1200px
+
+Small:   4 columns  · 16px gutter · 16px outer margin
+Medium:  6 columns  · 16px gutter · 24px outer margin
+Large:  10 columns  · 16px gutter · 32px outer margin
+
+Container:
+100% width · 1440px maximum · centered
+~~~
+
+Esses valores já estavam implementados em `tokens/tokens.json` (`breakpoint.*`, `grid.*`, `container.max`) e refletidos em `leoferraz.dev` antes desta revisão; este documento agora os reconhece formalmente como fonte canônica, para que a hierarquia `brand/*.md` → `tokens.json` deixe de ter uma decisão de implementação sem aprovação correspondente na fonte.
 
 ## Radius
 
@@ -274,11 +291,6 @@ Permanecem indefinidos:
 
 - spacing role mappings;
 - radius role mappings;
-- responsive grid;
-- breakpoints;
-- container widths;
-- responsive gutters;
-- responsive outer margins;
 - shadow component mappings;
 - canonical glow values;
 - glow mappings;
