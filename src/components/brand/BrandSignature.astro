@@ -42,32 +42,53 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
     line-height: 0;
   }
 
+  /*
+   * Every non-symbol signature export bakes in 32px of standalone clear
+   * space (SIGNATURE.md) before the visible glyph starts — correct for
+   * the asset used alone, but it reads as a stray left margin here,
+   * where the wordmark sits flush against other flush-left page content
+   * (nav, headline). The offset is exact, not eyeballed: it's
+   * -(native clear-space px / native canvas width px) for each asset,
+   * so it scales correctly with the image's own responsive width.
+   * Native canvas widths: wordmarkOnly 330, primaryLockup/descriptor/
+   * institutional 410, symbol 80 (8px clear space, not 32).
+   */
   .brand-signature__asset {
     display: block;
     width: min(100%, 410px);
     height: auto;
     max-width: 100%;
+    transform: translateX(calc(-32 / 410 * 100%));
   }
 
-  .brand-signature--primaryLockup .brand-signature__asset,
+  .brand-signature--primaryLockup .brand-signature__asset {
+    width: min(100%, 330px);
+    transform: translateX(calc(-32 / 410 * 100%));
+  }
+
   .brand-signature--wordmarkOnly .brand-signature__asset {
     width: min(100%, 330px);
+    transform: translateX(calc(-32 / 330 * 100%));
   }
 
   .brand-signature--descriptor .brand-signature__asset {
     width: min(100%, 300px);
+    transform: translateX(calc(-32 / 410 * 100%));
   }
 
   .brand-signature--institutional .brand-signature__asset {
     width: min(100%, 410px);
+    transform: translateX(calc(-32 / 410 * 100%));
   }
 
   .brand-signature--symbol .brand-signature__asset {
     width: 40px;
+    transform: translateX(calc(-8 / 80 * 100%));
   }
 
   .brand-signature--utility .brand-signature__asset {
     width: 32px;
+    transform: translateX(calc(-8 / 80 * 100%));
   }
 
   @media (max-width: 767px) {
