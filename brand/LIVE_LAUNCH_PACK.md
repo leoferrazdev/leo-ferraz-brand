@@ -20,15 +20,15 @@ Source commit: b2ae95cca8d6b62c6579c415113852b8ef8c8b09
 Master Brand: Leo Ferraz
 Descriptor: Building with AI
 Institutional Category: AI-Native Product Lab
-Signature: Editorial Tech Lockup
+Signature: Constructed LF Lockup
 Typography: Product / Editorial
 Color: Precision / Product
 Visual Foundations: Modular / Product
-Primary Symbol: none · structural marker only
-Secondary Utility Mark: LF
+Primary Symbol: Constructed LF
+Secondary Utility Mark: superseded
 ```
 
-`Leo Ferraz` permanece a assinatura primária. O marcador estrutural quadrado de `8px` usa `#4DA3FF` apenas como sinal funcional e pode ser removido em contextos compactos. `LF` é somente o utility mark para contextos compactos, como avatar, favicon e bug de transmissão.
+`Leo Ferraz` permanece a Master Brand. A assinatura primária combina o símbolo geométrico proprietário `Constructed LF` com o wordmark `Leo Ferraz`. O módulo ativo usa `#4DA3FF` como sinal funcional; avatar, favicon e contextos compactos usam o símbolo sem o wordmark.
 
 ## Asset pipeline
 
@@ -60,7 +60,7 @@ O conteúdo é separado do template. O render falha fechado para template ou con
 
 ```text
 brand-assets/exports/day-1/01-profile/
-→ wordmarks, lockups, LF, avatars e crops
+→ logos, lockups, símbolo, avatars e crops
 
 brand-assets/exports/day-1/02-channels/
 → YouTube e Twitch banners
@@ -88,7 +88,7 @@ Estas são regras operacionais dos templates, não novas regras universais do Br
 - headline: permanece a informação primária quando há produto, screenshot ou evidência;
 - artifact: ocupa o slot principal disponível e não é coberto pela assinatura;
 - signature: permanece subordinada ao artifact e usa `Leo Ferraz` quando houver espaço;
-- `LF`: somente em avatar, favicon, bug ou contexto realmente compacto;
+- `Constructed LF`: isolado somente em avatar, favicon ou contexto realmente compacto;
 - fontes: somente IBM Plex Sans e IBM Plex Mono;
 - cor: somente tokens aprovados, sem glow, gradient ou efeito decorativo;
 - live canvas: 1920×1080; identidade ocupa somente a camada de autoria;
@@ -116,6 +116,25 @@ Instagram carousel/feed: 1080×1350
 Social square: 1080×1080
 Open Graph: 1200×630
 ```
+
+## Safe-zone contract
+
+Safe zones are applied by `scripts/build-brand-assets.mjs` and recorded per export in `brand-assets/manifest.json`. They are placement constraints, not visible artwork or review guides.
+
+```text
+YouTube banner 2560×1440: x=508, y=508, width=1544, height=423
+Twitch banner 1200×480: x=48, y=48, width=1050, height=300
+Story/Reels 9:16: horizontal 10%; vertical 12%
+Thumbnails 16:9: horizontal and vertical 8%
+Social square, carousel and Open Graph: horizontal and vertical 8%
+OBS scenes: horizontal and vertical 10%
+Avatars and web icons: optical inset 16% on each side
+Wordmarks: clear space 0.5em
+Constructed LF symbol: clear space 0.25em
+Transparent overlays: minimum 16px inset
+```
+
+The validator fails if an export lacks safe-zone metadata, exceeds its canvas bounds or contains a dashed safe-area guide. The final delivery files contain no visible safe-zone annotation.
 
 ## Live workflow
 

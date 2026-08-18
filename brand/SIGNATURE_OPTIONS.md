@@ -1,302 +1,116 @@
 ---
 document: SIGNATURE_OPTIONS
 brand: Leo Ferraz
-version: 0.2.0
+version: 0.3.0
 status: approved
 authority: Leo Ferraz
 exploration_status: completed
 decision_status: selected
-selected_option: Editorial Tech Lockup
-selection_authority: Leo Ferraz
+selected_option: Constructed LF
+selection_authority: delegated by Leo Ferraz
 depends_on:
   - BRAND_FOUNDATION.md
   - VISUAL_DIRECTION.md
   - TYPOGRAPHY.md
-  - TYPOGRAPHY_IMPLEMENTATION.md
   - COLOR.md
   - VISUAL_FOUNDATIONS.md
 ---
 
 # Signature Options
 
-Este documento registra uma exploração visual determinística da assinatura institucional da Master Brand. A exploração comparou três territórios de wordmark e preserva a evidência da revisão que levou à seleção de Editorial Tech Lockup, sem criar um logotipo ilustrativo ou um monograma canônico.
+## Review trigger
 
-## Identidade compartilhada
+The former `Editorial Tech Lockup` was consistent but visually read as ordinary typeset text with a small marker. The new review therefore required a genuine symbol, a stronger avatar and a full hybrid logo without changing the existing strategic or verbal identity.
 
-```text
-Master Brand:
-Leo Ferraz
-
-Descriptor:
-Building with AI
-
-Institutional Category:
-AI-Native Product Lab
-
-Digital Handle:
-@leoferrazdev
-
-Domain:
-leoferraz.dev
-```
-
-O nome `Leo Ferraz` é a identidade. `Building with AI` é um descriptor subordinado, contextual e removível. `AI-Native Product Lab`, `@leoferrazdev` e `leoferraz.dev` não são partes inseparáveis do wordmark.
-
-## Fundamentos compartilhados
+## Shared constraints
 
 ```text
-Typography:
-Product / Editorial
-Primary Sans:
-IBM Plex Sans
-Technical Mono:
-IBM Plex Mono
-Color:
-Precision / Product
-Structure:
-Modular / Product
-Direction:
-Dark Product Lab · evidence-driven
-Glow:
-off
+Master Brand: Leo Ferraz
+Descriptor: Building with AI
+Institutional Category: AI-Native Product Lab
+Typography: IBM Plex Sans + IBM Plex Mono
+Color: Precision / Product
+Structure: Modular / Product
 ```
 
-O accent `#4DA3FF` aparece apenas como sinal estrutural secundário. Cada opção precisa sobreviver em `#F3F6FA` sobre `#0D1117` sem depender do azul.
+Every option had to survive in monochrome, use no generic AI imagery, remain deterministic in SVG and stay subordinate to real products and evidence.
 
-## Option A — Pure / Editorial
+## Option A — Constructed LF
 
 ```text
 character:
-direct · editorial · founder-led · minimal · timeless
+ownable · modular · compact · direct · product-oriented
 
 construction:
-purely typographic Leo Ferraz in IBM Plex Sans Medium
-
-wordmark_weight:
-500
-
-tracking_candidate:
--0.035em, signature candidate only
-
-descriptor_treatment:
-subordinate IBM Plex Mono line with clear separation from the name
+custom LF geometry on a 64 × 64 modular grid plus name-led wordmark
 
 principal_strength:
-direct name recognition with low visual dependency
+direct ownership and strong avatar/favicon behavior
 
 principal_risk:
-can become neutral or under-designed when context is too sparse
+lettermark familiarity requires disciplined geometry and spacing
+
+selection_status:
+selected
 ```
 
-The descriptor remains optional and the institutional category remains a separate supporting line.
-
-## Option B — Structured / Product
+## Option B — Build Loop
 
 ```text
 character:
-modular · precise · product-oriented · technical restraint
+iterative · open · process-led · abstract
 
 construction:
-name-led lockup using alignment, baseline, spacing and a functional rule
-
-wordmark_weight:
-500
-
-tracking_candidate:
--0.030em, signature candidate only
-
-descriptor_treatment:
-aligned secondary line with restrained rule/border relationship
+open geometric loop derived from Idea → Build → Ship → Measure → Learn → Repeat
 
 principal_strength:
-clear coexistence with evidence, artifacts and product documentation
+connects to the operational cycle without using initials
 
 principal_risk:
-can read as a generic product system if the rule becomes decorative
+can read as a generic workflow or software icon
+
+selection_status:
+historical
 ```
 
-The structure is produced by spacing, alignment, typography and border; it does not require a symbol.
-
-## Option C — Editorial Tech Lockup
+## Option C — Proof Frame
 
 ```text
 character:
-distinct · compact · systematic · recognizable · controlled
+evidence-led · framed · structural · minimal
 
 construction:
-typographic signature with a small removable structural marker and Sans/Mono contrast
-
-wordmark_weight:
-500
-
-tracking_candidate:
--0.025em, signature candidate only
-
-descriptor_treatment:
-compact mono descriptor with an institutional micro-label
+an artifact module inside an open product frame
 
 principal_strength:
-strong repeatable construction at compact functional sizes without introducing a symbol
+connects directly to The product is the proof.
 
 principal_risk:
-can become overly system-like if the marker or metadata dominates the name
+can read as a crop, scanner, camera or interface control
+
+selection_status:
+historical
 ```
 
-The marker is the approved functional structural cue. It is a square measuring 8px, uses `#4DA3FF` only as a contextual accent, is removable in compact contexts and is not an abstract AI symbol, a logo or a monogram.
+## Decision matrix
 
-## Required specimen contexts
-
-Each option is compared with identical content in:
-
-```text
-Primary:
-Leo Ferraz
-
-With Descriptor:
-Leo Ferraz
-Building with AI
-
-Institutional:
-Leo Ferraz
-Building with AI
-AI-Native Product Lab
-
-Compact:
-Leo Ferraz
-```
-
-The lockups are shown as horizontal, stacked and compact specimens. They are also tested at large, medium, small and very small review sizes across hero, website header, social profile header, YouTube thumbnail, mobile header and footer contexts.
-
-## Monogram Necessity Test
-
-```text
-MONOGRAM CANDIDATE — NOT A DECISION
-
-wordmark-only:
-tested
-
-LF candidate:
-plain typographic LF only
-
-small-size result:
-functional comparison at 16px, 32px, 48px and 64px
-
-functional_need:
-not_defined
-
-monogram_decision:
-not_defined
-```
-
-The comparison includes no monogram, plain `L`, plain `LF` and text-only identity where size permits. Circular and square crops are shown because platforms impose those crops; neither crop becomes a proprietary identity shape.
-
-If useful in a future functional context, `LF` remains a secondary utility mark and never automatically becomes the primary brand symbol.
-
-## Monochrome and artifact tests
-
-```text
-monochrome_survival:
-tested per option
-
-artifact_context:
-REAL PRODUCT ARTIFACT
-
-editorial_context:
-Leo Ferraz
-Building with AI
-CONSTRUINDO PRODUTOS REAIS COM IA.
-
-metadata_context:
-PROJECT 003
-BUILDING
-VERSION 0.3
-```
-
-The artifact remains visually dominant. The signature is evaluated as authorship context and must not compete with the product.
-
-## Risk matrix
-
-Ratings are review observations, not approval states.
-
-| Criterion | Pure / Editorial | Structured / Product | Editorial Tech Lockup |
+| Criterion | Constructed LF | Build Loop | Proof Frame |
 |---|---|---|---|
-| Generic Personal Brand Risk | low — name-led | low — structure adds specificity | low — repeatable system |
-| Corporate Risk | low — human name | medium — rule can formalize | medium — metadata can institutionalize |
-| Developer Tool Risk | low — editorial surface | medium — technical structure | medium — mono contrast |
-| AI Startup Risk | low — no AI symbol | low — evidence over promise | low — controlled marker |
-| SaaS Risk | medium — neutral sans | medium — product framing | medium — system language |
-| Creator Brand Risk | low — builder-led name | low — product context | low — artifact context |
-| Over-designed Risk | low — minimal | medium — rule must stay functional | medium — marker must stay quiet |
-| Under-designed Risk | medium — sparse context | low — structural relation | low — signature construction |
-| Artifact Compatibility | high — stays subordinate | high — frames without absorbing | medium — marker needs restraint |
-| Editorial Compatibility | high — direct reading | high — modular reading | medium — compact system tone |
-| Small-size Legibility | medium — name only | medium — rule may compress | medium — marker may compete |
-| Website Compatibility | high — flexible | high — modular | high — compact utility |
-| Social Compatibility | high — clear profile name | high — structured lockup | medium — needs crop testing |
-| Deterministic Reproduction | high — text and CSS | high — layout rules | high — text, CSS and marker |
-| Long-Term Durability | high — low trend dependency | high — structural foundation | medium — marker needs governance |
+| Ownable recognition | high | medium | medium |
+| Avatar/favicon clarity | high | high | high |
+| Founder-name connection | high | low | low |
+| Generic tech-icon risk | low | medium | high |
+| Monochrome survival | high | high | high |
+| Deterministic reproduction | high | high | high |
+| Artifact compatibility | high | high | medium |
+| Long-term durability | high | medium | medium |
 
-## Founder review questions
+## Selection
 
-```text
-Which signature feels most like Leo Ferraz?
+`Constructed LF` is selected as the primary symbol. The full system is named `Constructed LF Lockup`.
 
-Which system feels like a builder rather than a creator/influencer brand?
+The selection resolves the former open monogram question with a custom geometric mark. It does not promote the old plain IBM Plex `LF` abbreviation; that utility treatment is superseded.
 
-Which option feels technical without looking like a software company logo?
+## Historical continuity
 
-Which option gives products the greatest visual priority?
-
-Which option works best next to real screenshots and artifacts?
-
-Which option works best with Product / Editorial typography?
-
-Which option survives without accent color?
-
-Which option feels least dependent on trends?
-
-Which option is easiest for agents to reproduce deterministically?
-
-Does the brand actually require a monogram?
-
-If a monogram is needed, is LF sufficient as a secondary utility mark?
-```
-
-## Status
-
-```text
-signature_status:
-approved
-
-selected_option:
-Editorial Tech Lockup
-
-selection_authority:
-Leo Ferraz
-
-Pure / Editorial:
-selection_status: historical
-
-Structured / Product:
-selection_status: historical
-
-Editorial Tech Lockup:
-selection_status: selected
-
-structural_marker:
-approved · square · 8px · #4DA3FF · removable
-
-monogram_decision:
-not_defined
-
-semantic_colors:
-not_defined
-
-light_mode:
-not_defined
-
-tokens:
-implemented
-```
-
-The selection records the founder's approval of Editorial Tech Lockup. The other options remain historical exploration evidence and are not selected; they are not classified as rejected, failed, invalid or deprecated.
+The prior 0.2.0 exploration of `Pure / Editorial`, `Structured / Product` and `Editorial Tech Lockup` remains available in Git history. `Editorial Tech Lockup` is now superseded, not erased or classified as a failure.

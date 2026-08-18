@@ -1,11 +1,11 @@
 ---
 document: SIGNATURE
 brand: Leo Ferraz
-version: 0.2.0
+version: 0.3.0
 status: approved
 authority: Leo Ferraz
-decision_basis: founder_visual_review
-selected_system: Editorial Tech Lockup
+decision_basis: delegated_deterministic_review
+selected_system: Constructed LF Lockup
 depends_on:
   - BRAND_FOUNDATION.md
   - TYPOGRAPHY.md
@@ -19,16 +19,76 @@ depends_on:
 
 ## Decision
 
-The approved signature system is `Editorial Tech Lockup`.
+The approved signature system is `Constructed LF Lockup`.
 
-> The name is the identity. The system provides the recognition; the marker provides a restrained structural cue.
+> The symbol creates recognition. The name preserves authorship. The product remains the proof.
 
-The signature is a deterministic typographic system for identifying the author beside real products, artifacts and evidence. It uses a small removable structural marker, not an abstract AI symbol, illustrative logo or proprietary monogram.
+The system is hybrid: a custom geometric `LF` symbol is paired with the Master Brand wordmark `Leo Ferraz`. This replaces the typeset-only `Editorial Tech Lockup`, whose small square marker did not create enough ownable recognition in avatars, favicons and compact applications.
 
-## Primary Wordmark
+## Identity hierarchy
 
 ```text
-Primary Wordmark:
+Master Brand:
+Leo Ferraz
+
+Primary Symbol:
+Constructed LF
+
+Descriptor:
+Building with AI
+
+Institutional Category:
+AI-Native Product Lab
+```
+
+The symbol does not rename the brand. `Leo Ferraz` remains the permanent Master Brand and the first verbal reading of the primary lockup.
+
+## Primary symbol
+
+```text
+Name:
+Constructed LF
+
+Type:
+custom geometric monogram
+
+Construction Grid:
+64 × 64 viewBox · 4px modular grid
+
+Primary Geometry:
+#F3F6FA
+
+Active Module:
+#4DA3FF
+```
+
+Exact geometry:
+
+```text
+L foundation:
+M8 8H20V44H28V56H8Z
+
+F structure:
+M28 8H56V20H40V28H48V36H40V56H28Z
+
+Active module:
+x=48 y=28 width=8 height=8
+```
+
+The `L` and `F` are drawn as custom vector geometry and are not font glyphs. Their shared structural junction makes the mark one constructed unit. The active blue module is a controlled product-state signal; it is not an AI metaphor and the mark must remain recognizable without it.
+
+## Primary lockup
+
+```text
+[Constructed LF] Leo Ferraz
+```
+
+The horizontal lockup is the default signature for headers, channel covers, institutional surfaces, editorial authorship and public brand applications.
+
+### Wordmark
+
+```text
+Text:
 Leo Ferraz
 
 Typeface:
@@ -37,164 +97,102 @@ IBM Plex Sans
 Weight:
 500
 
-Signature Tracking:
+Tracking:
 -0.035em
-
-Construction:
-typographic wordmark with optional structural marker
 ```
 
-The wordmark uses the unmodified text `Leo Ferraz` in IBM Plex Sans at weight 500 with signature tracking `-0.035em`. It does not use custom lettering, glyph alterations or a manually authored SVG.
+The wordmark remains typographic so the full name stays direct and legible. It becomes part of a proprietary logo system through its fixed relationship with the Constructed LF symbol, not through ornamental lettering.
+
+## Descriptor and institutional lockups
 
 ```text
-primary_identity:
-Leo Ferraz
-
-primary_symbol:
-none
-
-structural_marker:
-square · 8px · #4DA3FF · optional
+[Constructed LF] Leo Ferraz
+                 Building with AI
 ```
-
-## Descriptor
 
 ```text
-Descriptor:
-Building with AI
+[Constructed LF] Leo Ferraz
+                 Building with AI
+                 AI-Native Product Lab
 ```
 
-`Building with AI` complements `Leo Ferraz` as a subordinate descriptor. It is optional, removable and context-dependent; it is not inseparable from the Master Brand and does not replace it.
+`Building with AI` remains optional, removable and subordinate. `AI-Native Product Lab` remains a separate contextual line and is never part of the symbol.
 
-### Primary Lockup
+## Compact behavior
+
+The Constructed LF symbol is the compact identity for:
+
+- avatar;
+- favicon;
+- browser shortcut;
+- app or web icon;
+- OBS brand bug when the full name would be too small;
+- constrained UI identity.
+
+The former plain typed `LF` utility mark is superseded. It must not be used as the canonical avatar or favicon after regeneration.
+
+## Color and monochrome
+
+Default on dark:
 
 ```text
-Leo Ferraz
-Building with AI
+Primary Geometry: #F3F6FA
+Active Module: #4DA3FF
 ```
 
-The name is primary. The descriptor is subordinate and may be omitted where space, context or artifact priority requires it.
+Monochrome light uses one light foreground color. Monochrome dark uses `#0D1117`. The system must not use gradients, glow, decorative shadow, outline, rotation or transparency effects.
 
-## Structural Marker
+## Clear space and minimum size
 
 ```text
-Shape:
-square
+Symbol clear space:
+0.25 × symbol width
 
-Size:
-8px
+Full lockup clear space:
+0.5 × wordmark cap-height
 
-Gap:
-8px
+Symbol minimum digital box:
+16px functional · 24px preferred
 
-Color:
-#4DA3FF
-
-Role:
-functional structural cue only
-
-Compact behavior:
-optional when space or artifact priority requires
+Full lockup minimum width:
+120px
 ```
 
-The marker sits beside the primary wordmark and is removable without changing the identity. It is not a monogram, AI symbol, logo, decorative ornament or standalone asset. It must not use glow, gradient, shadow, animation or any color outside the approved Precision / Product system. In monochrome contexts it adopts the active text color.
+Platform safe zones are additional constraints and do not replace logo clear space. Safe-zone guides must not appear in delivery files.
 
-### Institutional Lockup
+## Product relationship
+
+The symbol identifies the Master Brand but must not visually absorb independent products.
+
+> The Master Brand frames products. It does not visually absorb them.
+
+Product artifacts, screenshots and evidence remain visually prior in product-led compositions.
+
+## Assets and projection
 
 ```text
-Leo Ferraz
-Building with AI
-AI-Native Product Lab
+leo-ferraz-logo-horizontal.svg:
+primary hybrid logo
+
+leo-ferraz-symbol.svg:
+primary symbol
+
+leo-ferraz-wordmark.svg:
+compatibility alias for the primary hybrid logo
+
+avatar-*:
+Constructed LF symbol
+
+favicon-*:
+Constructed LF symbol
 ```
 
-The institutional category is a separate supporting line with an explicit lower hierarchy. It is not a logo element, slogan or manifesto.
+Identity SVGs contain vector outlines and geometry only. Font binaries, `<text>`, scripts, external URLs, gradients and filters are prohibited.
 
-## Utility Mark
+## Superseded system
 
-```text
-core_monogram:
-none
+`Editorial Tech Lockup` remains historical evidence of the prior approved stage. Its square marker and typed `LF` utility treatment are superseded by the Constructed LF primary symbol. They must not coexist as competing canonical signatures.
 
-secondary_utility_mark:
-LF
+## Preserved governance states
 
-utility_mark_typeface:
-IBM Plex Sans
-
-utility_mark_weight:
-500
-```
-
-`LF` is a plain typographic abbreviation for extremely constrained digital contexts.
-
-> LF is a secondary utility identifier, not the primary Leo Ferraz signature.
-
-`LF` is not the primary logo. It may be used for a favicon, browser shortcut, small avatar, compact digital identity marker or an extremely constrained interface. It must not be used in a hero, a website header with space, institutional communication, a social cover, an editorial signature, a brandbook title, a presentation cover or a major marketing application.
-
-Circle and square crops are platform-imposed containers only; neither is a proprietary identity shape.
-
-## Behavior and Reproduction
-
-The primary signature must survive in monochrome and does not depend on `#4DA3FF`. Gradients, glow and decorative shadows are prohibited. The signature identifies authorship and must remain subordinate to the product artifact.
-
-> The signature identifies the author. It does not compete with the artifact.
-
-The factual reasons for selecting Editorial Tech Lockup are direct founder recognition, high artifact compatibility, strong monochrome behavior, low trend dependency, high deterministic reproducibility and compatibility with Product / Editorial typography. The marker adds a restrained repeatable cue without becoming a symbol. These are decision reasons, not a claim of universal superiority.
-
-The historical exploration recorded possible generic SaaS/system character as the risk of Structured / Product, and metadata/system treatment competing with the founder name and artifacts as the risk of Signature / System. Both remain historical evidence; neither is classified as rejected, failed, invalid or deprecated.
-
-## Open Technical Values
-
-```text
-wordmark_minimum_size:
-18px
-
-utility_mark_minimum_size:
-16px × 16px
-
-signature_clear_space:
-wordmark: 0.5em
-utility mark: 0.25em
-
-marker:
-size: 8px
-gap: 8px
-color: #4DA3FF
-```
-
-Minimum size and clear space are approved signature constraints and are encoded in `tokens/tokens.json`.
-
-## Assets and Projection
-
-The implementation derives outlined SVG assets from the approved typographic signature. No manually authored logo asset is introduced:
-
-```text
-logo.svg:
-not_created
-
-wordmark.svg:
-not_created
-
-monogram.svg:
-not_created
-
-lf.svg:
-secondary utility asset
-```
-
-The Review Lab is retained at `/brand/review/signature/` for local development and evidence only. It must return HTTP 200 in development and remain absent from the production build. The public `/brand/` projection shows only the approved Editorial Tech Lockup signature.
-
-## Unchanged Governance States
-
-```text
-semantic_colors:
-not_defined
-
-light_mode:
-not_defined
-
-tokens:
-implemented in DESIGN_TOKENS.md
-```
-
-No other open brand decision is resolved by this document.
+No Master Brand, descriptor, category, handle, domain, language, typography-family, color-palette or visual-foundation decision is changed by this revision.

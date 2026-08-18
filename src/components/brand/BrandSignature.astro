@@ -1,22 +1,24 @@
 ---
 interface Props {
-  variant?: 'wordmark' | 'descriptor' | 'institutional' | 'utility';
+  variant?: 'wordmark' | 'descriptor' | 'institutional' | 'symbol' | 'utility';
   class?: string;
 }
 
 const { variant = 'wordmark', class: className = '' } = Astro.props;
-const classes = ['brand-signature', `brand-signature--${variant}`, className].filter(Boolean).join(' ');
+const symbolOnly = variant === 'symbol' || variant === 'utility';
+const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : variant}`, className].filter(Boolean).join(' ');
 ---
 
-<div class={classes} data-variant={variant}>
-  {variant === 'utility' ? (
-    <span class="brand-signature__utility" aria-label="Leo Ferraz secondary utility mark">LF</span>
-  ) : (
-    <span class="brand-signature__primary">
-      <span class="brand-signature__marker" aria-hidden="true"></span>
-      <span class="brand-signature__name">Leo Ferraz</span>
-    </span>
-  )}
+<div class={classes} data-variant={symbolOnly ? 'symbol' : variant} aria-label={symbolOnly ? 'Leo Ferraz' : undefined}>
+  <span class="brand-signature__primary">
+    <svg class="brand-signature__symbol" viewBox="0 0 64 64" role={symbolOnly ? 'img' : undefined} aria-hidden={symbolOnly ? undefined : 'true'}>
+      {symbolOnly ? <title>Leo Ferraz</title> : null}
+      <path d="M8 8H20V44H28V56H8Z" fill="currentColor" />
+      <path d="M28 8H56V20H40V28H48V36H40V56H28Z" fill="currentColor" />
+      <rect class="brand-signature__active-module" x="48" y="28" width="8" height="8" />
+    </svg>
+    {!symbolOnly ? <span class="brand-signature__name">Leo Ferraz</span> : null}
+  </span>
   {variant === 'descriptor' || variant === 'institutional' ? <span class="brand-signature__descriptor">Building with AI</span> : null}
   {variant === 'institutional' ? <span class="brand-signature__category">AI-Native Product Lab</span> : null}
 </div>
@@ -29,6 +31,23 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
     color: var(--lf-color-text-primary);
   }
 
+  .brand-signature__primary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lf-signature-symbol-gap);
+  }
+
+  .brand-signature__symbol {
+    flex: 0 0 auto;
+    width: clamp(var(--lf-signature-symbol-preferred-minimum-box), 0.8em, 40px);
+    height: auto;
+    color: var(--lf-signature-symbol-primary-color);
+  }
+
+  .brand-signature__active-module {
+    fill: var(--lf-signature-symbol-active-module-color);
+  }
+
   .brand-signature__name {
     font-family: var(--lf-font-family-sans);
     font-size: var(--lf-type-display-size-large);
@@ -37,22 +56,9 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
     line-height: var(--lf-type-display-line-height);
   }
 
-  .brand-signature__primary {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: var(--lf-signature-marker-gap);
-  }
-
-  .brand-signature__marker {
-    flex: 0 0 var(--lf-signature-marker-size);
-    width: var(--lf-signature-marker-size);
-    height: var(--lf-signature-marker-size);
-    margin-top: 0.32em;
-    background: var(--lf-signature-marker-color);
-  }
-
   .brand-signature__descriptor,
   .brand-signature__category {
+    margin-left: calc(clamp(var(--lf-signature-symbol-preferred-minimum-box), 0.8em, 40px) + var(--lf-signature-symbol-gap));
     font-family: var(--lf-font-family-mono);
     font-size: var(--lf-type-code-size-large);
     font-weight: var(--lf-type-code-weight);
@@ -62,17 +68,13 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
   .brand-signature__descriptor { color: var(--lf-color-text-secondary); }
   .brand-signature__category { color: var(--lf-color-experimental-primary); }
 
-  .brand-signature--utility {
+  .brand-signature--symbol {
     gap: 0;
+    line-height: 0;
   }
 
-  .brand-signature__utility {
-    color: var(--lf-color-text-primary);
-    font-family: var(--lf-font-family-sans);
-    font-size: var(--lf-signature-utility-mark-minimum-box);
-    font-weight: var(--lf-signature-wordmark-weight);
-    letter-spacing: var(--lf-signature-wordmark-tracking);
-    line-height: 1;
+  .brand-signature--symbol .brand-signature__symbol {
+    width: max(var(--lf-signature-symbol-minimum-box), 1em);
   }
 
   @media (min-width: 768px) and (max-width: 1199px) {
@@ -81,10 +83,5 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
 
   @media (max-width: 767px) {
     .brand-signature__name { font-size: var(--lf-type-display-size-small); }
-    .brand-signature__marker {
-      width: 6px;
-      height: 6px;
-      flex-basis: 6px;
-    }
   }
 </style>

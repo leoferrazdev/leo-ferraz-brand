@@ -18,11 +18,11 @@ brand-assets/exports/day-1/01-profile/avatar-1024.png
 Avatar compact:
 brand-assets/exports/day-1/01-profile/avatar-256.png
 
-Primary wordmark (Editorial Tech Lockup):
+Primary logo (Constructed LF Lockup):
 brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg
 
-LF utility:
-brand-assets/exports/day-1/01-profile/leo-ferraz-lf.svg
+Primary symbol:
+brand-assets/exports/day-1/01-profile/leo-ferraz-symbol.svg
 
 Primary link:
 https://leoferraz.dev

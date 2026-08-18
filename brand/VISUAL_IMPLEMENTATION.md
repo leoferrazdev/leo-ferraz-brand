@@ -509,22 +509,22 @@ Componentes futuros podem utilizar estados e transições funcionais mínimas se
 ## Signature Usage
 
 ```text
-wordmark_minimum_font_size:
-18px
+primary_logo_minimum_width:
+120px
 
-LF minimum digital box:
+Constructed LF minimum digital box:
 16px × 16px
 
-clear space:
+full lockup clear space:
 0.5em
 
-LF clear space:
+Constructed LF clear space:
 0.25em minimum
 ```
 
-`18px` aplica-se somente ao Primary Wordmark `Leo Ferraz`, não à ocorrência do nome em texto corrido. Abaixo desse limite, em contexto digital muito restrito, considerar o secondary utility mark `LF`.
+`120px` aplica-se ao full lockup horizontal, não à ocorrência do nome em texto corrido. Abaixo desse limite, em contexto digital restrito, usar o símbolo primário `Constructed LF`.
 
-Para um favicon de `16px`, usar somente `LF`, sem descriptor ou outros elementos. A legibilidade deve continuar sendo verificada pelo contexto.
+Para um favicon de `16px`, usar somente o `Constructed LF`, sem descriptor ou outros elementos. A legibilidade deve continuar sendo verificada pelo contexto.
 
 O clear space do wordmark é medido a partir do tamanho tipográfico atual:
 

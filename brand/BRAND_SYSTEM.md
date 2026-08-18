@@ -43,7 +43,7 @@ Visual Foundations:
 Modular / Product
 
 Signature:
-Editorial Tech Lockup
+Constructed LF Lockup
 ```
 
 ## Principles

@@ -14,6 +14,12 @@ function fail(message) { failures.push(message); }
 for (const asset of manifest.assets) {
   const file = path.join(root, asset.export_path);
   if (!fs.existsSync(file)) { fail(`${asset.id}: missing ${asset.export_path}`); continue; }
+  if (!asset.safe_zone || typeof asset.safe_zone !== 'object') fail(`${asset.id}: safe_zone metadata missing`);
+  if (asset.safe_zone?.type === 'rect') {
+    const zone = asset.safe_zone;
+    if ([zone.x, zone.y, zone.width, zone.height].some((value) => !Number.isFinite(value))) fail(`${asset.id}: invalid safe_zone geometry`);
+    if (zone.x < 0 || zone.y < 0 || zone.width <= 0 || zone.height <= 0 || zone.x + zone.width > asset.width || zone.y + zone.height > asset.height) fail(`${asset.id}: safe_zone exceeds canvas`);
+  }
   if (asset.format === 'SVG') {
     const source = fs.readFileSync(file, 'utf8');
     if (/<(script|iframe)\b/i.test(source)) fail(`${asset.id}: executable markup`);
@@ -21,7 +27,8 @@ for (const asset of manifest.assets) {
     const withoutSvgNamespace = source.replace('http://www.w3.org/2000/svg', '');
     if (/(https?:\/\/|url\()/i.test(withoutSvgNamespace)) fail(`${asset.id}: external URL or resource`);
     if (/<(linearGradient|radialGradient|filter)\b/i.test(source)) fail(`${asset.id}: gradient/filter effect`);
-    if (asset.role === 'signature' || asset.role === 'secondary utility mark' || asset.role === 'avatar' || asset.role === 'crop validation' || asset.role === 'favicon') {
+    if (/stroke-dasharray|SAFE AREA|SAFE ZONE/i.test(source)) fail(`${asset.id}: review guide leaked into delivery asset`);
+    if (asset.role === 'signature' || asset.role === 'primary symbol' || asset.role === 'legacy compatibility alias' || asset.role === 'avatar' || asset.role === 'crop validation' || asset.role === 'favicon') {
       if (/<text\b/i.test(source)) fail(`${asset.id}: identity asset contains text instead of outlines`);
     }
     for (const color of source.match(/#[0-9A-Fa-f]{6}/g) ?? []) if (!allowedColors.has(color.toUpperCase())) fail(`${asset.id}: unapproved color ${color}`);
@@ -37,14 +44,15 @@ for (const asset of manifest.assets) {
   }
 }
 
-const identityFiles = manifest.assets.filter((asset) => asset.format === 'SVG' && (asset.role === 'signature' || asset.role === 'secondary utility mark' || asset.role === 'avatar' || asset.role === 'favicon'));
+const identityFiles = manifest.assets.filter((asset) => asset.format === 'SVG' && (asset.role === 'signature' || asset.role === 'primary symbol' || asset.role === 'legacy compatibility alias' || asset.role === 'avatar' || asset.role === 'favicon'));
 if (identityFiles.some((asset) => /<text\b/i.test(fs.readFileSync(path.join(root, asset.export_path), 'utf8')))) fail('identity outlines: <text> found');
 if (manifest.status !== 'approved') fail(`manifest status is ${manifest.status}`);
 if (manifest.source_tag !== 'v1.0.0') fail(`source tag is ${manifest.source_tag}`);
-if (manifest.signature_system !== 'Editorial Tech Lockup') fail(`signature system is ${manifest.signature_system}`);
-for (const asset of manifest.assets.filter((candidate) => candidate.format === 'SVG' && candidate.role === 'signature')) {
+if (manifest.signature_system !== 'Constructed LF Lockup') fail(`signature system is ${manifest.signature_system}`);
+for (const asset of manifest.assets.filter((candidate) => candidate.format === 'SVG' && ['signature', 'primary symbol', 'legacy compatibility alias', 'avatar', 'favicon'].includes(candidate.role))) {
   const source = fs.readFileSync(path.join(root, asset.export_path), 'utf8');
-  if (!source.includes('<rect')) fail(`${asset.id}: structural marker is missing`);
+  if (!source.includes('data-mark="constructed-lf"')) fail(`${asset.id}: Constructed LF symbol is missing`);
+  if (!source.includes('M8 8H20V44H28V56H8Z') || !source.includes('M28 8H56V20H40V28H48V36H40V56H28Z')) fail(`${asset.id}: Constructed LF geometry drifted`);
 }
 
 if (failures.length) {

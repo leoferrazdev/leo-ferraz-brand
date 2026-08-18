@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0.0",
   "brand_system": "1.0.0",
-  "signature_system": "Editorial Tech Lockup",
+  "signature_system": "Constructed LF Lockup",
   "source_tag": "v1.0.0",
   "source_commit": "b2ae95cca8d6b62c6579c415113852b8ef8c8b09",
   "status": "approved",
@@ -11,13 +11,17 @@
       "id": "leo-ferraz-wordmark",
       "platform": "all",
       "role": "signature",
-      "width": 282,
-      "height": 77,
-      "dimensions": "282x77",
+      "width": 402,
+      "height": 133,
+      "dimensions": "402x133",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
       "usage": "primary authorship layer",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg",
       "status": "approved"
@@ -26,29 +30,75 @@
       "id": "leo-ferraz-wordmark-dark",
       "platform": "all",
       "role": "signature",
-      "width": 282,
-      "height": 77,
-      "dimensions": "282x77",
+      "width": 402,
+      "height": 133,
+      "dimensions": "402x133",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
-      "usage": "primary authorship layer",
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "primary authorship layer on light backgrounds",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-dark.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-logo-horizontal",
+      "platform": "all",
+      "role": "signature",
+      "width": 402,
+      "height": 133,
+      "dimensions": "402x133",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "canonical horizontal logo",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-logo-horizontal-dark",
+      "platform": "all",
+      "role": "signature",
+      "width": 402,
+      "height": 133,
+      "dimensions": "402x133",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "canonical horizontal logo on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal-dark.svg",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-building-with-ai",
       "platform": "all",
       "role": "signature",
-      "width": 282,
-      "height": 106,
-      "dimensions": "282x106",
+      "width": 402,
+      "height": 162,
+      "dimensions": "402x162",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
-      "usage": "primary authorship layer",
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "descriptor lockup",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-building-with-ai.svg",
       "status": "approved"
     },
@@ -56,44 +106,94 @@
       "id": "leo-ferraz-institutional",
       "platform": "all",
       "role": "signature",
-      "width": 282,
-      "height": 131,
-      "dimensions": "282x131",
+      "width": 402,
+      "height": 187,
+      "dimensions": "402x187",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
-      "usage": "primary authorship layer",
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "institutional lockup",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-institutional.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-symbol",
+      "platform": "all",
+      "role": "primary symbol",
+      "width": 80,
+      "height": 80,
+      "dimensions": "80x80",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "avatar, favicon and compact contexts",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-symbol.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-symbol-dark",
+      "platform": "all",
+      "role": "primary symbol",
+      "width": 80,
+      "height": 80,
+      "dimensions": "80x80",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "compact contexts on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-symbol-dark.svg",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-lf",
       "platform": "all",
-      "role": "secondary utility mark",
-      "width": 67,
-      "height": 77,
-      "dimensions": "67x77",
+      "role": "legacy compatibility alias",
+      "width": 80,
+      "height": 80,
+      "dimensions": "80x80",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
-      "usage": "compact contexts only",
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "compatibility path; content is the Constructed LF symbol",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-lf.svg",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-lf-dark",
       "platform": "all",
-      "role": "secondary utility mark",
-      "width": 67,
-      "height": 77,
-      "dimensions": "67x77",
+      "role": "legacy compatibility alias",
+      "width": 80,
+      "height": 80,
+      "dimensions": "80x80",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
-      "usage": "compact contexts only",
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "compatibility path; content is the Constructed LF symbol",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-lf-dark.svg",
       "status": "approved"
     },
@@ -102,12 +202,16 @@
       "platform": "all",
       "role": "transparent wordmark export",
       "width": 512,
-      "height": 140,
-      "dimensions": "512x140",
+      "height": 170,
+      "dimensions": "512x170",
       "format": "PNG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
       "usage": "upload or composition",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-512.png",
       "status": "approved"
@@ -117,12 +221,16 @@
       "platform": "all",
       "role": "transparent wordmark export",
       "width": 1024,
-      "height": 280,
-      "dimensions": "1024x280",
+      "height": 339,
+      "dimensions": "1024x339",
       "format": "PNG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
       "usage": "upload or composition",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-1024.png",
       "status": "approved"
@@ -132,12 +240,16 @@
       "platform": "all",
       "role": "transparent wordmark export",
       "width": 2048,
-      "height": 560,
-      "dimensions": "2048x560",
+      "height": 678,
+      "dimensions": "2048x678",
       "format": "PNG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
       "usage": "upload or composition",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-2048.png",
       "status": "approved"
@@ -153,6 +265,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 164,
+        "y": 164,
+        "width": 696,
+        "height": 696
+      },
       "usage": "profile avatar master",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-square.svg",
       "status": "approved"
@@ -168,6 +287,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 164,
+        "y": 164,
+        "width": 696,
+        "height": 696
+      },
       "usage": "circle crop validation only",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-circle.svg",
       "status": "approved"
@@ -183,6 +309,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 3,
+        "y": 3,
+        "width": 11,
+        "height": 11
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-16.png",
       "status": "approved"
@@ -198,6 +331,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 5,
+        "y": 5,
+        "width": 22,
+        "height": 22
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-32.png",
       "status": "approved"
@@ -213,6 +353,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 8,
+        "y": 8,
+        "width": 33,
+        "height": 33
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-48.png",
       "status": "approved"
@@ -228,6 +375,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 10,
+        "y": 10,
+        "width": 44,
+        "height": 44
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-64.png",
       "status": "approved"
@@ -243,6 +397,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 20,
+        "y": 20,
+        "width": 87,
+        "height": 87
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-128.png",
       "status": "approved"
@@ -258,6 +419,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 41,
+        "y": 41,
+        "width": 174,
+        "height": 174
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-256.png",
       "status": "approved"
@@ -273,6 +441,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 82,
+        "y": 82,
+        "width": 348,
+        "height": 348
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-512.png",
       "status": "approved"
@@ -288,6 +463,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 164,
+        "y": 164,
+        "width": 696,
+        "height": 696
+      },
       "usage": "profile upload or small-size validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-1024.png",
       "status": "approved"
@@ -303,6 +485,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 164,
+        "y": 164,
+        "width": 696,
+        "height": 696
+      },
       "usage": "platform crop validation",
       "export_path": "brand-assets/exports/day-1/01-profile/avatar-circle-1024.png",
       "status": "approved"
@@ -318,6 +507,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 3,
+        "y": 3,
+        "width": 11,
+        "height": 11
+      },
       "usage": "browser favicon",
       "export_path": "brand-assets/exports/day-1/06-web/favicon-16x16.png",
       "status": "approved"
@@ -333,6 +529,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 5,
+        "y": 5,
+        "width": 22,
+        "height": 22
+      },
       "usage": "browser favicon",
       "export_path": "brand-assets/exports/day-1/06-web/favicon-32x32.png",
       "status": "approved"
@@ -348,6 +551,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 8,
+        "y": 8,
+        "width": 33,
+        "height": 33
+      },
       "usage": "browser favicon",
       "export_path": "brand-assets/exports/day-1/06-web/favicon-48x48.png",
       "status": "approved"
@@ -363,6 +573,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 8,
+        "y": 8,
+        "width": 33,
+        "height": 33
+      },
       "usage": "legacy browser favicon",
       "export_path": "brand-assets/exports/day-1/06-web/favicon.ico",
       "status": "approved"
@@ -378,6 +595,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 29,
+        "y": 29,
+        "width": 122,
+        "height": 122
+      },
       "usage": "web installation or shortcut",
       "export_path": "brand-assets/exports/day-1/06-web/apple-touch-icon.png",
       "status": "approved"
@@ -393,6 +617,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 31,
+        "y": 31,
+        "width": 131,
+        "height": 131
+      },
       "usage": "web installation or shortcut",
       "export_path": "brand-assets/exports/day-1/06-web/icon-192.png",
       "status": "approved"
@@ -408,6 +639,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 82,
+        "y": 82,
+        "width": 348,
+        "height": 348
+      },
       "usage": "web installation or shortcut",
       "export_path": "brand-assets/exports/day-1/06-web/icon-512.png",
       "status": "approved"
@@ -423,6 +661,9 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "metadata-only"
+      },
       "usage": "web app metadata",
       "export_path": "brand-assets/exports/day-1/06-web/site.webmanifest",
       "status": "approved"
@@ -438,6 +679,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 508,
+        "y": 508,
+        "width": 1544,
+        "height": 423
+      },
       "usage": "channel upload source",
       "export_path": "brand-assets/exports/day-1/02-channels/youtube-banner-2560x1440.svg",
       "status": "approved"
@@ -453,6 +701,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 508,
+        "y": 508,
+        "width": 1544,
+        "height": 423
+      },
       "usage": "channel upload",
       "export_path": "brand-assets/exports/day-1/02-channels/youtube-banner-2560x1440.png",
       "status": "approved"
@@ -468,6 +723,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 48,
+        "y": 48,
+        "width": 1050,
+        "height": 300
+      },
       "usage": "channel upload source",
       "export_path": "brand-assets/exports/day-1/02-channels/twitch-banner-1200x480.svg",
       "status": "approved"
@@ -483,6 +745,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 48,
+        "y": 48,
+        "width": 1050,
+        "height": 300
+      },
       "usage": "channel upload",
       "export_path": "brand-assets/exports/day-1/02-channels/twitch-banner-1200x480.png",
       "status": "approved"
@@ -498,6 +767,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 86,
+        "y": 108,
+        "width": 907,
+        "height": 1134
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-carousel-cover-1080x1350.svg",
       "status": "approved"
@@ -513,6 +789,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 86,
+        "y": 108,
+        "width": 907,
+        "height": 1134
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-carousel-cover-1080x1350.png",
       "status": "approved"
@@ -528,6 +811,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 108,
+        "y": 230,
+        "width": 864,
+        "height": 1459
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-story-reels-1080x1920.svg",
       "status": "approved"
@@ -543,6 +833,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 108,
+        "y": 230,
+        "width": 864,
+        "height": 1459
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-story-reels-1080x1920.png",
       "status": "approved"
@@ -558,6 +855,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 102,
+        "y": 58,
+        "width": 1075,
+        "height": 605
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-1280x720.svg",
       "status": "approved"
@@ -573,6 +877,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 102,
+        "y": 58,
+        "width": 1075,
+        "height": 605
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-1280x720.png",
       "status": "approved"
@@ -588,6 +899,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 307,
+        "y": 173,
+        "width": 3226,
+        "height": 1814
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-master-3840x2160.svg",
       "status": "approved"
@@ -603,6 +921,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 307,
+        "y": 173,
+        "width": 3226,
+        "height": 1814
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-master-3840x2160.png",
       "status": "approved"
@@ -618,6 +943,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 42,
+        "y": 78,
+        "width": 336,
+        "height": 497
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-reels-cover-420x654.svg",
       "status": "approved"
@@ -633,6 +965,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 42,
+        "y": 78,
+        "width": 336,
+        "height": 497
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/04-social/instagram-reels-cover-420x654.png",
       "status": "approved"
@@ -648,6 +987,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 86,
+        "y": 86,
+        "width": 907,
+        "height": 907
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/04-social/social-square-1080x1080.svg",
       "status": "approved"
@@ -663,6 +1009,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 86,
+        "y": 86,
+        "width": 907,
+        "height": 907
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/04-social/social-square-1080x1080.png",
       "status": "approved"
@@ -678,6 +1031,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 96,
+        "y": 50,
+        "width": 1008,
+        "height": 529
+      },
       "usage": "editable template source",
       "export_path": "brand-assets/exports/day-1/06-web/open-graph-1200x630.svg",
       "status": "approved"
@@ -693,6 +1053,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 96,
+        "y": 50,
+        "width": 1008,
+        "height": 529
+      },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/06-web/open-graph-1200x630.png",
       "status": "approved"
@@ -708,6 +1075,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 102,
+        "y": 58,
+        "width": 1075,
+        "height": 605
+      },
       "usage": "clearly demonstrative example only",
       "export_path": "brand-assets/exports/day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png",
       "status": "approved"
@@ -723,6 +1097,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
       "usage": "OBS scene background",
       "export_path": "brand-assets/exports/day-1/03-live/obs/starting-soon-1920x1080.png",
       "status": "approved"
@@ -738,6 +1119,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
       "usage": "OBS scene background",
       "export_path": "brand-assets/exports/day-1/03-live/obs/live-main-1920x1080.png",
       "status": "approved"
@@ -753,6 +1141,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
       "usage": "OBS scene background",
       "export_path": "brand-assets/exports/day-1/03-live/obs/be-right-back-1920x1080.png",
       "status": "approved"
@@ -768,6 +1163,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
       "usage": "OBS scene background",
       "export_path": "brand-assets/exports/day-1/03-live/obs/stream-ending-1920x1080.png",
       "status": "approved"
@@ -783,6 +1185,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "#0D1117",
       "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
       "usage": "OBS scene background",
       "export_path": "brand-assets/exports/day-1/03-live/obs/offline-1920x1080.png",
       "status": "approved"
@@ -798,6 +1207,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 16,
+        "y": 16,
+        "width": 448,
+        "height": 64
+      },
       "usage": "corner overlay; use only when authorship needs a signal",
       "export_path": "brand-assets/exports/day-1/03-live/brand-bug.png",
       "status": "approved"
@@ -813,6 +1229,13 @@
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
       "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 16,
+        "y": 16,
+        "width": 928,
+        "height": 128
+      },
       "usage": "static OBS overlay",
       "export_path": "brand-assets/exports/day-1/03-live/lower-third.png",
       "status": "approved"

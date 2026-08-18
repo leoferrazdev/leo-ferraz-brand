@@ -104,4 +104,3 @@
 - The plan covers canonical decisions, source data, tokens, vector generation, website projection, safe zones, validation, Obsidian, Git and deployment.
 - No placeholder decision remains.
 - Unrelated homepage files remain explicitly outside the staged scope.
-
