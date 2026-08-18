@@ -103,9 +103,9 @@ Tracking:
 
 The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The full name stays direct and legible while reading as one mark with the symbol.
 
-### Accent underline variant
+### Public accent underline
 
-An optional emphasis variant adds a flat functional underline only beneath `Leo Ferraz`:
+The public lockup uses a flat functional underline only beneath `Leo Ferraz`:
 
 ```text
 Line:
@@ -118,7 +118,7 @@ Offset:
 8px below baseline
 ```
 
-This treatment is an alternate export, not the default signature. It may be used when a composition needs a controlled blue product-state signal. It must not receive glow, blur, gradient, animation, dark-blue track or increased thickness, and it never extends beneath the symbol.
+This treatment is the default for public wordmark, descriptor, institutional, channel, social and live exports. The unlined geometry is retained only as an internal construction reference; delivery assets must use the underlined lockup whenever the full name is present. It must not receive glow, blur, gradient, animation, dark-blue track or increased thickness, and it never extends beneath the symbol.
 
 ## Descriptor and institutional lockups
 
@@ -198,7 +198,7 @@ leo-ferraz-wordmark.svg:
 compatibility alias for the primary hybrid logo
 
 leo-ferraz-wordmark-underline.svg:
-optional accent underline variant
+accent underline compatibility alias for the public lockup
 
 avatar-*:
 Constructed LF symbol

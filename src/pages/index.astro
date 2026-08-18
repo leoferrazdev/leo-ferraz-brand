@@ -1,9 +1,8 @@
 ---
-// site_stage: foundation
-// This is an initial public web shell, not the final editorial homepage.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
+import BrandSignature from '../components/brand/BrandSignature.astro';
 import '../styles/global.css';
 ---
 
@@ -15,15 +14,13 @@ import '../styles/global.css';
 
   <main id="content" class="shell-width home-shell">
     <section class="hero-block" aria-labelledby="home-title">
-      <p class="eyebrow">Building with AI</p>
-      <h1 id="home-title">Leo Ferraz</h1>
-      <p class="hero-descriptor">Building with AI</p>
+      <p class="eyebrow">AI-NATIVE PRODUCT LAB</p>
+      <BrandSignature variant="institutional" />
+      <h1 id="home-title">Construindo produtos reais com IA.</h1>
       <div class="bio-block">
-        <p>Construindo produtos reais com IA.</p>
         <p>SaaS · Apps · Jogos · Experimentos</p>
         <p>Documentando a jornada.</p>
       </div>
-      <p class="category-label">AI-Native Product Lab</p>
     </section>
 
     <nav class="quiet-navigation" aria-label="Navegação principal">

@@ -132,12 +132,19 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   return { width, height, svg: svgDocument(title, width, height, body, { background }) };
 }
 
-function compactLogoBody({ x, baseline, textSize, primary = colors.text, accent = colors.accent, monochrome = false }) {
+function compactLogoBody({ x, baseline, textSize, primary = colors.text, accent = colors.accent, monochrome = false, underline = true }) {
   const symbolSize = textSize;
   const gap = Math.max(8, Math.round(textSize * 0.22));
   const capHeight = signatureFont.capHeight ?? signatureFont.ascent * 0.7;
   const symbolY = number(baseline - capHeight * fontScale(textSize, signatureFont) - symbolSize * 8 / 64);
-  return `${constructedLfSymbolSvg({ x, y: symbolY, size: symbolSize, primary, accent, monochrome })}${outlinedText(content.brand, { size: textSize, tracking: -0.035, x: x + symbolSize + gap, baseline, fill: primary, fontFace: signatureFont })}`;
+  const wordmarkX = x + symbolSize + gap;
+  const wordmarkWidth = measureText(content.brand, textSize, -0.035, signatureFont);
+  const underlineY = number(baseline + Math.max(6, Math.round(textSize * 0.14)));
+  const underlineSvg = underline ? [
+    `<rect data-accent="underline-line" x="${wordmarkX}" y="${underlineY}" width="${wordmarkWidth}" height="2" fill="${colors.accent}"/>`,
+    `<rect data-accent="underline-terminal" x="${number(wordmarkX + wordmarkWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
+  ].join('') : '';
+  return `${constructedLfSymbolSvg({ x, y: symbolY, size: symbolSize, primary, accent, monochrome })}${outlinedText(content.brand, { size: textSize, tracking: -0.035, x: wordmarkX, baseline, fill: primary, fontFace: signatureFont })}${underlineSvg}`;
 }
 
 function svgDocument(title, width, height, body, { background = null } = {}) {
@@ -151,18 +158,16 @@ function textElement(text, x, y, { size = 28, fill = colors.text, family = 'IBM 
 
 function socialSvg(title, width, height, { label, headline, state = 'CONTENT SLOT', safeZone = null } = {}) {
   const safe = safeZone ?? { x: Math.round(width * 0.1), y: Math.round(height * 0.1), width: Math.round(width * 0.8), height: Math.round(height * 0.8) };
-  const line = Math.max(6, Math.round(width * 0.012));
   const contentX = safe.x + Math.max(18, Math.round(width * 0.018));
   const contentRight = safe.x + safe.width - Math.max(18, Math.round(width * 0.018));
   const markSize = Math.max(26, Math.round(width * 0.065));
-  const mark = compactLogoBody({ x: contentX, baseline: safe.y + Math.round(safe.height * 0.2), textSize: markSize });
+  const mark = compactLogoBody({ x: contentX, baseline: safe.y + Math.round(safe.height * 0.2), textSize: markSize, underline: true });
   const labelY = safe.y + Math.round(safe.height * 0.31);
   const headlineY = safe.y + Math.round(safe.height * 0.53);
   const artifactY = safe.y + Math.round(safe.height * 0.65);
   const stateY = safe.y + Math.round(safe.height * 0.82);
   const descriptorY = safe.y + safe.height - Math.max(12, Math.round(width * 0.018));
   const body = [
-    `<rect x="${safe.x + Math.round(line / 2)}" y="${safe.y + Math.round(safe.height * 0.14)}" width="${line}" height="${Math.round(safe.height * 0.62)}" fill="${colors.accent}"/>`,
     mark,
     textElement(label, contentX, labelY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.accent, letterSpacing: 0.075 }),
     textElement(headline, contentX, headlineY, { size: Math.max(30, Math.round(width * 0.07)), weight: 500 }),
@@ -181,7 +186,7 @@ function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeH
   const symbolGap = 18;
   const wordmarkWidth = measureText(content.brand, 78, -0.035, signatureFont);
   const wordmarkStart = leftAligned ? x : x - (symbolSize + symbolGap + wordmarkWidth) / 2;
-  const wordmark = compactLogoBody({ x: wordmarkStart, baseline: y, textSize: symbolSize });
+  const wordmark = compactLogoBody({ x: wordmarkStart, baseline: y, textSize: symbolSize, underline: true });
   const body = [
     wordmark,
     textElement(content.descriptor, x, y + 68, { size: 28, family: 'IBM Plex Mono', fill: colors.secondary, anchor }),
@@ -321,19 +326,19 @@ async function main() {
   fs.writeFileSync(path.join(exportsRoot, 'README.md'), exportReadme);
 
   if (content.signatureSymbol !== 'constructed-lf') throw new Error('Unsupported signature symbol source.');
-  const wordmark = hybridLogoSvg('Leo Ferraz primary logo', [{ text: content.brand, size: 58, tracking: -0.035 }]);
-  const wordmarkDark = hybridLogoSvg('Leo Ferraz primary logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true });
-  const wordmarkUnderline = hybridLogoSvg('Leo Ferraz accent underline logo', [{ text: content.brand, size: 58, tracking: -0.035 }], { underline: true });
-  const wordmarkUnderlineDark = hybridLogoSvg('Leo Ferraz accent underline logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true, underline: true });
+  const wordmark = hybridLogoSvg('Leo Ferraz primary logo', [{ text: content.brand, size: 58, tracking: -0.035 }], { underline: true });
+  const wordmarkDark = hybridLogoSvg('Leo Ferraz primary logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true, underline: true });
+  const wordmarkUnderline = wordmark;
+  const wordmarkUnderlineDark = wordmarkDark;
   const descriptor = hybridLogoSvg('Leo Ferraz descriptor lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
-  ]);
+  ], { underline: true });
   const institutional = hybridLogoSvg('Leo Ferraz institutional lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
     { text: content.category, size: 14, tracking: 0, fill: colors.experimental },
-  ]);
+  ], { underline: true });
   const symbol = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64 })) };
   const symbolDark = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol dark', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64, primary: colors.background, accent: colors.background, monochrome: true })) };
 
@@ -342,8 +347,8 @@ async function main() {
     ['leo-ferraz-wordmark-dark.svg', wordmarkDark, 'signature', 'primary authorship layer on light backgrounds'],
     ['leo-ferraz-logo-horizontal.svg', wordmark, 'signature', 'canonical horizontal logo'],
     ['leo-ferraz-logo-horizontal-dark.svg', wordmarkDark, 'signature', 'canonical horizontal logo on light backgrounds'],
-    ['leo-ferraz-wordmark-underline.svg', wordmarkUnderline, 'signature', 'optional accent underline variant'],
-    ['leo-ferraz-wordmark-underline-dark.svg', wordmarkUnderlineDark, 'signature', 'optional accent underline variant on light backgrounds'],
+    ['leo-ferraz-wordmark-underline.svg', wordmarkUnderline, 'signature', 'accent underline compatibility alias'],
+    ['leo-ferraz-wordmark-underline-dark.svg', wordmarkUnderlineDark, 'signature', 'accent underline compatibility alias on light backgrounds'],
     ['leo-ferraz-building-with-ai.svg', descriptor, 'signature', 'descriptor lockup'],
     ['leo-ferraz-institutional.svg', institutional, 'signature', 'institutional lockup'],
     ['leo-ferraz-symbol.svg', symbol, 'primary symbol', 'avatar, favicon and compact contexts'],
@@ -469,7 +474,7 @@ async function main() {
     fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.svg`), path.join(root, 'live', 'obs', `${name}.svg`));
     register({ id: name, platform: 'OBS', role: `live scene ${headline.toLowerCase()}`, relative: `day-1/03-live/obs/${name}.png`, width: 1920, height: 1080, format: 'PNG', transparency: false, usage: 'OBS scene background' });
   }
-  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, compactLogoBody({ x: 16, baseline: 64, textSize: 48 }));
+  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, compactLogoBody({ x: 16, baseline: 64, textSize: 48, underline: true }));
   await writeSvg('day-1/03-live/brand-bug.svg', bugSvg);
   await writePng('day-1/03-live/brand-bug.png', bugSvg, 480, 96, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'brand-bug.png'));
@@ -479,8 +484,8 @@ async function main() {
   const lower = hybridLogoSvg('Leo Ferraz lower third', [
     { text: content.brand, size: 34, tracking: -0.035, fill: colors.text },
     { text: content.descriptor, size: 16, tracking: 0, fill: colors.secondary },
-  ], { padding: 16, symbolSize: 64, symbolGap: 16, lineGap: 4 });
-  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, `<rect x="0" y="0" width="8" height="160" fill="${colors.accent}"/><g transform="translate(24 16)">${outlinedBody(lower.svg)}</g>`);
+  ], { padding: 16, symbolSize: 64, symbolGap: 16, lineGap: 4, underline: true });
+  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, `<g transform="translate(24 16)">${outlinedBody(lower.svg)}</g>`);
   await writeSvg('day-1/03-live/lower-third.svg', lowerSvg);
   await writePng('day-1/03-live/lower-third.png', lowerSvg, 960, 160, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'lower-third.png'));

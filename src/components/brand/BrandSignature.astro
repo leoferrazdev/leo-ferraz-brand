@@ -1,11 +1,13 @@
 ---
 interface Props {
   variant?: 'wordmark' | 'accent' | 'descriptor' | 'institutional' | 'symbol' | 'utility';
+  underline?: boolean;
   class?: string;
 }
 
-const { variant = 'wordmark', class: className = '' } = Astro.props;
+const { variant = 'wordmark', underline = false, class: className = '' } = Astro.props;
 const symbolOnly = variant === 'symbol' || variant === 'utility';
+const hasUnderline = !symbolOnly && (underline || variant === 'accent' || variant === 'descriptor' || variant === 'institutional');
 const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : variant}`, className].filter(Boolean).join(' ');
 ---
 
@@ -20,7 +22,7 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
     {!symbolOnly ? (
       <span class="brand-signature__name-block">
         <span class="brand-signature__name">Leo Ferraz</span>
-        {variant === 'accent' ? (
+        {hasUnderline ? (
           <span class="brand-signature__accent-underline" aria-hidden="true">
             <span class="brand-signature__accent-terminal"></span>
           </span>
@@ -60,7 +62,7 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
   .brand-signature__name {
     font-family: var(--lf-font-family-sans);
     font-size: var(--lf-type-display-size-large);
-    font-weight: var(--lf-type-display-weight);
+    font-weight: var(--lf-signature-wordmark-weight);
     letter-spacing: var(--lf-type-display-tracking);
     line-height: var(--lf-type-display-line-height);
   }

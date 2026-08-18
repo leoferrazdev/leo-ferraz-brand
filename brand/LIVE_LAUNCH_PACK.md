@@ -89,6 +89,8 @@ Estas são regras operacionais dos templates, não novas regras universais do Br
 - artifact: ocupa o slot principal disponível e não é coberto pela assinatura;
 - signature: permanece subordinada ao artifact e usa `Leo Ferraz` quando houver espaço;
 - `Constructed LF`: isolado somente em avatar, favicon ou contexto realmente compacto;
+- `Leo Ferraz`: usar o lockup híbrido com underline funcional nas aplicações públicas; o underline fica somente sob o wordmark;
+- não usar barra azul vertical junto ao lockup; sinais de autoria devem respeitar a área segura e o underline do sistema;
 - fontes: somente IBM Plex Sans e IBM Plex Mono;
 - cor: somente tokens aprovados, sem glow, gradient ou efeito decorativo;
 - live canvas: 1920×1080; identidade ocupa somente a camada de autoria;

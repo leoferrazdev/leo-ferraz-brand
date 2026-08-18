@@ -60,6 +60,10 @@ for (const id of ['leo-ferraz-wordmark-underline', 'leo-ferraz-wordmark-underlin
   const source = fs.readFileSync(path.join(root, asset.export_path), 'utf8');
   for (const part of ['underline-line', 'underline-terminal']) if (!source.includes(`data-accent="${part}"`)) fail(`${id}: ${part} is missing`);
 }
+for (const asset of manifest.assets.filter((candidate) => candidate.format === 'SVG' && candidate.role === 'signature')) {
+  const source = fs.readFileSync(path.join(root, asset.export_path), 'utf8');
+  for (const part of ['underline-line', 'underline-terminal']) if (!source.includes(`data-accent="${part}"`)) fail(`${asset.id}: public signature underline is missing`);
+}
 
 if (failures.length) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join('\n'));
