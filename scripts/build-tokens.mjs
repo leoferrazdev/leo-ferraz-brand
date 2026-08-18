@@ -110,6 +110,9 @@ for (const [name, value] of [
   ['signature-wordmark-clear-space', get('signature.wordmark.clearSpace')],
   ['signature-utility-mark-minimum-box', get('signature.utilityMark.minimumBox')],
   ['signature-utility-mark-clear-space', get('signature.utilityMark.clearSpace')],
+  ['signature-marker-size', get('signature.marker.size')],
+  ['signature-marker-gap', get('signature.marker.gap')],
+  ['signature-marker-color', get('signature.marker.color')],
 ]) add(lines, name, value);
 
 for (const [role, values] of Object.entries(tokens.typography.role)) {

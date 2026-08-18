@@ -43,7 +43,7 @@ Visual Foundations:
 Modular / Product
 
 Signature:
-Pure / Editorial
+Editorial Tech Lockup
 ```
 
 ## Principles

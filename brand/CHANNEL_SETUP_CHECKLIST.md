@@ -18,7 +18,7 @@ brand-assets/exports/day-1/01-profile/avatar-1024.png
 Avatar compact:
 brand-assets/exports/day-1/01-profile/avatar-256.png
 
-Primary wordmark:
+Primary wordmark (Editorial Tech Lockup):
 brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg
 
 LF utility:

@@ -12,7 +12,10 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
   {variant === 'utility' ? (
     <span class="brand-signature__utility" aria-label="Leo Ferraz secondary utility mark">LF</span>
   ) : (
-    <span class="brand-signature__name">Leo Ferraz</span>
+    <span class="brand-signature__primary">
+      <span class="brand-signature__marker" aria-hidden="true"></span>
+      <span class="brand-signature__name">Leo Ferraz</span>
+    </span>
   )}
   {variant === 'descriptor' || variant === 'institutional' ? <span class="brand-signature__descriptor">Building with AI</span> : null}
   {variant === 'institutional' ? <span class="brand-signature__category">AI-Native Product Lab</span> : null}
@@ -32,6 +35,20 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
     font-weight: var(--lf-type-display-weight);
     letter-spacing: var(--lf-type-display-tracking);
     line-height: var(--lf-type-display-line-height);
+  }
+
+  .brand-signature__primary {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--lf-signature-marker-gap);
+  }
+
+  .brand-signature__marker {
+    flex: 0 0 var(--lf-signature-marker-size);
+    width: var(--lf-signature-marker-size);
+    height: var(--lf-signature-marker-size);
+    margin-top: 0.32em;
+    background: var(--lf-signature-marker-color);
   }
 
   .brand-signature__descriptor,
@@ -64,5 +81,10 @@ const classes = ['brand-signature', `brand-signature--${variant}`, className].fi
 
   @media (max-width: 767px) {
     .brand-signature__name { font-size: var(--lf-type-display-size-small); }
+    .brand-signature__marker {
+      width: 6px;
+      height: 6px;
+      flex-basis: 6px;
+    }
   }
 </style>

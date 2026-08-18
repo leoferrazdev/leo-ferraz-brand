@@ -2,7 +2,7 @@
 title: Editorial Tech Lockup Signature
 date: 2026-08-18
 document_type: design-specification
-status: review
+status: approved
 scope: signature-application-and-canonical-review
 source_brand_system: v1.0.0
 ---
@@ -17,7 +17,7 @@ A revisão humana selecionou a direção de exploração:
 Option C — Editorial Tech Lockup
 ```
 
-Esta seleção inicia a formalização de uma nova assinatura candidata. Ela ainda não altera o estado `approved` de `brand/SIGNATURE.md` nem substitui `Pure / Editorial` até que a implementação determinística e a revisão canônica sejam concluídas.
+Esta especificação formaliza a promoção da assinatura selecionada. Ela preserva os valores canônicos de identidade e define a implementação determinística do novo lockup sem criar símbolo, monograma ou copy nova.
 
 ## Intent
 
@@ -154,7 +154,7 @@ Não alterar nesta etapa:
 - copy canônica;
 - domínio, handle ou categoria institucional.
 
-A promoção de `Pure / Editorial` para `Editorial Tech Lockup` só poderá ocorrer após:
+A promoção de `Pure / Editorial` para `Editorial Tech Lockup` foi executada com:
 
 1. implementação da opção candidata;
 2. validação de assinatura, cor, tipografia, SVG, PNG e pequenos tamanhos;
@@ -175,4 +175,4 @@ A promoção de `Pure / Editorial` para `Editorial Tech Lockup` só poderá ocor
 
 ## Next Gate
 
-Esta especificação aguarda revisão humana escrita antes da criação do plano de implementação. A seleção visual de Option C não constitui, isoladamente, publicação da nova assinatura canônica.
+O fundador selecionou Option C — Editorial Tech Lockup. A especificação está aprovada para implementação determinística, com promoção simultânea nos documentos canônicos `brand/SIGNATURE.md` e `brand/SIGNATURE_OPTIONS.md`.

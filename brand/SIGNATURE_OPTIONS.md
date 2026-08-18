@@ -1,12 +1,12 @@
 ---
 document: SIGNATURE_OPTIONS
 brand: Leo Ferraz
-version: 0.1.0
+version: 0.2.0
 status: approved
 authority: Leo Ferraz
 exploration_status: completed
 decision_status: selected
-selected_option: Pure / Editorial
+selected_option: Editorial Tech Lockup
 selection_authority: Leo Ferraz
 depends_on:
   - BRAND_FOUNDATION.md
@@ -19,7 +19,7 @@ depends_on:
 
 # Signature Options
 
-Este documento registra uma exploração visual determinística da assinatura institucional da Master Brand. A exploração comparou três territórios de wordmark e preserva a evidência da revisão que levou à seleção de Pure / Editorial, sem criar um logotipo ilustrativo ou um monograma canônico.
+Este documento registra uma exploração visual determinística da assinatura institucional da Master Brand. A exploração comparou três territórios de wordmark e preserva a evidência da revisão que levou à seleção de Editorial Tech Lockup, sem criar um logotipo ilustrativo ou um monograma canônico.
 
 ## Identidade compartilhada
 
@@ -117,14 +117,14 @@ can read as a generic product system if the rule becomes decorative
 
 The structure is produced by spacing, alignment, typography and border; it does not require a symbol.
 
-## Option C — Signature / System
+## Option C — Editorial Tech Lockup
 
 ```text
 character:
 distinct · compact · systematic · recognizable · controlled
 
 construction:
-typographic signature with a small structural marker and Sans/Mono contrast
+typographic signature with a small removable structural marker and Sans/Mono contrast
 
 wordmark_weight:
 500
@@ -136,13 +136,13 @@ descriptor_treatment:
 compact mono descriptor with an institutional micro-label
 
 principal_strength:
-strong repeatable construction at compact functional sizes
+strong repeatable construction at compact functional sizes without introducing a symbol
 
 principal_risk:
 can become overly system-like if the marker or metadata dominates the name
 ```
 
-The marker is a functional structural test only. It is not an abstract AI symbol, a logo or a decision.
+The marker is the approved functional structural cue. It is a square measuring 8px, uses `#4DA3FF` only as a contextual accent, is removable in compact contexts and is not an abstract AI symbol, a logo or a monogram.
 
 ## Required specimen contexts
 
@@ -218,7 +218,7 @@ The artifact remains visually dominant. The signature is evaluated as authorship
 
 Ratings are review observations, not approval states.
 
-| Criterion | Pure / Editorial | Structured / Product | Signature / System |
+| Criterion | Pure / Editorial | Structured / Product | Editorial Tech Lockup |
 |---|---|---|---|
 | Generic Personal Brand Risk | low — name-led | low — structure adds specificity | low — repeatable system |
 | Corporate Risk | low — human name | medium — rule can formalize | medium — metadata can institutionalize |
@@ -269,19 +269,22 @@ signature_status:
 approved
 
 selected_option:
-Pure / Editorial
+Editorial Tech Lockup
 
 selection_authority:
 Leo Ferraz
 
 Pure / Editorial:
-selection_status: selected
+selection_status: historical
 
 Structured / Product:
-selection_status: not_selected
+selection_status: historical
 
-Signature / System:
-selection_status: not_selected
+Editorial Tech Lockup:
+selection_status: selected
+
+structural_marker:
+approved · square · 8px · #4DA3FF · removable
 
 monogram_decision:
 not_defined
@@ -296,4 +299,4 @@ tokens:
 not_created
 ```
 
-The selection records the founder's approval of Pure / Editorial. The other options remain historical exploration evidence and are not selected; they are not classified as rejected, failed, invalid or deprecated.
+The selection records the founder's approval of Editorial Tech Lockup. The other options remain historical exploration evidence and are not selected; they are not classified as rejected, failed, invalid or deprecated.

@@ -41,6 +41,11 @@ const identityFiles = manifest.assets.filter((asset) => asset.format === 'SVG' &
 if (identityFiles.some((asset) => /<text\b/i.test(fs.readFileSync(path.join(root, asset.export_path), 'utf8')))) fail('identity outlines: <text> found');
 if (manifest.status !== 'approved') fail(`manifest status is ${manifest.status}`);
 if (manifest.source_tag !== 'v1.0.0') fail(`source tag is ${manifest.source_tag}`);
+if (manifest.signature_system !== 'Editorial Tech Lockup') fail(`signature system is ${manifest.signature_system}`);
+for (const asset of manifest.assets.filter((candidate) => candidate.format === 'SVG' && candidate.role === 'signature')) {
+  const source = fs.readFileSync(path.join(root, asset.export_path), 'utf8');
+  if (!source.includes('<rect')) fail(`${asset.id}: structural marker is missing`);
+}
 
 if (failures.length) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join('\n'));

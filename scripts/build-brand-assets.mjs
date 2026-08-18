@@ -71,23 +71,36 @@ function outlinedText(text, { size, tracking = 0, x = 0, baseline = 0, fill = co
   return paths.join('');
 }
 
-function outlinedSvg(title, lines, { padding = 4, gap = 8, background = null } = {}) {
+function signatureMarkerSvg({ x, baseline, textSize, size = 8, fill = colors.accent }) {
+  const y = number(baseline - textSize * 0.68);
+  return `<rect x="${number(x)}" y="${y}" width="${size}" height="${size}" fill="${fill}"/>`;
+}
+
+function signatureOutlinedText(text, { markerSize = 8, markerGap = 8, ...options }) {
+  const marker = signatureMarkerSvg({ x: options.x ?? 0, baseline: options.baseline ?? 0, textSize: options.size, size: markerSize, fill: options.markerFill ?? colors.accent });
+  return `${marker}${outlinedText(text, { ...options, x: (options.x ?? 0) + markerSize + markerGap })}`;
+}
+
+function outlinedSvg(title, lines, { padding = 4, gap = 8, background = null, marker = false, markerFill = colors.accent, markerSize = 8, markerGap = 8 } = {}) {
   const measured = lines.map((line) => ({ ...line, width: measureText(line.text, line.size, line.tracking ?? 0) }));
-  const width = Math.ceil(Math.max(...measured.map((line) => line.width)) + padding * 2);
+  const markerOffset = marker ? markerSize + markerGap : 0;
+  const width = Math.ceil(Math.max(...measured.map((line) => line.width)) + markerOffset + padding * 2);
   const lineHeight = (size) => number(size * 1.18);
   const height = Math.ceil(measured.reduce((sum, line) => sum + lineHeight(line.size), padding * 2 + gap * Math.max(0, measured.length - 1)));
   let top = padding;
   const paths = measured.map((line) => {
     const baseline = top + font.ascent * fontScale(line.size);
-    const result = outlinedText(line.text, { ...line, baseline, x: padding });
+    const result = outlinedText(line.text, { ...line, baseline, x: padding + markerOffset });
     top += lineHeight(line.size) + gap;
     return result;
   }).join('');
+  const firstBaseline = padding + font.ascent * fontScale(measured[0].size);
+  const markerSvg = marker ? signatureMarkerSvg({ x: padding, baseline: firstBaseline, textSize: measured[0].size, size: markerSize, fill: markerFill }) : '';
   const bg = background ? `<rect width="${width}" height="${height}" fill="${background}"/>` : '';
   return {
     width,
     height,
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="title"><title id="title">${escapeXml(title)}</title>${bg}${paths}</svg>`,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="title"><title id="title">${escapeXml(title)}</title>${bg}${markerSvg}${paths}</svg>`,
   };
 }
 
@@ -103,7 +116,7 @@ function textElement(text, x, y, { size = 28, fill = colors.text, family = 'IBM 
 function socialSvg(title, width, height, { label, headline, state = 'CONTENT SLOT', safe = false } = {}) {
   const pad = Math.round(width * 0.075);
   const line = Math.round(width * 0.012);
-  const mark = outlinedText(content.brand, { size: Math.round(width * 0.065), tracking: -0.035, x: pad, baseline: Math.round(height * 0.16), fill: colors.text });
+  const mark = signatureOutlinedText(content.brand, { size: Math.round(width * 0.065), tracking: -0.035, x: pad, baseline: Math.round(height * 0.16), fill: colors.text });
   const safeGuide = safe ? `<rect x="${pad}" y="${Math.round(height * 0.12)}" width="${width - pad * 2}" height="${Math.round(height * 0.76)}" fill="none" stroke="${colors.borderStrong}" stroke-dasharray="8 12"/><text x="${pad}" y="${height - pad * 0.55}" fill="${colors.muted}" font-family="IBM Plex Mono" font-size="${Math.max(14, Math.round(width * 0.012))}px">SAFE AREA — KEEP ESSENTIAL CONTENT INSIDE</text>` : '';
   const body = [
     `<rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" fill="none" stroke="${colors.border}" stroke-width="${line}"/>`,
@@ -123,7 +136,11 @@ function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeH
   const x = leftAligned ? 72 : safeX + safeWidth / 2;
   const anchor = leftAligned ? 'start' : 'middle';
   const y = safeY + 92;
-  const wordmark = outlinedText(content.brand, { size: 78, tracking: -0.035, x: leftAligned ? x : x - measureText(content.brand, 78, -0.035) / 2, baseline: y, fill: colors.text });
+  const markerSize = 8;
+  const markerGap = 8;
+  const wordmarkWidth = measureText(content.brand, 78, -0.035);
+  const wordmarkStart = leftAligned ? x : x - (markerSize + markerGap + wordmarkWidth) / 2;
+  const wordmark = signatureMarkerSvg({ x: wordmarkStart, baseline: y, textSize: 78, size: markerSize, fill: colors.accent }) + outlinedText(content.brand, { size: 78, tracking: -0.035, x: wordmarkStart + markerSize + markerGap, baseline: y, fill: colors.text });
   const body = [
     `<rect x="${safeX}" y="${safeY}" width="${safeWidth}" height="${safeHeight}" fill="none" stroke="${colors.borderStrong}" stroke-dasharray="10 14"/>`,
     wordmark,
@@ -182,9 +199,14 @@ function copyPublic(relative, buffer) {
   fs.writeFileSync(destination, buffer);
 }
 
+function outlinedBody(svg) {
+  return svg.replace(/^.*?<title[^>]*>.*?<\/title>/s, '').replace(/<\/svg>$/s, '');
+}
+
 const manifest = {
   manifest_version: '1.0.0',
   brand_system: '1.0.0',
+  signature_system: 'Editorial Tech Lockup',
   source_tag: 'v1.0.0',
   source_commit: 'b2ae95cca8d6b62c6579c415113852b8ef8c8b09',
   status: 'approved',
@@ -228,17 +250,18 @@ async function main() {
   ].join('\\n') + '\\n';
   fs.writeFileSync(path.join(exportsRoot, 'README.md'), exportReadme);
 
-  const wordmark = outlinedSvg('Leo Ferraz primary wordmark', [{ text: content.brand, size: 58, tracking: -0.035, fill: colors.text }]);
-  const wordmarkDark = outlinedSvg('Leo Ferraz primary wordmark dark', [{ text: content.brand, size: 58, tracking: -0.035, fill: colors.background }]);
+  if (content.signatureMarker !== 'square') throw new Error('Unsupported signature marker source.');
+  const wordmark = outlinedSvg('Leo Ferraz primary wordmark', [{ text: content.brand, size: 58, tracking: -0.035, fill: colors.text }], { marker: true });
+  const wordmarkDark = outlinedSvg('Leo Ferraz primary wordmark dark', [{ text: content.brand, size: 58, tracking: -0.035, fill: colors.background }], { marker: true, markerFill: colors.background });
   const descriptor = outlinedSvg('Leo Ferraz descriptor lockup', [
     { text: content.brand, size: 58, tracking: -0.035, fill: colors.text },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
-  ], { gap: 8 });
+  ], { gap: 8, marker: true });
   const institutional = outlinedSvg('Leo Ferraz institutional lockup', [
     { text: content.brand, size: 58, tracking: -0.035, fill: colors.text },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
     { text: content.category, size: 14, tracking: 0, fill: colors.experimental },
-  ], { gap: 8 });
+  ], { gap: 8, marker: true });
   const utility = outlinedSvg('LF secondary utility mark', [{ text: 'LF', size: 58, tracking: -0.035, fill: colors.text }]);
   const utilityDark = outlinedSvg('LF secondary utility mark dark', [{ text: 'LF', size: 58, tracking: -0.035, fill: colors.background }]);
 
@@ -352,8 +375,8 @@ async function main() {
     fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.svg`), path.join(root, 'live', 'obs', `${name}.svg`));
     register({ id: name, platform: 'OBS', role: `live scene ${headline.toLowerCase()}`, relative: `day-1/03-live/obs/${name}.png`, width: 1920, height: 1080, format: 'PNG', transparency: false, usage: 'OBS scene background' });
   }
-  const bug = outlinedSvg('Leo Ferraz live brand bug', [{ text: content.brand, size: 32, tracking: -0.035, fill: colors.text }]);
-  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, `<g transform="translate(16 24)">${bug.svg.match(/(<path.*)/s)?.[1]?.replace('</svg>', '') ?? ''}</g>`);
+  const bug = outlinedSvg('Leo Ferraz live brand bug', [{ text: content.brand, size: 32, tracking: -0.035, fill: colors.text }], { marker: true });
+  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, `<g transform="translate(16 24)">${outlinedBody(bug.svg)}</g>`);
   await writeSvg('day-1/03-live/brand-bug.svg', bugSvg);
   await writePng('day-1/03-live/brand-bug.png', bugSvg, 480, 96, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'brand-bug.png'));
@@ -363,8 +386,8 @@ async function main() {
   const lower = outlinedSvg('Leo Ferraz lower third', [
     { text: content.brand, size: 34, tracking: -0.035, fill: colors.text },
     { text: content.descriptor, size: 16, tracking: 0, fill: colors.secondary },
-  ], { gap: 4 });
-  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, `<rect x="0" y="0" width="8" height="160" fill="${colors.accent}"/><g transform="translate(32 24)">${lower.svg.match(/(<path.*)/s)?.[1]?.replace('</svg>', '') ?? ''}</g>`);
+  ], { gap: 4, marker: true });
+  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, `<rect x="0" y="0" width="8" height="160" fill="${colors.accent}"/><g transform="translate(32 24)">${outlinedBody(lower.svg)}</g>`);
   await writeSvg('day-1/03-live/lower-third.svg', lowerSvg);
   await writePng('day-1/03-live/lower-third.png', lowerSvg, 960, 160, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'lower-third.png'));

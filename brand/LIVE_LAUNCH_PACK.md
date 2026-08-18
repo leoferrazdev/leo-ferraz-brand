@@ -20,15 +20,15 @@ Source commit: b2ae95cca8d6b62c6579c415113852b8ef8c8b09
 Master Brand: Leo Ferraz
 Descriptor: Building with AI
 Institutional Category: AI-Native Product Lab
-Signature: Pure / Editorial
+Signature: Editorial Tech Lockup
 Typography: Product / Editorial
 Color: Precision / Product
 Visual Foundations: Modular / Product
-Primary Symbol: none
+Primary Symbol: none · structural marker only
 Secondary Utility Mark: LF
 ```
 
-`Leo Ferraz` permanece a assinatura primária. `LF` é somente o utility mark para contextos compactos, como avatar, favicon e bug de transmissão.
+`Leo Ferraz` permanece a assinatura primária. O marcador estrutural quadrado de `8px` usa `#4DA3FF` apenas como sinal funcional e pode ser removido em contextos compactos. `LF` é somente o utility mark para contextos compactos, como avatar, favicon e bug de transmissão.
 
 ## Asset pipeline
 
