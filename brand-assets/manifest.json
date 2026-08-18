@@ -8,9 +8,9 @@
   "generated_by": "scripts/build-brand-assets.mjs",
   "assets": [
     {
-      "id": "leo-ferraz-wordmark",
+      "id": "leo-ferraz-primary-lockup",
       "platform": "all",
-      "role": "signature",
+      "role": "primary lockup",
       "width": 410,
       "height": 137,
       "dimensions": "410x137",
@@ -22,14 +22,14 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "primary authorship layer",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg",
+      "usage": "Constructed LF + Leo Ferraz",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-primary-lockup.svg",
       "status": "approved"
     },
     {
-      "id": "leo-ferraz-wordmark-dark",
+      "id": "leo-ferraz-primary-lockup-dark",
       "platform": "all",
-      "role": "signature",
+      "role": "primary lockup",
       "width": 410,
       "height": 137,
       "dimensions": "410x137",
@@ -41,17 +41,17 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "primary authorship layer on light backgrounds",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-dark.svg",
+      "usage": "Constructed LF + Leo Ferraz on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-primary-lockup-dark.svg",
       "status": "approved"
     },
     {
-      "id": "leo-ferraz-logo-horizontal",
+      "id": "leo-ferraz-wordmark-only",
       "platform": "all",
-      "role": "signature",
-      "width": 410,
+      "role": "wordmark-only",
+      "width": 330,
       "height": 137,
-      "dimensions": "410x137",
+      "dimensions": "330x137",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
@@ -60,17 +60,17 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "canonical horizontal logo",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal.svg",
+      "usage": "Leo Ferraz without the symbol",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only.svg",
       "status": "approved"
     },
     {
-      "id": "leo-ferraz-logo-horizontal-dark",
+      "id": "leo-ferraz-wordmark-only-dark",
       "platform": "all",
-      "role": "signature",
-      "width": 410,
+      "role": "wordmark-only",
+      "width": 330,
       "height": 137,
-      "dimensions": "410x137",
+      "dimensions": "330x137",
       "format": "SVG",
       "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
       "background": "transparent",
@@ -79,52 +79,14 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "canonical horizontal logo on light backgrounds",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal-dark.svg",
+      "usage": "Leo Ferraz without the symbol on light backgrounds",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-dark.svg",
       "status": "approved"
     },
     {
-      "id": "leo-ferraz-wordmark-underline",
+      "id": "leo-ferraz-descriptor-lockup",
       "platform": "all",
-      "role": "signature",
-      "width": 410,
-      "height": 137,
-      "dimensions": "410x137",
-      "format": "SVG",
-      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
-      "background": "transparent",
-      "transparency": true,
-      "safe_zone": {
-        "type": "clear-space",
-        "value": "0.5em"
-      },
-      "usage": "accent underline compatibility alias",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline.svg",
-      "status": "approved"
-    },
-    {
-      "id": "leo-ferraz-wordmark-underline-dark",
-      "platform": "all",
-      "role": "signature",
-      "width": 410,
-      "height": 137,
-      "dimensions": "410x137",
-      "format": "SVG",
-      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
-      "background": "transparent",
-      "transparency": true,
-      "safe_zone": {
-        "type": "clear-space",
-        "value": "0.5em"
-      },
-      "usage": "accent underline compatibility alias on light backgrounds",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-dark.svg",
-      "status": "approved"
-    },
-    {
-      "id": "leo-ferraz-building-with-ai",
-      "platform": "all",
-      "role": "signature",
+      "role": "descriptor lockup",
       "width": 410,
       "height": 166,
       "dimensions": "410x166",
@@ -136,14 +98,14 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "descriptor lockup",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-building-with-ai.svg",
+      "usage": "Constructed LF + Leo Ferraz + Building with AI",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-descriptor-lockup.svg",
       "status": "approved"
     },
     {
-      "id": "leo-ferraz-institutional",
+      "id": "leo-ferraz-institutional-lockup",
       "platform": "all",
-      "role": "signature",
+      "role": "institutional lockup",
       "width": 410,
       "height": 191,
       "dimensions": "410x191",
@@ -155,8 +117,8 @@
         "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "institutional lockup",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-institutional.svg",
+      "usage": "Constructed LF + Leo Ferraz + Building with AI + AI-Native Product Lab",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-institutional-lockup.svg",
       "status": "approved"
     },
     {
@@ -198,6 +160,158 @@
       "status": "approved"
     },
     {
+      "id": "leo-ferraz-wordmark",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-dark",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup-dark.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-dark.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-logo-horizontal",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-logo-horizontal-dark",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup-dark.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-logo-horizontal-dark.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-underline",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-underline-dark",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 137,
+      "dimensions": "410x137",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup-dark.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-dark.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-building-with-ai",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 166,
+      "dimensions": "410x166",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-descriptor-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-building-with-ai.svg",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-institutional",
+      "platform": "all",
+      "role": "legacy compatibility alias",
+      "width": 410,
+      "height": 191,
+      "dimensions": "410x191",
+      "format": "SVG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-institutional-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-institutional.svg",
+      "status": "approved"
+    },
+    {
       "id": "leo-ferraz-lf",
       "platform": "all",
       "role": "legacy compatibility alias",
@@ -236,9 +350,28 @@
       "status": "approved"
     },
     {
+      "id": "leo-ferraz-wordmark-only-512",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "width": 512,
+      "height": 213,
+      "dimensions": "512x213",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
+        "value": "0.5em"
+      },
+      "usage": "upload or composition; name-only signature",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-512.png",
+      "status": "approved"
+    },
+    {
       "id": "leo-ferraz-wordmark-512",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 512,
       "height": 172,
       "dimensions": "512x172",
@@ -248,16 +381,16 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
-        "value": "0.5em"
+        "value": "0.25em"
       },
-      "usage": "upload or composition",
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-512.png",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-wordmark-underline-512",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 512,
       "height": 172,
       "dimensions": "512x172",
@@ -267,16 +400,35 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-512.png",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-only-1024",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "width": 1024,
+      "height": 426,
+      "dimensions": "1024x426",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "optional accent underline variant",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-512.png",
+      "usage": "upload or composition; name-only signature",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-1024.png",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-wordmark-1024",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 1024,
       "height": 343,
       "dimensions": "1024x343",
@@ -286,16 +438,16 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
-        "value": "0.5em"
+        "value": "0.25em"
       },
-      "usage": "upload or composition",
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-1024.png",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-wordmark-underline-1024",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 1024,
       "height": 343,
       "dimensions": "1024x343",
@@ -305,16 +457,35 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
+        "value": "0.25em"
+      },
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-1024.png",
+      "status": "approved"
+    },
+    {
+      "id": "leo-ferraz-wordmark-only-2048",
+      "platform": "all",
+      "role": "wordmark-only export",
+      "width": 2048,
+      "height": 851,
+      "dimensions": "2048x851",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "clear-space",
         "value": "0.5em"
       },
-      "usage": "optional accent underline variant",
-      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-1024.png",
+      "usage": "upload or composition; name-only signature",
+      "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only-2048.png",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-wordmark-2048",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 2048,
       "height": 685,
       "dimensions": "2048x685",
@@ -324,16 +495,16 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
-        "value": "0.5em"
+        "value": "0.25em"
       },
-      "usage": "upload or composition",
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-2048.png",
       "status": "approved"
     },
     {
       "id": "leo-ferraz-wordmark-underline-2048",
       "platform": "all",
-      "role": "transparent wordmark export",
+      "role": "legacy compatibility alias",
       "width": 2048,
       "height": 685,
       "dimensions": "2048x685",
@@ -343,9 +514,9 @@
       "transparency": true,
       "safe_zone": {
         "type": "clear-space",
-        "value": "0.5em"
+        "value": "0.25em"
       },
-      "usage": "optional accent underline variant",
+      "usage": "legacy alias for leo-ferraz-primary-lockup.svg",
       "export_path": "brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline-2048.png",
       "status": "approved"
     },

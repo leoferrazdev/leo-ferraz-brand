@@ -132,6 +132,22 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   return { width, height, svg: svgDocument(title, width, height, body, { background }) };
 }
 
+function wordmarkOnlySvg(title, { primary = colors.text, underline = true } = {}) {
+  const textSize = 58;
+  const tracking = -0.035;
+  const padding = 32;
+  const wordmarkWidth = measureText(content.brand, textSize, tracking, signatureFont);
+  const baseline = number(padding + signatureFont.ascent * fontScale(textSize, signatureFont));
+  const underlineY = number(baseline + 8);
+  const underlineSvg = underline ? [
+    `<rect data-accent="underline-line" x="${padding}" y="${underlineY}" width="${wordmarkWidth}" height="2" fill="${colors.accent}"/>`,
+    `<rect data-accent="underline-terminal" x="${number(padding + wordmarkWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
+  ].join('') : '';
+  const body = `${outlinedText(content.brand, { size: textSize, tracking, x: padding, baseline, fill: primary, fontFace: signatureFont })}${underlineSvg}`;
+  const height = Math.ceil(padding * 2 + textSize * 1.18 + (underline ? 4 : 0));
+  return { width: Math.ceil(padding * 2 + wordmarkWidth), height, svg: svgDocument(title, Math.ceil(padding * 2 + wordmarkWidth), height, body) };
+}
+
 function compactLogoBody({ x, baseline, textSize, primary = colors.text, accent = colors.accent, monochrome = false, underline = true }) {
   const symbolSize = textSize;
   const gap = Math.max(8, Math.round(textSize * 0.22));
@@ -259,7 +275,7 @@ function rectSafeZone(width, height, xRatio = 0.1, yRatio = 0.1, widthRatio = 0.
 
 function defaultSafeZone({ role, width, height, transparency }) {
   if (width === 0 || height === 0) return { type: 'metadata-only' };
-  if (role === 'signature' || role === 'transparent wordmark export') return { type: 'clear-space', value: '0.5em' };
+  if (role === 'primary lockup' || role === 'wordmark-only' || role === 'descriptor lockup' || role === 'institutional lockup' || role === 'signature' || role === 'wordmark-only export' || role === 'transparent wordmark export') return { type: 'clear-space', value: '0.5em' };
   if (role === 'primary symbol' || role === 'legacy compatibility alias') return { type: 'clear-space', value: '0.25em' };
   if (role.includes('avatar') || role.includes('crop validation') || role === 'favicon' || role === 'apple touch icon' || role === 'web app icon') return rectSafeZone(width, height, 0.16, 0.16, 0.68, 0.68);
   if (transparency) return { type: 'rect', x: 16, y: 16, width: Math.max(0, width - 32), height: Math.max(0, height - 32) };
@@ -298,8 +314,10 @@ async function main() {
     '',
     '## Quick map',
     '',
-    '- Primary logo: day-1/01-profile/leo-ferraz-logo-horizontal.svg',
-    '- Accent underline variant: day-1/01-profile/leo-ferraz-wordmark-underline.svg',
+    '- Primary lockup: day-1/01-profile/leo-ferraz-primary-lockup.svg',
+    '- Wordmark only: day-1/01-profile/leo-ferraz-wordmark-only.svg',
+    '- Descriptor lockup: day-1/01-profile/leo-ferraz-descriptor-lockup.svg',
+    '- Institutional lockup: day-1/01-profile/leo-ferraz-institutional-lockup.svg',
     '- Primary symbol: day-1/01-profile/leo-ferraz-symbol.svg',
     '- Avatar: day-1/01-profile/avatar-1024.png',
     '- YouTube banner: day-1/02-channels/youtube-banner-2560x1440.png',
@@ -326,10 +344,12 @@ async function main() {
   fs.writeFileSync(path.join(exportsRoot, 'README.md'), exportReadme);
 
   if (content.signatureSymbol !== 'constructed-lf') throw new Error('Unsupported signature symbol source.');
-  const wordmark = hybridLogoSvg('Leo Ferraz primary logo', [{ text: content.brand, size: 58, tracking: -0.035 }], { underline: true });
-  const wordmarkDark = hybridLogoSvg('Leo Ferraz primary logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true, underline: true });
-  const wordmarkUnderline = wordmark;
-  const wordmarkUnderlineDark = wordmarkDark;
+  const primaryLockup = hybridLogoSvg('Leo Ferraz primary lockup', [{ text: content.brand, size: 58, tracking: -0.035 }], { underline: true });
+  const primaryLockupDark = hybridLogoSvg('Leo Ferraz primary lockup dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true, underline: true });
+  const wordmarkOnly = wordmarkOnlySvg('Leo Ferraz wordmark only');
+  const wordmarkOnlyDark = wordmarkOnlySvg('Leo Ferraz wordmark only dark', { primary: colors.background });
+  const wordmarkUnderline = primaryLockup;
+  const wordmarkUnderlineDark = primaryLockupDark;
   const descriptor = hybridLogoSvg('Leo Ferraz descriptor lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
@@ -343,16 +363,22 @@ async function main() {
   const symbolDark = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol dark', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64, primary: colors.background, accent: colors.background, monochrome: true })) };
 
   const profileSvgs = [
-    ['leo-ferraz-wordmark.svg', wordmark, 'signature', 'primary authorship layer'],
-    ['leo-ferraz-wordmark-dark.svg', wordmarkDark, 'signature', 'primary authorship layer on light backgrounds'],
-    ['leo-ferraz-logo-horizontal.svg', wordmark, 'signature', 'canonical horizontal logo'],
-    ['leo-ferraz-logo-horizontal-dark.svg', wordmarkDark, 'signature', 'canonical horizontal logo on light backgrounds'],
-    ['leo-ferraz-wordmark-underline.svg', wordmarkUnderline, 'signature', 'accent underline compatibility alias'],
-    ['leo-ferraz-wordmark-underline-dark.svg', wordmarkUnderlineDark, 'signature', 'accent underline compatibility alias on light backgrounds'],
-    ['leo-ferraz-building-with-ai.svg', descriptor, 'signature', 'descriptor lockup'],
-    ['leo-ferraz-institutional.svg', institutional, 'signature', 'institutional lockup'],
+    ['leo-ferraz-primary-lockup.svg', primaryLockup, 'primary lockup', 'Constructed LF + Leo Ferraz'],
+    ['leo-ferraz-primary-lockup-dark.svg', primaryLockupDark, 'primary lockup', 'Constructed LF + Leo Ferraz on light backgrounds'],
+    ['leo-ferraz-wordmark-only.svg', wordmarkOnly, 'wordmark-only', 'Leo Ferraz without the symbol'],
+    ['leo-ferraz-wordmark-only-dark.svg', wordmarkOnlyDark, 'wordmark-only', 'Leo Ferraz without the symbol on light backgrounds'],
+    ['leo-ferraz-descriptor-lockup.svg', descriptor, 'descriptor lockup', 'Constructed LF + Leo Ferraz + Building with AI'],
+    ['leo-ferraz-institutional-lockup.svg', institutional, 'institutional lockup', 'Constructed LF + Leo Ferraz + Building with AI + AI-Native Product Lab'],
     ['leo-ferraz-symbol.svg', symbol, 'primary symbol', 'avatar, favicon and compact contexts'],
     ['leo-ferraz-symbol-dark.svg', symbolDark, 'primary symbol', 'compact contexts on light backgrounds'],
+    ['leo-ferraz-wordmark.svg', primaryLockup, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup.svg'],
+    ['leo-ferraz-wordmark-dark.svg', primaryLockupDark, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup-dark.svg'],
+    ['leo-ferraz-logo-horizontal.svg', primaryLockup, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup.svg'],
+    ['leo-ferraz-logo-horizontal-dark.svg', primaryLockupDark, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup-dark.svg'],
+    ['leo-ferraz-wordmark-underline.svg', wordmarkUnderline, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup.svg'],
+    ['leo-ferraz-wordmark-underline-dark.svg', wordmarkUnderlineDark, 'legacy compatibility alias', 'legacy alias for leo-ferraz-primary-lockup-dark.svg'],
+    ['leo-ferraz-building-with-ai.svg', descriptor, 'legacy compatibility alias', 'legacy alias for leo-ferraz-descriptor-lockup.svg'],
+    ['leo-ferraz-institutional.svg', institutional, 'legacy compatibility alias', 'legacy alias for leo-ferraz-institutional-lockup.svg'],
     ['leo-ferraz-lf.svg', symbol, 'legacy compatibility alias', 'compatibility path; content is the Constructed LF symbol'],
     ['leo-ferraz-lf-dark.svg', symbolDark, 'legacy compatibility alias', 'compatibility path; content is the Constructed LF symbol'],
   ];
@@ -361,10 +387,12 @@ async function main() {
     register({ id: name.replace('.svg', ''), platform: 'all', role, relative: `day-1/01-profile/${name}`, width: asset.width, height: asset.height, format: 'SVG', transparency: true, usage });
   }
   for (const size of [512, 1024, 2048]) {
-    await writePng(`day-1/01-profile/leo-ferraz-wordmark-${size}.png`, wordmark.svg, size, Math.ceil(size * wordmark.height / wordmark.width));
-    register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'transparent wordmark export', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * wordmark.height / wordmark.width), format: 'PNG', transparency: true, usage: 'upload or composition' });
+    await writePng(`day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, wordmarkOnly.svg, size, Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width));
+    register({ id: `leo-ferraz-wordmark-only-${size}`, platform: 'all', role: 'wordmark-only export', relative: `day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, width: size, height: Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width), format: 'PNG', transparency: true, usage: 'upload or composition; name-only signature' });
+    await writePng(`day-1/01-profile/leo-ferraz-wordmark-${size}.png`, primaryLockup.svg, size, Math.ceil(size * primaryLockup.height / primaryLockup.width));
+    register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * primaryLockup.height / primaryLockup.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg' });
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, wordmarkUnderline.svg, size, Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width));
-    register({ id: `leo-ferraz-wordmark-underline-${size}`, platform: 'all', role: 'transparent wordmark export', relative: `day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, width: size, height: Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width), format: 'PNG', transparency: true, usage: 'optional accent underline variant' });
+    register({ id: `leo-ferraz-wordmark-underline-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, width: size, height: Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg' });
   }
 
   const avatar = svgDocument('Constructed LF avatar', 1024, 1024, [

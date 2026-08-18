@@ -45,7 +45,7 @@ Não é uma biblioteca de UI genérica completa.
 
 | Component | Purpose | Default / variants | Canonical dependencies | Prohibited drift |
 |---|---|---|---|---|
-| `BrandSignature` | Identificar a Master Brand | `wordmark`; `descriptor`, `institutional`, `utility` | signature, typography | LF como default, SVG, JS |
+| `BrandSignature` | Identificar a Master Brand | `primaryLockup`; `wordmarkOnly`, `descriptor`, `institutional`, `symbol`, `utility` | signature, typography | SVG aprovado, sem reconstrução |
 | `BrandContainer` | Composição central responsiva | 100%, max 1440px | container, grid | novo max-width ou margem |
 | `BrandSection` | Wrapper semântico de seção | `standard`, `major` | section spacing | spacing arbitrário |
 | `ArtifactFrame` | Enquadrar artefatos reais | `elevated=false` | surface, border, artifact radius, shadow | device mockup, radius > 8px, glow |
@@ -55,6 +55,8 @@ Não é uma biblioteca de UI genérica completa.
 | `BrandStack` | Composição vertical determinística | gaps aprovados | spacing aliases | número CSS arbitrário |
 
 Todos os componentes usam tokens gerados e não necessitam JavaScript do cliente.
+
+`wordmark` e `accent` permanecem apenas como aliases de compatibilidade para `primaryLockup`. Novos consumidores devem usar os nomes semânticos explícitos.
 
 ## Limites
 

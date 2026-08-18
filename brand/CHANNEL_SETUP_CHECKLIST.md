@@ -18,11 +18,11 @@ brand-assets/exports/day-1/01-profile/avatar-1024.png
 Avatar compact:
 brand-assets/exports/day-1/01-profile/avatar-256.png
 
-Primary logo (Constructed LF Lockup):
-brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg
+Primary lockup (Constructed LF Lockup):
+brand-assets/exports/day-1/01-profile/leo-ferraz-primary-lockup.svg
 
-Optional accent underline logo:
-brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline.svg
+Wordmark-only authorship asset:
+brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-only.svg
 
 Primary symbol:
 brand-assets/exports/day-1/01-profile/leo-ferraz-symbol.svg

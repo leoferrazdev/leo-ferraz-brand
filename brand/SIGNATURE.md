@@ -83,9 +83,9 @@ The `L` and `F` are drawn as custom vector geometry and are not font glyphs. The
 [Constructed LF] Leo Ferraz
 ```
 
-The horizontal lockup is the default signature for headers, channel covers, institutional surfaces, editorial authorship and public brand applications.
+The primary lockup is the default signature for headers, channel covers, institutional surfaces, editorial authorship and public brand applications.
 
-### Wordmark
+### Wordmark-only application
 
 ```text
 Text:
@@ -101,7 +101,7 @@ Tracking:
 -0.035em
 ```
 
-The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The full name stays direct and legible while reading as one mark with the symbol.
+The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The name-only asset is a valid signature for authorship, bylines, credits and contexts where the symbol would compete with the content.
 
 ### Public accent underline
 
@@ -134,6 +134,27 @@ This treatment is the default for public wordmark, descriptor, institutional, ch
 ```
 
 `Building with AI` remains optional, removable and subordinate. `AI-Native Product Lab` remains a separate contextual line and is never part of the symbol.
+
+Canonical asset roles are explicit:
+
+```text
+primary lockup:
+Constructed LF + Leo Ferraz
+
+wordmark-only:
+Leo Ferraz
+
+descriptor lockup:
+Constructed LF + Leo Ferraz + Building with AI
+
+institutional lockup:
+Constructed LF + Leo Ferraz + Building with AI + AI-Native Product Lab
+
+primary symbol:
+Constructed LF
+```
+
+The lockup is not mandatory in every application. Symbol-only remains the compact identity; wordmark-only remains the name-led identity. These are coordinated applications of one signature system, not competing brands.
 
 ## Compact behavior
 
@@ -189,16 +210,28 @@ Product artifacts, screenshots and evidence remain visually prior in product-led
 
 ```text
 leo-ferraz-logo-horizontal.svg:
-primary hybrid logo
+legacy compatibility alias for the primary lockup
+
+leo-ferraz-primary-lockup.svg:
+canonical hybrid logo
 
 leo-ferraz-symbol.svg:
 primary symbol
 
 leo-ferraz-wordmark.svg:
-compatibility alias for the primary hybrid logo
+legacy compatibility alias for the primary lockup
+
+leo-ferraz-wordmark-only.svg:
+canonical name-only wordmark
 
 leo-ferraz-wordmark-underline.svg:
-accent underline compatibility alias for the public lockup
+legacy compatibility alias for the primary lockup
+
+leo-ferraz-descriptor-lockup.svg:
+canonical descriptor lockup
+
+leo-ferraz-institutional-lockup.svg:
+canonical institutional lockup
 
 avatar-*:
 Constructed LF symbol

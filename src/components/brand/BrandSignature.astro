@@ -1,33 +1,36 @@
 ---
 interface Props {
-  variant?: 'wordmark' | 'accent' | 'descriptor' | 'institutional' | 'symbol' | 'utility';
+  variant?: 'primaryLockup' | 'wordmarkOnly' | 'descriptor' | 'institutional' | 'symbol' | 'utility' | 'wordmark' | 'accent';
   underline?: boolean;
   class?: string;
 }
 
-const { variant = 'wordmark', underline = false, class: className = '' } = Astro.props;
-const symbolOnly = variant === 'symbol' || variant === 'utility';
+const { variant = 'primaryLockup', underline = false, class: className = '' } = Astro.props;
+const canonicalVariant = variant === 'wordmark' || variant === 'accent' ? 'primaryLockup' : variant;
+const symbolOnly = canonicalVariant === 'symbol' || canonicalVariant === 'utility';
 const assetName = symbolOnly
   ? 'leo-ferraz-symbol.svg'
-  : variant === 'descriptor'
-    ? 'leo-ferraz-building-with-ai.svg'
-    : variant === 'institutional'
-      ? 'leo-ferraz-institutional.svg'
-      : variant === 'accent' || underline
-        ? 'leo-ferraz-wordmark-underline.svg'
-        : 'leo-ferraz-wordmark.svg';
+  : canonicalVariant === 'wordmarkOnly'
+    ? 'leo-ferraz-wordmark-only.svg'
+    : canonicalVariant === 'descriptor'
+      ? 'leo-ferraz-descriptor-lockup.svg'
+      : canonicalVariant === 'institutional'
+        ? 'leo-ferraz-institutional-lockup.svg'
+        : 'leo-ferraz-primary-lockup.svg';
 const assetPath = `/brand-assets/exports/day-1/01-profile/${assetName}`;
 const alt = symbolOnly
   ? 'Leo Ferraz — Constructed LF'
-  : variant === 'descriptor'
+  : canonicalVariant === 'wordmarkOnly'
+    ? 'Leo Ferraz'
+    : canonicalVariant === 'descriptor'
     ? 'Leo Ferraz — Building with AI'
-    : variant === 'institutional'
+    : canonicalVariant === 'institutional'
       ? 'Leo Ferraz — Building with AI — AI-Native Product Lab'
       : 'Leo Ferraz';
-const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : variant}`, className].filter(Boolean).join(' ');
+const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : canonicalVariant}`, className].filter(Boolean).join(' ');
 ---
 
-<span class={classes} data-variant={symbolOnly ? 'symbol' : variant}>
+<span class={classes} data-variant={symbolOnly ? 'symbol' : canonicalVariant}>
   <img class="brand-signature__asset" src={assetPath} alt={alt} decoding="async" />
 </span>
 
@@ -46,8 +49,8 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
     max-width: 100%;
   }
 
-  .brand-signature--wordmark .brand-signature__asset,
-  .brand-signature--accent .brand-signature__asset {
+  .brand-signature--primaryLockup .brand-signature__asset,
+  .brand-signature--wordmarkOnly .brand-signature__asset {
     width: min(100%, 330px);
   }
 
@@ -68,8 +71,8 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
   }
 
   @media (max-width: 767px) {
-    .brand-signature--wordmark .brand-signature__asset,
-    .brand-signature--accent .brand-signature__asset,
+    .brand-signature--primaryLockup .brand-signature__asset,
+    .brand-signature--wordmarkOnly .brand-signature__asset,
     .brand-signature--descriptor .brand-signature__asset,
     .brand-signature--institutional .brand-signature__asset {
       width: min(100%, 320px);
