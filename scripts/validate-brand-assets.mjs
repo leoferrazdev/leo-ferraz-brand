@@ -45,8 +45,14 @@ async function validatePixelSafeZone(asset, file) {
     for (let x = 0; x < info.width; x += 1) {
       const offset = (y * info.width + x) * info.channels;
       const alpha = data[offset + 3];
+      // Threshold 60: separates deliberate low-contrast background texture
+      // (the Construction Grid, brand/VISUAL_DIRECTION.md "Grid Visível" —
+      // stroke #405064 at 50% opacity over #0D1117 diffs ~26-39 per channel)
+      // from real content, whose weakest color in this system (muted text
+      // #7F8B99) still diffs 114+ per channel. Comfortable margin on both
+      // sides; texture must never accidentally count as safe-zone content.
       const isContent = background
-        ? alpha > 8 && (Math.abs(data[offset] - background[0]) > 3 || Math.abs(data[offset + 1] - background[1]) > 3 || Math.abs(data[offset + 2] - background[2]) > 3)
+        ? alpha > 8 && (Math.abs(data[offset] - background[0]) > 60 || Math.abs(data[offset + 1] - background[1]) > 60 || Math.abs(data[offset + 2] - background[2]) > 60)
         : alpha > 8;
       if (!isContent) continue;
       bounds ??= { minX: x, minY: y, maxX: x, maxY: y };
@@ -106,7 +112,10 @@ for (const asset of manifest.assets) {
     if (/<(script|iframe)\b/i.test(source)) fail(`${asset.id}: executable markup`);
     if (/<(style|font-face)\b|@font-face|(?:woff2?|ttf|otf)|font-embed/i.test(source)) fail(`${asset.id}: embedded font or style block`);
     const withoutSvgNamespace = source.replace('http://www.w3.org/2000/svg', '');
-    if (/(https?:\/\/|url\()/i.test(withoutSvgNamespace)) fail(`${asset.id}: external URL or resource`);
+    // url(#id) is a same-document fragment reference (e.g. fill="url(#pattern-id)"
+    // for the Construction Grid pattern) — standard, local, deterministic SVG.
+    // Only url(<anything not starting with #>) is an external/remote resource.
+    if (/(https?:\/\/|url\(\s*(?!['"]?#))/i.test(withoutSvgNamespace)) fail(`${asset.id}: external URL or resource`);
     if (/<(linearGradient|radialGradient|filter)\b/i.test(source)) fail(`${asset.id}: gradient/filter effect`);
     if (/stroke-dasharray|SAFE AREA|SAFE ZONE/i.test(source)) fail(`${asset.id}: review guide leaked into delivery asset`);
     if (signatureRoles.has(asset.role) || asset.role === 'primary symbol' || asset.role === 'legacy compatibility alias' || asset.role === 'avatar' || asset.role === 'crop validation' || asset.role === 'favicon') {

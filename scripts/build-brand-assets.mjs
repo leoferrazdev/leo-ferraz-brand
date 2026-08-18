@@ -177,7 +177,22 @@ function textElement(text, x, y, { size = 28, fill = colors.text, family = 'IBM 
   return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}px" font-weight="${weight}" text-anchor="${anchor}" letter-spacing="${letterSpacing}em">${escapeXml(text)}</text>`;
 }
 
-function socialSvg(title, width, height, { label, headline, signatureAsset, artifact = content.artifact, state = 'CONTENT SLOT', headlineSize = null, showState = true, showDescriptor = true, safeZone = null } = {}) {
+// Construction Grid (brand/VISUAL_DIRECTION.md, "Grid Visível"): discreet,
+// low-contrast structural texture, applied only to full-bleed environment
+// surfaces (OBS scenes, channel banners) that are viewed at real size.
+// Deliberately not applied to thumbnails, carousel/story/square or Open
+// Graph — small, feed-consumed, legibility-critical formats where the
+// headline/artifact must stay the only signal (VISUAL_DIRECTION.md: grid
+// "não deve virar textura decorativa obrigatória em todas as aplicações").
+// Cell size scales with the canvas (1/10th of the shorter side) so density
+// reads consistently across very different asset dimensions.
+function constructionGridSvg(width, height, { color = colors.borderStrong, opacity = 0.5, cellDivisor = 10 } = {}) {
+  const cell = Math.round(Math.min(width, height) / cellDivisor);
+  const id = `construction-grid-${width}x${height}`;
+  return `<defs><pattern id="${id}" width="${cell}" height="${cell}" patternUnits="userSpaceOnUse"><path d="M ${cell} 0 L 0 0 0 ${cell}" fill="none" stroke="${color}" stroke-opacity="${opacity}" stroke-width="1"/></pattern></defs><rect width="${width}" height="${height}" fill="url(#${id})"/>`;
+}
+
+function socialSvg(title, width, height, { label, headline, signatureAsset, artifact = content.artifact, state = 'CONTENT SLOT', headlineSize = null, showState = true, showDescriptor = true, safeZone = null, showGrid = false } = {}) {
   const safe = safeZone ?? { x: Math.round(width * 0.1), y: Math.round(height * 0.1), width: Math.round(width * 0.8), height: Math.round(height * 0.8) };
   const contentX = safe.x + Math.max(18, Math.round(width * 0.018));
   const contentRight = safe.x + safe.width - Math.max(18, Math.round(width * 0.018));
@@ -194,6 +209,7 @@ function socialSvg(title, width, height, { label, headline, signatureAsset, arti
   const stateY = safe.y + Math.round(safe.height * 0.82);
   const descriptorY = safe.y + safe.height - Math.max(12, Math.round(width * 0.018));
   const body = [
+    showGrid ? constructionGridSvg(width, height) : '',
     mark,
     textElement(label, contentX, labelY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.accent, letterSpacing: 0.075 }),
     textElement(headline, contentX, headlineY, { size: headlineSize ?? Math.max(30, Math.round(width * 0.07)), weight: 500 }),
@@ -213,6 +229,7 @@ function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeH
   const signature = placedSignatureBody(signatureAsset, { x, y: signatureY, width: signatureWidth, anchor });
   const metadataY = signatureY + signatureHeight + 32;
   const body = [
+    constructionGridSvg(width, height),
     signature,
     textElement(content.bio[1], x, metadataY, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, anchor }),
   ].join('');
@@ -515,7 +532,7 @@ async function main() {
   ];
   for (const [name, headline, state] of liveScenes) {
     const liveSafeZone = rectSafeZone(1920, 1080);
-    const svg = socialSvg(`OBS ${headline}`, 1920, 1080, { label: 'LEO FERRAZ · LIVE', headline, signatureAsset: wordmarkOnly, state, safeZone: liveSafeZone });
+    const svg = socialSvg(`OBS ${headline}`, 1920, 1080, { label: 'LEO FERRAZ · LIVE', headline, signatureAsset: wordmarkOnly, state, safeZone: liveSafeZone, showGrid: true });
     await writeSvg(`day-1/03-live/obs/${name}.svg`, svg);
     await writePng(`day-1/03-live/obs/${name}.png`, svg, 1920, 1080, { fit: 'fill' });
     ensureDir(path.join(root, 'live', 'obs', `${name}.png`));
