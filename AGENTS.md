@@ -92,11 +92,25 @@ Mudanças na identidade devem ocorrer através de uma tarefa explícita de revis
 
 ## Git
 
-Não executar automaticamente:
+Regra operacional permanente: toda implementação ou alteração concluída deve ser commitada na branch `main` e publicada em `origin/main` após as validações aplicáveis.
+
+Agentes podem executar automaticamente:
 
 - commit;
 - push;
 - tag;
 - deploy.
 
-Essas ações dependem de autorização explícita.
+Antes dessas ações, devem:
+
+1. validar o escopo e preservar alterações não relacionadas;
+2. executar os testes e builds aplicáveis;
+3. auditar o diff e confirmar que somente arquivos intencionais serão incluídos;
+4. confirmar que a working tree e `origin/main` estão em estado coerente;
+5. publicar somente após as validações passarem.
+
+Não executar force push, reset destrutivo, rebase destrutivo ou alteração de histórico sem autorização explícita.
+
+## Cofre Obsidian
+
+Toda implementação, decisão, atualização ou entrega do projeto deve ser registrada no cofre `cofre-leoferraz-dev/` usando Markdown compatível com Obsidian, separando decisão, execução, evidência e pendências. O cofre é memória operacional; `brand/*.md` continua sendo a fonte canônica da marca.
