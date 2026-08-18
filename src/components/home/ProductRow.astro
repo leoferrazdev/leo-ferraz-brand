@@ -1,0 +1,190 @@
+---
+import ArtifactFrame from '../brand/ArtifactFrame.astro';
+import EvidenceBlock from '../brand/EvidenceBlock.astro';
+import StatusLabel from '../brand/StatusLabel.astro';
+import type { HomepageConcept } from '../../data/homepage-content';
+
+interface Props {
+  concept: HomepageConcept;
+  reverse?: boolean;
+}
+
+const { concept, reverse = false } = Astro.props;
+---
+
+<article class="product-row" aria-labelledby={`${concept.id}-title`} data-reverse={reverse ? 'true' : undefined}>
+  <div class="product-row__content">
+    <p class="product-row__eyebrow">{concept.label} · {concept.category}</p>
+    <h3 id={`${concept.id}-title`}>{concept.title}</h3>
+    <p class="product-row__description">{concept.description}</p>
+    <EvidenceBlock metadata="REVIEW ONLY" class="product-row__evidence">
+      {concept.evidence.map((item) => <span class="product-row__evidence-note">{item}</span>)}
+    </EvidenceBlock>
+    <StatusLabel variant="info" label={concept.status} />
+  </div>
+
+  <ArtifactFrame class="product-row__artifact">
+    <div class="mock-artifact" aria-label="Fictional product artifact placeholder">
+      <div class="mock-artifact__topline">
+        <span>{concept.artifactLabel}</span>
+        <span>NO LIVE PRODUCT</span>
+      </div>
+      <div class="mock-artifact__body">
+        <span class="mock-artifact__marker" aria-hidden="true"></span>
+        <div>
+          <p class="mock-artifact__title">{concept.label}</p>
+          {concept.artifactLines.map((line) => <p>{line}</p>)}
+        </div>
+      </div>
+      <div class="mock-artifact__footer">FICTIONAL CONTENT · REPLACE WITH REAL ARTIFACT</div>
+    </div>
+  </ArtifactFrame>
+</article>
+
+<style>
+  .product-row {
+    display: grid;
+    gap: var(--lf-spacing-block-content);
+    padding-block: var(--lf-spacing-block-major);
+    border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  }
+
+  .product-row:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .product-row__content {
+    display: grid;
+    gap: var(--lf-spacing-inline-standard);
+    align-content: start;
+  }
+
+  .product-row__eyebrow {
+    margin: 0;
+    color: var(--lf-color-accent-primary);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+  }
+
+  .product-row h3 {
+    max-width: 32ch;
+    margin: 0;
+    color: var(--lf-color-text-primary);
+    font-size: var(--lf-type-h2-size-large);
+    font-weight: var(--lf-type-h2-weight);
+    line-height: var(--lf-type-h2-line-height);
+  }
+
+  .product-row__description {
+    max-width: 46ch;
+    margin: 0;
+    color: var(--lf-color-text-secondary);
+    font-size: var(--lf-type-body-size-large);
+    line-height: var(--lf-type-body-line-height);
+  }
+
+  /* ArtifactFrame/EvidenceBlock render their own root element, so a class
+     passed as a prop lands on markup outside this component's Astro scope
+     — :global() is required for these two rules to actually match it. */
+  :global(.product-row__evidence) {
+    margin-block: var(--lf-spacing-micro);
+  }
+
+  .product-row__evidence-note {
+    color: var(--lf-color-text-secondary);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+  }
+
+  :global(.product-row__artifact) {
+    padding: var(--lf-spacing-inline-standard);
+    align-self: start;
+  }
+
+  .mock-artifact {
+    display: grid;
+    min-height: 220px;
+    grid-template-rows: auto 1fr auto;
+    background: var(--lf-color-background);
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
+    color: var(--lf-color-text-secondary);
+    font-family: var(--lf-font-family-mono);
+  }
+
+  .mock-artifact__topline,
+  .mock-artifact__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--lf-spacing-inline-standard);
+    padding: var(--lf-spacing-inline-standard);
+    color: var(--lf-color-text-muted);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+  }
+
+  .mock-artifact__topline { border-bottom: var(--lf-border-width-standard) solid var(--lf-color-border-default); }
+  .mock-artifact__footer { border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default); }
+
+  .mock-artifact__body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--lf-spacing-inline-standard);
+    padding: var(--lf-spacing-block-content);
+  }
+
+  .mock-artifact__marker {
+    width: var(--lf-signature-marker-size);
+    height: var(--lf-signature-marker-size);
+    flex: 0 0 var(--lf-signature-marker-size);
+    margin-top: 0.35em;
+    background: var(--lf-signature-marker-color);
+  }
+
+  .mock-artifact__title {
+    margin-bottom: var(--lf-spacing-component-standard);
+    color: var(--lf-color-text-primary);
+    font-family: var(--lf-font-family-sans);
+    font-size: var(--lf-type-h3-size-large);
+    font-weight: var(--lf-type-h3-weight);
+    line-height: var(--lf-type-h3-line-height);
+  }
+
+  .mock-artifact__body p:not(.mock-artifact__title) {
+    margin-bottom: var(--lf-spacing-inline-compact);
+    color: var(--lf-color-text-secondary);
+    font-size: var(--lf-type-metadata-size-large);
+  }
+
+  @media (min-width: 768px) {
+    .product-row {
+      grid-template-columns: repeat(var(--lf-grid-medium-columns), minmax(0, 1fr));
+      gap: var(--lf-grid-medium-gutter);
+      align-items: center;
+    }
+
+    .product-row__content { grid-column: 1 / span 3; }
+    :global(.product-row__artifact) { grid-column: 4 / span 3; }
+
+    .product-row[data-reverse] .product-row__content { grid-column: 4 / span 3; }
+    .product-row[data-reverse] :global(.product-row__artifact) { grid-column: 1 / span 3; grid-row: 1; }
+  }
+
+  @media (min-width: 1200px) {
+    .product-row {
+      grid-template-columns: repeat(var(--lf-grid-large-columns), minmax(0, 1fr));
+      gap: var(--lf-grid-large-gutter);
+    }
+
+    .product-row__content { grid-column: 1 / span 5; }
+    :global(.product-row__artifact) { grid-column: 6 / span 5; }
+
+    .product-row[data-reverse] .product-row__content { grid-column: 6 / span 5; }
+    .product-row[data-reverse] :global(.product-row__artifact) { grid-column: 1 / span 5; grid-row: 1; }
+  }
+
+  @media (max-width: 767px) {
+    .product-row h3 { font-size: var(--lf-type-h2-size-small); }
+  }
+</style>

@@ -2,10 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
-import FeaturedConcept from '../components/home/FeaturedConcept.astro';
-import ConceptSlot from '../components/home/ConceptSlot.astro';
+import ProductRow from '../components/home/ProductRow.astro';
 import { featuredConcept, secondaryConcepts } from '../data/homepage-content';
 import '../styles/global.css';
+
+const concepts = [featuredConcept, ...secondaryConcepts];
 ---
 
 <BaseLayout
@@ -31,27 +32,16 @@ import '../styles/global.css';
       </aside>
     </section>
 
-    <section class="homepage__featured" aria-labelledby="featured-title">
+    <section class="homepage__products" aria-labelledby="products-title">
       <div class="homepage__section-heading">
         <div>
           <p class="eyebrow">PRODUCT / PROJECT INDEX</p>
-          <h2 id="featured-title">Featured concept</h2>
+          <h2 id="products-title">O que está sendo construído.</h2>
         </div>
-        <p>Temporary application content</p>
+        <p>Temporary application content · no live destinations yet</p>
       </div>
-      <FeaturedConcept concept={featuredConcept} />
-    </section>
-
-    <section class="homepage__slots" aria-labelledby="slots-title">
-      <div class="homepage__section-heading">
-        <div>
-          <p class="eyebrow">NEXT PROJECTS</p>
-          <h2 id="slots-title">The lab will expand here.</h2>
-        </div>
-        <p>No live destinations yet</p>
-      </div>
-      <div class="homepage__slot-grid">
-        {secondaryConcepts.map((concept) => <ConceptSlot concept={concept} />)}
+      <div class="homepage__product-list">
+        {concepts.map((concept, index) => <ProductRow concept={concept} reverse={index % 2 === 1} />)}
       </div>
     </section>
   </main>
