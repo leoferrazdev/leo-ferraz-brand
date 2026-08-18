@@ -52,9 +52,12 @@ Comandos:
 npm run brand-assets:build
 npm run brand-assets:validate
 npm run brand:render -- --template youtube-thumbnail --content live-001
+npm run brand:render -- --template instagram-carousel-slide --content SEU-CONTEUDO --output caminho/base
 ```
 
 O conteúdo é separado do template. O render falha fechado para template ou conteúdo desconhecido.
+
+`instagram-carousel-slide` gera as telas internas de um carrossel (cover continua sendo `instagram-carousel`) a partir de um `slides: []` no JSON de conteúdo, uma imagem por item, com paginação `n / total` e assinatura compacta (`wordmark-only`) subordinada ao conteúdo. `carousel-slide-demo` em `brand-assets/sources/content/` é demonstração de template, não conteúdo publicável. `launch-day-0` contém a peça de lançamento derivada apenas da bio/manifesto já aprovados, pronta para os formatos de imagem única (thumbnail, story, square, capa de carrossel).
 
 ## Export map
 

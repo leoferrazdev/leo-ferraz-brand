@@ -1,0 +1,22 @@
+{
+  "brand": "Leo Ferraz",
+  "descriptor": "Building with AI",
+  "eyebrow": "TEMPLATE DEMO",
+  "slides": [
+    {
+      "eyebrow": "TEMPLATE DEMO",
+      "headline": "Instagram carousel — internal slide.",
+      "bodyLines": ["Template demonstration only.", "Not published content."]
+    },
+    {
+      "eyebrow": "TEMPLATE DEMO",
+      "headline": "Body text wraps as authored lines.",
+      "bodyLines": ["Author pre-wraps body copy", "as an explicit array of lines."]
+    },
+    {
+      "eyebrow": "TEMPLATE DEMO",
+      "headline": "Signature stays compact and subordinate.",
+      "bodyLines": ["Wordmark-only signature, bottom-left —", "content remains the primary signal."]
+    }
+  ]
+}
