@@ -54,6 +54,12 @@ for (const asset of manifest.assets.filter((candidate) => candidate.format === '
   if (!source.includes('data-mark="constructed-lf"')) fail(`${asset.id}: Constructed LF symbol is missing`);
   if (!source.includes('M8 8H20V44H28V56H8Z') || !source.includes('M28 8H56V20H40V28H48V36H40V56H28Z')) fail(`${asset.id}: Constructed LF geometry drifted`);
 }
+for (const id of ['leo-ferraz-wordmark-underline', 'leo-ferraz-wordmark-underline-dark']) {
+  const asset = manifest.assets.find((candidate) => candidate.id === id);
+  if (!asset) { fail(`${id}: accent underline variant is missing`); continue; }
+  const source = fs.readFileSync(path.join(root, asset.export_path), 'utf8');
+  for (const part of ['underline-line', 'underline-terminal']) if (!source.includes(`data-accent="${part}"`)) fail(`${id}: ${part} is missing`);
+}
 
 if (failures.length) {
   console.error(failures.map((failure) => `FAIL: ${failure}`).join('\n'));

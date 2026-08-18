@@ -44,7 +44,7 @@ brand-assets/exports/day-1/
 scripts/validate-brand-assets.mjs
 ```
 
-Os wordmarks externos são SVGs outlined, derivados do arquivo Fontsource IBM Plex Sans 500 instalado. Nenhuma fonte é distribuída ou incorporada nos SVGs.
+Os wordmarks externos são SVGs outlined, derivados do arquivo Fontsource IBM Plex Sans 700 instalado para correspondência óptica com o símbolo. Nenhuma fonte é distribuída ou incorporada nos SVGs.
 
 Comandos:
 
@@ -60,7 +60,7 @@ O conteúdo é separado do template. O render falha fechado para template ou con
 
 ```text
 brand-assets/exports/day-1/01-profile/
-→ logos, lockups, símbolo, avatars e crops
+→ logos, accent underline variant, lockups, símbolo, avatars e crops
 
 brand-assets/exports/day-1/02-channels/
 → YouTube e Twitch banners

@@ -28,7 +28,9 @@ const colors = {
 
 const fontPath = path.join(root, 'node_modules', '@fontsource', 'ibm-plex-sans', 'files', 'ibm-plex-sans-latin-500-normal.woff2');
 const font = createFont(fs.readFileSync(fontPath));
-const fontScale = (size) => size / font.unitsPerEm;
+const signatureFontPath = path.join(root, 'node_modules', '@fontsource', 'ibm-plex-sans', 'files', 'ibm-plex-sans-latin-700-normal.woff2');
+const signatureFont = createFont(fs.readFileSync(signatureFontPath));
+const fontScale = (size, fontFace = font) => size / fontFace.unitsPerEm;
 
 const escapeXml = (value) => String(value)
   .replaceAll('&', '&amp;')
@@ -45,23 +47,23 @@ function number(value) {
   return Number(value.toFixed(3));
 }
 
-function measureText(text, size, tracking = 0) {
-  const scale = fontScale(size);
-  const trackingUnits = tracking * font.unitsPerEm;
+function measureText(text, size, tracking = 0, fontFace = font) {
+  const scale = fontScale(size, fontFace);
+  const trackingUnits = tracking * fontFace.unitsPerEm;
   let width = 0;
   for (const character of text) {
-    width += font.glyphForCodePoint(character.codePointAt(0)).advanceWidth + trackingUnits;
+    width += fontFace.glyphForCodePoint(character.codePointAt(0)).advanceWidth + trackingUnits;
   }
   return number(width * scale);
 }
 
-function outlinedText(text, { size, tracking = 0, x = 0, baseline = 0, fill = colors.text }) {
-  const scale = fontScale(size);
-  const trackingUnits = tracking * font.unitsPerEm;
+function outlinedText(text, { size, tracking = 0, x = 0, baseline = 0, fill = colors.text, fontFace = font }) {
+  const scale = fontScale(size, fontFace);
+  const trackingUnits = tracking * fontFace.unitsPerEm;
   let cursor = x / scale;
   const paths = [];
   for (const character of text) {
-    const glyph = font.glyphForCodePoint(character.codePointAt(0));
+    const glyph = fontFace.glyphForCodePoint(character.codePointAt(0));
     if (glyph.path?.commands?.length) {
       const transformed = glyph.path.scale(scale, -scale).translate(cursor * scale, baseline);
       paths.push(`<path d="${transformed.toSVG()}" fill="${fill}"/>`);
@@ -98,30 +100,44 @@ function outlinedSvg(title, lines, { padding = null, clearSpace = 0.5, gap = 8, 
   };
 }
 
-function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8 } = {}) {
-  const normalized = lines.map((line) => ({ ...line, fill: line.fill ?? primary, width: measureText(line.text, line.size, line.tracking ?? 0) }));
+function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false } = {}) {
+  const normalized = lines.map((line, index) => {
+    const fontFace = index === 0 ? signatureFont : font;
+    return { ...line, fontFace, fill: line.fill ?? primary, width: measureText(line.text, line.size, line.tracking ?? 0, fontFace) };
+  });
   const lineHeight = (size) => number(size * 1.18);
-  const contentHeight = normalized.reduce((sum, line) => sum + lineHeight(line.size), lineGap * Math.max(0, normalized.length - 1));
+  const contentHeight = normalized.reduce((sum, line) => sum + lineHeight(line.size), lineGap * Math.max(0, normalized.length - 1)) + (underline ? 4 : 0);
   const width = Math.ceil(padding * 2 + symbolSize + symbolGap + Math.max(...normalized.map((line) => line.width)));
   const height = Math.ceil(padding * 2 + Math.max(symbolSize, contentHeight));
   const contentX = padding + symbolSize + symbolGap;
   let top = padding + (Math.max(symbolSize, contentHeight) - contentHeight) / 2;
-  const paths = normalized.map((line) => {
-    const baseline = top + font.ascent * fontScale(line.size);
+  let firstBaseline = 0;
+  const paths = normalized.map((line, index) => {
+    const baseline = top + line.fontFace.ascent * fontScale(line.size, line.fontFace);
+    if (index === 0) firstBaseline = baseline;
     const result = outlinedText(line.text, { ...line, x: contentX, baseline, fill: monochrome ? primary : line.fill });
     top += lineHeight(line.size) + lineGap;
     return result;
   }).join('');
-  const symbolY = padding + (Math.max(symbolSize, contentHeight) - symbolSize) / 2;
-  const body = `${constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome })}${paths}`;
+  const capHeight = signatureFont.capHeight ?? signatureFont.ascent * 0.7;
+  const symbolOpticalInset = symbolSize * 8 / 64;
+  const symbolY = number(firstBaseline - capHeight * fontScale(normalized[0].size, signatureFont) - symbolOpticalInset);
+  const underlineWidth = normalized[0].width;
+  const underlineY = number(firstBaseline + 8);
+  const underlineSvg = underline ? [
+    `<rect data-accent="underline-line" x="${contentX}" y="${underlineY}" width="${underlineWidth}" height="2" fill="${colors.accent}"/>`,
+    `<rect data-accent="underline-terminal" x="${number(contentX + underlineWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
+  ].join('') : '';
+  const body = `${constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome })}${paths}${underlineSvg}`;
   return { width, height, svg: svgDocument(title, width, height, body, { background }) };
 }
 
 function compactLogoBody({ x, baseline, textSize, primary = colors.text, accent = colors.accent, monochrome = false }) {
   const symbolSize = textSize;
   const gap = Math.max(8, Math.round(textSize * 0.22));
-  const symbolY = baseline - textSize * 0.78;
-  return `${constructedLfSymbolSvg({ x, y: symbolY, size: symbolSize, primary, accent, monochrome })}${outlinedText(content.brand, { size: textSize, tracking: -0.035, x: x + symbolSize + gap, baseline, fill: primary })}`;
+  const capHeight = signatureFont.capHeight ?? signatureFont.ascent * 0.7;
+  const symbolY = number(baseline - capHeight * fontScale(textSize, signatureFont) - symbolSize * 8 / 64);
+  return `${constructedLfSymbolSvg({ x, y: symbolY, size: symbolSize, primary, accent, monochrome })}${outlinedText(content.brand, { size: textSize, tracking: -0.035, x: x + symbolSize + gap, baseline, fill: primary, fontFace: signatureFont })}`;
 }
 
 function svgDocument(title, width, height, body, { background = null } = {}) {
@@ -163,7 +179,7 @@ function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeH
   const y = safeY + 92;
   const symbolSize = 78;
   const symbolGap = 18;
-  const wordmarkWidth = measureText(content.brand, 78, -0.035);
+  const wordmarkWidth = measureText(content.brand, 78, -0.035, signatureFont);
   const wordmarkStart = leftAligned ? x : x - (symbolSize + symbolGap + wordmarkWidth) / 2;
   const wordmark = compactLogoBody({ x: wordmarkStart, baseline: y, textSize: symbolSize });
   const body = [
@@ -278,6 +294,7 @@ async function main() {
     '## Quick map',
     '',
     '- Primary logo: day-1/01-profile/leo-ferraz-logo-horizontal.svg',
+    '- Accent underline variant: day-1/01-profile/leo-ferraz-wordmark-underline.svg',
     '- Primary symbol: day-1/01-profile/leo-ferraz-symbol.svg',
     '- Avatar: day-1/01-profile/avatar-1024.png',
     '- YouTube banner: day-1/02-channels/youtube-banner-2560x1440.png',
@@ -306,6 +323,8 @@ async function main() {
   if (content.signatureSymbol !== 'constructed-lf') throw new Error('Unsupported signature symbol source.');
   const wordmark = hybridLogoSvg('Leo Ferraz primary logo', [{ text: content.brand, size: 58, tracking: -0.035 }]);
   const wordmarkDark = hybridLogoSvg('Leo Ferraz primary logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true });
+  const wordmarkUnderline = hybridLogoSvg('Leo Ferraz accent underline logo', [{ text: content.brand, size: 58, tracking: -0.035 }], { underline: true });
+  const wordmarkUnderlineDark = hybridLogoSvg('Leo Ferraz accent underline logo dark', [{ text: content.brand, size: 58, tracking: -0.035 }], { primary: colors.background, accent: colors.background, monochrome: true, underline: true });
   const descriptor = hybridLogoSvg('Leo Ferraz descriptor lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
@@ -323,6 +342,8 @@ async function main() {
     ['leo-ferraz-wordmark-dark.svg', wordmarkDark, 'signature', 'primary authorship layer on light backgrounds'],
     ['leo-ferraz-logo-horizontal.svg', wordmark, 'signature', 'canonical horizontal logo'],
     ['leo-ferraz-logo-horizontal-dark.svg', wordmarkDark, 'signature', 'canonical horizontal logo on light backgrounds'],
+    ['leo-ferraz-wordmark-underline.svg', wordmarkUnderline, 'signature', 'optional accent underline variant'],
+    ['leo-ferraz-wordmark-underline-dark.svg', wordmarkUnderlineDark, 'signature', 'optional accent underline variant on light backgrounds'],
     ['leo-ferraz-building-with-ai.svg', descriptor, 'signature', 'descriptor lockup'],
     ['leo-ferraz-institutional.svg', institutional, 'signature', 'institutional lockup'],
     ['leo-ferraz-symbol.svg', symbol, 'primary symbol', 'avatar, favicon and compact contexts'],
@@ -337,6 +358,8 @@ async function main() {
   for (const size of [512, 1024, 2048]) {
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-${size}.png`, wordmark.svg, size, Math.ceil(size * wordmark.height / wordmark.width));
     register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'transparent wordmark export', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * wordmark.height / wordmark.width), format: 'PNG', transparency: true, usage: 'upload or composition' });
+    await writePng(`day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, wordmarkUnderline.svg, size, Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width));
+    register({ id: `leo-ferraz-wordmark-underline-${size}`, platform: 'all', role: 'transparent wordmark export', relative: `day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, width: size, height: Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width), format: 'PNG', transparency: true, usage: 'optional accent underline variant' });
   }
 
   const avatar = svgDocument('Constructed LF avatar', 1024, 1024, [

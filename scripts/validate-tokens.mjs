@@ -35,6 +35,7 @@ const requiredPaths = [
   'breakpoint.smallMax', 'breakpoint.mediumMin', 'breakpoint.mediumMax', 'breakpoint.largeMin', 'container.max',
   'signature.wordmark.weight', 'signature.wordmark.tracking', 'signature.wordmark.minimumFontSize', 'signature.wordmark.minimumWidth', 'signature.wordmark.clearSpace',
   'signature.symbol.name', 'signature.symbol.role', 'signature.symbol.viewBox', 'signature.symbol.minimumBox', 'signature.symbol.preferredMinimumBox', 'signature.symbol.clearSpace', 'signature.symbol.gap', 'signature.symbol.primaryColor', 'signature.symbol.activeModuleColor',
+  'signature.accentUnderline.role', 'signature.accentUnderline.thickness', 'signature.accentUnderline.offset', 'signature.accentUnderline.lineColor', 'signature.accentUnderline.terminalColor',
 ];
 
 for (const pathName of requiredPaths) required(pathName);
@@ -66,6 +67,8 @@ if (tokens.meta.motionSystem !== 'deferred') errors.push('motion disposition is 
 if (tokens.meta.canonicalGlowValues !== 'none') errors.push('glow disposition is missing');
 if (tokens.breakpoint.smallMax !== '767px' || tokens.breakpoint.mediumMin !== '768px' || tokens.breakpoint.mediumMax !== '1199px' || tokens.breakpoint.largeMin !== '1200px') errors.push('breakpoint values drifted');
 if (tokens.signature.symbol.name !== 'Constructed LF' || tokens.signature.symbol.role !== 'primary' || tokens.signature.symbol.viewBox !== '0 0 64 64') errors.push('Constructed LF symbol contract drifted');
+if (tokens.signature.wordmark.weight !== 700) errors.push('signature wordmark optical weight drifted');
+if (tokens.signature.accentUnderline.role !== 'optional-emphasis-variant') errors.push('accent underline contract drifted');
 
 if (errors.length) {
   console.error(errors.map((error) => `ERROR: ${error}`).join('\n'));

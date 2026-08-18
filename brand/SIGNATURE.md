@@ -95,13 +95,30 @@ Typeface:
 IBM Plex Sans
 
 Weight:
-500
+700
 
 Tracking:
 -0.035em
 ```
 
-The wordmark remains typographic so the full name stays direct and legible. It becomes part of a proprietary logo system through its fixed relationship with the Constructed LF symbol, not through ornamental lettering.
+The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The full name stays direct and legible while reading as one mark with the symbol.
+
+### Accent underline variant
+
+An optional emphasis variant adds a flat functional underline only beneath `Leo Ferraz`:
+
+```text
+Line:
+#4DA3FF · full wordmark width · 2px
+
+Terminal module:
+#86C5FF · 8px × 2px
+
+Offset:
+8px below baseline
+```
+
+This treatment is an alternate export, not the default signature. It may be used when a composition needs a controlled blue product-state signal. It must not receive glow, blur, gradient, animation, dark-blue track or increased thickness, and it never extends beneath the symbol.
 
 ## Descriptor and institutional lockups
 
@@ -179,6 +196,9 @@ primary symbol
 
 leo-ferraz-wordmark.svg:
 compatibility alias for the primary hybrid logo
+
+leo-ferraz-wordmark-underline.svg:
+optional accent underline variant
 
 avatar-*:
 Constructed LF symbol

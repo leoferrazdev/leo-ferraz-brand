@@ -1,6 +1,6 @@
 ---
 interface Props {
-  variant?: 'wordmark' | 'descriptor' | 'institutional' | 'symbol' | 'utility';
+  variant?: 'wordmark' | 'accent' | 'descriptor' | 'institutional' | 'symbol' | 'utility';
   class?: string;
 }
 
@@ -17,7 +17,16 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
       <path d="M28 8H56V20H40V28H48V36H40V56H28Z" fill="currentColor" />
       <rect class="brand-signature__active-module" x="48" y="28" width="8" height="8" />
     </svg>
-    {!symbolOnly ? <span class="brand-signature__name">Leo Ferraz</span> : null}
+    {!symbolOnly ? (
+      <span class="brand-signature__name-block">
+        <span class="brand-signature__name">Leo Ferraz</span>
+        {variant === 'accent' ? (
+          <span class="brand-signature__accent-underline" aria-hidden="true">
+            <span class="brand-signature__accent-terminal"></span>
+          </span>
+        ) : null}
+      </span>
+    ) : null}
   </span>
   {variant === 'descriptor' || variant === 'institutional' ? <span class="brand-signature__descriptor">Building with AI</span> : null}
   {variant === 'institutional' ? <span class="brand-signature__category">AI-Native Product Lab</span> : null}
@@ -54,6 +63,26 @@ const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : 
     font-weight: var(--lf-type-display-weight);
     letter-spacing: var(--lf-type-display-tracking);
     line-height: var(--lf-type-display-line-height);
+  }
+
+  .brand-signature__name-block {
+    display: inline-grid;
+  }
+
+  .brand-signature__accent-underline {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: var(--lf-signature-accent-underline-thickness);
+    margin-top: var(--lf-signature-accent-underline-offset);
+    background: var(--lf-signature-accent-underline-line-color);
+  }
+
+  .brand-signature__accent-terminal {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 8px;
+    background: var(--lf-signature-accent-underline-terminal-color);
   }
 
   .brand-signature__descriptor,

@@ -21,6 +21,9 @@ brand-assets/exports/day-1/01-profile/avatar-256.png
 Primary logo (Constructed LF Lockup):
 brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg
 
+Optional accent underline logo:
+brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark-underline.svg
+
 Primary symbol:
 brand-assets/exports/day-1/01-profile/leo-ferraz-symbol.svg
 
