@@ -296,7 +296,7 @@ light_mode:
 not_defined
 
 tokens:
-not_created
+implemented
 ```
 
 The selection records the founder's approval of Editorial Tech Lockup. The other options remain historical exploration evidence and are not selected; they are not classified as rejected, failed, invalid or deprecated.
