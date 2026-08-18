@@ -46,11 +46,17 @@ brand-assets/exports/day-1/01-profile/avatar-1024.png
 Banner:
 brand-assets/exports/day-1/02-channels/youtube-banner-2560x1440.png
 
+Banner signature variant:
+Descriptor Lockup
+
 Thumbnail master:
 brand-assets/exports/day-1/05-youtube/youtube-thumbnail-master-3840x2160.png
 
 Thumbnail quick export:
 brand-assets/exports/day-1/05-youtube/youtube-thumbnail-1280x720.png
+
+Thumbnail signature variant:
+Primary Symbol
 ```
 
 Description is maintained in the Obsidian decision note. Upload is manual in YouTube Studio.
@@ -70,11 +76,20 @@ brand-assets/exports/day-1/01-profile/avatar-1024.png
 Profile banner:
 brand-assets/exports/day-1/02-channels/twitch-banner-1200x480.png
 
+Profile banner signature variant:
+Descriptor Lockup
+
 Offline:
 brand-assets/exports/day-1/03-live/obs/offline-1920x1080.png
 
 Live visual kit:
 live/obs/
+
+Persistent brand bug:
+Primary Symbol
+
+OBS scene signature:
+Wordmark Only
 ```
 
 Upload is manual in Creator Dashboard.

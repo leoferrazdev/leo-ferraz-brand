@@ -29,10 +29,10 @@
 **Interfaces:**
 - Produces: canonical context-to-variant matrix consumed by generation and site implementation.
 
-- [ ] **Step 1:** Bump `SIGNATURE.md` to version `0.4.0` and replace the universal-default wording with the responsive identity rule.
-- [ ] **Step 2:** Add the exact site, social, video, channel and institutional mappings from the approved design spec.
-- [ ] **Step 3:** Document `signature_variant` as generated manifest metadata in `DESIGN_SYSTEM.md`.
-- [ ] **Step 4:** Annotate channel assets in `CHANNEL_SETUP_CHECKLIST.md` with their canonical variants.
+- [x] **Step 1:** Bump `SIGNATURE.md` to version `0.4.0` and replace the universal-default wording with the responsive identity rule.
+- [x] **Step 2:** Add the exact site, social, video, channel and institutional mappings from the approved design spec.
+- [x] **Step 3:** Document `signature_variant` as generated manifest metadata in `DESIGN_SYSTEM.md`.
+- [x] **Step 4:** Annotate channel assets in `CHANNEL_SETUP_CHECKLIST.md` with their canonical variants.
 
 ### Task 2: Deterministic asset composition
 
@@ -49,12 +49,12 @@
 **Interfaces:**
 - Produces: `signature_variant` values `primary-symbol`, `wordmark-only`, `primary-lockup`, `descriptor-lockup`, `institutional-lockup` or `none`.
 
-- [ ] **Step 1:** Add a reusable placement helper that inserts canonical outlined signature assets into larger SVG compositions.
-- [ ] **Step 2:** Map channel banners to `descriptor-lockup`.
-- [ ] **Step 3:** Map carousel/social-square/OBS scenes to `wordmark-only`; map Story/Reels/thumbnails/brand bug to `primary-symbol`.
-- [ ] **Step 4:** Keep the lower third on `descriptor-lockup` and remove duplicate brand naming from Open Graph.
-- [ ] **Step 5:** Make the on-demand renderer load canonical exported signature SVGs instead of drawing brand text.
-- [ ] **Step 6:** Add manifest assertions for every application role and run `npm run brand-assets:build` followed by `npm run brand-assets:validate`.
+- [x] **Step 1:** Add a reusable placement helper that inserts canonical outlined signature assets into larger SVG compositions.
+- [x] **Step 2:** Map channel banners to `descriptor-lockup`.
+- [x] **Step 3:** Map carousel/social-square/OBS scenes to `wordmark-only`; map Story/Reels/thumbnails/brand bug to `primary-symbol`.
+- [x] **Step 4:** Keep the lower third on `descriptor-lockup` and remove duplicate brand naming from Open Graph.
+- [x] **Step 5:** Make the on-demand renderer load canonical exported signature SVGs instead of drawing brand text.
+- [x] **Step 6:** Add manifest assertions for every application role and run `npm run brand-assets:build` followed by `npm run brand-assets:validate`.
 
 ### Task 3: Website distribution
 
@@ -67,9 +67,9 @@
 - Consumes: semantic variants from `BrandSignature.astro`.
 - Produces: wordmark-only navigation and footer, with no repeated hero signature.
 
-- [ ] **Step 1:** Change the header from `primaryLockup` to `wordmarkOnly`.
-- [ ] **Step 2:** Change the footer from symbol plus typed name to `wordmarkOnly`, keeping institutional metadata separate.
-- [ ] **Step 3:** Remove only the hero `institutional` signature line from the dirty homepage file; preserve every other local homepage change.
+- [x] **Step 1:** Change the header from `primaryLockup` to `wordmarkOnly`.
+- [x] **Step 2:** Change the footer from symbol plus typed name to `wordmarkOnly`, keeping institutional metadata separate.
+- [x] **Step 3:** Remove only the hero `institutional` signature line from the dirty homepage file; preserve every other local homepage change.
 
 ### Task 4: Verification and publication
 
@@ -80,8 +80,8 @@
 **Interfaces:**
 - Produces: operational decision, evidence and publication record.
 
-- [ ] **Step 1:** Run `npm run brand-assets:validate` and two consecutive `npm run build` executions.
-- [ ] **Step 2:** Verify `/`, `/brand/` and representative canonical assets with HTTP 200.
-- [ ] **Step 3:** Audit `git diff --check`, stage explicit files and the isolated homepage hunk, and confirm no unrelated homepage files are staged.
-- [ ] **Step 4:** Commit with `feat: implement responsive signature distribution` and push `main` to `origin/main`.
-- [ ] **Step 5:** Record commit, push, validation evidence and remaining external migration work in the Obsidian vault.
+- [x] **Step 1:** Run `npm run brand-assets:validate` and two consecutive `npm run build` executions.
+- [x] **Step 2:** Verify `/`, `/brand/` and representative canonical assets with HTTP 200.
+- [x] **Step 3:** Audit `git diff --check`, stage explicit files and the isolated homepage hunk, and confirm no unrelated homepage files are staged.
+- [x] **Step 4:** Commit with `feat: implement responsive signature distribution` and push `main` to `origin/main`.
+- [x] **Step 5:** Record commit, push, validation evidence and remaining external migration work in the Obsidian vault.

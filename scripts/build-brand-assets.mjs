@@ -148,19 +148,10 @@ function wordmarkOnlySvg(title, { primary = colors.text, underline = true } = {}
   return { width: Math.ceil(padding * 2 + wordmarkWidth), height, svg: svgDocument(title, Math.ceil(padding * 2 + wordmarkWidth), height, body) };
 }
 
-function compactLogoBody({ x, baseline, textSize, primary = colors.text, accent = colors.accent, monochrome = false, underline = true }) {
-  const symbolSize = textSize;
-  const gap = Math.max(8, Math.round(textSize * 0.22));
-  const capHeight = signatureFont.capHeight ?? signatureFont.ascent * 0.7;
-  const symbolY = number(baseline - capHeight * fontScale(textSize, signatureFont) - symbolSize * 8 / 64);
-  const wordmarkX = x + symbolSize + gap;
-  const wordmarkWidth = measureText(content.brand, textSize, -0.035, signatureFont);
-  const underlineY = number(baseline + Math.max(6, Math.round(textSize * 0.14)));
-  const underlineSvg = underline ? [
-    `<rect data-accent="underline-line" x="${wordmarkX}" y="${underlineY}" width="${wordmarkWidth}" height="2" fill="${colors.accent}"/>`,
-    `<rect data-accent="underline-terminal" x="${number(wordmarkX + wordmarkWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
-  ].join('') : '';
-  return `${constructedLfSymbolSvg({ x, y: symbolY, size: symbolSize, primary, accent, monochrome })}${outlinedText(content.brand, { size: textSize, tracking: -0.035, x: wordmarkX, baseline, fill: primary, fontFace: signatureFont })}${underlineSvg}`;
+function placedSignatureBody(asset, { x, y, width, anchor = 'start' }) {
+  const scale = width / asset.width;
+  const left = anchor === 'middle' ? x - width / 2 : anchor === 'end' ? x - width : x;
+  return `<g data-signature-variant="${asset.variant}" transform="translate(${number(left)} ${number(y)}) scale(${number(scale)})">${outlinedBody(asset.svg)}</g>`;
 }
 
 function svgDocument(title, width, height, body, { background = null } = {}) {
@@ -172,13 +163,18 @@ function textElement(text, x, y, { size = 28, fill = colors.text, family = 'IBM 
   return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}px" font-weight="${weight}" text-anchor="${anchor}" letter-spacing="${letterSpacing}em">${escapeXml(text)}</text>`;
 }
 
-function socialSvg(title, width, height, { label, headline, state = 'CONTENT SLOT', safeZone = null } = {}) {
+function socialSvg(title, width, height, { label, headline, signatureAsset, artifact = content.artifact, state = 'CONTENT SLOT', headlineSize = null, showState = true, showDescriptor = true, safeZone = null } = {}) {
   const safe = safeZone ?? { x: Math.round(width * 0.1), y: Math.round(height * 0.1), width: Math.round(width * 0.8), height: Math.round(height * 0.8) };
   const contentX = safe.x + Math.max(18, Math.round(width * 0.018));
   const contentRight = safe.x + safe.width - Math.max(18, Math.round(width * 0.018));
   const markSize = Math.max(26, Math.round(width * 0.065));
-  const mark = compactLogoBody({ x: contentX, baseline: safe.y + Math.round(safe.height * 0.2), textSize: markSize, underline: true });
-  const labelY = safe.y + Math.round(safe.height * 0.31);
+  const signatureWidth = signatureAsset.variant === 'primary-symbol'
+    ? markSize
+    : Math.min(Math.round(safe.width * 0.44), Math.round(width * 0.4));
+  const signatureY = safe.y + Math.max(12, Math.round(safe.height * 0.04));
+  const mark = placedSignatureBody(signatureAsset, { x: contentX, y: signatureY, width: signatureWidth });
+  const signatureHeight = signatureAsset.height * signatureWidth / signatureAsset.width;
+  const labelY = Math.max(safe.y + Math.round(safe.height * 0.31), Math.round(signatureY + signatureHeight + Math.max(20, width * 0.018)));
   const headlineY = safe.y + Math.round(safe.height * 0.53);
   const artifactY = safe.y + Math.round(safe.height * 0.65);
   const stateY = safe.y + Math.round(safe.height * 0.82);
@@ -186,27 +182,25 @@ function socialSvg(title, width, height, { label, headline, state = 'CONTENT SLO
   const body = [
     mark,
     textElement(label, contentX, labelY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.accent, letterSpacing: 0.075 }),
-    textElement(headline, contentX, headlineY, { size: Math.max(30, Math.round(width * 0.07)), weight: 500 }),
-    textElement(content.artifact, contentX, artifactY, { size: Math.max(16, Math.round(width * 0.022)), family: 'IBM Plex Mono', fill: colors.secondary, letterSpacing: 0.01 }),
-    textElement(state, contentX, stateY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.experimental, letterSpacing: 0.075 }),
-    textElement(content.descriptor, contentRight, descriptorY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.secondary, anchor: 'end' }),
+    textElement(headline, contentX, headlineY, { size: headlineSize ?? Math.max(30, Math.round(width * 0.07)), weight: 500 }),
+    textElement(artifact, contentX, artifactY, { size: Math.max(16, Math.round(width * 0.022)), family: 'IBM Plex Mono', fill: colors.secondary, letterSpacing: 0.01 }),
+    showState ? textElement(state, contentX, stateY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.experimental, letterSpacing: 0.075 }) : '',
+    showDescriptor ? textElement(content.descriptor, contentRight, descriptorY, { size: Math.max(14, Math.round(width * 0.016)), family: 'IBM Plex Mono', fill: colors.secondary, anchor: 'end' }) : '',
   ].join('');
   return svgDocument(title, width, height, body, { background: colors.background });
 }
 
-function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, leftAligned = false } = {}) {
+function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, signatureAsset, leftAligned = false } = {}) {
   const x = leftAligned ? 72 : safeX + safeWidth / 2;
   const anchor = leftAligned ? 'start' : 'middle';
-  const y = safeY + 92;
-  const symbolSize = 78;
-  const symbolGap = 18;
-  const wordmarkWidth = measureText(content.brand, 78, -0.035, signatureFont);
-  const wordmarkStart = leftAligned ? x : x - (symbolSize + symbolGap + wordmarkWidth) / 2;
-  const wordmark = compactLogoBody({ x: wordmarkStart, baseline: y, textSize: symbolSize, underline: true });
+  const signatureWidth = Math.min(520, Math.round(safeWidth * 0.52));
+  const signatureHeight = signatureAsset.height * signatureWidth / signatureAsset.width;
+  const signatureY = safeY + Math.max(10, Math.round((safeHeight - signatureHeight - 50) / 2));
+  const signature = placedSignatureBody(signatureAsset, { x, y: signatureY, width: signatureWidth, anchor });
+  const metadataY = signatureY + signatureHeight + 32;
   const body = [
-    wordmark,
-    textElement(content.descriptor, x, y + 68, { size: 28, family: 'IBM Plex Mono', fill: colors.secondary, anchor }),
-    textElement('SaaS · Apps · Games · Experiments', x, y + 112, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, anchor }),
+    signature,
+    textElement(content.bio[1], x, metadataY, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, anchor }),
   ].join('');
   return svgDocument(title, width, height, body, { background: colors.background });
 }
@@ -299,8 +293,8 @@ const manifest = {
   assets: [],
 };
 
-function register({ id, platform, role, relative, width, height, format, transparency, usage, safeZone = defaultSafeZone({ role, width, height, transparency }), source = 'brand-assets/sources/content.json + scripts/build-brand-assets.mjs', status = 'approved' }) {
-  manifest.assets.push({ id, platform, role, width, height, dimensions: `${width}x${height}`, format, source_template: source, background: transparency ? 'transparent' : colors.background, transparency, safe_zone: safeZone, usage, export_path: `brand-assets/exports/${relative}`, status });
+function register({ id, platform, role, relative, width, height, format, transparency, usage, signatureVariant = 'none', safeZone = defaultSafeZone({ role, width, height, transparency }), source = 'brand-assets/sources/content.json + scripts/build-brand-assets.mjs', status = 'approved' }) {
+  manifest.assets.push({ id, platform, role, signature_variant: signatureVariant, width, height, dimensions: `${width}x${height}`, format, source_template: source, background: transparency ? 'transparent' : colors.background, transparency, safe_zone: safeZone, usage, export_path: `brand-assets/exports/${relative}`, status });
 }
 
 async function main() {
@@ -361,6 +355,14 @@ async function main() {
   ], { underline: true });
   const symbol = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64 })) };
   const symbolDark = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol dark', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64, primary: colors.background, accent: colors.background, monochrome: true })) };
+  primaryLockup.variant = 'primary-lockup';
+  primaryLockupDark.variant = 'primary-lockup';
+  wordmarkOnly.variant = 'wordmark-only';
+  wordmarkOnlyDark.variant = 'wordmark-only';
+  descriptor.variant = 'descriptor-lockup';
+  institutional.variant = 'institutional-lockup';
+  symbol.variant = 'primary-symbol';
+  symbolDark.variant = 'primary-symbol';
 
   const profileSvgs = [
     ['leo-ferraz-primary-lockup.svg', primaryLockup, 'primary lockup', 'Constructed LF + Leo Ferraz'],
@@ -384,15 +386,15 @@ async function main() {
   ];
   for (const [name, asset, role, usage] of profileSvgs) {
     await writeSvg(`day-1/01-profile/${name}`, asset.svg);
-    register({ id: name.replace('.svg', ''), platform: 'all', role, relative: `day-1/01-profile/${name}`, width: asset.width, height: asset.height, format: 'SVG', transparency: true, usage });
+    register({ id: name.replace('.svg', ''), platform: 'all', role, relative: `day-1/01-profile/${name}`, width: asset.width, height: asset.height, format: 'SVG', transparency: true, usage, signatureVariant: asset.variant });
   }
   for (const size of [512, 1024, 2048]) {
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, wordmarkOnly.svg, size, Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width));
-    register({ id: `leo-ferraz-wordmark-only-${size}`, platform: 'all', role: 'wordmark-only export', relative: `day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, width: size, height: Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width), format: 'PNG', transparency: true, usage: 'upload or composition; name-only signature' });
+    register({ id: `leo-ferraz-wordmark-only-${size}`, platform: 'all', role: 'wordmark-only export', relative: `day-1/01-profile/leo-ferraz-wordmark-only-${size}.png`, width: size, height: Math.ceil(size * wordmarkOnly.height / wordmarkOnly.width), format: 'PNG', transparency: true, usage: 'upload or composition; name-only signature', signatureVariant: 'wordmark-only' });
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-${size}.png`, primaryLockup.svg, size, Math.ceil(size * primaryLockup.height / primaryLockup.width));
-    register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * primaryLockup.height / primaryLockup.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg' });
+    register({ id: `leo-ferraz-wordmark-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-${size}.png`, width: size, height: Math.ceil(size * primaryLockup.height / primaryLockup.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg', signatureVariant: 'primary-lockup' });
     await writePng(`day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, wordmarkUnderline.svg, size, Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width));
-    register({ id: `leo-ferraz-wordmark-underline-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, width: size, height: Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg' });
+    register({ id: `leo-ferraz-wordmark-underline-${size}`, platform: 'all', role: 'legacy compatibility alias', relative: `day-1/01-profile/leo-ferraz-wordmark-underline-${size}.png`, width: size, height: Math.ceil(size * wordmarkUnderline.height / wordmarkUnderline.width), format: 'PNG', transparency: true, usage: 'legacy alias for leo-ferraz-primary-lockup.svg', signatureVariant: 'primary-lockup' });
   }
 
   const avatar = svgDocument('Constructed LF avatar', 1024, 1024, [
@@ -405,15 +407,15 @@ async function main() {
   ].join(''));
   await writeSvg('day-1/01-profile/avatar-square.svg', avatar);
   await writeSvg('day-1/01-profile/avatar-circle.svg', avatarCircle);
-  register({ id: 'avatar-square-master', platform: 'all', role: 'avatar', relative: 'day-1/01-profile/avatar-square.svg', width: 1024, height: 1024, format: 'SVG', transparency: false, usage: 'profile avatar master' });
-  register({ id: 'avatar-circle-validation', platform: 'all', role: 'crop validation', relative: 'day-1/01-profile/avatar-circle.svg', width: 1024, height: 1024, format: 'SVG', transparency: true, usage: 'circle crop validation only' });
+  register({ id: 'avatar-square-master', platform: 'all', role: 'avatar', relative: 'day-1/01-profile/avatar-square.svg', width: 1024, height: 1024, format: 'SVG', transparency: false, usage: 'profile avatar master', signatureVariant: 'primary-symbol' });
+  register({ id: 'avatar-circle-validation', platform: 'all', role: 'crop validation', relative: 'day-1/01-profile/avatar-circle.svg', width: 1024, height: 1024, format: 'SVG', transparency: true, usage: 'circle crop validation only', signatureVariant: 'primary-symbol' });
   for (const size of [16, 32, 48, 64, 128, 256, 512, 1024]) {
     const relative = `day-1/01-profile/avatar-${size}.png`;
     await writePng(relative, avatar, size, size, { fit: 'fill' });
-    register({ id: `avatar-${size}`, platform: 'all', role: 'avatar export', relative, width: size, height: size, format: 'PNG', transparency: false, usage: 'profile upload or small-size validation' });
+    register({ id: `avatar-${size}`, platform: 'all', role: 'avatar export', relative, width: size, height: size, format: 'PNG', transparency: false, usage: 'profile upload or small-size validation', signatureVariant: 'primary-symbol' });
   }
   await writePng('day-1/01-profile/avatar-circle-1024.png', avatarCircle, 1024, 1024, { fit: 'fill' });
-  register({ id: 'avatar-circle-1024', platform: 'all', role: 'circular crop validation', relative: 'day-1/01-profile/avatar-circle-1024.png', width: 1024, height: 1024, format: 'PNG', transparency: true, usage: 'platform crop validation' });
+  register({ id: 'avatar-circle-1024', platform: 'all', role: 'circular crop validation', relative: 'day-1/01-profile/avatar-circle-1024.png', width: 1024, height: 1024, format: 'PNG', transparency: true, usage: 'platform crop validation', signatureVariant: 'primary-symbol' });
 
   const favicon = svgDocument('Constructed LF favicon', 48, 48, [
     `<rect width="48" height="48" fill="${colors.background}"/>`,
@@ -426,26 +428,26 @@ async function main() {
     const buffer = await writePng(`day-1/06-web/favicon-${size}x${size}.png`, favicon, size, size, { fit: 'fill' });
     faviconImages.push({ size, buffer });
     copyPublic(`favicon-${size}x${size}.png`, buffer);
-    register({ id: `favicon-${size}`, platform: 'web', role: 'favicon', relative: `day-1/06-web/favicon-${size}x${size}.png`, width: size, height: size, format: 'PNG', transparency: false, usage: 'browser favicon' });
+    register({ id: `favicon-${size}`, platform: 'web', role: 'favicon', relative: `day-1/06-web/favicon-${size}x${size}.png`, width: size, height: size, format: 'PNG', transparency: false, usage: 'browser favicon', signatureVariant: 'primary-symbol' });
   }
   const ico = createIco(faviconImages);
   await writeBuffer('day-1/06-web/favicon.ico', ico);
   copyPublic('favicon.ico', ico);
-  register({ id: 'favicon-ico', platform: 'web', role: 'favicon', relative: 'day-1/06-web/favicon.ico', width: 48, height: 48, format: 'ICO', transparency: false, usage: 'legacy browser favicon' });
+  register({ id: 'favicon-ico', platform: 'web', role: 'favicon', relative: 'day-1/06-web/favicon.ico', width: 48, height: 48, format: 'ICO', transparency: false, usage: 'legacy browser favicon', signatureVariant: 'primary-symbol' });
   const apple = await writePng('day-1/06-web/apple-touch-icon.png', favicon, 180, 180, { fit: 'fill' });
   const icon192 = await writePng('day-1/06-web/icon-192.png', favicon, 192, 192, { fit: 'fill' });
   const icon512 = await writePng('day-1/06-web/icon-512.png', favicon, 512, 512, { fit: 'fill' });
   copyPublic('apple-touch-icon.png', apple);
   copyPublic('icon-192.png', icon192);
   copyPublic('icon-512.png', icon512);
-  for (const [id, size, file] of [['apple-touch-icon', 180, 'apple-touch-icon.png'], ['icon-192', 192, 'icon-192.png'], ['icon-512', 512, 'icon-512.png']]) register({ id, platform: 'web', role: id === 'apple-touch-icon' ? 'apple touch icon' : 'web app icon', relative: `day-1/06-web/${file}`, width: size, height: size, format: 'PNG', transparency: false, usage: 'web installation or shortcut' });
+  for (const [id, size, file] of [['apple-touch-icon', 180, 'apple-touch-icon.png'], ['icon-192', 192, 'icon-192.png'], ['icon-512', 512, 'icon-512.png']]) register({ id, platform: 'web', role: id === 'apple-touch-icon' ? 'apple touch icon' : 'web app icon', relative: `day-1/06-web/${file}`, width: size, height: size, format: 'PNG', transparency: false, usage: 'web installation or shortcut', signatureVariant: 'primary-symbol' });
   const manifestJson = JSON.stringify({ name: 'Leo Ferraz — Building with AI', short_name: 'Leo Ferraz', start_url: '/', display: 'standalone', background_color: colors.background, theme_color: colors.background, icons: [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: '/icon-512.png', sizes: '512x512', type: 'image/png' }] }, null, 2) + '\n';
   await writeBuffer('day-1/06-web/site.webmanifest', Buffer.from(manifestJson));
   copyPublic('site.webmanifest', Buffer.from(manifestJson));
   register({ id: 'site-webmanifest', platform: 'web', role: 'manifest', relative: 'day-1/06-web/site.webmanifest', width: 0, height: 0, format: 'JSON', transparency: false, usage: 'web app metadata' });
 
-  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423 });
-  const twitchBanner = channelBannerSvg('Twitch profile banner · 1200×480', 1200, 480, { safeX: 48, safeY: 48, safeWidth: 1050, safeHeight: 300, leftAligned: true });
+  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423, signatureAsset: descriptor });
+  const twitchBanner = channelBannerSvg('Twitch profile banner · 1200×480', 1200, 480, { safeX: 48, safeY: 48, safeWidth: 1050, safeHeight: 300, signatureAsset: descriptor, leftAligned: true });
   const channelAssets = [
     ['day-1/02-channels/youtube-banner-2560x1440', youtubeBanner, 2560, 1440, 'YouTube channel banner'],
     ['day-1/02-channels/twitch-banner-1200x480', twitchBanner, 1200, 480, 'Twitch profile banner'],
@@ -456,32 +458,32 @@ async function main() {
     const safeZone = role.startsWith('YouTube')
       ? { type: 'rect', x: 508, y: 508, width: 1544, height: 423 }
       : { type: 'rect', x: 48, y: 48, width: 1050, height: 300 };
-    register({ id: path.basename(base), platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'channel upload source' });
-    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'channel upload' });
+    register({ id: path.basename(base), platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'channel upload source', signatureVariant: 'descriptor-lockup' });
+    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'channel upload', signatureVariant: 'descriptor-lockup' });
   }
 
   const socialSpecs = [
-    ['day-1/04-social/instagram-carousel-cover-1080x1350', 1080, 1350, 'Instagram carousel/feed cover', 'BUILDING WITH AI'],
-    ['day-1/04-social/instagram-story-reels-1080x1920', 1080, 1920, 'Instagram Story/Reels cover', 'AO VIVO'],
-    ['day-1/05-youtube/youtube-thumbnail-1280x720', 1280, 720, 'YouTube thumbnail template', 'BUILDING WITH AI'],
-    ['day-1/05-youtube/youtube-thumbnail-master-3840x2160', 3840, 2160, 'YouTube thumbnail master', 'BUILDING WITH AI'],
-    ['day-1/04-social/instagram-reels-cover-420x654', 420, 654, 'Instagram Reels cover crop', 'AO VIVO'],
-    ['day-1/04-social/social-square-1080x1080', 1080, 1080, 'Social square template', 'REAL PRODUCT ARTIFACT'],
-    ['day-1/06-web/open-graph-1200x630', 1200, 630, 'Open Graph default', 'Leo Ferraz'],
+    ['day-1/04-social/instagram-carousel-cover-1080x1350', 1080, 1350, 'Instagram carousel/feed cover', 'BUILDING WITH AI', wordmarkOnly],
+    ['day-1/04-social/instagram-story-reels-1080x1920', 1080, 1920, 'Instagram Story/Reels cover', 'AO VIVO', symbol],
+    ['day-1/05-youtube/youtube-thumbnail-1280x720', 1280, 720, 'YouTube thumbnail template', 'BUILDING WITH AI', symbol],
+    ['day-1/05-youtube/youtube-thumbnail-master-3840x2160', 3840, 2160, 'YouTube thumbnail master', 'BUILDING WITH AI', symbol],
+    ['day-1/04-social/instagram-reels-cover-420x654', 420, 654, 'Instagram Reels cover crop', 'AO VIVO', symbol],
+    ['day-1/04-social/social-square-1080x1080', 1080, 1080, 'Social square template', 'REAL PRODUCT ARTIFACT', wordmarkOnly, { headlineSize: 64 }],
+    ['day-1/06-web/open-graph-1200x630', 1200, 630, 'Open Graph default', content.bio[0], descriptor, { artifact: content.bio[1], headlineSize: 42, showState: false, showDescriptor: false }],
   ];
-  for (const [base, width, height, role, headline] of socialSpecs) {
+  for (const [base, width, height, role, headline, signatureAsset, options = {}] of socialSpecs) {
     const safeZone = socialSafeZone(role, width, height);
-    const svg = socialSvg(role, width, height, { label: role.toUpperCase(), headline, state: content.liveState, safeZone });
+    const svg = socialSvg(role, width, height, { label: role.toUpperCase(), headline, signatureAsset, state: content.liveState, safeZone, ...options });
     await writeSvg(`${base}.svg`, svg);
     await writePng(`${base}.png`, svg, width, height, { fit: 'fill' });
-    register({ id: path.basename(base), platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'editable template source' });
-    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'upload/publication export' });
+    register({ id: path.basename(base), platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'editable template source', signatureVariant: signatureAsset.variant });
+    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'upload/publication export', signatureVariant: signatureAsset.variant });
   }
   const liveExampleSafeZone = socialSafeZone('YouTube thumbnail', 1280, 720);
-  const liveExample = socialSvg('Live example thumbnail', 1280, 720, { label: 'AO VIVO · EXAMPLE', headline: content.liveExample, state: content.liveState, safeZone: liveExampleSafeZone });
+  const liveExample = socialSvg('Live example thumbnail', 1280, 720, { label: 'AO VIVO · EXAMPLE', headline: content.liveExample, signatureAsset: symbol, state: content.liveState, safeZone: liveExampleSafeZone });
   await writeSvg('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.svg', liveExample);
   await writePng('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', liveExample, 1280, 720, { fit: 'fill' });
-  register({ id: 'live-001-youtube-thumbnail', platform: 'YouTube', role: 'first demonstrative live thumbnail', relative: 'day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', width: 1280, height: 720, format: 'PNG', transparency: false, safeZone: liveExampleSafeZone, usage: 'clearly demonstrative example only' });
+  register({ id: 'live-001-youtube-thumbnail', platform: 'YouTube', role: 'first demonstrative live thumbnail', relative: 'day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', width: 1280, height: 720, format: 'PNG', transparency: false, safeZone: liveExampleSafeZone, usage: 'clearly demonstrative example only', signatureVariant: 'primary-symbol' });
   const ogPng = fs.readFileSync(path.join(exportsRoot, 'day-1/06-web/open-graph-1200x630.png'));
   copyPublic('brand-assets/exports/day-1/06-web/open-graph-1200x630.png', ogPng);
 
@@ -494,32 +496,28 @@ async function main() {
   ];
   for (const [name, headline, state] of liveScenes) {
     const liveSafeZone = rectSafeZone(1920, 1080);
-    const svg = socialSvg(`OBS ${headline}`, 1920, 1080, { label: 'LEO FERRAZ · LIVE', headline, state, safeZone: liveSafeZone });
+    const svg = socialSvg(`OBS ${headline}`, 1920, 1080, { label: 'LEO FERRAZ · LIVE', headline, signatureAsset: wordmarkOnly, state, safeZone: liveSafeZone });
     await writeSvg(`day-1/03-live/obs/${name}.svg`, svg);
     await writePng(`day-1/03-live/obs/${name}.png`, svg, 1920, 1080, { fit: 'fill' });
     ensureDir(path.join(root, 'live', 'obs', `${name}.png`));
     fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.png`), path.join(root, 'live', 'obs', `${name}.png`));
     fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.svg`), path.join(root, 'live', 'obs', `${name}.svg`));
-    register({ id: name, platform: 'OBS', role: `live scene ${headline.toLowerCase()}`, relative: `day-1/03-live/obs/${name}.png`, width: 1920, height: 1080, format: 'PNG', transparency: false, usage: 'OBS scene background' });
+    register({ id: name, platform: 'OBS', role: `live scene ${headline.toLowerCase()}`, relative: `day-1/03-live/obs/${name}.png`, width: 1920, height: 1080, format: 'PNG', transparency: false, usage: 'OBS scene background; do not combine with the persistent brand bug', signatureVariant: 'wordmark-only' });
   }
-  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, compactLogoBody({ x: 16, baseline: 64, textSize: 48, underline: true }));
+  const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, placedSignatureBody(symbol, { x: 16, y: 8, width: 80 }));
   await writeSvg('day-1/03-live/brand-bug.svg', bugSvg);
   await writePng('day-1/03-live/brand-bug.png', bugSvg, 480, 96, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'brand-bug.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/brand-bug.png'), path.join(root, 'live', 'obs', 'brand-bug.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/brand-bug.svg'), path.join(root, 'live', 'obs', 'brand-bug.svg'));
-  register({ id: 'brand-bug', platform: 'OBS', role: 'transparent corner brand bug', relative: 'day-1/03-live/brand-bug.png', width: 480, height: 96, format: 'PNG', transparency: true, usage: 'corner overlay; use only when authorship needs a signal' });
-  const lower = hybridLogoSvg('Leo Ferraz lower third', [
-    { text: content.brand, size: 34, tracking: -0.035, fill: colors.text },
-    { text: content.descriptor, size: 16, tracking: 0, fill: colors.secondary },
-  ], { padding: 16, symbolSize: 64, symbolGap: 16, lineGap: 4, underline: true });
-  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, `<g transform="translate(24 16)">${outlinedBody(lower.svg)}</g>`);
+  register({ id: 'brand-bug', platform: 'OBS', role: 'transparent corner brand bug', relative: 'day-1/03-live/brand-bug.png', width: 480, height: 96, format: 'PNG', transparency: true, usage: 'persistent compact corner marker; do not combine with a complete scene signature', signatureVariant: 'primary-symbol' });
+  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, placedSignatureBody(descriptor, { x: 24, y: 4, width: 430 }));
   await writeSvg('day-1/03-live/lower-third.svg', lowerSvg);
   await writePng('day-1/03-live/lower-third.png', lowerSvg, 960, 160, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'lower-third.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/lower-third.png'), path.join(root, 'live', 'obs', 'lower-third.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/lower-third.svg'), path.join(root, 'live', 'obs', 'lower-third.svg'));
-  register({ id: 'lower-third', platform: 'OBS', role: 'transparent lower third', relative: 'day-1/03-live/lower-third.png', width: 960, height: 160, format: 'PNG', transparency: true, usage: 'static OBS overlay' });
+  register({ id: 'lower-third', platform: 'OBS', role: 'transparent lower third', relative: 'day-1/03-live/lower-third.png', width: 960, height: 160, format: 'PNG', transparency: true, usage: 'static OBS overlay', signatureVariant: 'descriptor-lockup' });
 
   fs.writeFileSync(path.join(root, 'brand-assets', 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   const hashInput = manifest.assets.map((asset) => asset.export_path).sort().map((relative) => `${relative}:${createHash('sha256').update(fs.readFileSync(path.join(root, relative))).digest('hex')}`).join('\n');

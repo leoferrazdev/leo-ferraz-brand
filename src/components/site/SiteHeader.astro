@@ -12,7 +12,7 @@ const { href = '/', linkLabel, linkHref } = Astro.props;
 
 <header class="site-header shell-width">
   <a class="site-header__brand" href={href} aria-label="Leo Ferraz — Building with AI">
-    <BrandSignature variant="primaryLockup" />
+    <BrandSignature variant="wordmarkOnly" />
   </a>
   {linkLabel && linkHref ? <a class="header-link" href={linkHref}>{linkLabel}</a> : null}
 </header>

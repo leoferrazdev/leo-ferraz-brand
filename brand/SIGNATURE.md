@@ -1,7 +1,7 @@
 ---
 document: SIGNATURE
 brand: Leo Ferraz
-version: 0.3.0
+version: 0.4.0
 status: approved
 authority: Leo Ferraz
 decision_basis: delegated_deterministic_review
@@ -83,7 +83,7 @@ The `L` and `F` are drawn as custom vector geometry and are not font glyphs. The
 [Constructed LF] Leo Ferraz
 ```
 
-The primary lockup is the default signature for headers, channel covers, institutional surfaces, editorial authorship and public brand applications.
+The primary lockup is the formal combined signature for standalone brand introductions, presentations, press materials and public surfaces where neither the platform interface nor another nearby signature already identifies the brand. It is not a universal default.
 
 ### Wordmark-only application
 
@@ -101,7 +101,7 @@ Tracking:
 -0.035em
 ```
 
-The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The name-only asset is a valid signature for authorship, bylines, credits and contexts where the symbol would compete with the content.
+The wordmark uses a logo-specific optical weight so its stems match the Constructed LF geometry. This weight belongs to the signature only and does not change the approved body or interface typography. The name-only asset is the name-led signature for website navigation, footer identity, authorship, bylines, credits, editorial covers and contexts where the symbol would compete with the content.
 
 ### Public accent underline
 
@@ -156,6 +156,73 @@ Constructed LF
 
 The lockup is not mandatory in every application. Symbol-only remains the compact identity; wordmark-only remains the name-led identity. These are coordinated applications of one signature system, not competing brands.
 
+## Responsive signature distribution
+
+The signature system is responsive. Context, available space, surrounding platform identity and content hierarchy determine which approved variant is used.
+
+```text
+Primary Symbol:
+compact recognition
+
+Wordmark Only:
+name-led authorship
+
+Primary Lockup:
+formal standalone introduction
+
+Descriptor Lockup:
+brand plus proposition
+
+Institutional Lockup:
+governance and institutional contexts
+```
+
+Canonical application matrix:
+
+| Context | Canonical variant |
+|---|---|
+| Avatar, favicon, app icon | Primary Symbol |
+| Persistent OBS brand bug | Primary Symbol |
+| YouTube thumbnail | Primary Symbol |
+| Story/Reels cover | Primary Symbol |
+| Constrained interface identity | Primary Symbol |
+| Website header | Wordmark Only |
+| Website footer | Wordmark Only |
+| Editorial authorship and byline | Wordmark Only |
+| Instagram carousel/feed cover | Wordmark Only |
+| Social square | Wordmark Only |
+| OBS scene | Wordmark Only |
+| Formal standalone brand surface | Primary Lockup |
+| YouTube and Twitch channel banner | Descriptor Lockup |
+| OBS lower third | Descriptor Lockup |
+| Homepage Open Graph default | Descriptor Lockup |
+| Brandbook and signature review | Institutional Lockup |
+| Press and formal institutional material | Institutional Lockup |
+
+The combined lockup must not be repeated merely because space is available. A persistent brand bug and another complete scene signature must not be active simultaneously. Product artifacts, editorial headlines and evidence retain visual priority.
+
+Website hierarchy:
+
+```text
+Favicon:
+Primary Symbol
+
+Header:
+Wordmark Only
+
+Hero:
+no repeated signature
+AI-NATIVE PRODUCT LAB
+Building with AI
+Construindo produtos reais com IA.
+
+Footer:
+Wordmark Only
+institutional metadata remains separate
+```
+
+The homepage hero does not repeat the Master Brand after the header has identified it. `AI-Native Product Lab` appears only once in the hero composition.
+
 ## Compact behavior
 
 The Constructed LF symbol is the compact identity for:
@@ -164,7 +231,9 @@ The Constructed LF symbol is the compact identity for:
 - favicon;
 - browser shortcut;
 - app or web icon;
-- OBS brand bug when the full name would be too small;
+- persistent OBS brand bug;
+- YouTube thumbnail marker;
+- Story/Reels marker;
 - constrained UI identity.
 
 The former plain typed `LF` utility mark is superseded. It must not be used as the canonical avatar or favicon after regeneration.

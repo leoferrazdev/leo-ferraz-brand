@@ -27,7 +27,27 @@ const [width, height] = specs[template];
 const pad = Math.round(width * 0.075);
 const xml = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const text = (value, x, y, size, fill, family = 'IBM Plex Sans') => `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}px" font-weight="500">${xml(value)}</text>`;
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}"><title>Leo Ferraz content template</title><rect width="${width}" height="${height}" fill="#0D1117"/><rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" fill="none" stroke="#2A3543"/><rect x="${pad}" y="${Math.round(height * 0.2)}" width="10" height="${Math.round(height * 0.58)}" fill="#4DA3FF"/>${text(content.brand, pad, Math.round(height * 0.15), Math.max(30, Math.round(width * 0.06)), '#F3F6FA')}${text(content.eyebrow ?? 'CONTENT', pad, Math.round(height * 0.3), Math.max(16, Math.round(width * 0.018)), '#4DA3FF', 'IBM Plex Mono')}${text(content.headline, pad, Math.round(height * 0.49), Math.max(34, Math.round(width * 0.075)), '#F3F6FA')}${text(content.artifact, pad, Math.round(height * 0.61), Math.max(16, Math.round(width * 0.022)), '#B7C2CE', 'IBM Plex Mono')}${text(content.state ?? 'CONTENT SLOT', pad, Math.round(height * 0.83), Math.max(16, Math.round(width * 0.018)), '#9B8CFF', 'IBM Plex Mono')}${text(content.descriptor, width - pad, Math.round(height * 0.9), Math.max(14, Math.round(width * 0.016)), '#B7C2CE', 'IBM Plex Mono')}</svg>`;
+const signatureMap = {
+  'youtube-thumbnail': ['leo-ferraz-symbol.svg', 'primary-symbol'],
+  'instagram-carousel': ['leo-ferraz-wordmark-only.svg', 'wordmark-only'],
+  'instagram-story': ['leo-ferraz-symbol.svg', 'primary-symbol'],
+  'social-square': ['leo-ferraz-wordmark-only.svg', 'wordmark-only'],
+};
+const [signatureFile, signatureVariant] = signatureMap[template];
+const signaturePath = path.join(root, 'brand-assets', 'exports', 'day-1', '01-profile', signatureFile);
+if (!fs.existsSync(signaturePath)) throw new Error(`Canonical signature asset missing: ${signaturePath}. Run npm run brand-assets:build first.`);
+const signatureSource = fs.readFileSync(signaturePath, 'utf8');
+const viewBox = signatureSource.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+if (!viewBox) throw new Error(`Canonical signature viewBox missing: ${signatureFile}`);
+const signatureSourceWidth = Number(viewBox[1]);
+const signatureSourceHeight = Number(viewBox[2]);
+const signatureBody = signatureSource.replace(/^.*?<title[^>]*>.*?<\/title>/s, '').replace(/<\/svg>\s*$/s, '');
+const signatureWidth = signatureVariant === 'primary-symbol' ? Math.max(48, Math.round(width * 0.065)) : Math.round(width * 0.34);
+const signatureScale = signatureWidth / signatureSourceWidth;
+const signatureHeight = signatureSourceHeight * signatureScale;
+const signatureY = Math.round(height * 0.08);
+const signature = `<g data-signature-variant="${signatureVariant}" transform="translate(${pad} ${signatureY}) scale(${signatureScale.toFixed(5)})">${signatureBody}</g>`;
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}"><title>Leo Ferraz content template</title><rect width="${width}" height="${height}" fill="#0D1117"/><rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" fill="none" stroke="#2A3543"/><rect x="${pad}" y="${Math.round(height * 0.2)}" width="10" height="${Math.round(height * 0.58)}" fill="#4DA3FF"/>${signature}${text(content.eyebrow ?? 'CONTENT', pad, Math.max(Math.round(height * 0.3), Math.round(signatureY + signatureHeight + 36)), Math.max(16, Math.round(width * 0.018)), '#4DA3FF', 'IBM Plex Mono')}${text(content.headline, pad, Math.round(height * 0.49), Math.max(34, Math.round(width * 0.075)), '#F3F6FA')}${text(content.artifact, pad, Math.round(height * 0.61), Math.max(16, Math.round(width * 0.022)), '#B7C2CE', 'IBM Plex Mono')}${text(content.state ?? 'CONTENT SLOT', pad, Math.round(height * 0.83), Math.max(16, Math.round(width * 0.018)), '#9B8CFF', 'IBM Plex Mono')}${text(content.descriptor, width - pad, Math.round(height * 0.9), Math.max(14, Math.round(width * 0.016)), '#B7C2CE', 'IBM Plex Mono')}</svg>`;
 const base = path.resolve(root, output);
 fs.mkdirSync(path.dirname(base), { recursive: true });
 fs.writeFileSync(`${base}.svg`, `${svg}\n`);
