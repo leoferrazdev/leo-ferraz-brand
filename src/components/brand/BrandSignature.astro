@@ -7,112 +7,72 @@ interface Props {
 
 const { variant = 'wordmark', underline = false, class: className = '' } = Astro.props;
 const symbolOnly = variant === 'symbol' || variant === 'utility';
-const hasUnderline = !symbolOnly && (underline || variant === 'accent' || variant === 'descriptor' || variant === 'institutional');
+const assetName = symbolOnly
+  ? 'leo-ferraz-symbol.svg'
+  : variant === 'descriptor'
+    ? 'leo-ferraz-building-with-ai.svg'
+    : variant === 'institutional'
+      ? 'leo-ferraz-institutional.svg'
+      : variant === 'accent' || underline
+        ? 'leo-ferraz-wordmark-underline.svg'
+        : 'leo-ferraz-wordmark.svg';
+const assetPath = `/brand-assets/exports/day-1/01-profile/${assetName}`;
+const alt = symbolOnly
+  ? 'Leo Ferraz — Constructed LF'
+  : variant === 'descriptor'
+    ? 'Leo Ferraz — Building with AI'
+    : variant === 'institutional'
+      ? 'Leo Ferraz — Building with AI — AI-Native Product Lab'
+      : 'Leo Ferraz';
 const classes = ['brand-signature', `brand-signature--${symbolOnly ? 'symbol' : variant}`, className].filter(Boolean).join(' ');
 ---
 
-<div class={classes} data-variant={symbolOnly ? 'symbol' : variant} aria-label={symbolOnly ? 'Leo Ferraz' : undefined}>
-  <span class="brand-signature__primary">
-    <svg class="brand-signature__symbol" viewBox="0 0 64 64" role={symbolOnly ? 'img' : undefined} aria-hidden={symbolOnly ? undefined : 'true'}>
-      {symbolOnly ? <title>Leo Ferraz</title> : null}
-      <path d="M8 8H20V44H28V56H8Z" fill="currentColor" />
-      <path d="M28 8H56V20H40V28H48V36H40V56H28Z" fill="currentColor" />
-      <rect class="brand-signature__active-module" x="48" y="28" width="8" height="8" />
-    </svg>
-    {!symbolOnly ? (
-      <span class="brand-signature__name-block">
-        <span class="brand-signature__name">Leo Ferraz</span>
-        {hasUnderline ? (
-          <span class="brand-signature__accent-underline" aria-hidden="true">
-            <span class="brand-signature__accent-terminal"></span>
-          </span>
-        ) : null}
-      </span>
-    ) : null}
-  </span>
-  {variant === 'descriptor' || variant === 'institutional' ? <span class="brand-signature__descriptor">Building with AI</span> : null}
-  {variant === 'institutional' ? <span class="brand-signature__category">AI-Native Product Lab</span> : null}
-</div>
+<span class={classes} data-variant={symbolOnly ? 'symbol' : variant}>
+  <img class="brand-signature__asset" src={assetPath} alt={alt} decoding="async" />
+</span>
 
 <style>
   .brand-signature {
-    display: inline-grid;
-    justify-items: start;
-    gap: var(--lf-spacing-inline-compact);
+    display: inline-block;
+    max-width: 100%;
     color: var(--lf-color-text-primary);
-  }
-
-  .brand-signature__primary {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--lf-signature-symbol-gap);
-  }
-
-  .brand-signature__symbol {
-    flex: 0 0 auto;
-    width: clamp(var(--lf-signature-symbol-preferred-minimum-box), 0.8em, 40px);
-    height: auto;
-    color: var(--lf-signature-symbol-primary-color);
-  }
-
-  .brand-signature__active-module {
-    fill: var(--lf-signature-symbol-active-module-color);
-  }
-
-  .brand-signature__name {
-    font-family: var(--lf-font-family-sans);
-    font-size: var(--lf-type-display-size-large);
-    font-weight: var(--lf-signature-wordmark-weight);
-    letter-spacing: var(--lf-type-display-tracking);
-    line-height: var(--lf-type-display-line-height);
-  }
-
-  .brand-signature__name-block {
-    display: inline-grid;
-  }
-
-  .brand-signature__accent-underline {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: var(--lf-signature-accent-underline-thickness);
-    margin-top: var(--lf-signature-accent-underline-offset);
-    background: var(--lf-signature-accent-underline-line-color);
-  }
-
-  .brand-signature__accent-terminal {
-    position: absolute;
-    inset: 0 0 0 auto;
-    width: 8px;
-    background: var(--lf-signature-accent-underline-terminal-color);
-  }
-
-  .brand-signature__descriptor,
-  .brand-signature__category {
-    margin-left: calc(clamp(var(--lf-signature-symbol-preferred-minimum-box), 0.8em, 40px) + var(--lf-signature-symbol-gap));
-    font-family: var(--lf-font-family-mono);
-    font-size: var(--lf-type-code-size-large);
-    font-weight: var(--lf-type-code-weight);
-    line-height: var(--lf-type-code-line-height);
-  }
-
-  .brand-signature__descriptor { color: var(--lf-color-text-secondary); }
-  .brand-signature__category { color: var(--lf-color-experimental-primary); }
-
-  .brand-signature--symbol {
-    gap: 0;
     line-height: 0;
   }
 
-  .brand-signature--symbol .brand-signature__symbol {
-    width: max(var(--lf-signature-symbol-minimum-box), 1em);
+  .brand-signature__asset {
+    display: block;
+    width: min(100%, 410px);
+    height: auto;
+    max-width: 100%;
   }
 
-  @media (min-width: 768px) and (max-width: 1199px) {
-    .brand-signature__name { font-size: var(--lf-type-display-size-medium); }
+  .brand-signature--wordmark .brand-signature__asset,
+  .brand-signature--accent .brand-signature__asset {
+    width: min(100%, 330px);
+  }
+
+  .brand-signature--descriptor .brand-signature__asset {
+    width: min(100%, 300px);
+  }
+
+  .brand-signature--institutional .brand-signature__asset {
+    width: min(100%, 410px);
+  }
+
+  .brand-signature--symbol .brand-signature__asset {
+    width: 40px;
+  }
+
+  .brand-signature--utility .brand-signature__asset {
+    width: 32px;
   }
 
   @media (max-width: 767px) {
-    .brand-signature__name { font-size: var(--lf-type-display-size-small); }
+    .brand-signature--wordmark .brand-signature__asset,
+    .brand-signature--accent .brand-signature__asset,
+    .brand-signature--descriptor .brand-signature__asset,
+    .brand-signature--institutional .brand-signature__asset {
+      width: min(100%, 320px);
+    }
   }
 </style>
