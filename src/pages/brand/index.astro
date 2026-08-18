@@ -2,6 +2,8 @@
 // Canonical source: brand/*.md
 // This page is an executable/public projection of approved decisions.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
 import BrandContainer from '../../components/brand/BrandContainer.astro';
 import BrandSection from '../../components/brand/BrandSection.astro';
 import BrandSignature from '../../components/brand/BrandSignature.astro';
@@ -47,10 +49,7 @@ const typographyScale = [
   title="Living Brandbook — Leo Ferraz"
   description="Decisões aprovadas do sistema de marca Leo Ferraz."
 >
-  <header class="site-header shell-width">
-    <a class="wordmark-text" href="/">Leo Ferraz</a>
-    <a class="header-link" href="/">Home</a>
-  </header>
+  <SiteHeader linkLabel="Home" linkHref="/" />
 
   <main id="content" class="shell-width brandbook-shell">
     <section class="brandbook-intro" aria-labelledby="brandbook-title">
@@ -264,6 +263,7 @@ const typographyScale = [
       <p>This page is an executable/public projection of approved decisions.</p>
     </footer>
   </main>
+  <SiteFooter note="Living Brandbook" />
 </BaseLayout>
 
 <style>

@@ -2,6 +2,8 @@
 // site_stage: foundation
 // This is an initial public web shell, not the final editorial homepage.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
 import '../styles/global.css';
 ---
 
@@ -9,10 +11,7 @@ import '../styles/global.css';
   title="Leo Ferraz — Building with AI"
   description="Construindo produtos reais com IA."
 >
-  <header class="site-header shell-width">
-    <a class="wordmark-text" href="/">Leo Ferraz</a>
-    <span class="header-descriptor">Building with AI</span>
-  </header>
+  <SiteHeader />
 
   <main id="content" class="shell-width home-shell">
     <section class="hero-block" aria-labelledby="home-title">
@@ -31,4 +30,5 @@ import '../styles/global.css';
       <a href="/brand/">Brand System</a>
     </nav>
   </main>
+  <SiteFooter />
 </BaseLayout>

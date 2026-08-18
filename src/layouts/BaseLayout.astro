@@ -3,10 +3,12 @@ interface Props {
   title: string;
   description: string;
   lang?: string;
+  ogImage?: string;
 }
 
-const { title, description, lang = 'pt-BR' } = Astro.props;
+const { title, description, lang = 'pt-BR', ogImage = '/brand-assets/exports/day-1/06-web/open-graph-1200x630.png' } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const socialImage = new URL(ogImage, canonical).href;
 import { Font } from 'astro:assets';
 ---
 
@@ -17,6 +19,19 @@ import { Font } from 'astro:assets';
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <Font cssVariable="--font-ibm-plex-sans" />
     <Font cssVariable="--font-ibm-plex-mono" />
     <title>{title}</title>

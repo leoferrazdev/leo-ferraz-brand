@@ -21,6 +21,14 @@ const typographyReviewDevOnly = {
           pattern: '/brand/review/design-system/',
           entrypoint: './src/review/design-system.astro',
         });
+        injectRoute({
+          pattern: '/brand/review/deployment-pack/',
+          entrypoint: './src/review/day-1-launch.astro',
+        });
+        injectRoute({
+          pattern: '/brand/review/day-1-launch/',
+          entrypoint: './src/review/day-1-launch.astro',
+        });
       }
     },
   },

@@ -1,0 +1,14 @@
+{
+  "brand": "Leo Ferraz",
+  "descriptor": "Building with AI",
+  "category": "AI-Native Product Lab",
+  "bio": [
+    "Construindo produtos reais com IA.",
+    "SaaS · Apps · Jogos · Experimentos",
+    "Documentando a jornada."
+  ],
+  "artifact": "REAL PRODUCT ARTIFACT",
+  "evidence": ["PROJECT 003", "BUILDING", "VERSION 0.3", "commit a91f51"],
+  "liveExample": "BUILDING WITH AI",
+  "liveState": "AO VIVO"
+}

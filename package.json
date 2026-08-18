@@ -3,19 +3,24 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "brand-assets:build": "node scripts/build-brand-assets.mjs",
+    "brand-assets:validate": "node scripts/validate-brand-assets.mjs",
+    "brand:render": "node scripts/render-brand-content.mjs",
     "tokens:validate": "node scripts/validate-tokens.mjs",
     "tokens:build": "node scripts/build-tokens.mjs",
-    "dev": "npm run tokens:validate && npm run tokens:build && astro dev",
-    "build": "npm run tokens:validate && npm run tokens:build && astro build",
+    "dev": "npm run tokens:validate && npm run tokens:build && npm run brand-assets:build && astro dev",
+    "build": "npm run tokens:validate && npm run tokens:build && npm run brand-assets:build && astro build",
     "preview": "astro preview"
   },
   "engines": {
     "node": ">=22.19.0 <23"
   },
   "devDependencies": {
-    "astro": "7.2.2"
+    "astro": "7.2.2",
+    "sharp": "0.35.3"
   },
   "dependencies": {
+    "@fontsource/ibm-plex-sans": "5.3.0",
     "@fontsource-variable/ibm-plex-sans": "5.3.0",
     "@fontsource/ibm-plex-mono": "5.3.0"
   }

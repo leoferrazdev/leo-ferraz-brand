@@ -1,0 +1,37 @@
+---
+import BrandSignature from '../brand/BrandSignature.astro';
+
+interface Props {
+  note?: string;
+}
+
+const { note = 'Building with AI' } = Astro.props;
+---
+
+<footer class="site-footer shell-width">
+  <div>
+    <BrandSignature variant="utility" />
+    <p>Leo Ferraz · {note}</p>
+  </div>
+  <p>AI-Native Product Lab</p>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--lf-spacing-block-content);
+    padding-block: var(--lf-spacing-block-content);
+    border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+  }
+
+  .site-footer div { display: flex; align-items: center; gap: var(--lf-spacing-inline-compact); }
+  .site-footer p { margin: 0; }
+
+  @media (max-width: 767px) {
+    .site-footer { align-items: flex-start; flex-direction: column; }
+  }
+</style>

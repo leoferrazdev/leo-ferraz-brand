@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/global.css';
+
+const groups = [
+  {
+    title: '01 — Brand master assets',
+    items: [
+      ['Primary Wordmark', '/brand-assets/exports/day-1/01-profile/leo-ferraz-wordmark.svg', 'outlined SVG'],
+      ['Descriptor Lockup', '/brand-assets/exports/day-1/01-profile/leo-ferraz-building-with-ai.svg', 'outlined SVG'],
+      ['Institutional Lockup', '/brand-assets/exports/day-1/01-profile/leo-ferraz-institutional.svg', 'outlined SVG'],
+      ['LF Utility Mark', '/brand-assets/exports/day-1/01-profile/leo-ferraz-lf.svg', 'outlined SVG · secondary only'],
+    ],
+  },
+  {
+    title: '02 — Avatar and profile',
+    items: [
+      ['Avatar Square', '/brand-assets/exports/day-1/01-profile/avatar-square.svg', '1024×1024'],
+      ['Avatar Circular Crop', '/brand-assets/exports/day-1/01-profile/avatar-circle.svg', 'crop validation'],
+      ['YouTube Banner', '/brand-assets/exports/day-1/02-channels/youtube-banner-2560x1440.png', '2560×1440 · safe area'],
+      ['Twitch Banner', '/brand-assets/exports/day-1/02-channels/twitch-banner-1200x480.png', '1200×480'],
+    ],
+  },
+  {
+    title: '03 — Live / OBS',
+    items: [
+      ['Starting Soon', '/brand-assets/exports/day-1/03-live/obs/starting-soon-1920x1080.png', '1920×1080'],
+      ['Live / Main', '/brand-assets/exports/day-1/03-live/obs/live-main-1920x1080.png', '1920×1080'],
+      ['Be Right Back', '/brand-assets/exports/day-1/03-live/obs/be-right-back-1920x1080.png', '1920×1080'],
+      ['Stream Ending', '/brand-assets/exports/day-1/03-live/obs/stream-ending-1920x1080.png', '1920×1080'],
+      ['Offline', '/brand-assets/exports/day-1/03-live/obs/offline-1920x1080.png', '1920×1080'],
+      ['Brand Bug', '/brand-assets/exports/day-1/03-live/brand-bug.png', '480×96 · transparent'],
+      ['Lower Third', '/brand-assets/exports/day-1/03-live/lower-third.png', '960×160 · transparent'],
+    ],
+  },
+  {
+    title: '04 — Social and web templates',
+    items: [
+      ['Instagram Carousel', '/brand-assets/exports/day-1/04-social/instagram-carousel-cover-1080x1350.png', '1080×1350'],
+      ['Instagram Story / Reels', '/brand-assets/exports/day-1/04-social/instagram-story-reels-1080x1920.png', '1080×1920'],
+      ['YouTube Thumbnail', '/brand-assets/exports/day-1/05-youtube/youtube-thumbnail-1280x720.png', '1280×720'],
+      ['Social Square', '/brand-assets/exports/day-1/04-social/social-square-1080x1080.png', '1080×1080'],
+      ['Open Graph', '/brand-assets/exports/day-1/06-web/open-graph-1200x630.png', '1200×630'],
+      ['Favicon', '/favicon.svg', 'LF only'],
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Day-1 Launch Readiness — Leo Ferraz"
+  description="Local validation board for the Leo Ferraz operational launch assets."
+>
+  <main class="day-one-review">
+    <header class="day-one-review__header">
+      <p class="eyebrow">BRAND DEPLOYMENT PACK REVIEW</p>
+      <h1>Day-1 Launch Readiness</h1>
+      <p>v1.0.0 · operational assets derived from the approved Leo Ferraz Brand System.</p>
+      <div class="review-flags">
+        <span>LOCAL DEVELOPMENT ONLY</span>
+        <span>NOT APPROVED FOR PRODUCTION</span>
+        <span>IDENTITY FROZEN</span>
+      </div>
+    </header>
+
+    {groups.map((group) => (
+      <section class="review-group" aria-labelledby={group.title.replaceAll(' ', '-')}>
+        <div class="review-group__heading">
+          <h2 id={group.title.replaceAll(' ', '-')}>{group.title}</h2>
+          <p>REAL ASSET · REVIEW SPECIMEN</p>
+        </div>
+        <div class="review-grid">
+          {group.items.map(([label, src, note]) => (
+            <figure class="review-card">
+              <div class="review-card__stage"><img src={src} alt={label} loading="lazy" /></div>
+              <figcaption><strong>{label}</strong><span>{note}</span></figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <footer class="day-one-review__footer">
+      <p>LOCAL REVIEW BOARD — NO PRODUCTION ROUTE</p>
+      <p>Source: Leo Ferraz Brand System v1.0.0 · Signature: Pure / Editorial · Color: Precision / Product</p>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .day-one-review { width: min(1440px, calc(100% - 64px)); margin-inline: auto; padding-block: 64px; }
+  .day-one-review__header { display: grid; gap: 16px; padding-bottom: 48px; border-bottom: 1px solid var(--lf-color-border-default); }
+  .day-one-review h1 { margin: 0; font-size: clamp(2.5rem, 6vw, 5.5rem); }
+  .day-one-review__header > p:not(.eyebrow), .day-one-review__footer { color: var(--lf-color-text-secondary); line-height: 1.55; }
+  .review-flags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .review-flags span { padding: 6px 8px; border: 1px solid var(--lf-color-border-strong); color: var(--lf-color-text-muted); font-family: var(--lf-font-family-mono); font-size: 11px; letter-spacing: .075em; }
+  .review-group { padding-block: 48px; border-bottom: 1px solid var(--lf-color-border-default); }
+  .review-group__heading { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 24px; }
+  .review-group h2 { margin: 0; font-size: 30px; font-weight: 500; }
+  .review-group__heading p, .review-card figcaption span, .day-one-review__footer { color: var(--lf-color-text-muted); font-family: var(--lf-font-family-mono); font-size: 11px; letter-spacing: .075em; text-transform: uppercase; }
+  .review-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .review-card { min-width: 0; margin: 0; background: var(--lf-color-surface-1); border: 1px solid var(--lf-color-border-default); }
+  .review-card__stage { display: grid; place-items: center; min-height: 180px; padding: 24px; background: var(--lf-color-background); border-bottom: 1px solid var(--lf-color-border-default); }
+  .review-card__stage img { display: block; max-width: 100%; max-height: 260px; object-fit: contain; }
+  .review-card figcaption { display: grid; gap: 8px; padding: 16px; }
+  .review-card figcaption strong { color: var(--lf-color-text-primary); font-weight: 500; }
+  .review-card figcaption span { letter-spacing: .01em; text-transform: none; }
+  .day-one-review__footer { display: grid; gap: 8px; padding-top: 24px; }
+  .day-one-review__footer p { margin: 0; }
+  @media (max-width: 1000px) { .review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .day-one-review { width: calc(100% - 32px); padding-block: 32px; } .review-grid { grid-template-columns: 1fr; } .review-group__heading { align-items: flex-start; flex-direction: column; } }
+</style>
