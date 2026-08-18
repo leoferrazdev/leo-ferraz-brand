@@ -2,7 +2,7 @@
 title: Homepage Editorial Product Showcase
 date: 2026-08-17
 document_type: design-specification
-status: review
+status: approved
 scope: application-layer
 source_brand_system: v1.0.0
 ---
@@ -39,6 +39,24 @@ Não altera:
 - documentos `brand/*.md`.
 
 O escopo é exclusivamente a apresentação da homepage e de seus módulos derivados.
+
+## Approved Initial Content Scope
+
+A primeira implementação será um cartão de visita editorial com um único conceito SaaS em destaque e dois espaços secundários de projeto. O conteúdo é deliberadamente provisório e deve ser identificado na própria interface como ficcional/review-only até ser substituído por produtos e artefatos reais.
+
+```text
+Featured:
+PROJECT 001 — SAAS CONCEPT
+
+Secondary:
+PROJECT 002 — APP CONCEPT
+PROJECT 003 — GAME CONCEPT
+
+Content state:
+FICTIONAL CONTENT · REVIEW ONLY
+```
+
+Não serão exibidos números, métricas, commits, resultados, depoimentos ou CTAs externos fictícios. O único destino funcional inicial da homepage será o Living Brandbook em `/brand/`.
 
 ## Objective
 
@@ -266,4 +284,4 @@ Ficam para o plano de implementação, sem decisão nesta especificação:
 
 ## Review Gate
 
-Esta especificação registra a direção aprovada em nível conceitual e aguarda revisão do documento escrito antes da criação do plano de implementação.
+Esta especificação está aprovada para a primeira implementação da camada editorial da homepage, preservando a separação entre conteúdo provisório da aplicação e decisões canônicas do Brand System.
