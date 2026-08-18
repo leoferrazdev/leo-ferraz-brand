@@ -11,7 +11,13 @@ const valueOf = (name, fallback) => {
 };
 const template = valueOf('--template', 'youtube-thumbnail');
 const contentId = valueOf('--content', 'live-001');
-const output = valueOf('--output', `brand-assets/exports/day-1/05-youtube/${contentId}-${template}`);
+// content-renders/ is deliberately outside brand-assets/exports/: the
+// deterministic build (scripts/build-brand-assets.mjs) wipes that whole
+// tree on every run via fs.rmSync(exportsRoot, ...), and npm run dev/build
+// both invoke it as a prerequisite — any ad-hoc content render placed
+// inside exports/ gets silently deleted the next time anyone starts the
+// site, with no error and no warning.
+const output = valueOf('--output', `brand-assets/content-renders/${contentId}-${template}`);
 const contentPath = path.join(root, 'brand-assets', 'sources', 'content', `${contentId}.json`);
 if (!fs.existsSync(contentPath)) throw new Error(`Unknown content source: ${contentId}`);
 const content = JSON.parse(fs.readFileSync(contentPath, 'utf8'));

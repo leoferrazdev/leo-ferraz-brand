@@ -1,20 +1,28 @@
 ---
 import BrandSignature from '../brand/BrandSignature.astro';
 
-interface Props {
-  href?: string;
-  linkLabel?: string;
-  linkHref?: string;
+interface NavLink {
+  label: string;
+  href: string;
 }
 
-const { href = '/', linkLabel, linkHref } = Astro.props;
+interface Props {
+  href?: string;
+  links?: NavLink[];
+}
+
+const { href = '/', links = [] } = Astro.props;
 ---
 
 <header class="site-header shell-width">
   <a class="site-header__brand" href={href} aria-label="Leo Ferraz — Building with AI">
     <BrandSignature variant="wordmarkOnly" />
   </a>
-  {linkLabel && linkHref ? <a class="header-link" href={linkHref}>{linkLabel}</a> : null}
+  {links.length > 0 ? (
+    <nav class="site-header__nav" aria-label="Navegação principal">
+      {links.map((link) => <a class="header-link" href={link.href}>{link.label}</a>)}
+    </nav>
+  ) : null}
 </header>
 
 <style>
@@ -25,4 +33,8 @@ const { href = '/', linkLabel, linkHref } = Astro.props;
     text-decoration: none;
   }
 
+  .site-header__nav {
+    display: flex;
+    gap: var(--lf-spacing-block-content);
+  }
 </style>

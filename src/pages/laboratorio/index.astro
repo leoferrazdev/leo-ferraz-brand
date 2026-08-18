@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+import ProductRow from '../../components/home/ProductRow.astro';
+import { featuredConcept, secondaryConcepts } from '../../data/homepage-content';
+import '../../styles/global.css';
+
+const concepts = [featuredConcept, ...secondaryConcepts];
+---
+
+<BaseLayout
+  title="Laboratório — Leo Ferraz"
+  description="Índice de projetos e experimentos do AI-Native Product Lab."
+>
+  <SiteHeader links={[{ label: 'Brand System', href: '/brand/' }]} />
+
+  <main id="content" class="homepage shell-width">
+    <section class="homepage__hero" aria-labelledby="home-title">
+      <div class="homepage__hero-copy">
+        <p class="category-label">AI-NATIVE PRODUCT LAB</p>
+        <h1 id="home-title">O que está sendo construído.</h1>
+        <p class="homepage__content-state">FICTIONAL CONCEPTS · REVIEW ONLY</p>
+      </div>
+      <aside class="homepage__hero-note" aria-label="Nota sobre o conteúdo desta página">
+        <p>Índice de projetos e experimentos do laboratório.</p>
+        <p>Produtos reais substituirão estes conceitos provisórios.</p>
+      </aside>
+    </section>
+
+    <section class="homepage__products" aria-labelledby="products-title">
+      <div class="homepage__section-heading">
+        <div>
+          <p class="eyebrow">PRODUCT / PROJECT INDEX</p>
+          <h2 id="products-title">Projetos e experimentos</h2>
+        </div>
+        <p>Temporary application content · no live destinations yet</p>
+      </div>
+      <div class="homepage__product-list">
+        {concepts.map((concept, index) => <ProductRow concept={concept} reverse={index % 2 === 1} />)}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>

@@ -52,10 +52,12 @@ Comandos:
 npm run brand-assets:build
 npm run brand-assets:validate
 npm run brand:render -- --template youtube-thumbnail --content live-001
-npm run brand:render -- --template instagram-carousel-slide --content SEU-CONTEUDO --output caminho/base
+npm run brand:render -- --template instagram-carousel-slide --content SEU-CONTEUDO
 ```
 
 O conteúdo é separado do template. O render falha fechado para template ou conteúdo desconhecido.
+
+Toda saída de `brand:render` vai por padrão para `brand-assets/content-renders/`, fora de `brand-assets/exports/`. Isso é proposital: `brand-assets:build` apaga e regenera `brand-assets/exports/` inteira a cada execução (inclusive como pré-requisito de `npm run dev` e `npm run build`), e um render ad-hoc salvo dentro dessa árvore seria apagado silenciosamente na próxima vez que alguém rodasse o site.
 
 `instagram-carousel-slide` gera as telas internas de um carrossel (cover continua sendo `instagram-carousel`) a partir de um `slides: []` no JSON de conteúdo, uma imagem por item, com paginação `n / total` e assinatura compacta (`wordmark-only`) subordinada ao conteúdo. `carousel-slide-demo` em `brand-assets/sources/content/` é demonstração de template, não conteúdo publicável. `launch-day-0` contém a peça de lançamento derivada apenas da bio/manifesto já aprovados, pronta para os formatos de imagem única (thumbnail, story, square, capa de carrossel).
 
