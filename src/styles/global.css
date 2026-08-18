@@ -93,6 +93,7 @@ a:focus-visible {
 .header-link {
   color: var(--lf-color-text-secondary);
   text-transform: none;
+  white-space: nowrap;
 }
 
 .home-shell {

@@ -37,4 +37,12 @@ const { href = '/', links = [] } = Astro.props;
     display: flex;
     gap: var(--lf-spacing-block-content);
   }
+
+  @media (max-width: 767px) {
+    .site-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--lf-spacing-inline-standard);
+    }
+  }
 </style>
