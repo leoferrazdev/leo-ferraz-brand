@@ -136,7 +136,7 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
     `<rect data-accent="underline-terminal" x="${number(contentX + underlineWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
   ].join('') : '';
   const body = `${constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome })}${paths}${underlineSvg}`;
-  return { width, height, svg: svgDocument(title, width, height, body, { background }) };
+  return { width, height, padding, svg: svgDocument(title, width, height, body, { background }) };
 }
 
 function wordmarkOnlySvg(title, { primary = colors.text, underline = true } = {}) {
@@ -152,13 +152,20 @@ function wordmarkOnlySvg(title, { primary = colors.text, underline = true } = {}
   ].join('') : '';
   const body = `${outlinedText(content.brand, { size: textSize, tracking, x: padding, baseline, fill: primary, fontFace: signatureFont })}${underlineSvg}`;
   const height = Math.ceil(padding * 2 + textSize * 1.18 + (underline ? 4 : 0));
-  return { width: Math.ceil(padding * 2 + wordmarkWidth), height, svg: svgDocument(title, Math.ceil(padding * 2 + wordmarkWidth), height, body) };
+  return { width: Math.ceil(padding * 2 + wordmarkWidth), height, padding, svg: svgDocument(title, Math.ceil(padding * 2 + wordmarkWidth), height, body) };
 }
 
+// Composable signature assets carry their own baked-in clear-space padding
+// (see SIGNATURE.md), which is correct for standalone export but must not
+// leak into composed templates: their surrounding text is placed flush at
+// the template's own content margin with zero padding. Without this inset,
+// the signature renders visibly indented relative to that text.
 function placedSignatureBody(asset, { x, y, width, anchor = 'start' }) {
   const scale = width / asset.width;
-  const left = anchor === 'middle' ? x - width / 2 : anchor === 'end' ? x - width : x;
-  return `<g data-signature-variant="${asset.variant}" transform="translate(${number(left)} ${number(y)}) scale(${number(scale)})">${outlinedBody(asset.svg)}</g>`;
+  const inset = (asset.padding ?? 0) * scale;
+  const left = (anchor === 'middle' ? x - width / 2 : anchor === 'end' ? x - width + inset : x - inset);
+  const top = number(y - inset);
+  return `<g data-signature-variant="${asset.variant}" transform="translate(${number(left)} ${top}) scale(${number(scale)})">${outlinedBody(asset.svg)}</g>`;
 }
 
 function svgDocument(title, width, height, body, { background = null } = {}) {
@@ -363,8 +370,8 @@ async function main() {
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
     { text: content.category, size: 14, tracking: 0, fill: colors.experimental },
   ], { underline: true });
-  const symbol = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64 })) };
-  const symbolDark = { width: 80, height: 80, svg: svgDocument('Constructed LF primary symbol dark', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64, primary: colors.background, accent: colors.background, monochrome: true })) };
+  const symbol = { width: 80, height: 80, padding: 8, svg: svgDocument('Constructed LF primary symbol', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64 })) };
+  const symbolDark = { width: 80, height: 80, padding: 8, svg: svgDocument('Constructed LF primary symbol dark', 80, 80, constructedLfSymbolSvg({ x: 8, y: 8, size: 64, primary: colors.background, accent: colors.background, monochrome: true })) };
   primaryLockup.variant = 'primary-lockup';
   primaryLockupDark.variant = 'primary-lockup';
   wordmarkOnly.variant = 'wordmark-only';
