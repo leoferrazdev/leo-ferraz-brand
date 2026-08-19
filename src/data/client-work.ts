@@ -25,6 +25,13 @@ export interface ClientProject {
   id: string;
   client: string;
   scope: string;
+  /**
+   * Real capture of a real page — never a mockup or a decorative card. The
+   * whole point is that the reader can open the link beside it and land on
+   * the same thing they just saw.
+   */
+  thumbnail: string;
+  thumbnailAlt: string;
   artifacts: ClientArtifact[];
 }
 
@@ -33,6 +40,8 @@ export const clientWork: ClientProject[] = [
     id: 'porto-alegre-oficial',
     client: 'Porto Alegre Oficial',
     scope: 'CRM · operação comercial',
+    thumbnail: '/evidence/porto-alegre-oficial.webp',
+    thumbnailAlt: 'Tela de acesso do CRM da Porto Alegre Oficial',
     artifacts: [
       {
         label: 'CRM Porto Alegre Oficial',
@@ -45,6 +54,8 @@ export const clientWork: ClientProject[] = [
     id: 'vitra',
     client: 'Vitra',
     scope: 'Central operacional · sistema de marca',
+    thumbnail: '/evidence/vitra.webp',
+    thumbnailAlt: 'Capa do brandbook da Vitra Imobiliária',
     artifacts: [
       {
         label: 'Central Operacional',
@@ -67,6 +78,8 @@ export const clientWork: ClientProject[] = [
     id: 'uliz-arzana',
     client: 'Uli Zarzana',
     scope: 'CRM · direção visual · página de captação',
+    thumbnail: '/evidence/uliz-arzana.webp',
+    thumbnailAlt: 'Página de direção visual de Uli Zarzana',
     artifacts: [
       {
         label: 'CRM Uli Zarzana',

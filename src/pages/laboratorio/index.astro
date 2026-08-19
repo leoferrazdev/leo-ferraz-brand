@@ -34,20 +34,25 @@ import '../../styles/global.css';
       </div>
 
       <div class="client-work">
-        {clientWork.map((project) => (
-          <article class="client-work__row">
-            <div class="client-work__meta">
-              <h3>{project.client}</h3>
-              <p>{project.scope}</p>
+        {clientWork.map((project, index) => (
+          <article class="client-work__row" data-reverse={index % 2 === 1 ? '' : null}>
+            <figure class="client-work__visual">
+              <img src={project.thumbnail} alt={project.thumbnailAlt} width="960" height="600" loading="lazy" decoding="async" />
+            </figure>
+            <div class="client-work__body">
+              <div class="client-work__meta">
+                <h3>{project.client}</h3>
+                <p>{project.scope}</p>
+              </div>
+              <ul class="client-work__artifacts">
+                {project.artifacts.map((artifact) => (
+                  <li>
+                    <a href={artifact.href} target="_blank" rel="noopener noreferrer">{artifact.label}</a>
+                    <span class="client-work__status" data-status={artifact.status}>{artifact.status}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul class="client-work__artifacts">
-              {project.artifacts.map((artifact) => (
-                <li>
-                  <a href={artifact.href} target="_blank" rel="noopener noreferrer">{artifact.label}</a>
-                  <span class="client-work__status" data-status={artifact.status}>{artifact.status}</span>
-                </li>
-              ))}
-            </ul>
           </article>
         ))}
       </div>

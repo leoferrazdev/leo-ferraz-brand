@@ -1311,10 +1311,45 @@ code {
   line-height: var(--lf-type-body-line-height);
 }
 
-@media (min-width: 768px) {
+/*
+ * Preview per project — the structural grammar of any portfolio, and the one
+ * thing aioriented.dev does that survives DECISAO-009. What does NOT come
+ * across: its per-project neon accent, the glow behind each card, the
+ * gradient borders. The frame here is the same flat border and surface used
+ * everywhere else on this site.
+ *
+ * The image is a real capture of the page the link opens, never a mockup —
+ * the reader can click and land on exactly what they just saw.
+ */
+.client-work__visual {
+  margin: 0;
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  background: var(--lf-color-surface-1);
+  line-height: 0;
+}
+
+.client-work__visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.client-work__body {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+  align-content: start;
+}
+
+@media (min-width: 900px) {
   .client-work__row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
     gap: var(--lf-spacing-block-major);
+  }
+
+  /* Alternate sides so consecutive rows do not read as a single column. */
+  .client-work__row[data-reverse] .client-work__visual {
+    order: 2;
   }
 }
 
