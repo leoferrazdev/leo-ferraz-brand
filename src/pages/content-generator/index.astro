@@ -1,0 +1,743 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+import '../../styles/global.css';
+---
+
+<BaseLayout
+  title="Gerador de Conteúdo — Leo Ferraz"
+  description="Ferramenta interna para gerar thumbnails, capas e carrosséis a partir dos templates aprovados."
+  noindex={true}
+>
+  <SiteHeader links={[{ label: 'Home', href: '/' }, { label: 'Laboratório', href: '/laboratorio/' }]} />
+
+  <main id="content" class="generator shell-width">
+    <section class="generator__intro">
+      <p class="eyebrow">FERRAMENTA INTERNA · NÃO INDEXADA</p>
+      <h1>Gerador de conteúdo</h1>
+      <p class="generator__lede">Mesma lógica de <code>scripts/render-brand-content.mjs</code>, rodando no navegador — sem servidor. Gera SVG/PNG a partir dos templates aprovados, com a assinatura oficial embutida.</p>
+    </section>
+
+    <div class="generator__layout">
+      <form class="generator__form" id="generator-form">
+        <label class="generator__field">
+          <span>Template</span>
+          <select id="field-template">
+            <option value="youtube-thumbnail">YouTube — Thumbnail</option>
+            <option value="instagram-carousel">Instagram — Capa de carrossel</option>
+            <option value="instagram-carousel-slide">Instagram — Slides internos do carrossel</option>
+            <option value="instagram-story">Instagram — Story</option>
+            <option value="social-square">Social — Square</option>
+          </select>
+        </label>
+
+        <div id="fields-single" class="generator__field-group">
+          <label class="generator__field">
+            <span>Eyebrow</span>
+            <input id="field-eyebrow" type="text" placeholder="AI-NATIVE PRODUCT LAB" />
+          </label>
+          <label class="generator__field">
+            <span>Headline</span>
+            <input id="field-headline" type="text" placeholder="Construindo produtos reais com IA." />
+          </label>
+          <label class="generator__field">
+            <span>Artifact</span>
+            <input id="field-artifact" type="text" placeholder="SaaS · Apps · Jogos · Experimentos" />
+          </label>
+          <label class="generator__field">
+            <span>State</span>
+            <input id="field-state" type="text" placeholder="BUILDING" />
+          </label>
+          <label class="generator__field">
+            <span>Descriptor</span>
+            <input id="field-descriptor" type="text" value="Building with AI" />
+          </label>
+          <label class="generator__field" id="field-photo-wrap" hidden>
+            <span>Foto do founder</span>
+            <select id="field-photo-position">
+              <option value="">Sem foto</option>
+              <option value="right">Foto à direita</option>
+              <option value="left">Foto à esquerda</option>
+              <option value="center">Foto ao centro</option>
+            </select>
+          </label>
+          <label class="generator__field generator__field--inline" id="field-badge-wrap" hidden>
+            <input id="field-show-badge" type="checkbox" checked />
+            <span>Mostrar selo de estado (ex.: "AO VIVO")</span>
+          </label>
+          <label class="generator__field generator__field--inline" id="field-frame-wrap" hidden>
+            <input id="field-show-frame" type="checkbox" checked />
+            <span>Mostrar moldura na foto</span>
+          </label>
+        </div>
+
+        <div id="fields-carousel" class="generator__field-group" hidden>
+          <label class="generator__field">
+            <span>Eyebrow padrão (usado se um slide não tiver o próprio)</span>
+            <input id="field-carousel-eyebrow" type="text" placeholder="TEMPLATE DEMO" />
+          </label>
+          <div id="slides-list" class="generator__slides"></div>
+          <button type="button" id="add-slide" class="generator__button generator__button--ghost">+ Adicionar slide</button>
+        </div>
+
+        <button type="submit" class="generator__button">Gerar</button>
+      </form>
+
+      <div class="generator__preview" id="preview-output" aria-live="polite">
+        <p class="generator__preview-empty">A prévia aparece aqui.</p>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .generator__intro {
+    padding-block: var(--lf-spacing-section-standard) var(--lf-spacing-block-major);
+  }
+
+  .generator__intro h1 {
+    margin-bottom: var(--lf-spacing-inline-standard);
+    font-size: var(--lf-type-h1-size-large);
+    line-height: var(--lf-type-h1-line-height);
+  }
+
+  .generator__lede {
+    max-width: 62ch;
+    color: var(--lf-color-text-secondary);
+    line-height: var(--lf-type-body-line-height);
+  }
+
+  .generator__layout {
+    display: grid;
+    gap: var(--lf-spacing-block-major);
+    padding-bottom: var(--lf-spacing-section-major);
+  }
+
+  .generator__form {
+    display: grid;
+    gap: var(--lf-spacing-component-standard);
+    align-content: start;
+    padding: var(--lf-spacing-block-content);
+    background: var(--lf-color-surface-1);
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  }
+
+  .generator__field {
+    display: grid;
+    gap: var(--lf-spacing-micro);
+  }
+
+  .generator__field span {
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+    text-transform: uppercase;
+  }
+
+  .generator__field input,
+  .generator__field select,
+  .generator__field textarea {
+    width: 100%;
+    padding: var(--lf-spacing-inline-standard);
+    background: var(--lf-color-background);
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
+    color: var(--lf-color-text-primary);
+    font-family: var(--lf-font-family-sans);
+    font-size: var(--lf-type-body-size-small);
+  }
+
+  .generator__field textarea { min-height: 4.5em; resize: vertical; }
+
+  .generator__field input:focus-visible,
+  .generator__field select:focus-visible,
+  .generator__field textarea:focus-visible {
+    outline: 2px solid var(--lf-color-accent-primary);
+    outline-offset: 1px;
+  }
+
+  .generator__field-group { display: grid; gap: var(--lf-spacing-component-standard); }
+
+  .generator__field--inline {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--lf-spacing-inline-compact);
+  }
+
+  .generator__field--inline input[type='checkbox'] { width: auto; margin-top: 3px; accent-color: var(--lf-color-accent-primary); }
+  .generator__field--inline span { text-transform: none; letter-spacing: normal; font-family: var(--lf-font-family-sans); font-size: var(--lf-type-body-small-size-large); color: var(--lf-color-text-secondary); }
+
+  .generator__slides { display: grid; gap: var(--lf-spacing-component-standard); }
+
+  .generator__slide {
+    display: grid;
+    gap: var(--lf-spacing-inline-standard);
+    padding: var(--lf-spacing-inline-standard);
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  }
+
+  .generator__slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    text-transform: uppercase;
+  }
+
+  .generator__remove-slide {
+    color: var(--lf-color-state-error);
+    background: none;
+    border: none;
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .generator__button {
+    padding: var(--lf-spacing-inline-standard) var(--lf-spacing-component-standard);
+    background: var(--lf-color-accent-primary);
+    border: var(--lf-border-width-standard) solid var(--lf-color-accent-primary);
+    color: var(--lf-color-background);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    letter-spacing: var(--lf-type-label-tracking);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .generator__button--ghost {
+    background: none;
+    color: var(--lf-color-accent-primary);
+  }
+
+  .generator__button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .generator__preview {
+    display: grid;
+    gap: var(--lf-spacing-block-content);
+  }
+
+  .generator__preview-empty {
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+    text-transform: uppercase;
+  }
+
+  .generator__preview-card {
+    display: grid;
+    gap: var(--lf-spacing-inline-standard);
+    padding: var(--lf-spacing-inline-standard);
+    background: var(--lf-color-surface-1);
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  }
+
+  .generator__preview-card :global(svg) {
+    width: 100%;
+    height: auto;
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
+  }
+
+  .generator__preview-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--lf-spacing-inline-standard);
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+  }
+
+  @media (min-width: 1024px) {
+    .generator__layout { grid-template-columns: minmax(320px, 380px) 1fr; align-items: start; }
+  }
+</style>
+
+<script>
+  const SPECS: Record<string, [number, number]> = {
+    'youtube-thumbnail': [1280, 720],
+    'instagram-carousel': [1080, 1350],
+    'instagram-carousel-slide': [1080, 1350],
+    'instagram-story': [1080, 1920],
+    'social-square': [1080, 1080],
+  };
+
+  const SIGNATURE_MAP: Record<string, [string, string, number]> = {
+    'youtube-thumbnail': ['leo-ferraz-symbol.svg', 'primary-symbol', 8],
+    'instagram-carousel': ['leo-ferraz-wordmark-only.svg', 'wordmark-only', 32],
+    'instagram-story': ['leo-ferraz-symbol.svg', 'primary-symbol', 8],
+    'social-square': ['leo-ferraz-wordmark-only.svg', 'wordmark-only', 32],
+  };
+
+  const COLORS = {
+    bg: '#0D1117',
+    text: '#F3F6FA',
+    secondary: '#B7C2CE',
+    muted: '#7F8B99',
+    accent: '#4DA3FF',
+    accentStrong: '#86C5FF',
+    experimental: '#9B8CFF',
+  };
+
+  // --- font resolution -------------------------------------------------
+  // The live page loads IBM Plex via astro:assets Font (hashed file names,
+  // change every build) — so the actual family name and font URLs can only
+  // be read at runtime from the page's own stylesheets, never hardcoded.
+  function resolvedFontFamily(cssVar: string, fallback: string): string {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+    return value ? `${value}, ${fallback}` : fallback;
+  }
+  const SANS_FAMILY = resolvedFontFamily('--font-ibm-plex-sans', '"IBM Plex Sans"');
+  const MONO_FAMILY = resolvedFontFamily('--font-ibm-plex-mono', '"IBM Plex Mono"');
+
+  // Exported PNGs are rendered by loading the SVG as an <img>, which the
+  // browser treats as an isolated document with no access to the parent
+  // page's @font-face rules or network — text would silently fall back to
+  // a system font unless the font data is embedded directly as a data URI.
+  let embeddedFontFaceCssPromise: Promise<string> | null = null;
+  async function embeddedFontFaceCss(): Promise<string> {
+    embeddedFontFaceCssPromise ??= (async () => {
+      const faces: string[] = [];
+      for (const sheet of Array.from(document.styleSheets)) {
+        let rules: CSSRuleList;
+        try {
+          rules = sheet.cssRules;
+        } catch {
+          continue;
+        }
+        for (const rule of Array.from(rules)) {
+          if (rule instanceof CSSFontFaceRule && /plex/i.test(rule.style.getPropertyValue('font-family'))) {
+            const src = rule.style.getPropertyValue('src');
+            const urlMatch = src.match(/url\(["']?([^"')]+)["']?\)/);
+            if (!urlMatch) continue;
+            const absoluteUrl = new URL(urlMatch[1], location.href).href;
+            const buffer = await fetch(absoluteUrl).then((r) => r.arrayBuffer());
+            const base64 = btoa(new Uint8Array(buffer).reduce((acc, byte) => acc + String.fromCharCode(byte), ''));
+            const dataSrc = src.replace(urlMatch[0], `url("data:font/woff2;base64,${base64}")`);
+            const family = rule.style.getPropertyValue('font-family');
+            const weight = rule.style.getPropertyValue('font-weight') || 'normal';
+            const style = rule.style.getPropertyValue('font-style') || 'normal';
+            faces.push(`@font-face{font-family:${family};font-weight:${weight};font-style:${style};src:${dataSrc};}`);
+          }
+        }
+      }
+      return `<style>${faces.join('')}</style>`;
+    })();
+    return embeddedFontFaceCssPromise;
+  }
+
+  // --- signature assets --------------------------------------------------
+  const signatureCache = new Map<string, { width: number; height: number; body: string }>();
+  async function loadSignature(file: string) {
+    const cached = signatureCache.get(file);
+    if (cached) return cached;
+    const source = await fetch(`/brand-assets/exports/day-1/01-profile/${file}`).then((r) => r.text());
+    const viewBox = source.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
+    if (!viewBox) throw new Error(`viewBox missing in ${file}`);
+    const sig = {
+      width: Number(viewBox[1]),
+      height: Number(viewBox[2]),
+      body: source.replace(/^.*?<title[^>]*>.*?<\/title>/s, '').replace(/<\/svg>\s*$/s, ''),
+    };
+    signatureCache.set(file, sig);
+    return sig;
+  }
+
+  function placeSignature(
+    sig: { width: number; height: number; body: string },
+    opts: { x: number; y: number; targetWidth: number; variant: string; padding?: number },
+  ) {
+    const { x, y, targetWidth, variant, padding = 0 } = opts;
+    const scale = targetWidth / sig.width;
+    const inset = padding * scale;
+    return {
+      svg: `<g data-signature-variant="${variant}" transform="translate(${(x - inset).toFixed(3)} ${(y - inset).toFixed(3)}) scale(${scale.toFixed(5)})">${sig.body}</g>`,
+      height: sig.height * scale,
+    };
+  }
+
+  // --- text -------------------------------------------------------------
+  function escapeXml(value: string): string {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;');
+  }
+
+  function textEl(
+    value: string,
+    x: number,
+    y: number,
+    size: number,
+    fill: string,
+    opts: { family?: string; anchor?: string; weight?: number } = {},
+  ): string {
+    const { family = SANS_FAMILY, anchor = 'start', weight = 500 } = opts;
+    // family comes from a resolved CSS custom property and already contains
+    // literal quote characters (e.g. `"IBM Plex Mono-<hash>"`) — escaping it
+    // like any other attribute value is required, or those embedded quotes
+    // close the font-family="..." attribute early and corrupt the XML.
+    return `<text x="${x}" y="${y}" fill="${fill}" font-family="${escapeXml(family)}" font-size="${size}px" font-weight="${weight}" text-anchor="${anchor}">${escapeXml(value)}</text>`;
+  }
+
+  let measureCanvas: HTMLCanvasElement | null = null;
+  function measureTextWidth(value: string, sizePx: number, family: string, weight: number): number {
+    measureCanvas ??= document.createElement('canvas');
+    const ctx = measureCanvas.getContext('2d')!;
+    ctx.font = `${weight} ${sizePx}px ${family}`;
+    return ctx.measureText(value).width;
+  }
+
+  function fitHeadlineSize(value: string, baseSize: number, maxWidth: number, family: string, weight: number, minSize = 18): number {
+    let size = baseSize;
+    while (size > minSize && measureTextWidth(value, size, family, weight) > maxWidth) size -= 1;
+    return size;
+  }
+
+  async function ensureFontsReady(): Promise<void> {
+    await Promise.all([
+      document.fonts.load(`400 40px ${SANS_FAMILY}`),
+      document.fonts.load(`500 40px ${SANS_FAMILY}`),
+      document.fonts.load(`600 40px ${SANS_FAMILY}`),
+      document.fonts.load(`500 40px ${MONO_FAMILY}`),
+    ]);
+    await document.fonts.ready;
+  }
+
+  // --- rendering ----------------------------------------------------------
+  interface SingleContent {
+    eyebrow: string;
+    headline: string;
+    artifact: string;
+    state: string;
+    descriptor: string;
+  }
+
+  async function renderSingleSvg(template: string, content: SingleContent): Promise<{ svg: string; width: number; height: number }> {
+    const [width, height] = SPECS[template];
+    const pad = Math.round(width * 0.075);
+    const [signatureFile, signatureVariant, signaturePadding] = SIGNATURE_MAP[template];
+    const sig = await loadSignature(signatureFile);
+    const signatureWidth = signatureVariant === 'primary-symbol' ? Math.max(48, Math.round(width * 0.065)) : Math.round(width * 0.34);
+    const signatureY = Math.round(height * 0.08);
+    const signature = placeSignature(sig, { x: pad, y: signatureY, targetWidth: signatureWidth, variant: signatureVariant, padding: signaturePadding });
+    const headlineSize = fitHeadlineSize(content.headline, Math.max(34, Math.round(width * 0.075)), width - pad * 2, SANS_FAMILY, 500);
+    const svg = [
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">`,
+      '<title>Leo Ferraz content template</title>',
+      `<rect width="${width}" height="${height}" fill="${COLORS.bg}"/>`,
+      signature.svg,
+      textEl(content.eyebrow || 'CONTENT', pad, Math.max(Math.round(height * 0.3), Math.round(signatureY + signature.height + 36)), Math.max(16, Math.round(width * 0.018)), COLORS.accent, { family: MONO_FAMILY }),
+      textEl(content.headline, pad, Math.round(height * 0.49), headlineSize, COLORS.text),
+      textEl(content.artifact, pad, Math.round(height * 0.61), Math.max(16, Math.round(width * 0.022)), COLORS.secondary, { family: MONO_FAMILY }),
+      textEl(content.state || 'CONTENT SLOT', pad, Math.round(height * 0.83), Math.max(16, Math.round(width * 0.018)), COLORS.experimental, { family: MONO_FAMILY }),
+      textEl(content.descriptor, width - pad, Math.round(height * 0.9), Math.max(14, Math.round(width * 0.016)), COLORS.secondary, { family: MONO_FAMILY, anchor: 'end' }),
+      '</svg>',
+    ].join('');
+    return { svg, width, height };
+  }
+
+  function wrapText(value: string, maxWidth: number, size: number, family: string, weight: number): string[] {
+    const words = value.split(' ').filter(Boolean);
+    const lines: string[] = [];
+    let current = '';
+    for (const word of words) {
+      const candidate = current ? `${current} ${word}` : word;
+      if (current && measureTextWidth(candidate, size, family, weight) > maxWidth) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = candidate;
+      }
+    }
+    if (current) lines.push(current);
+    return lines;
+  }
+
+  const imageDataUriCache = new Map<string, string>();
+  async function embeddedImageDataUri(path: string): Promise<string> {
+    const cached = imageDataUriCache.get(path);
+    if (cached) return cached;
+    const blob = await fetch(path).then((r) => r.blob());
+    const dataUri: string = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    imageDataUriCache.set(path, dataUri);
+    return dataUri;
+  }
+
+  type PhotoPosition = 'left' | 'right' | 'center';
+
+  function photoFrame(x: number, y: number, size: number, dataUri: string, showFrame: boolean): string {
+    const border = showFrame ? `<rect x="${x - 1}" y="${y - 1}" width="${size + 2}" height="${size + 2}" fill="none" stroke="${COLORS.accent}" stroke-width="1"/>` : '';
+    return `${border}<image href="${dataUri}" x="${x}" y="${y}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid slice"/>`;
+  }
+
+  function stateBadge(label: string, x: number, y: number, anchor: 'start' | 'end' = 'start'): { svg: string; width: number; height: number } {
+    const textSize = 15;
+    const padX = 14;
+    const height = 32;
+    const width = Math.ceil(measureTextWidth(label, textSize, MONO_FAMILY, 600)) + padX * 2;
+    const rectX = anchor === 'end' ? x - width : x;
+    const textX = anchor === 'end' ? x - width + padX : x + padX;
+    return {
+      width,
+      height,
+      svg: [
+        `<rect x="${rectX}" y="${y}" width="${width}" height="${height}" fill="none" stroke="${COLORS.experimental}" stroke-width="1"/>`,
+        textEl(label, textX, y + 21, textSize, COLORS.experimental, { family: MONO_FAMILY, weight: 600 }),
+      ].join(''),
+    };
+  }
+
+  // Thumbnail-with-photo style: derived from a founder-shared reference
+  // (multi-color badge, glow rim-light, floating panels, particle texture)
+  // with only the structural grammar kept — split layout, bold headline,
+  // state badge, real photo. Same discipline as DECISAO-009: one accent
+  // (blue), no glow, no gradient-as-structure, photo framed like every
+  // other artifact on the site (ArtifactFrame's plain 1px border). Three
+  // positions (left/right/center) requested as variants of the same rule.
+  async function renderPhotoThumbnailSvg(content: SingleContent, position: PhotoPosition, showBadge: boolean, showFrame: boolean): Promise<{ svg: string; width: number; height: number }> {
+    const width = 1280;
+    const height = 720;
+    const pad = Math.round(width * 0.075);
+    const photoDataUri = await embeddedImageDataUri('/profile/leo-ferraz-founder-thumbnail-720.jpg');
+    const badgeLabel = (content.state || 'AO VIVO').toUpperCase();
+    const badge = showBadge ? stateBadge(badgeLabel, pad, Math.round(height * 0.08)) : { svg: '', width: 0, height: 0 };
+
+    let body: string;
+
+    if (position === 'center') {
+      const photoSize = 380;
+      const photoX = Math.round((width - photoSize) / 2);
+      const photoY = Math.round(height * 0.06);
+      const headlineSize = 48;
+      const headlineWeight = 700;
+      const lines = wrapText(content.headline, width - pad * 2, headlineSize, SANS_FAMILY, headlineWeight).slice(0, 2);
+      const lineHeight = Math.round(headlineSize * 1.12);
+      const headlineStartY = photoY + photoSize + 70;
+      body = [
+        content.eyebrow ? textEl(content.eyebrow, width / 2, photoY + photoSize + 32, 18, COLORS.accent, { family: MONO_FAMILY, weight: 600, anchor: 'middle' }) : '',
+        lines.map((line, i) => textEl(line, width / 2, headlineStartY + i * lineHeight, headlineSize, COLORS.text, { weight: headlineWeight, anchor: 'middle' })).join(''),
+        content.artifact ? textEl(content.artifact, width / 2, headlineStartY + (lines.length - 1) * lineHeight + Math.round(headlineSize * 0.9), 20, COLORS.secondary, { family: MONO_FAMILY, anchor: 'middle' }) : '',
+        photoFrame(photoX, photoY, photoSize, photoDataUri, showFrame),
+      ].join('');
+    } else {
+      const photoSize = 620;
+      const photoY = Math.round((height - photoSize) / 2);
+      const photoOnRight = position === 'right';
+      const photoX = photoOnRight ? width - pad - photoSize : pad;
+      const textX = photoOnRight ? pad : photoX + photoSize + 48;
+      const textMaxWidth = photoOnRight ? photoX - pad - 40 : width - pad - textX;
+      const headlineSize = 62;
+      const headlineWeight = 700;
+      const lines = wrapText(content.headline, textMaxWidth, headlineSize, SANS_FAMILY, headlineWeight).slice(0, 3);
+      const lineHeight = Math.round(headlineSize * 1.1);
+      const headlineStartY = Math.round(height * 0.42) - Math.round(((lines.length - 1) * lineHeight) / 2);
+      const eyebrowY = headlineStartY - lineHeight - 6;
+      const afterHeadlineY = headlineStartY + (lines.length - 1) * lineHeight + Math.round(headlineSize * 0.9);
+      body = [
+        content.eyebrow ? textEl(content.eyebrow, textX, eyebrowY, 18, COLORS.accent, { family: MONO_FAMILY, weight: 600 }) : '',
+        lines.map((line, i) => textEl(line, textX, headlineStartY + i * lineHeight, headlineSize, COLORS.text, { weight: headlineWeight })).join(''),
+        content.artifact ? textEl(content.artifact, textX, afterHeadlineY, 22, COLORS.secondary, { family: MONO_FAMILY }) : '',
+        photoFrame(photoX, photoY, photoSize, photoDataUri, showFrame),
+      ].join('');
+    }
+
+    const svg = [
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">`,
+      `<title>Leo Ferraz thumbnail com foto — ${position}</title>`,
+      `<rect width="${width}" height="${height}" fill="${COLORS.bg}"/>`,
+      badge.svg,
+      body,
+      '</svg>',
+    ].join('');
+    return { svg, width, height };
+  }
+
+  async function renderCarouselSlideSvg(slide: { eyebrow: string; headline: string; bodyLines: string[] }, index: number, total: number): Promise<{ svg: string; width: number; height: number }> {
+    const [width, height] = SPECS['instagram-carousel-slide'];
+    const pad = Math.round(width * 0.075);
+    const sig = await loadSignature('leo-ferraz-wordmark-only.svg');
+    const sigWidth = Math.round(width * 0.2);
+    const sigHeight = sig.height * (sigWidth / sig.width);
+    const signature = placeSignature(sig, { x: pad, y: height - pad - sigHeight, targetWidth: sigWidth, variant: 'wordmark-only', padding: 32 });
+    const bodySize = Math.max(20, Math.round(width * 0.032));
+    const bodyLineHeight = Math.round(bodySize * 1.45);
+    const bodyStartY = Math.round(height * 0.48);
+    const body = slide.bodyLines.map((line, i) => textEl(line, pad, bodyStartY + i * bodyLineHeight, bodySize, COLORS.secondary, { weight: 400 })).join('');
+    const headlineSize = fitHeadlineSize(slide.headline, Math.max(30, Math.round(width * 0.062)), width - pad * 2, SANS_FAMILY, 600);
+    const n = index + 1;
+    const svg = [
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">`,
+      `<title>Leo Ferraz carousel slide ${n}/${total}</title>`,
+      `<rect width="${width}" height="${height}" fill="${COLORS.bg}"/>`,
+      textEl(slide.eyebrow || 'CONTENT', pad, Math.round(height * 0.12), Math.max(14, Math.round(width * 0.02)), COLORS.accent, { family: MONO_FAMILY }),
+      textEl(slide.headline, pad, Math.round(height * 0.24), headlineSize, COLORS.text, { weight: 600 }),
+      body,
+      textEl(`${n} / ${total}`, width - pad, height - pad - 4, Math.max(14, Math.round(width * 0.018)), COLORS.muted, { family: MONO_FAMILY, anchor: 'end' }),
+      signature.svg,
+      '</svg>',
+    ].join('');
+    return { svg, width, height };
+  }
+
+  // --- PNG export -----------------------------------------------------
+  async function downloadSvgAsPng(svgMarkup: string, width: number, height: number, filename: string) {
+    const fontCss = await embeddedFontFaceCss();
+    const withFonts = svgMarkup.replace('</title>', `</title>${fontCss}`);
+    const blob = new Blob([withFonts], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    try {
+      const img = new Image();
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = reject;
+        img.src = url;
+      });
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0, width, height);
+      const pngBlob: Blob = await new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob failed'))), 'image/png'));
+      const pngUrl = URL.createObjectURL(pngBlob);
+      const a = document.createElement('a');
+      a.href = pngUrl;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(pngUrl);
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  // --- UI wiring --------------------------------------------------------
+  const templateSelect = document.getElementById('field-template') as HTMLSelectElement;
+  const fieldsSingle = document.getElementById('fields-single')!;
+  const fieldsCarousel = document.getElementById('fields-carousel')!;
+  const slidesList = document.getElementById('slides-list')!;
+  const addSlideBtn = document.getElementById('add-slide') as HTMLButtonElement;
+  const form = document.getElementById('generator-form') as HTMLFormElement;
+  const preview = document.getElementById('preview-output')!;
+
+  const singleFieldIds = ['field-eyebrow', 'field-headline', 'field-artifact', 'field-state', 'field-descriptor'];
+
+  function isCarouselSlideTemplate(): boolean {
+    return templateSelect.value === 'instagram-carousel-slide';
+  }
+
+  const photoFieldWrap = document.getElementById('field-photo-wrap')!;
+  const badgeFieldWrap = document.getElementById('field-badge-wrap')!;
+  const frameFieldWrap = document.getElementById('field-frame-wrap')!;
+  const photoPositionSelect = document.getElementById('field-photo-position') as HTMLSelectElement;
+  function updateFieldVisibility() {
+    const isCarousel = isCarouselSlideTemplate();
+    fieldsSingle.hidden = isCarousel;
+    fieldsCarousel.hidden = !isCarousel;
+    const isThumbnail = templateSelect.value === 'youtube-thumbnail';
+    photoFieldWrap.hidden = !isThumbnail;
+    const hasPhoto = isThumbnail && photoPositionSelect.value !== '';
+    badgeFieldWrap.hidden = !hasPhoto;
+    frameFieldWrap.hidden = !hasPhoto;
+  }
+  templateSelect.addEventListener('change', updateFieldVisibility);
+  photoPositionSelect.addEventListener('change', updateFieldVisibility);
+  updateFieldVisibility();
+
+  let slideCounter = 0;
+  function addSlideRow(): void {
+    slideCounter += 1;
+    const id = slideCounter;
+    const row = document.createElement('div');
+    row.className = 'generator__slide';
+    row.dataset.slideId = String(id);
+    row.innerHTML = `
+      <div class="generator__slide-header">
+        <span>Slide ${id}</span>
+        <button type="button" class="generator__remove-slide">Remover</button>
+      </div>
+      <label class="generator__field"><span>Eyebrow (opcional)</span><input type="text" class="slide-eyebrow" /></label>
+      <label class="generator__field"><span>Headline</span><input type="text" class="slide-headline" /></label>
+      <label class="generator__field"><span>Corpo (uma linha por parágrafo)</span><textarea class="slide-body"></textarea></label>
+    `;
+    row.querySelector('.generator__remove-slide')!.addEventListener('click', () => row.remove());
+    slidesList.appendChild(row);
+  }
+  addSlideBtn.addEventListener('click', addSlideRow);
+  addSlideRow();
+
+  function fieldValue(id: string): string {
+    return (document.getElementById(id) as HTMLInputElement)?.value.trim() ?? '';
+  }
+
+  async function generate(): Promise<void> {
+    await ensureFontsReady();
+    preview.innerHTML = '';
+
+    if (isCarouselSlideTemplate()) {
+      const defaultEyebrow = fieldValue('field-carousel-eyebrow');
+      const rows = Array.from(slidesList.querySelectorAll<HTMLElement>('.generator__slide'));
+      const slides = rows.map((row) => ({
+        eyebrow: (row.querySelector('.slide-eyebrow') as HTMLInputElement).value.trim() || defaultEyebrow,
+        headline: (row.querySelector('.slide-headline') as HTMLInputElement).value.trim(),
+        bodyLines: (row.querySelector('.slide-body') as HTMLTextAreaElement).value.split('\n').map((l) => l.trim()).filter(Boolean),
+      }));
+      const total = slides.length;
+      for (const [index, slide] of slides.entries()) {
+        const { svg, width, height } = await renderCarouselSlideSvg(slide, index, total);
+        appendPreviewCard(svg, width, height, `slide-${index + 1}-de-${total}.png`, `Slide ${index + 1} / ${total}`);
+      }
+    } else {
+      const template = templateSelect.value;
+      const content: SingleContent = {
+        eyebrow: fieldValue('field-eyebrow'),
+        headline: fieldValue('field-headline') || 'Headline',
+        artifact: fieldValue('field-artifact'),
+        state: fieldValue('field-state'),
+        descriptor: fieldValue('field-descriptor') || 'Building with AI',
+      };
+      const photoPosition = template === 'youtube-thumbnail' ? ((document.getElementById('field-photo-position') as HTMLSelectElement).value as '' | 'left' | 'right' | 'center') : '';
+      const showBadge = (document.getElementById('field-show-badge') as HTMLInputElement).checked;
+      const showFrame = (document.getElementById('field-show-frame') as HTMLInputElement).checked;
+      const { svg, width, height } = photoPosition ? await renderPhotoThumbnailSvg(content, photoPosition, showBadge, showFrame) : await renderSingleSvg(template, content);
+      appendPreviewCard(svg, width, height, photoPosition ? `youtube-thumbnail-foto-${photoPosition}.png` : `${template}.png`, photoPosition ? `YouTube thumbnail (foto ${photoPosition})` : template);
+    }
+  }
+
+  function appendPreviewCard(svg: string, width: number, height: number, filename: string, label: string): void {
+    const card = document.createElement('div');
+    card.className = 'generator__preview-card';
+    card.innerHTML = svg;
+    const meta = document.createElement('div');
+    meta.className = 'generator__preview-meta';
+    const dims = document.createElement('span');
+    dims.textContent = `${label} · ${width}×${height}`;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'generator__button';
+    button.textContent = 'Baixar PNG';
+    button.addEventListener('click', () => downloadSvgAsPng(svg, width, height, filename));
+    meta.append(dims, button);
+    card.appendChild(meta);
+    preview.appendChild(card);
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    generate().catch((error) => {
+      console.error(error);
+      preview.innerHTML = `<p class="generator__preview-empty">Erro ao gerar: ${(error as Error).message}</p>`;
+    });
+  });
+</script>

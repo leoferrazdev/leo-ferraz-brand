@@ -4,9 +4,10 @@ interface Props {
   description: string;
   lang?: string;
   ogImage?: string;
+  noindex?: boolean;
 }
 
-const { title, description, lang = 'pt-BR', ogImage = '/brand-assets/exports/day-1/06-web/open-graph-1200x630.png' } = Astro.props;
+const { title, description, lang = 'pt-BR', ogImage = '/brand-assets/exports/day-1/06-web/open-graph-1200x630.png', noindex = false } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 const socialImage = new URL(ogImage, canonical).href;
 import { Font } from 'astro:assets';
@@ -18,6 +19,7 @@ import { Font } from 'astro:assets';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
