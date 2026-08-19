@@ -55,15 +55,18 @@ const socialLinks = [
   .site-footer p { margin: 0; }
 
   /*
-   * BrandSignature's wordmarkOnly variant defaults to hero-lockup scale
-   * (min(100%, 330px)) — correct for the homepage hero, but next to
-   * 11px footer label text it dwarfs everything else on the page.
-   * Constrain it here to a proportion consistent with other small
-   * brand+text pairings in the system (e.g. .homepage__author-chip's
-   * 32px photo next to the same 11px label size).
+   * BrandSignature's wordmarkOnly asset bakes in vertical clear space
+   * (SIGNATURE.md) so large that visible glyph ink fills only ~37% of
+   * its own canvas height (ink bbox y∈[50.97,101.45] of a 137px-tall
+   * canvas). A naive container width of 72px — this file's original
+   * fix — left only ~11px of visible ink, illegible next to the 11px
+   * footer label text (same defect found and corrected on the header
+   * logo, see SiteHeader.astro). 131px keeps ink height around 20px:
+   * legible, secondary in weight to the header's ~24px ink (footer is
+   * a closing mark, not the primary brand touchpoint).
    */
   .site-footer__brand :global(.brand-signature__asset) {
-    width: 72px !important;
+    width: 131px !important;
   }
 
   .site-footer__social {
