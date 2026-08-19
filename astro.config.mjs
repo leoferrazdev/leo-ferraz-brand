@@ -1,4 +1,5 @@
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 const typographyReviewDevOnly = {
   name: 'typography-review-dev-only',
@@ -43,7 +44,13 @@ export default defineConfig({
     format: 'directory',
   },
   trailingSlash: 'always',
-  integrations: [typographyReviewDevOnly],
+  integrations: [
+    typographyReviewDevOnly,
+    sitemap({
+      // /content-generator/ is unlisted by design (BaseLayout noindex prop) — keep it out of the sitemap too.
+      filter: (page) => !page.includes('/content-generator/'),
+    }),
+  ],
   fonts: [
     {
       // The variable Fontsource package declares this exact internal family name.

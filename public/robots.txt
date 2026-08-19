@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /content-generator/
+
+Sitemap: https://leoferraz.dev/sitemap-index.xml
