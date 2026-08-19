@@ -34,15 +34,18 @@ const { href = '/', links = [] } = Astro.props;
   }
 
   /*
-   * BrandSignature's wordmarkOnly variant defaults to hero-lockup scale
-   * (min(100%, 330px)) — correct for the homepage hero but next to
-   * 12px nav links it dwarfed the header, inflating its height to
-   * ~189px. Same fix and same size as the footer wordmark
-   * (SiteFooter.astro) to keep brand-mark scale consistent across
-   * the two chrome regions.
+   * BrandSignature's wordmarkOnly asset bakes in vertical clear space
+   * (SIGNATURE.md): the visible glyph ink fills only ~37% of the SVG's
+   * own canvas height. At the hero-lockup default (330px wide) the
+   * layout box ballooned to 137px tall, but the ink itself read at a
+   * legible ~50px. 72px (matched to the footer) shrank the ink to
+   * ~11px — illegible next to nav links. 160px keeps ink height around
+   * 24px — legible, clearly the primary mark, still a fraction of the
+   * original bloated layout box (~66px vs 137px) and comfortably above
+   * the 44px touch-target minimum on its own.
    */
   .site-header__brand :global(.brand-signature__asset) {
-    width: 72px !important;
+    width: 160px !important;
   }
 
   .site-header__nav {
