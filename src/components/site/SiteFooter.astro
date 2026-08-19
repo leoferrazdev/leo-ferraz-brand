@@ -6,21 +6,37 @@ interface Props {
 }
 
 const { note = 'Building with AI' } = Astro.props;
+
+const socialLinks = [
+  { label: 'X', href: 'https://x.com/leoferrazdev' },
+  { label: 'YouTube', href: 'https://www.youtube.com/@leoferrazdev' },
+  { label: 'Instagram', href: 'https://www.instagram.com/leoferrazdev' },
+  { label: 'Facebook', href: 'https://www.facebook.com/leoferrazdev' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/leoferrazdev' },
+  { label: 'Reddit', href: 'https://www.reddit.com/user/leoferrazdev' },
+  { label: 'Substack', href: 'https://substack.com/@leoferrazdev' },
+];
 ---
 
 <footer class="site-footer shell-width">
-  <div>
-    <BrandSignature variant="wordmarkOnly" />
-    <p>{note}</p>
+  <div class="site-footer__row">
+    <div class="site-footer__brand">
+      <BrandSignature variant="wordmarkOnly" />
+      <p>{note}</p>
+    </div>
+    <p class="site-footer__category">AI-Native Product Lab</p>
   </div>
-  <p>AI-Native Product Lab</p>
+  <nav class="site-footer__social" aria-label="Redes sociais">
+    {socialLinks.map((link) => (
+      <a href={link.href} target="_blank" rel="me noopener noreferrer">{link.label}</a>
+    ))}
+  </nav>
 </footer>
 
 <style>
   .site-footer {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--lf-spacing-block-content);
+    display: grid;
+    gap: var(--lf-spacing-component-standard);
     padding-block: var(--lf-spacing-block-content);
     border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
     color: var(--lf-color-text-muted);
@@ -28,10 +44,37 @@ const { note = 'Building with AI' } = Astro.props;
     font-size: var(--lf-type-label-size-large);
   }
 
-  .site-footer div { display: flex; align-items: center; gap: var(--lf-spacing-inline-compact); }
+  .site-footer__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--lf-spacing-block-content);
+  }
+
+  .site-footer__brand { display: flex; align-items: center; gap: var(--lf-spacing-inline-compact); }
   .site-footer p { margin: 0; }
 
+  .site-footer__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--lf-spacing-inline-standard) var(--lf-spacing-component-standard);
+    padding-top: var(--lf-spacing-component-standard);
+    border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  }
+
+  .site-footer__social a {
+    color: var(--lf-color-text-muted);
+    text-decoration: none;
+    letter-spacing: var(--lf-type-label-tracking);
+    text-transform: uppercase;
+  }
+
+  .site-footer__social a:hover,
+  .site-footer__social a:focus-visible {
+    color: var(--lf-color-accent-primary);
+  }
+
   @media (max-width: 767px) {
-    .site-footer { align-items: flex-start; flex-direction: column; }
+    .site-footer__row { align-items: flex-start; flex-direction: column; gap: var(--lf-spacing-inline-standard); }
   }
 </style>
