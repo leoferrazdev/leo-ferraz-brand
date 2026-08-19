@@ -1135,9 +1135,90 @@ code {
 }
 
 .homepage__products,
+.homepage__follow,
 .homepage__commitment {
   padding-block: var(--lf-spacing-section-standard);
   border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+}
+
+/*
+ * leoferraz.dev is the single bio link across every platform, so the homepage
+ * doubles as the routing hub. YouTube carries primary weight (long-form lives
+ * there); the rest stay flat so no secondary platform reads as an also-ran.
+ */
+.follow-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-spacing-block-content);
+}
+
+.follow-primary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-spacing-inline-standard);
+  align-self: flex-start;
+  padding: var(--lf-spacing-inline-standard) var(--lf-spacing-block-content);
+  background: var(--lf-color-accent-subtle);
+  border: var(--lf-border-width-standard) solid var(--lf-color-accent-primary);
+  border-radius: var(--lf-radius-control);
+  color: var(--lf-color-text-primary);
+  text-decoration: none;
+}
+
+.follow-primary:hover,
+.follow-primary:focus-visible {
+  background: var(--lf-color-accent-primary);
+  color: var(--lf-color-background);
+}
+
+.follow-primary__label {
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-body-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+}
+
+.follow-primary__note {
+  color: var(--lf-color-text-secondary);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+}
+
+.follow-primary:hover .follow-primary__note,
+.follow-primary:focus-visible .follow-primary__note {
+  color: var(--lf-color-background);
+}
+
+.follow-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-spacing-inline-standard) var(--lf-spacing-component-standard);
+}
+
+.follow-secondary a {
+  color: var(--lf-color-text-secondary);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.follow-secondary a:hover,
+.follow-secondary a:focus-visible {
+  color: var(--lf-color-accent-primary);
+}
+
+@media (max-width: 767px) {
+  /*
+   * Phone is the dominant case for this block: it is the destination of the
+   * in-app browser on every platform bio link. Tighten the section's own top
+   * padding so the primary destination sits as close to the fold as the
+   * hero above it allows.
+   */
+  .homepage__follow {
+    padding-top: var(--lf-spacing-component-comfortable);
+  }
 }
 
 .commitment-grid {

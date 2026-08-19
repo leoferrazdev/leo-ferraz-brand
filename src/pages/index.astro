@@ -2,7 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
+import { socialLinks } from '../data/social-links';
 import '../styles/global.css';
+
+// leoferraz.dev is the single bio link on every platform, so this page has to
+// route people onward without scrolling. Primary destination first, rest flat.
+const primaryChannel = socialLinks.find((link) => link.primary)!;
+const otherChannels = socialLinks.filter((link) => !link.primary);
 ---
 
 <BaseLayout
@@ -29,6 +35,27 @@ import '../styles/global.css';
         <p>Veja os projetos e experimentos do laboratório.</p>
         <p><a href="/laboratorio/">Ir para o laboratório →</a></p>
       </aside>
+    </section>
+
+    <section class="homepage__follow" aria-labelledby="follow-title">
+      <div class="homepage__section-heading">
+        <div>
+          <p class="eyebrow">ONDE ACOMPANHAR</p>
+          <h2 id="follow-title">Escolha por onde seguir.</h2>
+        </div>
+        <p>leoferraz.dev</p>
+      </div>
+      <div class="follow-grid">
+        <a class="follow-primary" href={primaryChannel.href} target="_blank" rel="me noopener noreferrer">
+          <span class="follow-primary__label">{primaryChannel.label}</span>
+          <span class="follow-primary__note">{primaryChannel.note}</span>
+        </a>
+        <nav class="follow-secondary" aria-label="Outras plataformas">
+          {otherChannels.map((link) => (
+            <a href={link.href} target="_blank" rel="me noopener noreferrer">{link.label}</a>
+          ))}
+        </nav>
+      </div>
     </section>
 
     <section class="homepage__commitment" aria-labelledby="commitment-title">
