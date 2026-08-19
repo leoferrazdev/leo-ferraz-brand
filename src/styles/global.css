@@ -1065,6 +1065,33 @@ code {
   margin-bottom: var(--lf-spacing-inline-standard);
 }
 
+.homepage__author-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-spacing-inline-compact);
+  margin-bottom: var(--lf-spacing-component-comfortable);
+  padding: 6px 14px 6px 6px;
+  background: var(--lf-color-surface-1);
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  border-radius: var(--lf-radius-control);
+}
+
+.homepage__author-chip img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.homepage__author-chip span {
+  color: var(--lf-color-text-secondary);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+}
+
 .homepage__hero-note {
   align-self: start;
   padding: var(--lf-spacing-block-content);
