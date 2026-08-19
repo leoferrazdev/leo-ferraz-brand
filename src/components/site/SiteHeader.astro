@@ -33,6 +33,18 @@ const { href = '/', links = [] } = Astro.props;
     text-decoration: none;
   }
 
+  /*
+   * BrandSignature's wordmarkOnly variant defaults to hero-lockup scale
+   * (min(100%, 330px)) — correct for the homepage hero but next to
+   * 12px nav links it dwarfed the header, inflating its height to
+   * ~189px. Same fix and same size as the footer wordmark
+   * (SiteFooter.astro) to keep brand-mark scale consistent across
+   * the two chrome regions.
+   */
+  .site-header__brand :global(.brand-signature__asset) {
+    width: 72px !important;
+  }
+
   .site-header__nav {
     display: flex;
     gap: var(--lf-spacing-block-content);
