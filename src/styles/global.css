@@ -72,7 +72,16 @@ a:focus-visible {
 
 .site-header {
   display: flex;
-  align-items: baseline;
+  /*
+   * Not `baseline`: the wordmark is a replaced element (img), so its
+   * CSS baseline is its own bottom margin edge — but the SVG bakes in
+   * ~17px of empty clear space below the visible glyph ink (see
+   * SiteHeader.astro), so baseline alignment anchored the nav text to
+   * empty space, not to the logo's visible letters, reading as
+   * misaligned. `center` aligns against the logo's full box instead,
+   * landing within ~4px of the ink's true center — visually correct.
+   */
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
   padding-block: 24px;
