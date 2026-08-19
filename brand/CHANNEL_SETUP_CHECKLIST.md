@@ -7,7 +7,9 @@ scope: operational platform setup
 
 # Channel Setup Checklist
 
-Use `cofre-leoferraz-dev/01_DECISOES/DECISAO - Nomes e Bios das Redes Sociais.md` as the operational copy reference. Canonical language authority remains `brand/LANGUAGE_ARCHITECTURE.md`.
+Use `cofre-leoferraz-dev/01_DECISOES/DECISAO-012 - Nomes e Bios das Redes Sociais.md` as the operational copy reference. Canonical language authority remains `brand/LANGUAGE_ARCHITECTURE.md`.
+
+The single link for every platform bio is `https://leoferraz.dev` — see `DECISAO-015` in the same folder.
 
 ## Common assets
 
