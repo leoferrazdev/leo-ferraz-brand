@@ -54,6 +54,18 @@ const socialLinks = [
   .site-footer__brand { display: flex; align-items: center; gap: var(--lf-spacing-inline-compact); }
   .site-footer p { margin: 0; }
 
+  /*
+   * BrandSignature's wordmarkOnly variant defaults to hero-lockup scale
+   * (min(100%, 330px)) — correct for the homepage hero, but next to
+   * 11px footer label text it dwarfs everything else on the page.
+   * Constrain it here to a proportion consistent with other small
+   * brand+text pairings in the system (e.g. .homepage__author-chip's
+   * 32px photo next to the same 11px label size).
+   */
+  .site-footer__brand :global(.brand-signature__asset) {
+    width: 72px !important;
+  }
+
   .site-footer__social {
     display: flex;
     flex-wrap: wrap;
