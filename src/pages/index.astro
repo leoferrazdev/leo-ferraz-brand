@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import { socialLinks } from '../data/social-links';
+import { clientWork } from '../data/client-work';
 import '../styles/global.css';
 
 // leoferraz.dev is the single bio link on every platform, so this page has to
@@ -35,6 +36,27 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
         <p>Sistemas reais construídos com IA, com link para cada um.</p>
         <p><a href="/laboratorio/">Ir para o laboratório →</a></p>
       </aside>
+    </section>
+
+    <section class="homepage__proof" aria-labelledby="proof-title">
+      <div class="homepage__section-heading">
+        <div>
+          <p class="eyebrow">TRABALHO RECENTE</p>
+          <h2 id="proof-title">Sistemas em operação.</h2>
+        </div>
+        <p><a href="/laboratorio/">Ver no laboratório →</a></p>
+      </div>
+      <div class="proof-strip">
+        {clientWork.map((project) => (
+          <a class="proof-card" href="/laboratorio/">
+            <span class="proof-card__shot">
+              <img src={project.thumbnail} alt="" width="960" height="600" loading="lazy" decoding="async" />
+            </span>
+            <span class="proof-card__client">{project.client}</span>
+            <span class="proof-card__scope">{project.scope}</span>
+          </a>
+        ))}
+      </div>
     </section>
 
     <section class="homepage__follow" aria-labelledby="follow-title">

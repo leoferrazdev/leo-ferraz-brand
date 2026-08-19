@@ -1134,7 +1134,83 @@ code {
   text-transform: uppercase;
 }
 
+/*
+ * Proof before the ask. The page claims "produtos reais com IA" and then asks
+ * for a follow; without something built sitting between the two, the ask is
+ * unearned. Compact by design — it is a signal that real work exists plus a
+ * route to /laboratorio/, not the portfolio itself.
+ */
+.proof-strip {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+}
+
+.proof-card {
+  display: grid;
+  gap: var(--lf-spacing-inline-compact);
+  color: inherit;
+  text-decoration: none;
+}
+
+.proof-card__shot {
+  display: block;
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  background: var(--lf-color-surface-1);
+  line-height: 0;
+}
+
+.proof-card__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.proof-card:hover .proof-card__shot,
+.proof-card:focus-visible .proof-card__shot {
+  border-color: var(--lf-color-accent-primary);
+}
+
+.proof-card__client {
+  color: var(--lf-color-text-primary);
+  font-size: var(--lf-type-body-size);
+}
+
+.proof-card__scope {
+  color: var(--lf-color-text-muted);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  /*
+   * Stacking three cards would make the strip taller than the hero and push
+   * the follow block far down (DECISAO-015 optimised for that block sitting
+   * near the fold). A swipeable rail keeps the whole section one card tall
+   * while each shot stays large enough to read as a real screen.
+   */
+  .proof-strip {
+    grid-auto-flow: column;
+    grid-auto-columns: 76%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--lf-spacing-inline-compact);
+  }
+
+  .proof-card {
+    scroll-snap-align: start;
+  }
+}
+
+@media (min-width: 768px) {
+  .proof-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .homepage__products,
+.homepage__proof,
 .homepage__follow,
 .homepage__commitment {
   padding-block: var(--lf-spacing-section-standard);

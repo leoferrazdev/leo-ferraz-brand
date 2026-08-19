@@ -15,7 +15,10 @@ const { note = 'Building with AI' } = Astro.props;
       <BrandSignature variant="wordmarkOnly" />
       <p>{note}</p>
     </div>
-    <p class="site-footer__category">AI-Native Product Lab</p>
+    <div class="site-footer__contact">
+      <a href="mailto:leo@leoferraz.dev">leo@leoferraz.dev</a>
+      <p class="site-footer__category">AI-Native Product Lab</p>
+    </div>
   </div>
   <nav class="site-footer__social" aria-label="Redes sociais">
     {socialLinks.map((link) => (
@@ -44,6 +47,28 @@ const { note = 'Building with AI' } = Astro.props;
 
   .site-footer__brand { display: flex; align-items: center; gap: var(--lf-spacing-inline-compact); }
   .site-footer p { margin: 0; }
+
+  .site-footer__contact {
+    display: grid;
+    gap: var(--lf-spacing-micro);
+    justify-items: end;
+  }
+
+  .site-footer__contact a {
+    color: var(--lf-color-text-secondary);
+    text-decoration: none;
+    border-bottom: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
+  }
+
+  .site-footer__contact a:hover,
+  .site-footer__contact a:focus-visible {
+    color: var(--lf-color-accent-primary);
+    border-bottom-color: var(--lf-color-accent-primary);
+  }
+
+  @media (max-width: 767px) {
+    .site-footer__contact { justify-items: start; }
+  }
 
   /*
    * BrandSignature's wordmarkOnly asset bakes in vertical clear space
