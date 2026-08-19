@@ -1221,6 +1221,103 @@ code {
   }
 }
 
+/*
+ * Client work (DECISAO-017). Each artifact is a live link, not a screenshot —
+ * the reader verifies it themselves. The status chip is the honest half of the
+ * claim: a page that calls itself preliminary or demonstrative says so here too.
+ */
+.client-work {
+  display: grid;
+  gap: var(--lf-spacing-block-major);
+}
+
+.client-work__row {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+  padding-top: var(--lf-spacing-block-content);
+  border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+}
+
+.client-work__meta h3 {
+  margin: 0 0 var(--lf-spacing-inline-compact);
+  font-size: var(--lf-type-h3-size-large);
+  font-weight: var(--lf-type-h3-weight);
+}
+
+.client-work__meta p {
+  margin: 0;
+  color: var(--lf-color-text-muted);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+}
+
+.client-work__artifacts {
+  display: grid;
+  gap: var(--lf-spacing-inline-standard);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.client-work__artifacts li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--lf-spacing-inline-standard);
+}
+
+.client-work__artifacts a {
+  color: var(--lf-color-text-primary);
+  font-size: var(--lf-type-body-size-large);
+  text-decoration: none;
+  border-bottom: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
+}
+
+.client-work__artifacts a:hover,
+.client-work__artifacts a:focus-visible {
+  color: var(--lf-color-accent-primary);
+  border-bottom-color: var(--lf-color-accent-primary);
+}
+
+.client-work__status {
+  padding: 2px 8px;
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  border-radius: var(--lf-radius-control);
+  color: var(--lf-color-text-muted);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  white-space: nowrap;
+}
+
+.client-work__status[data-status='EM OPERAÇÃO'] {
+  border-color: var(--lf-color-accent-primary);
+  color: var(--lf-color-accent-primary);
+}
+
+.client-work__status[data-status='DEMONSTRAÇÃO'],
+.client-work__status[data-status='PRELIMINAR'] {
+  border-color: var(--lf-color-experimental-primary);
+  color: var(--lf-color-experimental-primary);
+}
+
+.lab-note {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--lf-color-text-secondary);
+  font-size: var(--lf-type-body-size-large);
+  line-height: var(--lf-type-body-line-height);
+}
+
+@media (min-width: 768px) {
+  .client-work__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--lf-spacing-block-major);
+  }
+}
+
 .commitment-grid {
   display: grid;
   gap: var(--lf-grid-small-gutter);
@@ -1317,6 +1414,16 @@ code {
   .homepage__section-heading {
     display: grid;
     gap: var(--lf-spacing-micro);
+  }
+
+  /*
+   * The nowrap above keeps the right-hand label on one line beside the
+   * heading on wide screens. Once the heading stacks, that same rule forces
+   * any label longer than the viewport to overflow the page horizontally —
+   * so release it here.
+   */
+  .homepage__section-heading > p {
+    white-space: normal;
   }
 }
 
