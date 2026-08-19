@@ -19,11 +19,14 @@ jobs:
     timeout-minutes: 15
 
     steps:
+      # All three actions below were on node20, which GitHub is removing from
+      # its runners. Every one of them is pinned to a node24 release so the
+      # pipeline does not break when that removal lands.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22.23.2
           cache: npm
@@ -40,8 +43,31 @@ jobs:
           test -f dist/index.html
           test -f dist/brand/index.html
 
+      # The FTP control socket to Hostinger times out intermittently — it took
+      # down the run for bd883ef, and only the next unrelated push put that
+      # commit live, since each deploy uploads the whole dist. Without a retry
+      # a failure is silent: the build passes, nothing alerts, and production
+      # quietly stays a commit behind.
+      #
+      # Pinned to a commit SHA rather than a tag: this is third-party code that
+      # receives the FTP password, and a tag can be repointed at any time.
       - name: Deploy dist to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        id: deploy
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: 62.72.62.179
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./dist/
+          server-dir: ./
+          log-level: minimal
+
+      - name: Retry deploy once
+        if: steps.deploy.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:
           server: 62.72.62.179
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
