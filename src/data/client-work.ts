@@ -41,7 +41,7 @@ export const clientWork: ClientProject[] = [
     client: 'Porto Alegre Oficial',
     scope: 'CRM · operação comercial',
     thumbnail: '/evidence/porto-alegre-oficial.webp',
-    thumbnailAlt: 'Tela de acesso do CRM da Porto Alegre Oficial',
+    thumbnailAlt: 'Visão geral do CRM da Porto Alegre Oficial, com indicadores de aquisição e conversão',
     artifacts: [
       {
         label: 'CRM Porto Alegre Oficial',

@@ -16,3 +16,9 @@ coverage/
 
 .vscode/
 .idea/
+
+# Raw authenticated captures. This repository is public: originals from
+# behind a login carry real client data (lead names, revenue figures,
+# session identity) and must never be committed. Only the cropped or
+# masked derivatives alongside them are safe to publish.
+brand-assets/evidence/_raw/
