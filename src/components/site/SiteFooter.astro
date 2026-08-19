@@ -16,7 +16,11 @@ const { note = 'Building with AI' } = Astro.props;
       <p>{note}</p>
     </div>
     <div class="site-footer__contact">
-      <a href="mailto:leo@leoferraz.dev">leo@leoferraz.dev</a>
+      <div class="site-footer__contact-actions">
+        <a href="mailto:leo@leoferraz.dev">leo@leoferraz.dev</a>
+        {/* wa.me takes digits only, country code first: +55 51 99256-8861. */}
+        <a class="site-footer__whatsapp" href="https://wa.me/5551992568861" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
       <p class="site-footer__category">AI-Native Product Lab</p>
     </div>
   </div>
@@ -50,20 +54,46 @@ const { note = 'Building with AI' } = Astro.props;
 
   .site-footer__contact {
     display: grid;
-    gap: var(--lf-spacing-micro);
+    gap: var(--lf-spacing-inline-compact);
     justify-items: end;
   }
 
-  .site-footer__contact a {
+  .site-footer__contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--lf-spacing-inline-standard);
+  }
+
+  .site-footer__contact-actions a {
     color: var(--lf-color-text-secondary);
     text-decoration: none;
     border-bottom: var(--lf-border-width-standard) solid var(--lf-color-border-strong);
   }
 
-  .site-footer__contact a:hover,
-  .site-footer__contact a:focus-visible {
+  .site-footer__contact-actions a:hover,
+  .site-footer__contact-actions a:focus-visible {
     color: var(--lf-color-accent-primary);
     border-bottom-color: var(--lf-color-accent-primary);
+  }
+
+  /*
+   * The number itself is not printed — the label carries the action. Publishing
+   * a personal mobile number as text invites scraping without helping anyone,
+   * since the link already opens the conversation.
+   */
+  .site-footer__whatsapp {
+    padding: 6px 14px;
+    border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+    border-bottom-color: var(--lf-color-border-default);
+    border-radius: var(--lf-radius-control);
+    letter-spacing: var(--lf-type-label-tracking);
+    text-transform: uppercase;
+  }
+
+  .site-footer__whatsapp:hover,
+  .site-footer__whatsapp:focus-visible {
+    border-color: var(--lf-color-accent-primary);
   }
 
   @media (max-width: 767px) {
