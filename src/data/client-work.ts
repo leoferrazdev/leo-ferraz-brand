@@ -79,7 +79,7 @@ export const clientWork: ClientProject[] = [
     client: 'Uli Zarzana',
     scope: 'CRM · direção visual · página de captação',
     thumbnail: '/evidence/uliz-arzana.webp',
-    thumbnailAlt: 'Página de direção visual de Uli Zarzana',
+    thumbnailAlt: 'Regras de uso do sistema visual de Uli Zarzana',
     artifacts: [
       {
         label: 'CRM Uli Zarzana',
