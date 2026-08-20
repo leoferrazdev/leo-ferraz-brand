@@ -11,15 +11,39 @@ Use `cofre-leoferraz-dev/01_DECISOES/DECISAO-012 - Nomes e Bios das Redes Sociai
 
 The single link for every platform bio is `https://leoferraz.dev` — see `DECISAO-015` in the same folder.
 
+## Avatar rule
+
+Social profile avatars use a photograph of the founder. The Constructed LF
+symbol is reserved for the favicon, for small sizes where a face is
+unreadable, and for any surface where a photograph is not appropriate.
+
+The reasoning is humanisation: these are personal profiles on platforms where
+people follow people, and a geometric mark reads as a company. It does not
+replace the symbol anywhere else in the system.
+
+```text
+Social avatar master:
+brand-assets/profile/avatar/leo-ferraz-avatar-1024.png
+
+Social avatar compact:
+brand-assets/profile/avatar/leo-ferraz-avatar-256.png
+
+Symbol avatar (favicon, small sizes, non-photo surfaces):
+brand-assets/exports/day-1/01-profile/avatar-1024.png
+```
+
+Derived from `brand-assets/profile/leo-ferraz-founder-photo-provisional.jpg`.
+Provenance of that file is still unverified — see `DECISAO-011` in the vault.
+Adopting it across every platform propagates that caveat; replacing the source
+means regenerating this set.
+
+The avatar files live under `brand-assets/profile/` and not under
+`brand-assets/exports/`, because `scripts/build-brand-assets.mjs` deletes the
+exports tree on every run.
+
 ## Common assets
 
 ```text
-Avatar master:
-brand-assets/exports/day-1/01-profile/avatar-1024.png
-
-Avatar compact:
-brand-assets/exports/day-1/01-profile/avatar-256.png
-
 Primary lockup (Constructed LF Lockup):
 brand-assets/exports/day-1/01-profile/leo-ferraz-primary-lockup.svg
 
@@ -43,7 +67,7 @@ Language:
 pt-BR
 
 Avatar:
-brand-assets/exports/day-1/01-profile/avatar-1024.png
+brand-assets/profile/avatar/leo-ferraz-avatar-1024.png
 
 Banner:
 brand-assets/exports/day-1/02-channels/youtube-banner-2560x1440.png
@@ -73,7 +97,7 @@ Language:
 pt-BR
 
 Avatar:
-brand-assets/exports/day-1/01-profile/avatar-1024.png
+brand-assets/profile/avatar/leo-ferraz-avatar-1024.png
 
 Profile banner:
 brand-assets/exports/day-1/02-channels/twitch-banner-1200x480.png
@@ -106,7 +130,7 @@ Language:
 pt-BR
 
 Avatar:
-brand-assets/exports/day-1/01-profile/avatar-1024.png
+brand-assets/profile/avatar/leo-ferraz-avatar-1024.png
 
 Carousel/feed:
 brand-assets/exports/day-1/04-social/instagram-carousel-cover-1080x1350.png
@@ -125,9 +149,9 @@ brand-assets/exports/day-1/04-social/social-square-1080x1080.png
 
 | Platform | Display name | Language | Avatar | Banner / content | Status |
 |---|---|---|---|---|---|
-| TikTok | Leo Ferraz \| Building with AI | pt-BR | `avatar-1024.png` | reuse `instagram-story-reels-1080x1920.png` | READY / manual upload |
-| X | Leo Ferraz \| Building with AI | English | `avatar-1024.png` | reuse `social-square-1080x1080.png` | READY / manual upload |
-| LinkedIn | Leo Ferraz \| Building with AI | pt-BR | `avatar-1024.png` | use platform crop; no dedicated profile banner in P0 | PARTIAL / manual upload |
+| TikTok | Leo Ferraz \| Building with AI | pt-BR | `leo-ferraz-avatar-1024.png` | reuse `instagram-story-reels-1080x1920.png` | READY / manual upload |
+| X | Leo Ferraz \| Building with AI | English | `leo-ferraz-avatar-1024.png` | reuse `social-square-1080x1080.png` | READY / manual upload |
+| LinkedIn | Leo Ferraz \| Building with AI | pt-BR | `leo-ferraz-avatar-1024.png` | use platform crop; no dedicated profile banner in P0 | PARTIAL / manual upload |
 
 Copy is not re-authored here; use the Obsidian decision note.
 
@@ -135,9 +159,9 @@ Copy is not re-authored here; use the Obsidian decision note.
 
 | Platform | Display name | Language | Avatar | Banner | Status |
 |---|---|---|---|---|---|
-| GitHub | Leo Ferraz | English | `avatar-1024.png` | not applicable | READY / manual upload |
-| Reddit | Leo Ferraz \| Building with AI | English | `avatar-1024.png` | not applicable | READY / manual upload |
-| Substack | Leo Ferraz \| Building with AI | pt-BR | `avatar-1024.png` | not applicable | READY / manual upload |
+| GitHub | Leo Ferraz | English | `leo-ferraz-avatar-1024.png` | not applicable | READY / manual upload |
+| Reddit | Leo Ferraz \| Building with AI | English | `leo-ferraz-avatar-1024.png` | not applicable | READY / manual upload |
+| Substack | Leo Ferraz \| Building with AI | pt-BR | `leo-ferraz-avatar-1024.png` | not applicable | READY / manual upload |
 
 ## Official platform sources
 
