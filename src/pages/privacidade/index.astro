@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/site/SiteHeader.astro';
+import SiteFooter from '../../components/site/SiteFooter.astro';
+import '../../styles/global.css';
+
+const lastUpdated = '19 de agosto de 2026';
+---
+
+<BaseLayout
+  title="Privacidade — Leo Ferraz"
+  description="O que este site coleta, por quê, e como exercer seus direitos."
+>
+  <SiteHeader links={[{ label: 'Home', href: '/' }, { label: 'Laboratório', href: '/laboratorio/' }]} />
+
+  <main id="content" class="shell-width legal-page">
+    <p class="category-label">PRIVACIDADE</p>
+    <h1>O que este site coleta.</h1>
+    <p class="legal-page__updated">Atualizado em {lastUpdated}</p>
+
+    <h2>Resumo</h2>
+    <p>
+      Este site usa Google Analytics para medir audiência. Ele não pede cadastro, não tem
+      formulário e não recebe pagamento. Fora do Analytics, nada é coletado.
+    </p>
+
+    <h2>O que é coletado</h2>
+    <p>
+      O Google Analytics (GA4) registra dados de navegação: páginas visitadas, tempo de
+      visita, origem do acesso, tipo de dispositivo, navegador e localização aproximada
+      derivada do endereço IP. Ele grava cookies no seu navegador para reconhecer visitas
+      seguintes.
+    </p>
+    <p>
+      O tratamento é feito pelo Google, que atua como operador. Os dados podem ser
+      transferidos e armazenados fora do Brasil, em servidores do Google.
+    </p>
+    <p>
+      A finalidade é entender quais conteúdos e quais plataformas trazem visitantes. Não há
+      publicidade, remarketing ou venda de dados, e os dados não são usados para identificar
+      pessoas individualmente.
+    </p>
+
+    <h2>Onde o Analytics não roda</h2>
+    <p>
+      Páginas marcadas como não indexáveis — ferramentas internas e a página de erro — não
+      carregam o Analytics.
+    </p>
+
+    <h2>Links para outros sites</h2>
+    <p>
+      As páginas apontam para plataformas externas (YouTube, Instagram, LinkedIn, entre
+      outras) e para sistemas de clientes. Cada um desses destinos tem política própria, que
+      passa a valer assim que você sai daqui.
+    </p>
+
+    <h2>Como recusar</h2>
+    <p>
+      Você pode bloquear cookies nas configurações do navegador, usar o
+      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">complemento de desativação do Google Analytics</a>,
+      ou navegar com qualquer bloqueador de rastreadores. O site funciona normalmente em
+      todos esses casos.
+    </p>
+
+    <h2>Seus direitos</h2>
+    <p>
+      A LGPD garante o direito de confirmar a existência de tratamento, acessar, corrigir,
+      anonimizar, portar ou eliminar seus dados, e revogar consentimento. Para exercer
+      qualquer um deles, escreva para
+      <a href="mailto:leo@leoferraz.dev">leo@leoferraz.dev</a>.
+    </p>
+
+    <h2>Responsável</h2>
+    <p>
+      Leo Ferraz — <a href="mailto:leo@leoferraz.dev">leo@leoferraz.dev</a>
+    </p>
+
+    <h2>Mudanças</h2>
+    <p>
+      Se o que o site coleta mudar, esta página muda junto e a data acima é atualizada.
+    </p>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-block: var(--lf-spacing-section-standard);
+    max-width: 68ch;
+  }
+
+  .legal-page__updated {
+    margin-top: 0;
+    color: var(--lf-color-text-muted);
+    font-family: var(--lf-font-family-mono);
+    font-size: var(--lf-type-label-size-large);
+  }
+
+  .legal-page h2 {
+    margin-top: var(--lf-spacing-block-major);
+    margin-bottom: var(--lf-spacing-inline-standard);
+    font-size: var(--lf-type-h3-size-large);
+  }
+
+  .legal-page p {
+    margin: 0 0 var(--lf-spacing-inline-standard);
+    color: var(--lf-color-text-secondary);
+    line-height: var(--lf-type-body-line-height);
+  }
+</style>

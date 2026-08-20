@@ -11,6 +11,16 @@ const { title, description, lang = 'pt-BR', ogImage = '/brand-assets/exports/day
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 const socialImage = new URL(ogImage, canonical).href;
 import { Font } from 'astro:assets';
+
+// Public identifier: it ships in the page source either way, so there is
+// nothing to gain from hiding it in an environment variable.
+const GA_MEASUREMENT_ID = 'G-JSY7KECYCM';
+
+// Noindex pages are excluded. /content-generator/ is a private tool only the
+// founder opens, and counting his own sessions would inflate the audience
+// numbers this project has promised to publish honestly. Search Console still
+// reports crawl-level 404s, so skipping the error page costs little.
+const collectAnalytics = !noindex;
 ---
 
 <!doctype html>
@@ -37,6 +47,17 @@ import { Font } from 'astro:assets';
     <Font cssVariable="--font-ibm-plex-sans" />
     <Font cssVariable="--font-ibm-plex-mono" />
     <title>{title}</title>
+    {collectAnalytics && (
+      <>
+        <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_MEASUREMENT_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <a class="skip-link" href="#content">Pular para o conteúdo</a>

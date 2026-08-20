@@ -22,6 +22,7 @@ const { note = 'Building with AI' } = Astro.props;
         <a class="site-footer__whatsapp" href="https://wa.me/5551992568861" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </div>
       <p class="site-footer__category">AI-Native Product Lab</p>
+      <a class="site-footer__legal" href="/privacidade/">Privacidade</a>
     </div>
   </div>
   <nav class="site-footer__social" aria-label="Redes sociais">
@@ -94,6 +95,16 @@ const { note = 'Building with AI' } = Astro.props;
   .site-footer__whatsapp:hover,
   .site-footer__whatsapp:focus-visible {
     border-color: var(--lf-color-accent-primary);
+  }
+
+  .site-footer__legal {
+    color: var(--lf-color-text-muted);
+    text-decoration: none;
+  }
+
+  .site-footer__legal:hover,
+  .site-footer__legal:focus-visible {
+    color: var(--lf-color-accent-primary);
   }
 
   @media (max-width: 767px) {
