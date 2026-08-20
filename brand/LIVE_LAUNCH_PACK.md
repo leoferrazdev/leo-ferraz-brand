@@ -71,7 +71,9 @@ brand-assets/exports/day-1/02-channels/
 → YouTube e Twitch banners
 
 brand-assets/exports/day-1/03-live/obs/
-→ Starting Soon, Live, BRB, Ending, Offline
+→ cenas 01, 03, 04, 05, 06, 07 e sobreposições transparentes
+→ a cena 02 (câmera cheia) não tem fundo, só sobreposições
+→ arquivos `-guia` trazem as coordenadas de montagem e não vão ao ar
 
 brand-assets/exports/day-1/04-social/
 → Instagram, Story/Reels e square
@@ -151,13 +153,16 @@ The validator fails if an export lacks safe-zone metadata, exceeds its canvas bo
 3. gerar anúncio Instagram
 4. gerar Story/Reels
 5. configurar Twitch/YouTube
-6. carregar scenes no OBS
+6. montar as cenas no OBS seguindo live/obs/MONTAGEM.md
 7. iniciar transmissão
-8. usar Starting Soon
-9. entrar em Live/Main
-10. usar BRB quando necessário
-11. usar Ending
+8. abrir na cena 01 (Começando em breve)
+9. entrar na 02 (Câmera) ou 03 (Ao vivo)
+10. alternar para a 04 (Construção / Artefato) ao mostrar tela
+11. usar a 05 (Já volto) nas pausas
+12. fechar com a 06 (Encerrando)
 ```
+
+A 07 (Fora do ar) não entra no fluxo: é o banner que a Twitch exibe fora da transmissão.
 
 ## Day-1 decision
 

@@ -1478,9 +1478,9 @@
       "status": "approved"
     },
     {
-      "id": "starting-soon-1920x1080",
+      "id": "01-comecando-em-breve",
       "platform": "OBS",
-      "role": "live scene starting soon",
+      "role": "cena ao vivo — 01 — Começando em breve",
       "signature_variant": "wordmark-only",
       "width": 1920,
       "height": 1080,
@@ -1496,14 +1496,14 @@
         "width": 1536,
         "height": 864
       },
-      "usage": "OBS scene background; do not combine with the persistent brand bug",
-      "export_path": "brand-assets/exports/day-1/03-live/obs/starting-soon-1920x1080.png",
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/01-comecando-em-breve.png",
       "status": "approved"
     },
     {
-      "id": "live-main-1920x1080",
+      "id": "03-ao-vivo",
       "platform": "OBS",
-      "role": "live scene live / main",
+      "role": "cena ao vivo — 03 — Ao vivo",
       "signature_variant": "wordmark-only",
       "width": 1920,
       "height": 1080,
@@ -1519,14 +1519,14 @@
         "width": 1536,
         "height": 864
       },
-      "usage": "OBS scene background; do not combine with the persistent brand bug",
-      "export_path": "brand-assets/exports/day-1/03-live/obs/live-main-1920x1080.png",
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/03-ao-vivo.png",
       "status": "approved"
     },
     {
-      "id": "be-right-back-1920x1080",
+      "id": "04-construcao",
       "platform": "OBS",
-      "role": "live scene be right back",
+      "role": "cena ao vivo — 04 — Construção / Artefato",
       "signature_variant": "wordmark-only",
       "width": 1920,
       "height": 1080,
@@ -1542,14 +1542,14 @@
         "width": 1536,
         "height": 864
       },
-      "usage": "OBS scene background; do not combine with the persistent brand bug",
-      "export_path": "brand-assets/exports/day-1/03-live/obs/be-right-back-1920x1080.png",
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/04-construcao.png",
       "status": "approved"
     },
     {
-      "id": "stream-ending-1920x1080",
+      "id": "05-ja-volto",
       "platform": "OBS",
-      "role": "live scene stream ending",
+      "role": "cena ao vivo — 05 — Já volto",
       "signature_variant": "wordmark-only",
       "width": 1920,
       "height": 1080,
@@ -1565,14 +1565,14 @@
         "width": 1536,
         "height": 864
       },
-      "usage": "OBS scene background; do not combine with the persistent brand bug",
-      "export_path": "brand-assets/exports/day-1/03-live/obs/stream-ending-1920x1080.png",
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/05-ja-volto.png",
       "status": "approved"
     },
     {
-      "id": "offline-1920x1080",
+      "id": "06-encerrando",
       "platform": "OBS",
-      "role": "live scene offline",
+      "role": "cena ao vivo — 06 — Encerrando",
       "signature_variant": "wordmark-only",
       "width": 1920,
       "height": 1080,
@@ -1588,8 +1588,77 @@
         "width": 1536,
         "height": 864
       },
-      "usage": "OBS scene background; do not combine with the persistent brand bug",
-      "export_path": "brand-assets/exports/day-1/03-live/obs/offline-1920x1080.png",
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/06-encerrando.png",
+      "status": "approved"
+    },
+    {
+      "id": "07-fora-do-ar",
+      "platform": "OBS",
+      "role": "cena ao vivo — 07 — Fora do ar",
+      "signature_variant": "wordmark-only",
+      "width": 1920,
+      "height": 1080,
+      "dimensions": "1920x1080",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "#0D1117",
+      "transparency": false,
+      "safe_zone": {
+        "type": "rect",
+        "x": 192,
+        "y": 108,
+        "width": 1536,
+        "height": 864
+      },
+      "usage": "fundo de cena no OBS; não combinar com o brand bug persistente",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/07-fora-do-ar.png",
+      "status": "approved"
+    },
+    {
+      "id": "overlay-selo-ao-vivo",
+      "platform": "OBS",
+      "role": "selo transparente de estado ao vivo",
+      "signature_variant": "none",
+      "width": 260,
+      "height": 88,
+      "dimensions": "260x88",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 16,
+        "y": 16,
+        "width": 228,
+        "height": 56
+      },
+      "usage": "sobrepor à câmera na cena 02; um selo por cena",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/overlay-selo-ao-vivo.png",
+      "status": "approved"
+    },
+    {
+      "id": "overlay-rodape-link",
+      "platform": "OBS",
+      "role": "rodapé transparente com o link da bio",
+      "signature_variant": "none",
+      "width": 560,
+      "height": 80,
+      "dimensions": "560x80",
+      "format": "PNG",
+      "source_template": "brand-assets/sources/content.json + scripts/build-brand-assets.mjs",
+      "background": "transparent",
+      "transparency": true,
+      "safe_zone": {
+        "type": "rect",
+        "x": 16,
+        "y": 16,
+        "width": 528,
+        "height": 48
+      },
+      "usage": "sobrepor à câmera na cena 02",
+      "export_path": "brand-assets/exports/day-1/03-live/obs/overlay-rodape-link.png",
       "status": "approved"
     },
     {

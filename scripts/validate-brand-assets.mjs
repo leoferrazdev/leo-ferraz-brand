@@ -136,14 +136,18 @@ for (const asset of manifest.assets) {
   }
 }
 
+// Derived from the same scene list the generator reads, never a second copy of
+// it: a hardcoded list here silently rotted the moment the scenes were renamed,
+// and a validator that names files by hand can only ever validate the past.
+const liveContent = JSON.parse(fs.readFileSync(path.join(root, 'brand-assets', 'sources', 'content.json'), 'utf8'));
+const liveSceneChecks = liveContent.live.scenes
+  .filter((scene) => scene.kind !== 'bare')
+  .map((scene) => [`brand-assets/exports/day-1/03-live/obs/${scene.id}.svg`, 'wordmark-only']);
+
 for (const [relative, variant] of [
   ['brand-assets/exports/day-1/03-live/brand-bug.svg', 'primary-symbol'],
   ['brand-assets/exports/day-1/03-live/lower-third.svg', 'descriptor-lockup'],
-  ['brand-assets/exports/day-1/03-live/obs/starting-soon-1920x1080.svg', 'wordmark-only'],
-  ['brand-assets/exports/day-1/03-live/obs/live-main-1920x1080.svg', 'wordmark-only'],
-  ['brand-assets/exports/day-1/03-live/obs/be-right-back-1920x1080.svg', 'wordmark-only'],
-  ['brand-assets/exports/day-1/03-live/obs/stream-ending-1920x1080.svg', 'wordmark-only'],
-  ['brand-assets/exports/day-1/03-live/obs/offline-1920x1080.svg', 'wordmark-only'],
+  ...liveSceneChecks,
 ]) {
   const source = fs.readFileSync(path.join(root, relative), 'utf8');
   if (!source.includes(`data-signature-variant="${variant}"`)) fail(`${relative}: rendered signature marker ${variant} is missing`);

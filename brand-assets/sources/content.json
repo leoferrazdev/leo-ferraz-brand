@@ -9,7 +9,74 @@
     "Documentando a jornada."
   ],
   "artifact": "REAL PRODUCT ARTIFACT",
-  "evidence": ["PROJECT 003", "BUILDING", "VERSION 0.3", "commit a91f51"],
+  "evidence": [
+    "PROJECT 003",
+    "BUILDING",
+    "VERSION 0.3",
+    "commit a91f51"
+  ],
   "liveExample": "BUILDING WITH AI",
-  "liveState": "AO VIVO"
+  "liveState": "AO VIVO",
+  "live": {
+    "collection": "Leo Ferraz — YouTube / Twitch",
+    "link": "leoferraz.dev",
+    "scenes": [
+      {
+        "id": "01-comecando-em-breve",
+        "obsName": "01 — Começando em breve",
+        "kind": "card",
+        "headline": "COMEÇA EM BREVE",
+        "support": "Construindo produtos reais com IA.",
+        "textSource": null
+      },
+      {
+        "id": "02-camera",
+        "obsName": "02 — Câmera",
+        "kind": "bare",
+        "headline": null,
+        "support": null,
+        "textSource": null
+      },
+      {
+        "id": "03-ao-vivo",
+        "obsName": "03 — Ao vivo",
+        "kind": "frame",
+        "headline": null,
+        "support": null,
+        "textSource": "ASSUNTO DE AGORA"
+      },
+      {
+        "id": "04-construcao",
+        "obsName": "04 — Construção / Artefato",
+        "kind": "workspace",
+        "headline": null,
+        "support": null,
+        "textSource": "O QUE ESTOU CONSTRUINDO"
+      },
+      {
+        "id": "05-ja-volto",
+        "obsName": "05 — Já volto",
+        "kind": "card",
+        "headline": "JÁ VOLTO",
+        "support": "Documentando a jornada.",
+        "textSource": null
+      },
+      {
+        "id": "06-encerrando",
+        "obsName": "06 — Encerrando",
+        "kind": "card",
+        "headline": "ENCERRANDO",
+        "support": "Documentando a jornada.",
+        "textSource": null
+      },
+      {
+        "id": "07-fora-do-ar",
+        "obsName": "07 — Fora do ar",
+        "kind": "card",
+        "headline": "FORA DO AR",
+        "support": "Construindo produtos reais com IA.",
+        "textSource": null
+      }
+    ]
+  }
 }

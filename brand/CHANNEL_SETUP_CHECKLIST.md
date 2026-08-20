@@ -106,7 +106,7 @@ Profile banner signature variant:
 Descriptor Lockup
 
 Offline:
-brand-assets/exports/day-1/03-live/obs/offline-1920x1080.png
+brand-assets/exports/day-1/03-live/obs/07-fora-do-ar.png
 
 Live visual kit:
 live/obs/

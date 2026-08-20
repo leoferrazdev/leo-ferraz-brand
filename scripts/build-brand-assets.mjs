@@ -37,6 +37,8 @@ const fontPath = path.join(root, 'node_modules', '@fontsource', 'ibm-plex-sans',
 const font = createFont(fs.readFileSync(fontPath));
 const signatureFontPath = path.join(root, 'node_modules', '@fontsource', 'ibm-plex-sans', 'files', 'ibm-plex-sans-latin-700-normal.woff2');
 const signatureFont = createFont(fs.readFileSync(signatureFontPath));
+const monoFontPath = path.join(root, 'node_modules', '@fontsource', 'ibm-plex-mono', 'files', 'ibm-plex-mono-latin-500-normal.woff2');
+const monoFont = createFont(fs.readFileSync(monoFontPath));
 const fontScale = (size, fontFace = font) => size / fontFace.unitsPerEm;
 
 const escapeXml = (value) => String(value)
@@ -173,8 +175,21 @@ function svgDocument(title, width, height, body, { background = null } = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-labelledby="title"><title id="title">${escapeXml(title)}</title>${bg}${body}</svg>`;
 }
 
+// SVG font-family is inert in this pipeline. Rasterizing one string under four
+// families — "IBM Plex Sans", "IBM Plex Mono", "sans-serif" and a deliberately
+// nonexistent name — produced byte-identical PNGs, so librsvg resolves no font
+// here and every <text> element was drawn in a single arbitrary fallback face.
+// The Plex Sans/Plex Mono split this system encodes therefore never reached a
+// pixel. Text is outlined against the woff2 files bundled in node_modules
+// instead: typographically correct, and deterministic across machines rather
+// than dependent on what happens to be installed.
 function textElement(text, x, y, { size = 28, fill = colors.text, family = 'IBM Plex Sans', weight = 500, anchor = 'start', letterSpacing = 0 } = {}) {
-  return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}px" font-weight="${weight}" text-anchor="${anchor}" letter-spacing="${letterSpacing}em">${escapeXml(text)}</text>`;
+  const fontFace = family.includes('Mono') ? monoFont : weight >= 700 ? signatureFont : font;
+  // measureText appends tracking after every glyph, including the last; that
+  // trailing gap must not count when aligning to a right or centre anchor.
+  const width = measureText(text, size, letterSpacing, fontFace) - letterSpacing * size;
+  const left = anchor === 'middle' ? x - width / 2 : anchor === 'end' ? x - width : x;
+  return outlinedText(text, { size, tracking: letterSpacing, x: number(left), baseline: y, fill, fontFace });
 }
 
 // Construction Grid (brand/VISUAL_DIRECTION.md, "Grid Visível"): discreet,
@@ -329,6 +344,259 @@ const manifest = {
 
 function register({ id, platform, role, relative, width, height, format, transparency, usage, signatureVariant = 'none', safeZone = defaultSafeZone({ role, width, height, transparency }), source = 'brand-assets/sources/content.json + scripts/build-brand-assets.mjs', status = 'approved' }) {
   manifest.assets.push({ id, platform, role, signature_variant: signatureVariant, width, height, dimensions: `${width}x${height}`, format, source_template: source, background: transparency ? 'transparent' : colors.background, transparency, safe_zone: safeZone, usage, export_path: `brand-assets/exports/${relative}`, status });
+}
+
+// ---------------------------------------------------------------------------
+// Live scene system — Streamlabs/OBS collection "Leo Ferraz — YouTube / Twitch"
+// ---------------------------------------------------------------------------
+// Seven scenes, each composed of sources. Two rules shape everything below.
+//
+// 1. Scene copy is data, not code. The first version of this block hardcoded
+//    English labels ("STARTING SOON", "BE RIGHT BACK") right here, which put
+//    public-facing copy in the one place nobody reviews as copy. It shipped
+//    English onto pt-BR channels, sitting next to "AO VIVO" inside the same
+//    frame — breaking VOICE_AND_LANGUAGE.md ("one piece should have one
+//    predominant language"). Copy now lives in sources/content.json, where it
+//    can be read and corrected without reading a build script.
+//
+// 2. Anything that changes mid-stream is never baked into a PNG. Backgrounds
+//    carry structure and fixed copy; the topic line and the countdown are OBS
+//    text sources dropped into reserved regions. That is what lets one scene
+//    change meaning without regenerating an asset — the point of the whole
+//    setup being switchable live.
+
+const LIVE_W = 1920;
+const LIVE_H = 1080;
+
+// Every rectangle here is the contract between this script and the OBS scene
+// collection: the generated assembly guide reproduces these numbers verbatim,
+// so a source positioned at them lands exactly inside its drawn frame.
+const liveLayouts = {
+  card: {
+    textSource: { x: 192, y: 654, width: 760, height: 88, kind: 'texto' },
+  },
+  frame: {
+    camera: { x: 240, y: 120, width: 1440, height: 810, kind: 'video', label: 'CÂMERA' },
+    textSource: { x: 240, y: 962, width: 1000, height: 62, kind: 'texto' },
+  },
+  workspace: {
+    textSource: { x: 360, y: 40, width: 1200, height: 64, kind: 'texto' },
+    screen: { x: 40, y: 140, width: 1520, height: 855, kind: 'captura', label: 'TELA / ARTEFATO' },
+    camera: { x: 1592, y: 140, width: 288, height: 162, kind: 'video', label: 'CÂMERA' },
+    notes: { x: 1592, y: 326, width: 288, height: 669, kind: 'livre', label: 'CHAT / NOTAS' },
+  },
+};
+
+// The frame is drawn entirely outside the region. Stroking the region bounds
+// instead would put half the line under the video source once it is placed,
+// leaving a frame that looks thinner on screen than it does in the PNG.
+function liveMediaRegionBody(region, guide) {
+  const o = 3;
+  const x = region.x - o;
+  const y = region.y - o;
+  const w = region.width + o * 2;
+  const h = region.height + o * 2;
+  const x2 = x + w;
+  const y2 = y + h;
+  const tick = 32;
+  const parts = [
+    `<rect x="${region.x}" y="${region.y}" width="${region.width}" height="${region.height}" fill="${colors.surface1}"/>`,
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="${colors.border}" stroke-width="2"/>`,
+  ];
+  for (const d of [
+    `M ${x} ${y + tick} L ${x} ${y} L ${x + tick} ${y}`,
+    `M ${x2 - tick} ${y} L ${x2} ${y} L ${x2} ${y + tick}`,
+    `M ${x} ${y2 - tick} L ${x} ${y2} L ${x + tick} ${y2}`,
+    `M ${x2 - tick} ${y2} L ${x2} ${y2} L ${x2} ${y2 - tick}`,
+  ]) {
+    parts.push(`<path d="${d}" fill="none" stroke="${colors.accent}" stroke-width="3"/>`);
+  }
+  if (region.label) {
+    parts.push(textElement(region.label, region.x + 26, region.y + 48, { size: 20, family: 'IBM Plex Mono', fill: colors.muted, letterSpacing: 0.09 }));
+  }
+  if (guide) {
+    const style = { size: 18, family: 'IBM Plex Mono', fill: colors.accent };
+    const baseline = region.y + region.height - 26;
+    // A narrow region (the camera slot is 288px) cannot hold the coordinates on
+    // one line — they overflowed past its own frame in the first render.
+    if (region.width < 420) {
+      parts.push(textElement(`x ${region.x} · y ${region.y}`, region.x + 26, baseline - 26, style));
+      parts.push(textElement(`${region.width}×${region.height}`, region.x + 26, baseline, style));
+    } else {
+      parts.push(textElement(`x ${region.x} · y ${region.y} · ${region.width}×${region.height}`, region.x + 26, baseline, style));
+    }
+  }
+  return parts.join('');
+}
+
+// A text region is a bar, not a window: it stays filled because an OBS text
+// source sits *on* it rather than replacing it, and an empty topic bar has to
+// read as deliberate when there is nothing to announce.
+function liveTextRegionBody(region, label, guide) {
+  const parts = [
+    `<rect x="${region.x}" y="${region.y}" width="${region.width}" height="${region.height}" fill="${colors.surface2}"/>`,
+    `<rect x="${region.x}" y="${region.y}" width="4" height="${region.height}" fill="${colors.accent}"/>`,
+  ];
+  if (label) {
+    parts.push(textElement(label, region.x + 28, region.y + region.height / 2 + 8, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, letterSpacing: 0.09 }));
+  }
+  if (guide) {
+    parts.push(textElement(`x ${region.x} · y ${region.y} · ${region.width}×${region.height}`, region.x + region.width - 24, region.y + region.height / 2 + 7, { size: 18, family: 'IBM Plex Mono', fill: colors.accent, anchor: 'end' }));
+  }
+  return parts.join('');
+}
+
+function liveBadgeBody(x, y, { width = 210, height = 54 } = {}) {
+  return [
+    `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="4" fill="${colors.accentSubtle}" stroke="${colors.accent}" stroke-width="2"/>`,
+    `<circle cx="${x + 26}" cy="${number(y + height / 2)}" r="8" fill="${colors.accent}"/>`,
+    textElement(content.liveState, x + 48, number(y + height / 2 + 8), { size: 22, family: 'IBM Plex Mono', fill: colors.accentStrong, letterSpacing: 0.1 }),
+  ].join('');
+}
+
+// Ink height, not box height: the wordmark bakes in clear space, so its canvas
+// is far taller than its glyphs (SIGNATURE.md). Measuring the box instead is
+// what once pushed the site header logo down to a third of its intended size.
+function liveSignatureInkHeight(signature, width) {
+  return (signature.height - signature.padding * 2) * (width / signature.width);
+}
+
+function liveSceneSvg(scene, signature, { guide = false } = {}) {
+  const cfg = content.live;
+  const safe = rectSafeZone(LIVE_W, LIVE_H);
+  const mono = { family: 'IBM Plex Mono', fill: colors.secondary, size: 24 };
+  const body = [
+    `<rect width="${LIVE_W}" height="${LIVE_H}" fill="${colors.background}"/>`,
+    constructionGridSvg(LIVE_W, LIVE_H, { opacity: 0.32 }),
+  ];
+
+  if (scene.kind === 'card') {
+    // No label line under the wordmark: it restated the brand name directly
+    // beneath itself, and any live-state label would contradict the two scenes
+    // that exist precisely because the stream is not live (05, 07).
+    const sigWidth = 420;
+    body.push(placedSignatureBody(signature, { x: safe.x, y: safe.y, width: sigWidth }));
+    body.push(textElement(scene.headline, safe.x, 520, { size: 116, weight: 500 }));
+    if (scene.support) body.push(textElement(scene.support, safe.x, 596, { size: 34, fill: colors.secondary }));
+    if (scene.textSource) body.push(liveTextRegionBody(liveLayouts.card.textSource, scene.textSource, guide));
+    body.push(textElement(cfg.link, safe.x, LIVE_H - safe.y, mono));
+    body.push(textElement(content.descriptor, safe.x + safe.width, LIVE_H - safe.y, { ...mono, anchor: 'end' }));
+  } else {
+    const layout = liveLayouts[scene.kind];
+    body.push(placedSignatureBody(signature, { x: 40, y: 36, width: 240 }));
+    body.push(liveBadgeBody(1670, 36));
+    if (layout.camera) body.push(liveMediaRegionBody(layout.camera, guide));
+    if (layout.screen) body.push(liveMediaRegionBody(layout.screen, guide));
+    if (layout.notes) body.push(liveMediaRegionBody(layout.notes, guide));
+    body.push(liveTextRegionBody(layout.textSource, scene.textSource, guide));
+    const baseline = scene.kind === 'workspace' ? 1046 : 1002;
+    if (scene.kind === 'workspace') body.push(textElement(cfg.link, 40, baseline, mono));
+    body.push(textElement(content.descriptor, 1880, baseline, { ...mono, anchor: 'end' }));
+  }
+
+  return svgDocument(`Cena ao vivo — ${scene.obsName}`, LIVE_W, LIVE_H, body.join(''));
+}
+
+async function buildLiveSceneSystem({ wordmarkOnly }) {
+  const cfg = content.live;
+  const liveDir = path.join(root, 'live', 'obs');
+  // Rebuilt like exports/ rather than merged into: the previous English scene
+  // files live here under different names, and a merge would leave them on
+  // disk as a second, contradictory set of backgrounds.
+  fs.rmSync(liveDir, { recursive: true, force: true });
+  ensureDir(path.join(liveDir, 'x'));
+
+  const publish = async (name, svg, width, height, { transparent = false } = {}) => {
+    await writeSvg(`day-1/03-live/obs/${name}.svg`, svg);
+    await writePng(`day-1/03-live/obs/${name}.png`, svg, width, height, { fit: 'fill' });
+    for (const ext of ['svg', 'png']) {
+      fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.${ext}`), path.join(liveDir, `${name}.${ext}`));
+    }
+    return { transparent };
+  };
+
+  for (const scene of cfg.scenes) {
+    if (scene.kind === 'bare') continue; // scene 02 is camera plus transparent overlays only
+    const svg = liveSceneSvg(scene, wordmarkOnly);
+    await publish(scene.id, svg, LIVE_W, LIVE_H);
+    register({ id: scene.id, platform: 'OBS', role: `cena ao vivo — ${scene.obsName}`, relative: `day-1/03-live/obs/${scene.id}.png`, width: LIVE_W, height: LIVE_H, format: 'PNG', transparency: false, safeZone: rectSafeZone(LIVE_W, LIVE_H), usage: 'fundo de cena no OBS; não combinar com o brand bug persistente', signatureVariant: 'wordmark-only' });
+
+    // Composed scenes ship a second copy carrying the placement coordinates.
+    // Setup needs those numbers visible; broadcast must never risk showing
+    // them, so they are a separate file rather than a layer to remember to
+    // hide. The guide is a working aid and stays out of the manifest.
+    if (scene.kind !== 'card' || scene.textSource) {
+      await publish(`${scene.id}-guia`, liveSceneSvg(scene, wordmarkOnly, { guide: true }), LIVE_W, LIVE_H);
+    }
+  }
+
+  // Transparent overlays. LIVE_LAUNCH_PACK.md requires a minimum 16px inset on
+  // transparent assets so nothing touches a scene edge when composited.
+  const selo = svgDocument('Selo ao vivo', 260, 88, liveBadgeBody(16, 17));
+  await publish('overlay-selo-ao-vivo', selo, 260, 88);
+  register({ id: 'overlay-selo-ao-vivo', platform: 'OBS', role: 'selo transparente de estado ao vivo', relative: 'day-1/03-live/obs/overlay-selo-ao-vivo.png', width: 260, height: 88, format: 'PNG', transparency: true, usage: 'sobrepor à câmera na cena 02; um selo por cena', signatureVariant: 'none' });
+
+  const rodape = svgDocument('Rodapé com link', 560, 80, [
+    `<rect x="16" y="20" width="4" height="40" fill="${colors.accent}"/>`,
+    textElement(cfg.link, 40, 52, { size: 30, family: 'IBM Plex Mono', fill: colors.text }),
+  ].join(''));
+  await publish('overlay-rodape-link', rodape, 560, 80);
+  register({ id: 'overlay-rodape-link', platform: 'OBS', role: 'rodapé transparente com o link da bio', relative: 'day-1/03-live/obs/overlay-rodape-link.png', width: 560, height: 80, format: 'PNG', transparency: true, usage: 'sobrepor à câmera na cena 02', signatureVariant: 'none' });
+
+  fs.writeFileSync(path.join(liveDir, 'MONTAGEM.md'), liveAssemblyGuide());
+}
+
+function liveAssemblyGuide() {
+  const cfg = content.live;
+  const table = (regions, sceneTextSource) => [
+    '| Fonte | Tipo | X | Y | Largura | Altura |',
+    '| --- | --- | --- | --- | --- | --- |',
+    ...Object.entries(regions).map(([key, r]) => `| ${key === 'textSource' ? sceneTextSource : r.label} | ${r.kind} | ${r.x} | ${r.y} | ${r.width} | ${r.height} |`),
+  ].join('\n');
+
+  const sceneBlocks = cfg.scenes.map((scene) => {
+    const head = `## ${scene.obsName}`;
+    if (scene.kind === 'bare') {
+      return [head, '', 'Sem fundo: a câmera ocupa o quadro inteiro. Só entram as sobreposições transparentes.', '', '| Fonte | Arquivo | Posição sugerida |', '| --- | --- | --- |', '| Câmera | dispositivo de captura | 0, 0 · 1920×1080 |', '| Selo ao vivo | `overlay-selo-ao-vivo.png` | 1620, 60 |', '| Identificação | `lower-third.png` | 60, 840 |', '| Link | `overlay-rodape-link.png` | 60, 950 |'].join('\n');
+    }
+    if (scene.kind === 'card') {
+      const lines = [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080.`];
+      if (scene.textSource) {
+        const r = liveLayouts.card.textSource;
+        lines.push('', `Fonte de texto **${scene.textSource}** sobre a barra: x ${r.x + 28}, y ${r.y}, altura ${r.height}. O texto é do OBS, não está gravado na imagem — dá para mudar durante a transmissão.`);
+      }
+      return lines.join('\n');
+    }
+    return [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080. Confira as coordenadas com \`${scene.id}-guia.png\` aberto ao lado.`, '', table(liveLayouts[scene.kind], scene.textSource)].join('\n');
+  });
+
+  return [
+    `# Montagem das cenas — ${cfg.collection}`,
+    '',
+    'Gerado por `scripts/build-brand-assets.mjs`. Não editar à mão: as coordenadas abaixo vêm das mesmas constantes que desenham as molduras, então um valor digitado aqui deixaria de bater com a imagem.',
+    '',
+    'Os arquivos desta pasta espelham `brand-assets/exports/day-1/03-live/obs/`. Depois de mudar a copy em `brand-assets/sources/content.json`, rode `npm run brand-assets:build` — nunca edite um export diretamente.',
+    '',
+    '## Como funciona',
+    '',
+    'Cada cena tem um fundo e um conjunto de fontes. As molduras desenhadas no fundo ficam **fora** da área da fonte: se a câmera está no lugar certo, a moldura continua visível ao redor dela.',
+    '',
+    'O texto do assunto **não está gravado na imagem**: é uma fonte de texto do OBS posicionada sobre a barra. É isso que permite trocar o que está escrito sem regerar nada, no meio da transmissão.',
+    '',
+    'Arquivos terminados em `-guia` mostram as coordenadas sobre a própria arte. Use para montar e depois troque pelo arquivo sem sufixo. Nunca deixe um `-guia` no ar.',
+    '',
+    sceneBlocks.join('\n\n'),
+    '',
+    '## Sobreposições reutilizáveis',
+    '',
+    '| Arquivo | Tamanho | Uso |',
+    '| --- | --- | --- |',
+    '| `brand-bug.png` | 480×96 | marca discreta de canto; não usar junto de cena que já traz a assinatura |',
+    '| `lower-third.png` | 960×160 | identificação |',
+    '| `overlay-selo-ao-vivo.png` | 260×88 | estado ao vivo sobre a câmera |',
+    '| `overlay-rodape-link.png` | 560×80 | link da bio sobre a câmera |',
+    '',
+  ].join('\n');
 }
 
 async function main() {
@@ -523,23 +791,7 @@ async function main() {
   const ogPng = fs.readFileSync(path.join(exportsRoot, 'day-1/06-web/open-graph-1200x630.png'));
   copyPublic('brand-assets/exports/day-1/06-web/open-graph-1200x630.png', ogPng);
 
-  const liveScenes = [
-    ['starting-soon-1920x1080', 'STARTING SOON', content.liveState],
-    ['live-main-1920x1080', 'LIVE / MAIN', 'BUILDING WITH AI'],
-    ['be-right-back-1920x1080', 'BE RIGHT BACK', 'STATE'],
-    ['stream-ending-1920x1080', 'STREAM ENDING', 'DOCUMENTING THE JOURNEY.'],
-    ['offline-1920x1080', 'OFFLINE', 'LEO FERRAZ'],
-  ];
-  for (const [name, headline, state] of liveScenes) {
-    const liveSafeZone = rectSafeZone(1920, 1080);
-    const svg = socialSvg(`OBS ${headline}`, 1920, 1080, { label: 'LEO FERRAZ · LIVE', headline, signatureAsset: wordmarkOnly, state, safeZone: liveSafeZone, showGrid: true });
-    await writeSvg(`day-1/03-live/obs/${name}.svg`, svg);
-    await writePng(`day-1/03-live/obs/${name}.png`, svg, 1920, 1080, { fit: 'fill' });
-    ensureDir(path.join(root, 'live', 'obs', `${name}.png`));
-    fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.png`), path.join(root, 'live', 'obs', `${name}.png`));
-    fs.copyFileSync(path.join(exportsRoot, `day-1/03-live/obs/${name}.svg`), path.join(root, 'live', 'obs', `${name}.svg`));
-    register({ id: name, platform: 'OBS', role: `live scene ${headline.toLowerCase()}`, relative: `day-1/03-live/obs/${name}.png`, width: 1920, height: 1080, format: 'PNG', transparency: false, usage: 'OBS scene background; do not combine with the persistent brand bug', signatureVariant: 'wordmark-only' });
-  }
+  await buildLiveSceneSystem({ wordmarkOnly });
   const bugSvg = svgDocument('Leo Ferraz live brand bug', 480, 96, placedSignatureBody(symbol, { x: 16, y: 8, width: 80 }));
   await writeSvg('day-1/03-live/brand-bug.svg', bugSvg);
   await writePng('day-1/03-live/brand-bug.png', bugSvg, 480, 96, { fit: 'fill' });
