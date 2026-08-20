@@ -1,0 +1,179 @@
+:root {
+  --chat-text: #eaf2f8;
+  --chat-muted: #9aabba;
+  --chat-surface: rgba(7, 13, 20, 0.86);
+  --chat-border: rgba(234, 242, 248, 0.14);
+  --chat-accent: #4da3ff;
+  --chat-font: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  color: var(--chat-text);
+  font-family: var(--chat-font);
+  font-size: 13px;
+  line-height: 1.35;
+  text-rendering: optimizeLegibility;
+}
+
+#log {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+#log > div {
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 9px 9px 10px;
+  overflow: hidden;
+  background: var(--chat-surface);
+  border: 1px solid var(--chat-border);
+  border-left: 2px solid var(--chat-accent);
+  border-radius: 3px;
+  animation: chat-in 180ms ease-out both;
+}
+
+/* Eight messages are enough for the 288×669 slot without visual overflow. */
+#log > div:nth-last-child(n + 9),
+#log > div.deleted {
+  display: none;
+}
+
+#log > div .meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin: 0 0 3px;
+  overflow: hidden;
+  color: var(--chat-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.045em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#log > div[data-platform="youtube"] .meta::before,
+#log > div[data-platform="twitch"] .meta::before,
+#log > div[data-platform="streamlabs"] .meta::before,
+#log > div[data-platform="facebook"] .meta::before {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 14px;
+  padding: 0 4px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+#log > div[data-platform="youtube"] .meta::before {
+  content: "YT";
+  color: #ff6b6b;
+}
+
+#log > div[data-platform="twitch"] .meta::before {
+  content: "TW";
+  color: #b59cff;
+}
+
+#log > div[data-platform="streamlabs"] .meta::before {
+  content: "SL";
+  color: var(--chat-accent);
+}
+
+#log > div[data-platform="facebook"] .meta::before {
+  content: "FB";
+  color: #79aaff;
+}
+
+#log .badges {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+}
+
+#log .badge {
+  display: inline-block;
+  width: auto;
+  height: 13px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+#log .name {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#log .name::after {
+  content: attr(data-name);
+}
+
+#log .message {
+  display: block;
+  color: var(--chat-text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+#log .emote {
+  display: inline-block;
+  position: relative;
+  max-width: 1.5em;
+  padding: 0 0.1em;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+#log .emote img {
+  display: inline-block;
+  width: auto;
+  height: 1.35em;
+  opacity: 0;
+}
+
+@keyframes chat-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
