@@ -26,56 +26,49 @@
         "obsName": "01 — Começando em breve",
         "kind": "card",
         "headline": "COMEÇA EM BREVE",
-        "support": "Construindo produtos reais com IA.",
-        "textSource": null
+        "support": "Construindo produtos reais com IA."
       },
       {
         "id": "02-camera",
         "obsName": "02 — Câmera",
         "kind": "bare",
         "headline": null,
-        "support": null,
-        "textSource": null
+        "support": null
       },
       {
         "id": "03-ao-vivo",
         "obsName": "03 — Ao vivo",
         "kind": "frame",
         "headline": null,
-        "support": null,
-        "textSource": "ASSUNTO DE AGORA"
+        "support": "Construindo produtos reais com IA."
       },
       {
         "id": "04-construcao",
         "obsName": "04 — Construção / Artefato",
         "kind": "workspace",
         "headline": null,
-        "support": null,
-        "textSource": "O QUE ESTOU CONSTRUINDO"
+        "support": "Documentando a jornada."
       },
       {
         "id": "05-ja-volto",
         "obsName": "05 — Já volto",
         "kind": "card",
         "headline": "JÁ VOLTO",
-        "support": "Documentando a jornada.",
-        "textSource": null
+        "support": "Documentando a jornada."
       },
       {
         "id": "06-encerrando",
         "obsName": "06 — Encerrando",
         "kind": "card",
         "headline": "ENCERRANDO",
-        "support": "Documentando a jornada.",
-        "textSource": null
+        "support": "Documentando a jornada."
       },
       {
         "id": "07-fora-do-ar",
         "obsName": "07 — Fora do ar",
         "kind": "card",
         "headline": "FORA DO AR",
-        "support": "Construindo produtos reais com IA.",
-        "textSource": null
+        "support": "Construindo produtos reais com IA."
       }
     ]
   }

@@ -8,13 +8,13 @@ Os arquivos desta pasta espelham `brand-assets/exports/day-1/03-live/obs/`. Depo
 
 Cada cena tem um fundo e um conjunto de fontes. As molduras desenhadas no fundo ficam **fora** da área da fonte: se a câmera está no lugar certo, a moldura continua visível ao redor dela.
 
-O texto do assunto **não está gravado na imagem**: é uma fonte de texto do OBS posicionada sobre a barra. É isso que permite trocar o que está escrito sem regerar nada, no meio da transmissão.
+**Nenhuma cena pede texto digitado antes de entrar no ar.** Toda a copy é fixa e já está nas imagens. O tema da transmissão fica no título da live, que a plataforma exibe ao lado do player, e a cena 04 mostra o que está sendo construído na própria captura de tela.
 
 Arquivos terminados em `-guia` mostram as coordenadas sobre a própria arte. Use para montar e depois troque pelo arquivo sem sufixo. Nunca deixe um `-guia` no ar.
 
 ## 01 — Começando em breve
 
-Fundo: `01-comecando-em-breve.png` em 0, 0 · 1920×1080.
+Fundo: `01-comecando-em-breve.png` em 0, 0 · 1920×1080. Nada a posicionar.
 
 ## 02 — Câmera
 
@@ -34,7 +34,6 @@ Fundo: `03-ao-vivo.png` em 0, 0 · 1920×1080. Confira as coordenadas com `03-ao
 | Fonte | Tipo | X | Y | Largura | Altura |
 | --- | --- | --- | --- | --- | --- |
 | CÂMERA | video | 240 | 120 | 1440 | 810 |
-| ASSUNTO DE AGORA | texto | 240 | 962 | 1000 | 62 |
 
 ## 04 — Construção / Artefato
 
@@ -42,22 +41,21 @@ Fundo: `04-construcao.png` em 0, 0 · 1920×1080. Confira as coordenadas com `04
 
 | Fonte | Tipo | X | Y | Largura | Altura |
 | --- | --- | --- | --- | --- | --- |
-| O QUE ESTOU CONSTRUINDO | texto | 360 | 40 | 1200 | 64 |
 | TELA / ARTEFATO | captura | 40 | 140 | 1520 | 855 |
 | CÂMERA | video | 1592 | 140 | 288 | 162 |
 | CHAT / NOTAS | livre | 1592 | 326 | 288 | 669 |
 
 ## 05 — Já volto
 
-Fundo: `05-ja-volto.png` em 0, 0 · 1920×1080.
+Fundo: `05-ja-volto.png` em 0, 0 · 1920×1080. Nada a posicionar.
 
 ## 06 — Encerrando
 
-Fundo: `06-encerrando.png` em 0, 0 · 1920×1080.
+Fundo: `06-encerrando.png` em 0, 0 · 1920×1080. Nada a posicionar.
 
 ## 07 — Fora do ar
 
-Fundo: `07-fora-do-ar.png` em 0, 0 · 1920×1080.
+Fundo: `07-fora-do-ar.png` em 0, 0 · 1920×1080. Nada a posicionar.
 
 ## Sobreposições reutilizáveis
 

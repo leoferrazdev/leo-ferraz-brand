@@ -372,15 +372,10 @@ const LIVE_H = 1080;
 // collection: the generated assembly guide reproduces these numbers verbatim,
 // so a source positioned at them lands exactly inside its drawn frame.
 const liveLayouts = {
-  card: {
-    textSource: { x: 192, y: 654, width: 760, height: 88, kind: 'texto' },
-  },
   frame: {
     camera: { x: 240, y: 120, width: 1440, height: 810, kind: 'video', label: 'CÂMERA' },
-    textSource: { x: 240, y: 962, width: 1000, height: 62, kind: 'texto' },
   },
   workspace: {
-    textSource: { x: 360, y: 40, width: 1200, height: 64, kind: 'texto' },
     screen: { x: 40, y: 140, width: 1520, height: 855, kind: 'captura', label: 'TELA / ARTEFATO' },
     camera: { x: 1592, y: 140, width: 288, height: 162, kind: 'video', label: 'CÂMERA' },
     notes: { x: 1592, y: 326, width: 288, height: 669, kind: 'livre', label: 'CHAT / NOTAS' },
@@ -429,23 +424,6 @@ function liveMediaRegionBody(region, guide) {
   return parts.join('');
 }
 
-// A text region is a bar, not a window: it stays filled because an OBS text
-// source sits *on* it rather than replacing it, and an empty topic bar has to
-// read as deliberate when there is nothing to announce.
-function liveTextRegionBody(region, label, guide) {
-  const parts = [
-    `<rect x="${region.x}" y="${region.y}" width="${region.width}" height="${region.height}" fill="${colors.surface2}"/>`,
-    `<rect x="${region.x}" y="${region.y}" width="4" height="${region.height}" fill="${colors.accent}"/>`,
-  ];
-  if (label) {
-    parts.push(textElement(label, region.x + 28, region.y + region.height / 2 + 8, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, letterSpacing: 0.09 }));
-  }
-  if (guide) {
-    parts.push(textElement(`x ${region.x} · y ${region.y} · ${region.width}×${region.height}`, region.x + region.width - 24, region.y + region.height / 2 + 7, { size: 18, family: 'IBM Plex Mono', fill: colors.accent, anchor: 'end' }));
-  }
-  return parts.join('');
-}
-
 function liveBadgeBody(x, y, { width = 210, height = 54 } = {}) {
   return [
     `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="4" fill="${colors.accentSubtle}" stroke="${colors.accent}" stroke-width="2"/>`,
@@ -478,7 +456,6 @@ function liveSceneSvg(scene, signature, { guide = false } = {}) {
     body.push(placedSignatureBody(signature, { x: safe.x, y: safe.y, width: sigWidth }));
     body.push(textElement(scene.headline, safe.x, 520, { size: 116, weight: 500 }));
     if (scene.support) body.push(textElement(scene.support, safe.x, 596, { size: 34, fill: colors.secondary }));
-    if (scene.textSource) body.push(liveTextRegionBody(liveLayouts.card.textSource, scene.textSource, guide));
     body.push(textElement(cfg.link, safe.x, LIVE_H - safe.y, mono));
     body.push(textElement(content.descriptor, safe.x + safe.width, LIVE_H - safe.y, { ...mono, anchor: 'end' }));
   } else {
@@ -488,9 +465,20 @@ function liveSceneSvg(scene, signature, { guide = false } = {}) {
     if (layout.camera) body.push(liveMediaRegionBody(layout.camera, guide));
     if (layout.screen) body.push(liveMediaRegionBody(layout.screen, guide));
     if (layout.notes) body.push(liveMediaRegionBody(layout.notes, guide));
-    body.push(liveTextRegionBody(layout.textSource, scene.textSource, guide));
+    // These two scenes originally reserved a bar for an OBS text source naming
+    // the current topic. That turned a one-time cost into a per-stream one —
+    // typing a line in the minute before going live — to state something the
+    // viewer already has: the platform shows the stream title, and scene 04's
+    // screen capture *is* the answer to what is being built. Replaced with
+    // canonical bio copy, which is always true and never edited.
+    const support = { size: 26, family: 'IBM Plex Mono', fill: colors.muted };
     const baseline = scene.kind === 'workspace' ? 1046 : 1002;
-    if (scene.kind === 'workspace') body.push(textElement(cfg.link, 40, baseline, mono));
+    if (scene.kind === 'workspace') {
+      body.push(textElement(scene.support, 360, 80, support));
+      body.push(textElement(cfg.link, 40, baseline, mono));
+    } else {
+      body.push(textElement(scene.support, 240, baseline, support));
+    }
     body.push(textElement(content.descriptor, 1880, baseline, { ...mono, anchor: 'end' }));
   }
 
@@ -525,7 +513,7 @@ async function buildLiveSceneSystem({ wordmarkOnly }) {
     // Setup needs those numbers visible; broadcast must never risk showing
     // them, so they are a separate file rather than a layer to remember to
     // hide. The guide is a working aid and stays out of the manifest.
-    if (scene.kind !== 'card' || scene.textSource) {
+    if (scene.kind !== 'card') {
       await publish(`${scene.id}-guia`, liveSceneSvg(scene, wordmarkOnly, { guide: true }), LIVE_W, LIVE_H);
     }
   }
@@ -548,10 +536,10 @@ async function buildLiveSceneSystem({ wordmarkOnly }) {
 
 function liveAssemblyGuide() {
   const cfg = content.live;
-  const table = (regions, sceneTextSource) => [
+  const table = (regions) => [
     '| Fonte | Tipo | X | Y | Largura | Altura |',
     '| --- | --- | --- | --- | --- | --- |',
-    ...Object.entries(regions).map(([key, r]) => `| ${key === 'textSource' ? sceneTextSource : r.label} | ${r.kind} | ${r.x} | ${r.y} | ${r.width} | ${r.height} |`),
+    ...Object.values(regions).map((r) => `| ${r.label} | ${r.kind} | ${r.x} | ${r.y} | ${r.width} | ${r.height} |`),
   ].join('\n');
 
   const sceneBlocks = cfg.scenes.map((scene) => {
@@ -560,14 +548,9 @@ function liveAssemblyGuide() {
       return [head, '', 'Sem fundo: a câmera ocupa o quadro inteiro. Só entram as sobreposições transparentes.', '', '| Fonte | Arquivo | Posição sugerida |', '| --- | --- | --- |', '| Câmera | dispositivo de captura | 0, 0 · 1920×1080 |', '| Selo ao vivo | `overlay-selo-ao-vivo.png` | 1620, 60 |', '| Identificação | `lower-third.png` | 60, 840 |', '| Link | `overlay-rodape-link.png` | 60, 950 |'].join('\n');
     }
     if (scene.kind === 'card') {
-      const lines = [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080.`];
-      if (scene.textSource) {
-        const r = liveLayouts.card.textSource;
-        lines.push('', `Fonte de texto **${scene.textSource}** sobre a barra: x ${r.x + 28}, y ${r.y}, altura ${r.height}. O texto é do OBS, não está gravado na imagem — dá para mudar durante a transmissão.`);
-      }
-      return lines.join('\n');
+      return [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080. Nada a posicionar.`].join('\n');
     }
-    return [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080. Confira as coordenadas com \`${scene.id}-guia.png\` aberto ao lado.`, '', table(liveLayouts[scene.kind], scene.textSource)].join('\n');
+    return [head, '', `Fundo: \`${scene.id}.png\` em 0, 0 · 1920×1080. Confira as coordenadas com \`${scene.id}-guia.png\` aberto ao lado.`, '', table(liveLayouts[scene.kind])].join('\n');
   });
 
   return [
@@ -581,7 +564,7 @@ function liveAssemblyGuide() {
     '',
     'Cada cena tem um fundo e um conjunto de fontes. As molduras desenhadas no fundo ficam **fora** da área da fonte: se a câmera está no lugar certo, a moldura continua visível ao redor dela.',
     '',
-    'O texto do assunto **não está gravado na imagem**: é uma fonte de texto do OBS posicionada sobre a barra. É isso que permite trocar o que está escrito sem regerar nada, no meio da transmissão.',
+    '**Nenhuma cena pede texto digitado antes de entrar no ar.** Toda a copy é fixa e já está nas imagens. O tema da transmissão fica no título da live, que a plataforma exibe ao lado do player, e a cena 04 mostra o que está sendo construído na própria captura de tela.',
     '',
     'Arquivos terminados em `-guia` mostram as coordenadas sobre a própria arte. Use para montar e depois troque pelo arquivo sem sufixo. Nunca deixe um `-guia` no ar.',
     '',
