@@ -10,7 +10,7 @@ const allowedColors = new Set(['#0D1117', '#151B24', '#1D2632', '#2A3543', '#405
 const failures = [];
 const signatureRoles = new Set(['primary lockup', 'wordmark-only', 'descriptor lockup', 'institutional lockup', 'signature', 'wordmark-only export', 'transparent wordmark export']);
 const symbolRoles = new Set(['primary lockup', 'descriptor lockup', 'institutional lockup', 'primary symbol', 'legacy compatibility alias']);
-const signatureVariants = new Set(['primary-symbol', 'wordmark-only', 'primary-lockup', 'descriptor-lockup', 'institutional-lockup', 'none']);
+const signatureVariants = new Set(['primary-symbol', 'wordmark-only', 'primary-lockup', 'descriptor-lockup', 'descriptor-wordmark', 'institutional-lockup', 'none']);
 const pixelSafeZoneRoles = new Set([
   'YouTube channel banner',
   'Twitch profile banner',
@@ -86,7 +86,8 @@ function expectedSignatureVariant(asset) {
   if (role === 'YouTube channel banner' || role === 'Twitch profile banner') return 'descriptor-lockup';
   if (role === 'Instagram carousel/feed cover' || role === 'Social square template' || role.startsWith('live scene ')) return 'wordmark-only';
   if (role === 'Instagram Story/Reels cover' || role === 'Instagram Reels cover crop' || role.includes('thumbnail')) return 'primary-symbol';
-  if (role === 'Open Graph default' || role === 'transparent lower third') return 'descriptor-lockup';
+  if (role === 'Open Graph default') return 'descriptor-lockup';
+  if (role === 'transparent lower third') return 'descriptor-wordmark';
   if (role === 'transparent corner brand bug') return 'primary-symbol';
   if (role === 'manifest') return 'none';
   return null;
@@ -146,7 +147,7 @@ const liveSceneChecks = liveContent.live.scenes
 
 for (const [relative, variant] of [
   ['brand-assets/exports/day-1/03-live/brand-bug.svg', 'primary-symbol'],
-  ['brand-assets/exports/day-1/03-live/lower-third.svg', 'descriptor-lockup'],
+  ['brand-assets/exports/day-1/03-live/lower-third.svg', 'descriptor-wordmark'],
   ...liveSceneChecks,
 ]) {
   const source = fs.readFileSync(path.join(root, relative), 'utf8');

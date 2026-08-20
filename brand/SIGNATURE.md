@@ -133,6 +133,11 @@ This treatment is the default for public wordmark, descriptor, institutional, ch
                  AI-Native Product Lab
 ```
 
+```text
+Leo Ferraz
+Building with AI
+```
+
 `Building with AI` remains optional, removable and subordinate. `AI-Native Product Lab` remains a separate contextual line and is never part of the symbol.
 
 Canonical asset roles are explicit:
@@ -147,6 +152,9 @@ Leo Ferraz
 descriptor lockup:
 Constructed LF + Leo Ferraz + Building with AI
 
+descriptor wordmark:
+Leo Ferraz + Building with AI
+
 institutional lockup:
 Constructed LF + Leo Ferraz + Building with AI + AI-Native Product Lab
 
@@ -154,7 +162,7 @@ primary symbol:
 Constructed LF
 ```
 
-The lockup is not mandatory in every application. Symbol-only remains the compact identity; wordmark-only remains the name-led identity. These are coordinated applications of one signature system, not competing brands.
+The lockup is not mandatory in every application. Symbol-only remains the compact identity; wordmark-only remains the name-led identity, and the descriptor wordmark extends it with the descriptor line where the symbol would duplicate a mark already present in the frame — the live lower third being the governing case. These are coordinated applications of one signature system, not competing brands.
 
 ## Responsive signature distribution
 

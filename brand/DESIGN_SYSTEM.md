@@ -58,7 +58,7 @@ Todos os componentes usam tokens gerados e não necessitam JavaScript do cliente
 
 `wordmark` e `accent` permanecem apenas como aliases de compatibilidade para `primaryLockup`. Novos consumidores devem usar os nomes semânticos explícitos.
 
-`BrandSignature` obedece à distribuição responsiva definida em `SIGNATURE.md`. O header e o footer do site usam `wordmarkOnly`; avatar, favicon, thumbnails, Stories/Reels e brand bug usam `symbol`; banners de canal, lower third e Open Graph principal usam `descriptor`; `institutional` permanece restrito ao Brandbook e a superfícies institucionais formais.
+`BrandSignature` obedece à distribuição responsiva definida em `SIGNATURE.md`. O header e o footer do site usam `wordmarkOnly`; avatar, favicon, thumbnails, Stories/Reels e brand bug usam `symbol`; banners de canal e Open Graph principal usam `descriptor`; o lower third usa `descriptorWordmark`, que dispensa o símbolo por conviver com o brand bug no mesmo quadro; `institutional` permanece restrito ao Brandbook e a superfícies institucionais formais.
 
 Assets gerados registram `signature_variant` em `brand-assets/manifest.json`. O valor deve ser um de:
 
@@ -67,6 +67,7 @@ primary-symbol
 wordmark-only
 primary-lockup
 descriptor-lockup
+descriptor-wordmark
 institutional-lockup
 none
 ```

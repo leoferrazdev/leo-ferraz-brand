@@ -1688,7 +1688,7 @@
       "id": "lower-third",
       "platform": "OBS",
       "role": "transparent lower third",
-      "signature_variant": "descriptor-lockup",
+      "signature_variant": "descriptor-wordmark",
       "width": 960,
       "height": 160,
       "dimensions": "960x160",

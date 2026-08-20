@@ -109,17 +109,21 @@ function outlinedSvg(title, lines, { padding = null, clearSpace = 0.5, gap = 8, 
   };
 }
 
-function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false } = {}) {
+function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false, showSymbol = true } = {}) {
   const normalized = lines.map((line, index) => {
     const fontFace = index === 0 ? signatureFont : font;
     return { ...line, fontFace, fill: line.fill ?? primary, width: measureText(line.text, line.size, line.tracking ?? 0, fontFace) };
   });
   const lineHeight = (size) => number(size * 1.18);
   const contentHeight = normalized.reduce((sum, line) => sum + lineHeight(line.size), lineGap * Math.max(0, normalized.length - 1)) + (underline ? 4 : 0);
-  const width = Math.ceil(padding * 2 + symbolSize + symbolGap + Math.max(...normalized.map((line) => line.width)));
-  const height = Math.ceil(padding * 2 + Math.max(symbolSize, contentHeight));
-  const contentX = padding + symbolSize + symbolGap;
-  let top = padding + (Math.max(symbolSize, contentHeight) - contentHeight) / 2;
+  // Without the symbol the lockup is text alone: its column collapses to zero
+  // so the wordmark sits at the padding, not at an empty symbol's indent.
+  const symbolColumn = showSymbol ? symbolSize + symbolGap : 0;
+  const blockHeight = showSymbol ? Math.max(symbolSize, contentHeight) : contentHeight;
+  const width = Math.ceil(padding * 2 + symbolColumn + Math.max(...normalized.map((line) => line.width)));
+  const height = Math.ceil(padding * 2 + blockHeight);
+  const contentX = padding + symbolColumn;
+  let top = padding + (blockHeight - contentHeight) / 2;
   let firstBaseline = 0;
   const paths = normalized.map((line, index) => {
     const baseline = top + line.fontFace.ascent * fontScale(line.size, line.fontFace);
@@ -137,7 +141,8 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
     `<rect data-accent="underline-line" x="${contentX}" y="${underlineY}" width="${underlineWidth}" height="2" fill="${colors.accent}"/>`,
     `<rect data-accent="underline-terminal" x="${number(contentX + underlineWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
   ].join('') : '';
-  const body = `${constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome })}${paths}${underlineSvg}`;
+  const symbolSvg = showSymbol ? constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome }) : '';
+  const body = `${symbolSvg}${paths}${underlineSvg}`;
   return { width, height, padding, svg: svgDocument(title, width, height, body, { background }) };
 }
 
@@ -378,7 +383,10 @@ const liveLayouts = {
   workspace: {
     screen: { x: 40, y: 140, width: 1520, height: 855, kind: 'captura', label: 'TELA / ARTEFATO' },
     camera: { x: 1592, y: 140, width: 288, height: 162, kind: 'video', label: 'CÂMERA' },
-    notes: { x: 1592, y: 326, width: 288, height: 669, kind: 'livre', label: 'CHAT / NOTAS' },
+    // drawLabel: the chat overlay is transparent, so a label painted on the
+    // background stays visible through it and collides with the messages. The
+    // name survives on the assembly guide, which never goes on air.
+    notes: { x: 1592, y: 326, width: 288, height: 669, kind: 'livre', label: 'CHAT / NOTAS', drawLabel: false },
   },
 };
 
@@ -406,7 +414,7 @@ function liveMediaRegionBody(region, guide) {
   ]) {
     parts.push(`<path d="${d}" fill="none" stroke="${colors.accent}" stroke-width="3"/>`);
   }
-  if (region.label) {
+  if (region.label && (region.drawLabel !== false || guide)) {
     parts.push(textElement(region.label, region.x + 26, region.y + 48, { size: 20, family: 'IBM Plex Mono', fill: colors.muted, letterSpacing: 0.09 }));
   }
   if (guide) {
@@ -633,6 +641,13 @@ async function main() {
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
   ], { underline: true });
+  // Name-led signature: wordmark plus descriptor, no symbol. The lower third
+  // sits over live camera footage, where the symbol read as a second mark
+  // competing with the corner brand bug instead of supporting the name.
+  const descriptorWordmark = hybridLogoSvg('Leo Ferraz descriptor wordmark', [
+    { text: content.brand, size: 58, tracking: -0.035 },
+    { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
+  ], { underline: true, showSymbol: false });
   const institutional = hybridLogoSvg('Leo Ferraz institutional lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
@@ -645,6 +660,7 @@ async function main() {
   wordmarkOnly.variant = 'wordmark-only';
   wordmarkOnlyDark.variant = 'wordmark-only';
   descriptor.variant = 'descriptor-lockup';
+  descriptorWordmark.variant = 'descriptor-wordmark';
   institutional.variant = 'institutional-lockup';
   symbol.variant = 'primary-symbol';
   symbolDark.variant = 'primary-symbol';
@@ -782,13 +798,17 @@ async function main() {
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/brand-bug.png'), path.join(root, 'live', 'obs', 'brand-bug.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/brand-bug.svg'), path.join(root, 'live', 'obs', 'brand-bug.svg'));
   register({ id: 'brand-bug', platform: 'OBS', role: 'transparent corner brand bug', relative: 'day-1/03-live/brand-bug.png', width: 480, height: 96, format: 'PNG', transparency: true, usage: 'persistent compact corner marker; do not combine with a complete scene signature', signatureVariant: 'primary-symbol' });
-  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, placedSignatureBody(descriptor, { x: 24, y: 4, width: 430 }));
+  // Derived, not re-measured by hand: dropping the symbol narrows the asset,
+  // so reusing 430 would have scaled the remaining text up. Holding the old
+  // scale keeps the wordmark rendering at exactly the size it had before.
+  const lowerThirdScale = 430 / descriptor.width;
+  const lowerSvg = svgDocument('Leo Ferraz lower third', 960, 160, placedSignatureBody(descriptorWordmark, { x: 24, y: 4, width: number(descriptorWordmark.width * lowerThirdScale) }));
   await writeSvg('day-1/03-live/lower-third.svg', lowerSvg);
   await writePng('day-1/03-live/lower-third.png', lowerSvg, 960, 160, { fit: 'fill' });
   ensureDir(path.join(root, 'live', 'obs', 'lower-third.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/lower-third.png'), path.join(root, 'live', 'obs', 'lower-third.png'));
   fs.copyFileSync(path.join(exportsRoot, 'day-1/03-live/lower-third.svg'), path.join(root, 'live', 'obs', 'lower-third.svg'));
-  register({ id: 'lower-third', platform: 'OBS', role: 'transparent lower third', relative: 'day-1/03-live/lower-third.png', width: 960, height: 160, format: 'PNG', transparency: true, usage: 'static OBS overlay', signatureVariant: 'descriptor-lockup' });
+  register({ id: 'lower-third', platform: 'OBS', role: 'transparent lower third', relative: 'day-1/03-live/lower-third.png', width: 960, height: 160, format: 'PNG', transparency: true, usage: 'static OBS overlay', signatureVariant: 'descriptor-wordmark' });
 
   fs.writeFileSync(path.join(root, 'brand-assets', 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
   const hashInput = manifest.assets.map((asset) => asset.export_path).sort().map((relative) => `${relative}:${createHash('sha256').update(fs.readFileSync(path.join(root, relative))).digest('hex')}`).join('\n');
