@@ -43,6 +43,19 @@ jobs:
           test -f dist/index.html
           test -f dist/brand/index.html
 
+      # An unset or empty host reaches the FTP action as a blank server and
+      # surfaces as a connection timeout — the same symptom as a real network
+      # failure, which would send the next person debugging in the wrong
+      # direction. Fail here instead, with a message that names the cause.
+      - name: Verify deploy target is configured
+        env:
+          FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+        run: |
+          if [ -z "$FTP_HOST" ]; then
+            echo "::error::HOSTINGER_FTP_HOST is empty or unset. Set it in repository secrets."
+            exit 1
+          fi
+
       # The FTP control socket to Hostinger times out intermittently — it took
       # down the run for bd883ef, and only the next unrelated push put that
       # commit live, since each deploy uploads the whole dist. Without a retry
@@ -56,7 +69,7 @@ jobs:
         continue-on-error: true
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:
-          server: 62.72.62.179
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           protocol: ftp
@@ -66,10 +79,11 @@ jobs:
           log-level: minimal
 
       - name: Retry deploy once
+        id: retry
         if: steps.deploy.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
         with:
-          server: 62.72.62.179
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           protocol: ftp
@@ -77,3 +91,38 @@ jobs:
           local-dir: ./dist/
           server-dir: ./
           log-level: minimal
+
+  # The retry covers a transient socket timeout. It does not cover a host that
+  # moved, a switch to SFTP, or blocked runners — cases where both attempts
+  # fail and, without this job, nothing would say so. An issue is used rather
+  # than e-mail because it persists until someone closes it and needs no
+  # credentials of its own.
+  notify-failure:
+    needs: build-and-deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Open or update the deploy failure issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          gh label create deploy-failure -R "$REPO" --color B60205 --description "Deploy para produção falhou" --force
+
+          body=$(printf 'O deploy para leoferraz.dev falhou.\n\nCommit: `%s`\nLog: %s\n\nProdução continua servindo a versão anterior — o site não sai do ar, mas fica desatualizado até isto ser resolvido.' "$COMMIT_SHA" "$RUN_URL")
+
+          # Reuse one open issue instead of opening a new one per failed run,
+          # so a repeated outage does not bury the repository in duplicates.
+          existing=$(gh issue list -R "$REPO" --label deploy-failure --state open --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" -R "$REPO" --body "$body"
+          else
+            gh issue create -R "$REPO" --title "Deploy para leoferraz.dev falhou" --label deploy-failure --body "$body"
+          fi
