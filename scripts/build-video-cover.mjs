@@ -26,6 +26,10 @@ sharp.cache(false);
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const thumbsRoot = path.join(root, 'brand-assets', 'thumbnails');
+// Output goes to the centralised v2 deliverable folder, not thumbnails/ — it
+// sits with completo-v2.mp4, the TikTok file this cover actually promotes.
+const outRoot = path.join(root, 'videos', 'v2', 'tiktok-vertical');
+fs.mkdirSync(outRoot, { recursive: true });
 
 const colors = {
   background: '#0D1117',
@@ -194,8 +198,8 @@ async function build() {
     + `</svg>`;
 
   const buffer = Buffer.from(svg);
-  await sharp(buffer).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(thumbsRoot, 'capa_V2.png'));
-  await sharp(buffer).resize(W, H, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(path.join(thumbsRoot, 'capa_V2.jpg'));
+  await sharp(buffer).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(outRoot, 'capa_V2.png'));
+  await sharp(buffer).resize(W, H, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(path.join(outRoot, 'capa_V2.jpg'));
   console.log('Gerado: capa_V2.png / capa_V2.jpg');
 }
 

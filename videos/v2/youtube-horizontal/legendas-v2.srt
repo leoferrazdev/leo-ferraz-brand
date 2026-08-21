@@ -1,0 +1,150 @@
+1
+00:00:00,000 --> 00:00:02,570
+Esse projeto é sobre uma coisa só:
+
+2
+00:00:02,570 --> 00:00:03,620
+eu construindo
+
+3
+00:00:03,620 --> 00:00:08,850
+produtos de verdade com IA e mostrando o
+que acontece.
+
+4
+00:00:08,850 --> 00:00:16,860
+Eu trabalho com tecnologia há mais de 15
+anos... fazer sozinho.
+
+5
+00:00:16,860 --> 00:00:22,800
+Hoje, eu pesquiso, projeto, desenvolvo,
+testo e lanço...
+
+6
+00:00:22,800 --> 00:00:25,970
+ia exigir muito mais tempo e mais pessoas.
+
+7
+00:00:25,970 --> 00:00:26,810
+E não é teoria,
+
+8
+00:00:26,810 --> 00:00:29,720
+eu já uso isso em projeto real. Sistema,
+
+9
+00:00:29,720 --> 00:00:32,630
+CRM, automação, aplicação web.
+
+10
+00:00:32,630 --> 00:00:42,000
+E aí eu decidi fazer diferente... quando
+tá pronto e deu certo,
+
+11
+00:00:42,000 --> 00:00:43,830
+eu vou mostrar o processo inteiro,
+
+12
+00:00:43,830 --> 00:00:47,080
+inclusive quando der errado.
+
+13
+00:00:47,080 --> 00:00:52,810
+Na prática, você vai ver a ideia... o
+lançamento,
+
+14
+00:00:52,810 --> 00:00:53,850
+e os números também.
+
+15
+00:00:53,850 --> 00:00:55,920
+Quanto custou, quanto gerou,
+
+16
+00:00:55,920 --> 00:00:58,530
+se deu lucro ou prejuízo.
+
+17
+00:00:58,530 --> 00:01:00,820
+Se não gerar nada, eu mostro que não
+gerou.
+
+18
+00:01:00,820 --> 00:01:02,590
+Não é curso, não é mentoria,
+
+19
+00:01:02,590 --> 00:01:03,930
+não é notícia sobre IA.
+
+20
+00:01:03,930 --> 00:01:07,580
+Eu não vou te explicar como deveria
+funcionar.
+
+21
+00:01:07,580 --> 00:01:10,290
+Você vai acompanhar enquanto eu tento
+fazer
+
+22
+00:01:10,290 --> 00:01:11,020
+funcionar,
+
+23
+00:01:11,020 --> 00:01:14,410
+inclusive nas lives, com o erro
+acontecendo ao vivo.
+
+24
+00:01:14,410 --> 00:01:18,890
+A parte chata já tá pronta. Site, marca,
+os canais,
+
+25
+00:01:18,890 --> 00:01:20,280
+agora é executar.
+
+26
+00:01:20,280 --> 00:01:22,650
+Eu ainda não decidi qual vai ser o
+primeiro projeto.
+
+27
+00:01:22,650 --> 00:01:24,420
+E essa escolha também vai estar aqui.
+
+28
+00:01:24,420 --> 00:01:26,570
+Testar uma ideia, descartar,
+
+29
+00:01:26,570 --> 00:01:27,260
+escolher.
+
+30
+00:01:27,260 --> 00:01:30,510
+o que já tá no radar é software, que é o
+que eu já faço.
+
+31
+00:01:30,510 --> 00:01:32,780
+Sistema SaaS, automação,
+
+32
+00:01:32,780 --> 00:01:37,130
+jogos, incluindo publicar em plataforma de
+jogo para navegador,
+
+33
+00:01:37,130 --> 00:01:40,980
+e aplicativo pra iPhone... próximo passo
+planejado.
+
+34
+00:01:40,980 --> 00:01:45,250
+Tá tudo começando agora. Se quiser
+acompanhar, é só acompanhar.

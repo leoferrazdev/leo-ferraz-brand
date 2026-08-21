@@ -37,8 +37,12 @@ const platform = (process.argv[2] ?? 'youtube').toLowerCase();
 // CRF and ceiling per platform. TikTok gets the lower CRF because it re-encodes
 // on ingest, and detail lost before the upload never comes back.
 const presets = {
-  youtube: { crf: 17, maxrate: '16M', bufsize: '32M', out: 'entrega/produtos-reais-com-ia-leo-ferraz-01-v2.mp4', vf: null },
-  tiktok: { crf: 16, maxrate: '20M', bufsize: '40M', out: 'vertical/completo-v2.mp4', vf: 'crop=ih*9/16:ih,scale=1080:1920:flags=lanczos' },
+  // Written to videos/v2/, not videos/edit/entrega or /vertical: those hold
+  // the v1 working files and intermediates, and every corrected deliverable
+  // this rebuild produces belongs together, outside that working mess, one
+  // subfolder per platform.
+  youtube: { crf: 17, maxrate: '16M', bufsize: '32M', out: 'youtube-horizontal/produtos-reais-com-ia-leo-ferraz-01-v2.mp4', vf: null },
+  tiktok: { crf: 16, maxrate: '20M', bufsize: '40M', out: 'tiktok-vertical/completo-v2.mp4', vf: 'crop=ih*9/16:ih,scale=1080:1920:flags=lanczos' },
 };
 const preset = presets[platform];
 if (!preset) { console.error('plataforma: youtube | tiktok'); process.exit(2); }
@@ -119,7 +123,7 @@ overlays.forEach((o, i) => {
 
 parts.push(`[${current}]null[outv]`);
 
-const outPath = path.join(editRoot, preset.out);
+const outPath = path.join(root, 'videos', 'v2', preset.out);
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
 const args = ['-hide_banner', '-y'];

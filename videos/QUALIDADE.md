@@ -89,10 +89,14 @@ Ativar **"Permitir carregamentos de alta qualidade"** em Mais opções, antes de
 O PDF pede para confirmar quatro coisas a olho. `scripts/check-video-quality.mjs` verifica o que é mensurável e falha com código de saída:
 
 ```bash
-node scripts/check-video-quality.mjs videos/edit/entrega/arquivo.mp4 youtube
+node scripts/check-video-quality.mjs videos/v2/youtube-horizontal/arquivo.mp4 youtube
 ```
 
 Checa resolução declarada, bitrate contra o alvo da plataforma, codec e pixel format, áudio, e a resolução efetiva pelo teste de PSNR. O que resta para o olho é o enquadramento e a trepidação.
+
+## Onde os entregáveis corrigidos ficam
+
+`scripts/rebuild-video.mjs` grava direto em `videos/v2/<plataforma>/` — `youtube-horizontal/` ou `tiktok-vertical/` — não mais em `videos/edit/entrega/` ou `videos/edit/vertical/`, que continuam guardando os arquivos de trabalho e a entrega original (v1). `videos/v2/` centraliza só o que este diagnóstico produziu: vídeo corrigido, capa, miniatura, legenda e pacote de SEO, um por plataforma.
 
 ## Reexportação de 2026-08-21: o que mudou e o que não mudou
 

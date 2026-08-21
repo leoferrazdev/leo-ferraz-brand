@@ -28,3 +28,9 @@ brand-assets/evidence/_raw/
 videos/*
 !videos/*.md
 !videos/*.txt
+
+# videos/v2/ é o entregável final, não material de trabalho: capas, legenda,
+# pacote de SEO e documentação entram; só o .mp4 em si (dezenas de MB) fica
+# de fora, no mesmo espírito do resto desta regra.
+!videos/v2/
+videos/v2/**/*.mp4
