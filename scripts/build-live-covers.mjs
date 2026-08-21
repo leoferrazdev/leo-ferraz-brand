@@ -157,7 +157,21 @@ const variants = [
   // line repeated it instead of adding anything. The canonical bio list says
   // what actually gets built.
   { id: 'live_3', line1: 'VEM CONSTRUIR', size1: 80, size2: 44, line2: [{ text: 'SAAS, ', fill: colors.text }, { text: 'APPS', fill: colors.accent }, { text: ', JOGOS', fill: colors.text }] },
+  // Anchored to the method, not the artefact. "Deploy", "SaaS" and "apps" are
+  // software words, and the streams are not always about software — a session
+  // on the quality of AI-generated video has no deploy. "Solução" holds for a
+  // refactor and for a video pipeline alike.
+  { id: 'live_4', line1: 'SEM CORTES', size1: 104, size2: 46, line2: [{ text: 'DO ERRO À ', fill: colors.text }, { text: 'SOLUÇÃO', fill: colors.accent }] },
 ];
+
+// Accented capitals live outside the ASCII range, and a missing glyph is
+// dropped silently by the outliner — the letter would just vanish from the
+// rendered cover. Fail loudly instead.
+for (const variant of variants) {
+  const text = variant.line1 + variant.line2.map((r) => r.text).join('');
+  const missing = [...new Set([...text])].filter((c) => c !== ' ' && !bold.glyphForCodePoint(c.codePointAt(0))?.path?.commands?.length);
+  if (missing.length) throw new Error(`${variant.id}: fonte sem glifo para ${missing.map((c) => `"${c}"`).join(', ')}`);
+}
 
 const photo = await portraitDataUri();
 for (const variant of variants) {
