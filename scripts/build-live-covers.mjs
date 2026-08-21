@@ -177,8 +177,8 @@ const photo = await portraitDataUri();
 for (const variant of variants) {
   const svg = coverSvg(variant, photo);
   const buffer = Buffer.from(svg);
-  await sharp(buffer, { density: 96 }).png({ compressionLevel: 9 }).toFile(path.join(thumbsRoot, `${variant.id}.png`));
-  await sharp(buffer, { density: 96 }).jpeg({ quality: 90, chromaSubsampling: '4:4:4' }).toFile(path.join(thumbsRoot, `${variant.id}.jpg`));
+  await sharp(buffer).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(thumbsRoot, `${variant.id}.png`));
+  await sharp(buffer).resize(W, H, { fit: 'fill' }).jpeg({ quality: 90, chromaSubsampling: '4:4:4' }).toFile(path.join(thumbsRoot, `${variant.id}.jpg`));
   // A title that overruns the text column collides with the portrait, and the
   // gradient hides the collision just enough to miss it on a small preview.
   const overrun = Math.max(runsWidth([{ text: variant.line1 }], variant.size1, -0.028), runsWidth(variant.line2, variant.size2, -0.018));
