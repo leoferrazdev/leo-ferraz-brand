@@ -130,15 +130,17 @@ async function build() {
 
   const tx = 76;
   const kickerText = 'PRODUTOS REAIS COM IA';
-  // Three short lines, same shape as the published ab_1 ("SE DER" / "ZERO," /
-  // "EU MOSTRO."). The first draft wrote "INCLUSIVE OS ERROS" as one line and
-  // the width check below caught it at 1216px against a 700px column — the
-  // published headline's own longest line only reaches 679px, so this had to
-  // shrink to match, not just to fit.
+  // Founder's call, matching capa_V2's headline instead of the earlier
+  // three-line draft — the two assets promote the same republish on
+  // different platforms, not against each other, so sharing the line does
+  // not confuse the A/B read (thumb_v2 vs ab_1; capa_V2 vs capa_VA).
+  // Measured before swapping: "AQUI ESTÁ" 597px, "O PORQUÊ." 604px, both
+  // under the 700px column at this layout's 118px size (capa_V2 uses 132px
+  // in a 920px column — different numbers, so the fit does not carry over
+  // automatically and had to be rechecked here).
   const headlineLines = [
-    [{ text: 'MOSTRO', fill: colors.text }],
-    [{ text: 'TUDO,', fill: colors.text }],
-    [{ text: 'ATÉ O ', fill: colors.text }, { text: 'ERRO', fill: colors.accent }, { text: '.', fill: colors.text }],
+    [{ text: 'AQUI ESTÁ', fill: colors.text }],
+    [{ text: 'O PORQUÊ', fill: colors.accent }, { text: '.', fill: colors.text }],
   ];
   const subText = 'CUSTO · RECEITA · RESULTADO';
   assertGlyphs(headlineLines.flat().map((r) => r.text).join(''), bold);
