@@ -109,10 +109,25 @@ function outlinedSvg(title, lines, { padding = null, clearSpace = 0.5, gap = 8, 
   };
 }
 
-function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false, showSymbol = true, align = 'start' } = {}) {
+function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false, showSymbol = true, align = 'start', justify = false } = {}) {
+  // justify: every line after the first is tracked out (or in) until its ink
+  // matches the first line's, so the block reads as one rectangle. The tracking
+  // is solved, never hand-tuned — measureText counts the trailing gap after the
+  // last glyph, which must not count when matching ink widths, hence n - 1.
+  const inkWidth = (text, size, tracking, fontFace) => measureText(text, size, tracking, fontFace) - tracking * size;
+  const firstFace = signatureFont;
+  const firstInk = inkWidth(lines[0].text, lines[0].size, lines[0].tracking ?? 0, firstFace);
   const normalized = lines.map((line, index) => {
     const fontFace = index === 0 ? signatureFont : font;
-    return { ...line, fontFace, fill: line.fill ?? primary, width: measureText(line.text, line.size, line.tracking ?? 0, fontFace) };
+    let tracking = line.tracking ?? 0;
+    if (justify && index > 0 && [...line.text].length > 1) {
+      const base = inkWidth(line.text, line.size, 0, fontFace);
+      tracking = (firstInk - base) / (line.size * ([...line.text].length - 1));
+    }
+    // width keeps its original metric definition so every existing asset keeps
+    // its exact box and underline; ink is the drawn extent, which is what
+    // centring and width-matching must use.
+    return { ...line, tracking, fontFace, fill: line.fill ?? primary, width: measureText(line.text, line.size, tracking, fontFace), ink: inkWidth(line.text, line.size, tracking, fontFace) };
   });
   const lineHeight = (size) => number(size * 1.18);
   const contentHeight = normalized.reduce((sum, line) => sum + lineHeight(line.size), lineGap * Math.max(0, normalized.length - 1)) + (underline ? 4 : 0);
@@ -120,19 +135,25 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   // so the wordmark sits at the padding, not at an empty symbol's indent.
   const symbolColumn = showSymbol ? symbolSize + symbolGap : 0;
   const blockHeight = showSymbol ? Math.max(symbolSize, contentHeight) : contentHeight;
-  const width = Math.ceil(padding * 2 + symbolColumn + Math.max(...normalized.map((line) => line.width)));
+  // Centred signatures centre every line over the widest one. Left-aligning the
+  // descriptor under a centred wordmark is what left "Building with AI" hanging
+  // off the left edge of the YouTube banner while everything else was centred.
+  // A centred block sizes its box by ink as well: sizing by metric while
+  // centring by ink shifts the whole block by the first line's trailing
+  // tracking, which is negative on the wordmark.
+  const blockWidth = Math.max(...normalized.map((line) => line.width));
+  const inkBlockWidth = Math.max(...normalized.map((line) => line.ink));
+  const width = Math.ceil(padding * 2 + symbolColumn + (align === 'center' ? inkBlockWidth : blockWidth));
   const height = Math.ceil(padding * 2 + blockHeight);
   const contentX = padding + symbolColumn;
   let top = padding + (blockHeight - contentHeight) / 2;
   let firstBaseline = 0;
-  // Centred signatures centre every line over the widest one. Left-aligning the
-  // descriptor under a centred wordmark is what left "Building with AI" hanging
-  // off the left edge of the YouTube banner while everything else was centred.
-  const blockWidth = Math.max(...normalized.map((line) => line.width));
-  const lineOffset = (line) => (align === 'center' ? (blockWidth - line.width) / 2 : 0);
+  const lineOffset = (line) => (align === 'center' ? (inkBlockWidth - line.ink) / 2 : 0);
+  let lastInkBottom = 0;
   const paths = normalized.map((line, index) => {
     const baseline = top + line.fontFace.ascent * fontScale(line.size, line.fontFace);
     if (index === 0) firstBaseline = baseline;
+    lastInkBottom = baseline + Math.abs(line.fontFace.descent) * fontScale(line.size, line.fontFace);
     const result = outlinedText(line.text, { ...line, x: contentX + lineOffset(line), baseline, fill: monochrome ? primary : line.fill });
     top += lineHeight(line.size) + lineGap;
     return result;
@@ -149,7 +170,12 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   ].join('') : '';
   const symbolSvg = showSymbol ? constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome }) : '';
   const body = `${symbolSvg}${paths}${underlineSvg}`;
-  return { width, height, padding, svg: svgDocument(title, width, height, body, { background }) };
+  // The drawn extent, measured rather than guessed: cap height above the first
+  // baseline, descender below the last. Callers that centre this asset need the
+  // ink box — the layout box carries clear space that is not visible.
+  const inkTop = number(firstBaseline - capHeight * fontScale(normalized[0].size, signatureFont));
+  const inkBottom = number(Math.max(lastInkBottom, underline ? firstBaseline + 10 : 0));
+  return { width, height, padding, blockWidth: inkBlockWidth, inkTop, inkBottom, svg: svgDocument(title, width, height, body, { background }) };
 }
 
 function wordmarkOnlySvg(title, { primary = colors.text, underline = true } = {}) {
@@ -251,19 +277,59 @@ function socialSvg(title, width, height, { label, headline, signatureAsset, arti
 // box would enlarge its wordmark rather than just drop the symbol. Passing the
 // symbol-bearing asset holds the original scale and lets the signature end
 // narrower than the box, which is the whole point of removing the symbol.
-function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, signatureAsset, signatureScaleFrom = null, leftAligned = false } = {}) {
+function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, signatureAsset, signatureScaleFrom = null, leftAligned = false, justifyMetadata = false, signatureFill = null } = {}) {
   const x = leftAligned ? 72 : safeX + safeWidth / 2;
   const anchor = leftAligned ? 'start' : 'middle';
+  // signatureFill sizes the signature by the ink the block should occupy across
+  // the safe zone, which is what a reader actually perceives, rather than by a
+  // box width that includes baked-in clear space. Measured on the upload crop,
+  // the box rule left the block at 21.9% of the safe zone's width against 56%
+  // of its height: a narrow column stranded in a 3.65:1 band.
   const boxWidth = Math.min(520, Math.round(safeWidth * 0.52));
-  const signatureWidth = number(boxWidth * (signatureAsset.width / (signatureScaleFrom ?? signatureAsset).width));
+  const signatureWidth = signatureFill && signatureAsset.blockWidth
+    ? number(signatureAsset.width * ((safeWidth * signatureFill) / signatureAsset.blockWidth))
+    : number(boxWidth * (signatureAsset.width / (signatureScaleFrom ?? signatureAsset).width));
   const signatureHeight = signatureAsset.height * signatureWidth / signatureAsset.width;
-  const signatureY = safeY + Math.max(10, Math.round((safeHeight - signatureHeight - 50) / 2));
+  // Ink, not box: the signature bakes in clear space (SIGNATURE.md), so its box
+  // is much taller than its glyphs. The old formula centred the box and
+  // subtracted a constant 50 for the metadata line — calibrated for one block
+  // size, and it dropped the enlarged block 74px below the safe zone's centre.
+  const signatureScale = signatureWidth / signatureAsset.width;
+  const signatureInk = ((signatureAsset.inkBottom ?? signatureAsset.height) - (signatureAsset.inkTop ?? 0)) * signatureScale;
+  // The metadata line is drawn in banner space, not inside the signature, so it
+  // is matched by solving for its size against the signature's rendered block
+  // width. Tracking it in instead would crush a monospace face.
+  const metadataBase = 22;
+  const blockWidth = (signatureAsset.blockWidth ?? 0) * signatureScale;
+  const metadataInk = measureText(content.bio[1], metadataBase, 0, monoFont);
+  const metadataSize = justifyMetadata && blockWidth > 0 ? number(metadataBase * (blockWidth / metadataInk)) : metadataBase;
+  const metadataCap = metadataSize * ((monoFont.capHeight ?? monoFont.ascent * 0.7) / monoFont.unitsPerEm);
+  // "Apps", "Jogos" and "Experimentos" all carry descenders, so the line's ink
+  // runs below its baseline. Ignoring that is what pushed the block 22px below
+  // the safe zone's centre.
+  const metadataInkHeight = metadataCap + metadataSize * (Math.abs(monoFont.descent) / monoFont.unitsPerEm);
+  // Proportional, not a fixed 32: a fixed gap shrinks in relation to everything
+  // else the moment the block grows, closing the composition up.
+  const metadataGap = signatureFill ? number(signatureInk * 0.30) : 32;
+  // Centre the whole block — signature ink, gap and metadata — on the safe
+  // zone, instead of centring the signature alone and hoping the rest follows.
+  const blockTop = number(safeY + (safeHeight - (signatureInk + metadataGap + metadataInkHeight)) / 2);
+  // placedSignatureBody insets by the asset's baked-in padding, so this solves
+  // for the y that lands the signature's ink exactly on blockTop.
+  const signatureY = signatureFill
+    ? number(blockTop - ((signatureAsset.inkTop ?? 0) - signatureAsset.padding) * signatureScale)
+    : safeY + Math.max(10, Math.round((safeHeight - signatureHeight - 50) / 2));
+  const metadataY = signatureFill
+    ? number(blockTop + signatureInk + metadataGap + metadataCap)
+    // Left unrounded: this is the original expression, and rounding it here
+    // shifted the Twitch banner's glyph paths in the third decimal — invisible,
+    // but enough to churn the file and the determinism hash for no reason.
+    : signatureY + signatureHeight + metadataGap;
   const signature = placedSignatureBody(signatureAsset, { x, y: signatureY, width: signatureWidth, anchor });
-  const metadataY = signatureY + signatureHeight + 32;
   const body = [
     constructionGridSvg(width, height),
     signature,
-    textElement(content.bio[1], x, metadataY, { size: 22, family: 'IBM Plex Mono', fill: colors.muted, anchor }),
+    textElement(content.bio[1], x, metadataY, { size: metadataSize, family: 'IBM Plex Mono', fill: colors.muted, anchor }),
   ].join('');
   return svgDocument(title, width, height, body, { background: colors.background });
 }
@@ -660,10 +726,15 @@ async function main() {
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
   ], { underline: true, showSymbol: false });
-  const descriptorWordmarkCentered = hybridLogoSvg('Leo Ferraz descriptor wordmark centred', [
+  // The descriptor runs at 28 here, not the system's 18. Matching the wordmark's
+  // width at 18 would demand 0.50em of tracking — half an em between letters,
+  // which stops reading as a word. At 28 the same match needs about 0.15em,
+  // ordinary spacing for a letterspaced subtitle. Confined to this one asset so
+  // the descriptor keeps its normal size everywhere else in the system.
+  const descriptorWordmarkJustified = hybridLogoSvg('Leo Ferraz descriptor wordmark justified', [
     { text: content.brand, size: 58, tracking: -0.035 },
-    { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
-  ], { underline: true, showSymbol: false, align: 'center' });
+    { text: content.descriptor, size: 28, tracking: 0, fill: colors.secondary },
+  ], { underline: true, showSymbol: false, align: 'center', justify: true });
   const institutional = hybridLogoSvg('Leo Ferraz institutional lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
@@ -677,7 +748,7 @@ async function main() {
   wordmarkOnlyDark.variant = 'wordmark-only';
   descriptor.variant = 'descriptor-lockup';
   descriptorWordmark.variant = 'descriptor-wordmark';
-  descriptorWordmarkCentered.variant = 'descriptor-wordmark';
+  descriptorWordmarkJustified.variant = 'descriptor-wordmark';
   institutional.variant = 'institutional-lockup';
   symbol.variant = 'primary-symbol';
   symbolDark.variant = 'primary-symbol';
@@ -766,7 +837,7 @@ async function main() {
   copyPublic('site.webmanifest', Buffer.from(manifestJson));
   register({ id: 'site-webmanifest', platform: 'web', role: 'manifest', relative: 'day-1/06-web/site.webmanifest', width: 0, height: 0, format: 'JSON', transparency: false, usage: 'web app metadata' });
 
-  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423, signatureAsset: descriptorWordmarkCentered, signatureScaleFrom: descriptor });
+  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423, signatureAsset: descriptorWordmarkJustified, justifyMetadata: true, signatureFill: 0.38 });
   const twitchBanner = channelBannerSvg('Twitch profile banner · 1200×480', 1200, 480, { safeX: 48, safeY: 48, safeWidth: 1050, safeHeight: 300, signatureAsset: descriptorWordmark, signatureScaleFrom: descriptor, leftAligned: true });
   const channelAssets = [
     ['day-1/02-channels/youtube-banner-2560x1440', youtubeBanner, 2560, 1440, 'YouTube channel banner'],
