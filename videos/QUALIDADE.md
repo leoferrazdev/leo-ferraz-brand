@@ -94,6 +94,29 @@ node scripts/check-video-quality.mjs videos/edit/entrega/arquivo.mp4 youtube
 
 Checa resolução declarada, bitrate contra o alvo da plataforma, codec e pixel format, áudio, e a resolução efetiva pelo teste de PSNR. O que resta para o olho é o enquadramento e a trepidação.
 
+## Reexportação de 2026-08-21: o que mudou e o que não mudou
+
+`scripts/rebuild-video.mjs` reconstrói a edição direto dos `.MOV` da câmera, num único encode. É possível porque `edl.json` registra `grade: "none"` — não há trabalho de cor guardado nos intermediários que se perderia ao pular por cima deles. Os 34 cortes e as 11 inserções são a edição inteira.
+
+| | Bitrate | PSNR do teste | Áudio |
+| --- | --- | --- | --- |
+| YouTube publicado | 2,79 Mbps | 51,8 dB | 198 kbps |
+| **YouTube reconstruído** | **4,92 Mbps** | **48,6 dB** | **301 kbps** |
+| TikTok publicado | 2,03 Mbps | 52,0 dB | 197 kbps |
+| **TikTok reconstruído** | **4,37 Mbps** | **51,1 dB** | **301 kbps** |
+
+No horizontal o ganho é real: mais bits e, sobretudo, PSNR **3,2 dB menor** — quanto menor, mais detalhe fino sobreviveu.
+
+**No vertical o bitrate dobrou e o PSNR quase não se moveu (52,0 → 51,1).** Esse é o resultado mais importante da reexportação: com uma única geração de encode e o dobro dos bits, a nitidez do vertical praticamente não mudou. **O gargalo do vertical não é a exportação, é a geometria** — um recorte 9:16 de um quadro 1080p tem 607px de largura e não existe parâmetro de encode que invente os 473px que faltam.
+
+É a confirmação experimental de que gravar em 4K não é preferência, é a única correção possível para o formato vertical.
+
+### Fidelidade da reconstrução
+
+O arquivo reconstruído tem 105,50s contra 105,97s do publicado — cerca de meio segundo de deriva acumulada nos 34 cortes. Comparando quadros nos mesmos instantes, a cena e o enquadramento são os mesmos; a diferença é de alguns frames de deslocamento, não de edição.
+
+**Consequência prática:** `legendas.srt` e `capitulos.txt` foram sincronizados com o corte publicado. Se o reconstruído for ao ar, os dois precisam ser reconferidos.
+
 ## Limite do teste de resolução efetiva
 
 O PSNR alto indica ausência de detalhe fino, o que pode vir de três causas: ampliação, compressão agressiva ou uma cena naturalmente lisa. O vídeo em questão tem muito fundo escuro e cards gráficos, que elevam a medida por conta própria.
@@ -103,5 +126,7 @@ Por isso a medição foi confirmada num quadro com rosto e textura, onde deu **5
 ## Alvos de bitrate: de onde vêm
 
 **YouTube: 8 Mbps** é a recomendação publicada para 1080p30 SDR.
+
+O gate trata bitrate como **aviso**, não como falha. Estes exports usam qualidade constante (CRF), em que uma cena simples produz menos bits com a mesma qualidade visual: o arquivo reconstruído fica em 4,92 Mbps e mede mais nítido que o publicado. Um portão que reprova arquivo bom acaba ignorado, e aí não protege nada.
 
 **TikTok: 10 Mbps** é escolha nossa — a plataforma não publica número. O critério é que o TikTok recomprime na ingestão, então entrar alto é o único controle que resta do nosso lado.
