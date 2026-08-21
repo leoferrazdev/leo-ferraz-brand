@@ -7,6 +7,7 @@
     "brand-assets:validate": "node scripts/validate-brand-assets.mjs",
     "brand:render": "node scripts/render-brand-content.mjs",
     "live-covers:build": "node scripts/build-live-covers.mjs",
+    "video:check": "node scripts/check-video-quality.mjs",
     "tokens:validate": "node scripts/validate-tokens.mjs",
     "tokens:build": "node scripts/build-tokens.mjs",
     "dev": "npm run tokens:validate && npm run tokens:build && npm run brand-assets:build && astro dev",

@@ -22,3 +22,9 @@ coverage/
 # session identity) and must never be committed. Only the cropped or
 # masked derivatives alongside them are safe to publish.
 brand-assets/evidence/_raw/
+
+# Vídeo: 1,8 GB de originais de câmera, intermediários e renders. Nada disso
+# entra no repositório — só os documentos de processo do primeiro nível.
+videos/*
+!videos/*.md
+!videos/*.txt
