@@ -109,7 +109,7 @@ function outlinedSvg(title, lines, { padding = null, clearSpace = 0.5, gap = 8, 
   };
 }
 
-function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false, showSymbol = true } = {}) {
+function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.accent, monochrome = false, background = null, padding = 32, symbolSize = 64, symbolGap = 16, lineGap = 8, underline = false, showSymbol = true, align = 'start' } = {}) {
   const normalized = lines.map((line, index) => {
     const fontFace = index === 0 ? signatureFont : font;
     return { ...line, fontFace, fill: line.fill ?? primary, width: measureText(line.text, line.size, line.tracking ?? 0, fontFace) };
@@ -125,10 +125,15 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   const contentX = padding + symbolColumn;
   let top = padding + (blockHeight - contentHeight) / 2;
   let firstBaseline = 0;
+  // Centred signatures centre every line over the widest one. Left-aligning the
+  // descriptor under a centred wordmark is what left "Building with AI" hanging
+  // off the left edge of the YouTube banner while everything else was centred.
+  const blockWidth = Math.max(...normalized.map((line) => line.width));
+  const lineOffset = (line) => (align === 'center' ? (blockWidth - line.width) / 2 : 0);
   const paths = normalized.map((line, index) => {
     const baseline = top + line.fontFace.ascent * fontScale(line.size, line.fontFace);
     if (index === 0) firstBaseline = baseline;
-    const result = outlinedText(line.text, { ...line, x: contentX, baseline, fill: monochrome ? primary : line.fill });
+    const result = outlinedText(line.text, { ...line, x: contentX + lineOffset(line), baseline, fill: monochrome ? primary : line.fill });
     top += lineHeight(line.size) + lineGap;
     return result;
   }).join('');
@@ -136,10 +141,11 @@ function hybridLogoSvg(title, lines, { primary = colors.text, accent = colors.ac
   const symbolOpticalInset = symbolSize * 8 / 64;
   const symbolY = number(firstBaseline - capHeight * fontScale(normalized[0].size, signatureFont) - symbolOpticalInset);
   const underlineWidth = normalized[0].width;
+  const underlineX = number(contentX + lineOffset(normalized[0]));
   const underlineY = number(firstBaseline + 8);
   const underlineSvg = underline ? [
-    `<rect data-accent="underline-line" x="${contentX}" y="${underlineY}" width="${underlineWidth}" height="2" fill="${colors.accent}"/>`,
-    `<rect data-accent="underline-terminal" x="${number(contentX + underlineWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
+    `<rect data-accent="underline-line" x="${underlineX}" y="${underlineY}" width="${underlineWidth}" height="2" fill="${colors.accent}"/>`,
+    `<rect data-accent="underline-terminal" x="${number(underlineX + underlineWidth - 8)}" y="${underlineY}" width="8" height="2" fill="${colors.accentStrong}"/>`,
   ].join('') : '';
   const symbolSvg = showSymbol ? constructedLfSymbolSvg({ x: padding, y: symbolY, size: symbolSize, primary, accent, monochrome }) : '';
   const body = `${symbolSvg}${paths}${underlineSvg}`;
@@ -240,10 +246,16 @@ function socialSvg(title, width, height, { label, headline, signatureAsset, arti
   return svgDocument(title, width, height, body, { background: colors.background });
 }
 
-function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, signatureAsset, leftAligned = false } = {}) {
+// signatureScaleFrom: the box width is a layout rule (52% of the safe zone),
+// not a type size. A symbol-free signature is narrower, so filling that same
+// box would enlarge its wordmark rather than just drop the symbol. Passing the
+// symbol-bearing asset holds the original scale and lets the signature end
+// narrower than the box, which is the whole point of removing the symbol.
+function channelBannerSvg(title, width, height, { safeX, safeY, safeWidth, safeHeight, signatureAsset, signatureScaleFrom = null, leftAligned = false } = {}) {
   const x = leftAligned ? 72 : safeX + safeWidth / 2;
   const anchor = leftAligned ? 'start' : 'middle';
-  const signatureWidth = Math.min(520, Math.round(safeWidth * 0.52));
+  const boxWidth = Math.min(520, Math.round(safeWidth * 0.52));
+  const signatureWidth = number(boxWidth * (signatureAsset.width / (signatureScaleFrom ?? signatureAsset).width));
   const signatureHeight = signatureAsset.height * signatureWidth / signatureAsset.width;
   const signatureY = safeY + Math.max(10, Math.round((safeHeight - signatureHeight - 50) / 2));
   const signature = placedSignatureBody(signatureAsset, { x, y: signatureY, width: signatureWidth, anchor });
@@ -648,6 +660,10 @@ async function main() {
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
   ], { underline: true, showSymbol: false });
+  const descriptorWordmarkCentered = hybridLogoSvg('Leo Ferraz descriptor wordmark centred', [
+    { text: content.brand, size: 58, tracking: -0.035 },
+    { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
+  ], { underline: true, showSymbol: false, align: 'center' });
   const institutional = hybridLogoSvg('Leo Ferraz institutional lockup', [
     { text: content.brand, size: 58, tracking: -0.035 },
     { text: content.descriptor, size: 18, tracking: 0, fill: colors.secondary },
@@ -661,6 +677,7 @@ async function main() {
   wordmarkOnlyDark.variant = 'wordmark-only';
   descriptor.variant = 'descriptor-lockup';
   descriptorWordmark.variant = 'descriptor-wordmark';
+  descriptorWordmarkCentered.variant = 'descriptor-wordmark';
   institutional.variant = 'institutional-lockup';
   symbol.variant = 'primary-symbol';
   symbolDark.variant = 'primary-symbol';
@@ -749,8 +766,8 @@ async function main() {
   copyPublic('site.webmanifest', Buffer.from(manifestJson));
   register({ id: 'site-webmanifest', platform: 'web', role: 'manifest', relative: 'day-1/06-web/site.webmanifest', width: 0, height: 0, format: 'JSON', transparency: false, usage: 'web app metadata' });
 
-  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423, signatureAsset: descriptor });
-  const twitchBanner = channelBannerSvg('Twitch profile banner · 1200×480', 1200, 480, { safeX: 48, safeY: 48, safeWidth: 1050, safeHeight: 300, signatureAsset: descriptor, leftAligned: true });
+  const youtubeBanner = channelBannerSvg('YouTube channel banner · 2560×1440', 2560, 1440, { safeX: 508, safeY: 508, safeWidth: 1544, safeHeight: 423, signatureAsset: descriptorWordmarkCentered, signatureScaleFrom: descriptor });
+  const twitchBanner = channelBannerSvg('Twitch profile banner · 1200×480', 1200, 480, { safeX: 48, safeY: 48, safeWidth: 1050, safeHeight: 300, signatureAsset: descriptorWordmark, signatureScaleFrom: descriptor, leftAligned: true });
   const channelAssets = [
     ['day-1/02-channels/youtube-banner-2560x1440', youtubeBanner, 2560, 1440, 'YouTube channel banner'],
     ['day-1/02-channels/twitch-banner-1200x480', twitchBanner, 1200, 480, 'Twitch profile banner'],
@@ -761,8 +778,8 @@ async function main() {
     const safeZone = role.startsWith('YouTube')
       ? { type: 'rect', x: 508, y: 508, width: 1544, height: 423 }
       : { type: 'rect', x: 48, y: 48, width: 1050, height: 300 };
-    register({ id: path.basename(base), platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'channel upload source', signatureVariant: 'descriptor-lockup' });
-    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'channel upload', signatureVariant: 'descriptor-lockup' });
+    register({ id: path.basename(base), platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'channel upload source', signatureVariant: 'descriptor-wordmark' });
+    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('YouTube') ? 'YouTube' : 'Twitch', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'channel upload', signatureVariant: 'descriptor-wordmark' });
   }
 
   const socialSpecs = [

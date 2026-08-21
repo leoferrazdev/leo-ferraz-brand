@@ -181,6 +181,10 @@ formal standalone introduction
 Descriptor Lockup:
 brand plus proposition
 
+Descriptor Wordmark:
+brand plus proposition, name-led, where the symbol is already present in the
+same field of view
+
 Institutional Lockup:
 governance and institutional contexts
 ```
@@ -201,8 +205,8 @@ Canonical application matrix:
 | Social square | Wordmark Only |
 | OBS scene | Wordmark Only |
 | Formal standalone brand surface | Primary Lockup |
-| YouTube and Twitch channel banner | Descriptor Lockup |
-| OBS lower third | Descriptor Lockup |
+| YouTube and Twitch channel banner | Descriptor Wordmark |
+| OBS lower third | Descriptor Wordmark |
 | Homepage Open Graph default | Descriptor Lockup |
 | Brandbook and signature review | Institutional Lockup |
 | Press and formal institutional material | Institutional Lockup |

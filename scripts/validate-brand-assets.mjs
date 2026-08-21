@@ -83,7 +83,7 @@ function expectedSignatureVariant(asset) {
     return 'primary-lockup';
   }
   if (role.includes('avatar') || role.includes('crop validation') || role === 'favicon' || role === 'apple touch icon' || role === 'web app icon') return 'primary-symbol';
-  if (role === 'YouTube channel banner' || role === 'Twitch profile banner') return 'descriptor-lockup';
+  if (role === 'YouTube channel banner' || role === 'Twitch profile banner') return 'descriptor-wordmark';
   if (role === 'Instagram carousel/feed cover' || role === 'Social square template' || role.startsWith('live scene ')) return 'wordmark-only';
   if (role === 'Instagram Story/Reels cover' || role === 'Instagram Reels cover crop' || role.includes('thumbnail')) return 'primary-symbol';
   if (role === 'Open Graph default') return 'descriptor-lockup';
