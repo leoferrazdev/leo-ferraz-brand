@@ -127,6 +127,26 @@ Causa: o script aplicava `crop=ih*9/16:ih,scale=1080:1920` no vídeo inteiro já
 
 Falha explícita, não fallback silencioso: se um card usado na edição não tiver par vertical mapeado, o script lança erro em vez de recortar errado por padrão.
 
+## O horizontal já recebeu o mesmo tratamento — e um teste que provou o limite oposto
+
+O fundador perguntou, por lógica, se o defeito sinalizado no vertical também afetava o horizontal, pedindo o mesmo tratamento para o YouTube.
+
+**A resposta é: em parte já estava feito, e a parte que faltava tem uma causa diferente.** `rebuild-video.mjs` aplica o tonemap HLG→SDR à mesma fonte de câmera para os dois formatos — o commit que corrigiu a cor (`3644635`) já cobriu YouTube e TikTok juntos, não só o vertical. O `check-video-quality.mjs` roda limpo em cor nos dois desde então.
+
+O que restava era a falha de "resolução efetiva" que o gate reporta no horizontal (PSNR ~48,4 dB). No vertical essa falha tinha causa geométrica provada (recorte 9:16 de 607px reais esticado para 1080). Para o horizontal, sem recorte nenhum, a hipótese natural era: falta bitrate.
+
+**Testado, não assumido.** Peguei um segmento de 5s do rosto, reencodei três vezes só variando o CRF — 17 (o que está em produção), 12 e 8 (quase sem perdas) — e medi o mesmo teste de PSNR em cada um:
+
+| CRF | Bitrate do segmento | PSNR do teste |
+| --- | --- | --- |
+| 17 (atual) | 8,5 Mbps | 49,2 dB |
+| 12 | 20,1 Mbps | 48,8 dB |
+| 8 (quase sem perdas) | 40,5 Mbps | 48,3 dB |
+
+**Cinco vezes mais bits moveram o resultado em 0,9 dB.** Isso descarta bitrate como causa: o teto não é de compressão, é da própria captação. Uma filmagem 1080p com profundidade de campo rasa (o fundo desfocado de propósito) simplesmente não carrega detalhe espacial acima de ~1152px equivalentes, não importa quantos bits se gaste codificando. É o mesmo teto que a matemática do recorte vertical provou, chegando por um caminho diferente: 1080p é o limite, e só existe um jeito de superá-lo, que é gravar em 4K.
+
+**Por isso o horizontal não foi reexportado com CRF mais baixo.** Inflar o arquivo para ganhar 0,9 dB imperceptível seria o mesmo erro que o PDF do TikTok descreve como causa 3 de baixa qualidade, só que ao contrário: gastar recurso sem ganho real. O CRF 17 atual (5,22 Mbps médio) já está no ponto de eficiência — mais bits daqui não compram mais nitidez.
+
 ## Limite do teste de resolução efetiva
 
 O PSNR alto indica ausência de detalhe fino, o que pode vir de três causas: ampliação, compressão agressiva ou uma cena naturalmente lisa. O vídeo em questão tem muito fundo escuro e cards gráficos, que elevam a medida por conta própria.
