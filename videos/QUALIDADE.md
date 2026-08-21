@@ -101,9 +101,9 @@ Checa resolução declarada, bitrate contra o alvo da plataforma, codec e pixel 
 | | Bitrate | PSNR do teste | Áudio |
 | --- | --- | --- | --- |
 | YouTube publicado | 2,79 Mbps | 51,8 dB | 198 kbps |
-| **YouTube reconstruído** | **4,92 Mbps** | **48,6 dB** | **301 kbps** |
+| **YouTube reconstruído (cor corrigida)** | **5,22 Mbps** | **48,4 dB** | **301 kbps** |
 | TikTok publicado | 2,03 Mbps | 52,0 dB | 197 kbps |
-| **TikTok reconstruído** | **4,37 Mbps** | **51,1 dB** | **301 kbps** |
+| **TikTok reconstruído (cor corrigida)** | **4,63 Mbps** | **50,7 dB** | **301 kbps** |
 
 No horizontal o ganho é real: mais bits e, sobretudo, PSNR **3,2 dB menor** — quanto menor, mais detalhe fino sobreviveu.
 

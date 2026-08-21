@@ -6,8 +6,22 @@
 // lossy generation.
 //
 // It is possible only because edl.json records grade: "none" — there is no
-// colour work living inside the intermediates that would be lost by skipping
-// them. The cuts and the cutaways are the whole edit.
+// creative colour work living inside the intermediates that would be lost by
+// skipping them. The cuts and the cutaways are the whole edit.
+//
+// grade: "none" is NOT the same claim as "no colour processing needed". The
+// camera shoots HDR (HLG, bt2020nc/arib-std-b67) by default, and base.mp4 in
+// the original pipeline did a mandatory HLG-to-SDR/bt709 tonemap before any
+// cut — a format conversion, not a creative grade. The first version of this
+// script skipped that step and carried raw HLG pixel data into an H.264 file
+// tagged bt2020/HLG, a combination almost no real-world player expects (that
+// pairing is normal for HEVC HDR delivery, not H.264), so it read as blown
+// highlights on ordinary playback even though ffmpeg's own decode path showed
+// nothing wrong. The bt709 SDR overlay graphics got carried through and
+// mis-tagged the same way, which is why the AI-generated screen inserts
+// looked off too. TONEMAP below is that missing step, applied to every camera
+// source before any cut or composite, so the whole graph runs in one
+// consistent SDR space.
 //
 // Usage: node scripts/rebuild-video.mjs [youtube|tiktok]
 
@@ -39,6 +53,14 @@ for (const f of inputs) {
   if (!fs.existsSync(f)) { console.error(`fonte ausente: ${f}`); process.exit(2); }
 }
 
+// zscale needs full-range linear light to tone-map correctly, then returns to
+// tv-range bt709 8-bit for everything downstream. npl=100 is HLG's nominal
+// peak luminance in nits, the reference value the BBC/NHK HLG spec defines.
+// Applied only to camera sources — the overlay renders are already bt709 SDR,
+// and running them through an HDR tonemap they do not need would distort them.
+const TONEMAP = 'zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p10le,';
+const cameraIndices = new Set(sourceIds.map((_, i) => i));
+
 // One trim per range, then a single concat. Trimming with the decoder rather
 // than with -ss per segment keeps every cut frame-accurate against the same
 // timebase, which is what makes the result line up with the published edit.
@@ -46,7 +68,8 @@ const parts = [];
 const concatLabels = [];
 edl.ranges.forEach((r, i) => {
   const idx = sourceIds.indexOf(r.source);
-  parts.push(`[${idx}:v]trim=${r.start}:${r.end},setpts=PTS-STARTPTS,fps=30,scale=1920:1080:flags=lanczos,setsar=1[v${i}]`);
+  const tonemap = cameraIndices.has(idx) ? TONEMAP : '';
+  parts.push(`[${idx}:v]trim=${r.start}:${r.end},setpts=PTS-STARTPTS,${tonemap}fps=30,scale=1920:1080:flags=lanczos,setsar=1[v${i}]`);
   parts.push(`[${idx}:a]atrim=${r.start}:${r.end},asetpts=PTS-STARTPTS[a${i}]`);
   concatLabels.push(`[v${i}][a${i}]`);
 });
@@ -80,6 +103,10 @@ args.push(
   '-c:v', 'libx264', '-preset', 'slow', '-crf', String(preset.crf),
   '-maxrate', preset.maxrate, '-bufsize', preset.bufsize,
   '-pix_fmt', 'yuv420p', '-profile:v', 'high',
+  // Tagged explicitly rather than left to inherit: this is the exact mismatch
+  // that caused the blown-highlights defect, so the output space is asserted
+  // here instead of trusted to propagate correctly through the filter graph.
+  '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-color_range', 'tv',
   '-c:a', 'aac', '-b:a', '320k', '-ar', '48000',
   '-movflags', '+faststart',
   outPath,
