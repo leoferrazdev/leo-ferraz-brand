@@ -117,6 +117,16 @@ O arquivo reconstruído tem 105,50s contra 105,97s do publicado — cerca de mei
 
 **Consequência prática:** `legendas.srt` e `capitulos.txt` foram sincronizados com o corte publicado. Se o reconstruído for ao ar, os dois precisam ser reconferidos.
 
+## Defeito na segunda reexportação: cards recortados como se fossem câmera
+
+O fundador reportou, com captura de tela, que as cenas com telas gráficas (as inserções geradas por IA — não o rosto) vieram com texto cortado nas bordas laterais na versão vertical, formatadas como se fosse recorte de vídeo horizontal.
+
+Causa: o script aplicava `crop=ih*9/16:ih,scale=1080:1920` no vídeo inteiro já composto — câmera **e** cards juntos — depois de todos os overlays serem escalados para 1920×1080. Um recorte central de 607px de largura é o comportamento certo para o rosto, centralizado no quadro. É o comportamento errado para um card de texto desenhado para ocupar os 1920px inteiros: o recorte central descarta as bordas onde parte do texto está.
+
+**A correção não precisou inventar nada.** O projeto já tinha, gerados à parte, os pares verticais nativos de cada card e broll usado na edição — `v_manifesto`, `v_t1_anos`, `v_t2_verbos`, `v_caminho`, `v_t3_processo`, `v_t4_numeros`, `v_t5_negacoes`, `v_t6_escolha`, `v_t7_radar`, `vb_clientes`, `vb_site` — todos já em 1080×1920, com a mesma duração dos horizontais (conferido, diferença menor que meio frame). O script passou a apontar para esses arquivos na build vertical, sem escalá-los, e a aplicar o recorte de câmera **antes** da composição dos overlays, não depois — assim o card entra na composição já do tamanho certo, e o recorte de 9:16 nunca vê o card, só a filmagem.
+
+Falha explícita, não fallback silencioso: se um card usado na edição não tiver par vertical mapeado, o script lança erro em vez de recortar errado por padrão.
+
 ## Limite do teste de resolução efetiva
 
 O PSNR alto indica ausência de detalhe fino, o que pode vir de três causas: ampliação, compressão agressiva ou uma cena naturalmente lisa. O vídeo em questão tem muito fundo escuro e cards gráficos, que elevam a medida por conta própria.

@@ -43,11 +43,30 @@ const presets = {
 const preset = presets[platform];
 if (!preset) { console.error('plataforma: youtube | tiktok'); process.exit(2); }
 
+const isVertical = Boolean(preset.vf);
+
+// The overlay cards are graphic cards laid out full-bleed across 1920px of
+// text. Forcing them through the same centre-crop the camera footage needs
+// chopped that text at both edges — the crop takes only the middle 607px of
+// the 1920 the card was designed for. Every card and broll clip used in the
+// edit already has a hand-authored 1080x1920 sibling (v_<slot>, vb_<clip>)
+// laid out for the vertical frame, so the vertical build points at those
+// instead of reflowing the horizontal ones through a crop that cannot know
+// where the text is safe to lose.
+function verticalOverlayFile(rel) {
+  let m = rel.match(/^animations\/slot_(.+)\/render\.mp4$/);
+  if (m) return `animations/v_${m[1]}/render.mp4`;
+  m = rel.match(/^broll\/out\/b_(.+)\.mp4$/);
+  if (m) return `broll/out/vb_${m[1]}.mp4`;
+  throw new Error(`sem par vertical conhecido para ${rel} — gere o asset 1080x1920 e mapeie-o aqui antes de rodar tiktok`);
+}
+
 const sourceIds = Object.keys(edl.sources);
 const inputs = sourceIds.map((id) => edl.sources[id]);
 const overlays = edl.overlays ?? [];
 const overlayBase = inputs.length;
-for (const o of overlays) inputs.push(path.join(editRoot, o.file));
+const overlayFiles = overlays.map((o) => (isVertical ? verticalOverlayFile(o.file) : o.file));
+for (const f of overlayFiles) inputs.push(path.join(editRoot, f));
 
 for (const f of inputs) {
   if (!fs.existsSync(f)) { console.error(`fonte ausente: ${f}`); process.exit(2); }
@@ -75,22 +94,30 @@ edl.ranges.forEach((r, i) => {
 });
 parts.push(`${concatLabels.join('')}concat=n=${edl.ranges.length}:v=1:a=1[bv][outa]`);
 
-// Cutaways replace the frame for their window; they carry no audio, so the
-// narration underneath is untouched.
+// The vertical crop runs on the camera track before any overlay is composited
+// — Leo's face is centred in the 1920-wide frame, so a centre-crop is correct
+// for him. It must happen here, not at the end: applying it after the overlay
+// cards are composited is exactly what cropped their text, since it would
+// treat cards and camera the same way.
 let current = 'bv';
+if (isVertical) {
+  parts.push(`[bv]${preset.vf}[bvv]`);
+  current = 'bvv';
+}
+
+// Cutaways replace the frame for their window; they carry no audio, so the
+// narration underneath is untouched. Vertical overlays are already 1080x1920
+// — no scale needed, just the timing offset.
 overlays.forEach((o, i) => {
   const end = o.start_in_output + o.duration;
   const next = `ov${i}`;
-  parts.push(`[${overlayBase + i}:v]setpts=PTS-STARTPTS+${o.start_in_output}/TB,fps=30,scale=1920:1080:flags=lanczos,setsar=1[o${i}]`);
+  const overlayScale = isVertical ? '' : 'scale=1920:1080:flags=lanczos,';
+  parts.push(`[${overlayBase + i}:v]setpts=PTS-STARTPTS+${o.start_in_output}/TB,fps=30,${overlayScale}setsar=1[o${i}]`);
   parts.push(`[${current}][o${i}]overlay=0:0:enable='between(t,${o.start_in_output},${end})'[${next}]`);
   current = next;
 });
 
-if (preset.vf) {
-  parts.push(`[${current}]${preset.vf}[outv]`);
-} else {
-  parts.push(`[${current}]null[outv]`);
-}
+parts.push(`[${current}]null[outv]`);
 
 const outPath = path.join(editRoot, preset.out);
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
