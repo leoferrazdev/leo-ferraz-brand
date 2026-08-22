@@ -5,6 +5,8 @@
   "scripts": {
     "brand-assets:build": "node scripts/build-brand-assets.mjs",
     "brand-assets:validate": "node scripts/validate-brand-assets.mjs",
+    "founder-avatar:build": "node scripts/build-founder-avatar.mjs",
+    "founder-avatar:test": "node --test tests/founder-avatar.test.mjs",
     "brand:render": "node scripts/render-brand-content.mjs",
     "live-covers:build": "node scripts/build-live-covers.mjs",
     "video-cover:build": "node scripts/build-video-cover.mjs",
