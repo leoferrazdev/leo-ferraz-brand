@@ -284,6 +284,55 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
   };
 }
 
-export async function buildCoverPack() {
-  throw new Error('buildCoverPack not implemented');
+export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
+  const entries = validateCoverManifest(await loadCoverManifest(manifestPath));
+  const covers = [];
+
+  for (const [format, { width, height }] of Object.entries(COVER_FORMATS)) {
+    const formatDir = path.join(outputDir, format);
+    await fs.promises.mkdir(formatDir, { recursive: true });
+
+    for (const entry of entries) {
+      const { svg, metrics } = await renderCoverSvg({ entry, format, rootDir });
+      const base = `demo-${entry.id}-${width}x${height}`;
+      const pngPath = path.join(formatDir, `${base}.png`);
+      const jpgPath = path.join(formatDir, `${base}.jpg`);
+      await sharp(svg).resize(width, height, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(pngPath);
+      await sharp(svg).resize(width, height, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(jpgPath);
+      covers.push({ id: entry.id, format, extension: 'png', path: pngPath, metrics });
+      covers.push({ id: entry.id, format, extension: 'jpg', path: jpgPath, metrics });
+    }
+  }
+
+  const reviewDir = path.join(outputDir, 'review');
+  const contactSheet = path.join(reviewDir, 'demo-master-pack-contact-sheet.png');
+  const horizontalWidth = 960;
+  const verticalWidth = 304;
+  const rowHeight = 540;
+  const gutter = 48;
+  const rowX = (2400 - horizontalWidth - gutter - verticalWidth) / 2;
+  const rowY = 48;
+  await fs.promises.mkdir(reviewDir, { recursive: true });
+  const composites = await Promise.all(entries.flatMap((entry, index) => [
+    sharp(path.join(outputDir, 'horizontal', `demo-${entry.id}-1280x720.png`))
+      .resize(horizontalWidth, rowHeight, { fit: 'fill' })
+      .png()
+      .toBuffer()
+      .then((input) => ({ input, left: rowX, top: rowY + index * (rowHeight + gutter) })),
+    sharp(path.join(outputDir, 'vertical', `demo-${entry.id}-1080x1920.png`))
+      .resize(verticalWidth, rowHeight, { fit: 'fill' })
+      .png()
+      .toBuffer()
+      .then((input) => ({ input, left: rowX + horizontalWidth + gutter, top: rowY + index * (rowHeight + gutter) })),
+  ]));
+  await sharp({
+    create: {
+      width: 2400,
+      height: 2400,
+      channels: 4,
+      background: COLORS.background,
+    },
+  }).composite(composites).png({ compressionLevel: 9 }).toFile(contactSheet);
+
+  return { covers, contactSheet };
 }

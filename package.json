@@ -9,6 +9,8 @@
     "founder-avatar:test": "node --test tests/founder-avatar.test.mjs",
     "brand:render": "node scripts/render-brand-content.mjs",
     "live-covers:build": "node scripts/build-live-covers.mjs",
+    "video-cover-pack:build": "node scripts/build-video-cover-pack.mjs",
+    "video-cover-pack:test": "node --test tests/video-cover-pack.test.mjs",
     "video-cover:build": "node scripts/build-video-cover.mjs",
     "thumbnail:build": "node scripts/build-thumbnail-v2.mjs",
     "video:check": "node scripts/check-video-quality.mjs",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "astro": "7.2.2",
+    "fontkitten": "1.0.3",
     "sharp": "0.35.3"
   },
   "dependencies": {

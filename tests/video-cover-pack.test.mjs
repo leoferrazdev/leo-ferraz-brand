@@ -129,3 +129,32 @@ test('renderer rejects .notdef glyphs in headline and category copy', async () =
     /font has no glyph for "字"/,
   );
 });
+
+test('buildCoverPack writes sixteen cover files and one contact sheet', async () => {
+  const outputDir = await mkdtemp(path.join(tmpdir(), 'leo-ferraz-cover-pack-'));
+  try {
+    const result = await buildCoverPack({ rootDir: root, outputDir, manifestPath });
+    assert.equal(result.covers.length, 16);
+    assert.equal(result.contactSheet.endsWith('demo-master-pack-contact-sheet.png'), true);
+
+    for (const formatName of Object.keys(COVER_FORMATS)) {
+      const expected = COVER_FORMATS[formatName];
+      for (const entry of await loadCoverManifest(manifestPath)) {
+        for (const extension of ['png', 'jpg']) {
+          const file = path.join(outputDir, formatName, `demo-${entry.id}-${expected.width}x${expected.height}.${extension}`);
+          const metadata = await sharp(file).metadata();
+          assert.equal(metadata.width, expected.width);
+          assert.equal(metadata.height, expected.height);
+          assert.equal(metadata.format, extension === 'jpg' ? 'jpeg' : 'png');
+        }
+      }
+    }
+
+    const sheet = await sharp(result.contactSheet).metadata();
+    assert.equal(sheet.format, 'png');
+    assert.ok(sheet.width >= 1920);
+    assert.ok(sheet.height >= 1080);
+  } finally {
+    await rm(outputDir, { recursive: true, force: true });
+  }
+});
