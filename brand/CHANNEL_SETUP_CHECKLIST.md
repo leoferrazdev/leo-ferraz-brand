@@ -32,10 +32,10 @@ Symbol avatar (favicon, small sizes, non-photo surfaces):
 brand-assets/exports/day-1/01-profile/avatar-1024.png
 ```
 
-Derived from `brand-assets/profile/leo-ferraz-founder-photo-provisional.jpg`.
-Provenance of that file is still unverified — see `DECISAO-011` in the vault.
-Adopting it across every platform propagates that caveat; replacing the source
-means regenerating this set.
+Derived from the founder-approved neutral cutout:
+`brand-assets/profile/leo-ferraz/leo-ferraz-cutout-neutral.png`.
+The composition and exports are governed by `DECISAO-021` in the vault and
+`docs/superpowers/specs/2026-08-22-founder-social-avatar-design.md`.
 
 The avatar files live under `brand-assets/profile/` and not under
 `brand-assets/exports/`, because `scripts/build-brand-assets.mjs` deletes the
