@@ -286,6 +286,9 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
 
 export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
   const entries = validateCoverManifest(await loadCoverManifest(manifestPath));
+  if (entries.length !== 4) {
+    throw new Error(`master pack requires exactly 4 entries; received ${entries.length}`);
+  }
   const covers = [];
 
   for (const [format, { width, height }] of Object.entries(COVER_FORMATS)) {

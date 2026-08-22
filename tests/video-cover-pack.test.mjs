@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -17,6 +17,20 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifestPath = path.join(root, 'brand-assets', 'capas', 'master-pack', 'content.json');
+
+async function assertBuildCoverPackRejectsEntryCount(entries, count) {
+  const outputDir = await mkdtemp(path.join(tmpdir(), 'leo-ferraz-cover-pack-'));
+  const temporaryManifestPath = path.join(outputDir, 'content.json');
+  try {
+    await writeFile(temporaryManifestPath, JSON.stringify(entries));
+    await assert.rejects(
+      () => buildCoverPack({ rootDir: root, outputDir, manifestPath: temporaryManifestPath }),
+      new RegExp(`master pack requires exactly 4 entries; received ${count}`),
+    );
+  } finally {
+    await rm(outputDir, { recursive: true, force: true });
+  }
+}
 
 test('manifest declares four unique demonstrative PT-BR concepts', async () => {
   const entries = await loadCoverManifest(manifestPath);
@@ -130,6 +144,19 @@ test('renderer rejects .notdef glyphs in headline and category copy', async () =
   );
 });
 
+test('buildCoverPack rejects three master-pack entries', async () => {
+  const entries = (await loadCoverManifest(manifestPath)).slice(0, 3);
+  assert.doesNotThrow(() => validateCoverManifest(entries));
+  await assertBuildCoverPackRejectsEntryCount(entries, 3);
+});
+
+test('buildCoverPack rejects five master-pack entries', async () => {
+  const entries = await loadCoverManifest(manifestPath);
+  const fiveEntries = [...entries, { ...entries[0], id: 'fifth-concept' }];
+  assert.doesNotThrow(() => validateCoverManifest(fiveEntries));
+  await assertBuildCoverPackRejectsEntryCount(fiveEntries, 5);
+});
+
 test('buildCoverPack writes sixteen cover files and one contact sheet', async () => {
   const outputDir = await mkdtemp(path.join(tmpdir(), 'leo-ferraz-cover-pack-'));
   try {
@@ -152,8 +179,8 @@ test('buildCoverPack writes sixteen cover files and one contact sheet', async ()
 
     const sheet = await sharp(result.contactSheet).metadata();
     assert.equal(sheet.format, 'png');
-    assert.ok(sheet.width >= 1920);
-    assert.ok(sheet.height >= 1080);
+    assert.equal(sheet.width, 2400);
+    assert.equal(sheet.height, 2400);
   } finally {
     await rm(outputDir, { recursive: true, force: true });
   }
