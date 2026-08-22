@@ -69,4 +69,3 @@ The implementation must verify:
 ## Governance impact
 
 After implementation, update the avatar source declaration in `brand/CHANNEL_SETUP_CHECKLIST.md` and record the replacement in the Obsidian decision log. This design changes only the social avatar source and exports. It does not change the favicon, Constructed LF symbol, signature system or thumbnail portrait pack.
-
