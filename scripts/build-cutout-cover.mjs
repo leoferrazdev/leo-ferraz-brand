@@ -89,29 +89,82 @@ function badge(text, { x, y, size, height }) {
   ].join('');
 }
 
-// The cutout is scaled to cover the reserved area and anchored to its top, so
-// the head keeps its headroom and the body runs off the bottom edge. That
-// bleed is what gives the reference layouts their depth, and it only works
-// because the source has no background of its own to give the crop away.
-async function cutoutDataUri(file, w, h) {
-  const buf = await sharp(path.join(photoRoot, file))
-    .resize(w, h, { fit: 'cover', position: 'top', kernel: 'lanczos3' })
-    .png()
-    .toBuffer();
-  return `data:image/png;base64,${buf.toString('base64')}`;
+// Where the subject actually sits inside the PNG. The canvas is not the
+// subject: these files carry transparent margin that varies per pose, so
+// scaling the canvas scales the wrong thing.
+async function subjectBox(file) {
+  const img = sharp(path.join(photoRoot, file));
+  const { data, info } = await img.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  let minX = Infinity; let maxX = -1; let minY = Infinity; let maxY = -1;
+  for (let y = 0; y < info.height; y++) {
+    for (let x = 0; x < info.width; x++) {
+      if (data[(y * info.width + x) * info.channels + 3] > 16) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+  return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
 }
 
+// Scaled to fill the area's height so the body runs off the bottom edge, which
+// is the bleed the reference layouts get their depth from. Never cropped
+// horizontally: the first build did that and sliced a shoulder off at the
+// area's left boundary, a cut that reads as a mistake because it lands
+// mid-frame instead of at the frame edge. When the subject is wider than the
+// area, the scale drops until the full width fits, and the piece is anchored
+// to the bottom right so any remaining gap opens away from the text.
+async function placeCutout(file, zone, textRight) {
+  const box = await subjectBox(file);
+  let scale = zone.h / box.height;
+  let w = Math.round(box.width * scale);
+
+  const roomRight = W_FRAME - zone.x;
+  const maxW = Math.max(zone.w, roomRight);
+  if (w > maxW) {
+    scale = maxW / box.width;
+    w = maxW;
+  }
+  let h = Math.round(box.height * scale);
+
+  const left = W_FRAME - w;
+  const top = zone.y + zone.h - h;
+
+  // Only meaningful when the photo sits beside the text. In the vertical
+  // layout it sits below, so comparing horizontal extents there flags an
+  // overlap that does not exist.
+  if (zone.x > 0 && left < textRight) {
+    console.log(`  AVISO a figura comeca em x=${left}, o texto termina em x=${textRight}. Sobreposicao de ${textRight - left}px.`);
+  }
+
+  const buf = await sharp(path.join(photoRoot, file))
+    .extract({ left: box.left, top: box.top, width: box.width, height: box.height })
+    .resize(w, h, { fit: 'fill', kernel: 'lanczos3' })
+    .png()
+    .toBuffer();
+
+  return { uri: `data:image/png;base64,${buf.toString('base64')}`, x: left, y: top, w, h };
+}
+
+let W_FRAME = 1280;
+
 async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, headTop, photo, zone }) {
+  W_FRAME = W;
   assertGlyphs(headline.flat().map((r) => r.text).join(''), bold);
 
   const limit = zone.x > 0 ? zone.x - headX - Math.round(W * 0.03) : W - headX * 2;
+  let textRight = headX;
   for (const line of headline) {
     const t = line.map((r) => r.text).join('');
     const w = measure(t, headSize, -0.028, bold);
+    textRight = Math.max(textRight, headX + w);
     console.log(`  ${id} "${t}" ${Math.round(w)}px / limite ${limit}px${w > limit ? '  <-- ESTOURA' : ''}`);
   }
 
-  const uri = await cutoutDataUri(photo, zone.w, zone.h);
+  const fig = await placeCutout(photo, zone, Math.round(textRight) + Math.round(W * 0.02));
+  console.log(`  ${id} figura ${fig.w}x${fig.h} em x=${fig.x} y=${fig.y}`);
   const b = badge(badgeSpec.text, badgeSpec);
 
   const lineH = headSize * 0.95;
@@ -125,7 +178,7 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, hea
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">`
     + `<rect width="${W}" height="${H}" fill="${colors.background}"/>`
     + grid(W, H, cell)
-    + `<image x="${zone.x}" y="${zone.y}" width="${zone.w}" height="${zone.h}" xlink:href="${uri}"/>`
+    + `<image x="${fig.x}" y="${fig.y}" width="${fig.w}" height="${fig.h}" xlink:href="${fig.uri}"/>`
     + b
     + head.join('')
     + `</svg>`;
