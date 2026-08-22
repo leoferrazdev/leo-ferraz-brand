@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { access, mkdtemp, readdir, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -19,16 +19,19 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifestPath = path.join(root, 'brand-assets', 'capas', 'master-pack', 'content.json');
 
 async function assertBuildCoverPackRejectsEntryCount(entries, count) {
-  const outputDir = await mkdtemp(path.join(tmpdir(), 'leo-ferraz-cover-pack-'));
-  const temporaryManifestPath = path.join(outputDir, 'content.json');
+  const temporaryRoot = await mkdtemp(path.join(tmpdir(), 'leo-ferraz-cover-pack-'));
+  const outputDir = path.join(temporaryRoot, 'generated');
+  const temporaryManifestPath = path.join(temporaryRoot, 'content.json');
   try {
     await writeFile(temporaryManifestPath, JSON.stringify(entries));
     await assert.rejects(
       () => buildCoverPack({ rootDir: root, outputDir, manifestPath: temporaryManifestPath }),
       new RegExp(`master pack requires exactly 4 entries; received ${count}`),
     );
+    await assert.rejects(() => access(outputDir), { code: 'ENOENT' });
+    assert.deepEqual(await readdir(temporaryRoot), ['content.json']);
   } finally {
-    await rm(outputDir, { recursive: true, force: true });
+    await rm(temporaryRoot, { recursive: true, force: true });
   }
 }
 
