@@ -2,7 +2,7 @@
 title: Arms-Crossed Founder Social Avatar Design
 date: 2026-08-22
 status: approved
-implementation_status: implemented
+implementation_status: pending
 supersedes: 2026-08-22-founder-social-avatar-design.md
 ---
 
@@ -14,9 +14,10 @@ Replace the current neutral founder portrait with the founder-approved
 `Arms-Crossed Authority` portrait as the canonical avatar for every social
 network listed in `brand/CHANNEL_SETUP_CHECKLIST.md`.
 
-The change increases perceived authority and gives the founder portrait a more
-distinctive posture while preserving the existing dark, direct and technical
-brand language.
+The change increases perceived authority while preserving the existing dark,
+direct and technical brand language. The founder-approved close-crop revision
+prioritizes facial recognition over complete visibility of the crossed-arm
+posture.
 
 ## Approved source
 
@@ -52,14 +53,15 @@ alternative social-avatar source after implementation.
 - Background texture: none. The Construction Grid remains appropriate for
   banners and editorial surfaces, but is prohibited inside the compact avatar
   because it would add noise and weaken the founder silhouette.
-- Crop source: full source width, using a square crop anchored at the top.
-- Expected source crop: `left: 0`, `top: 0`, `width: 1122`, `height: 1122`.
+- Crop source: close square crop, centered horizontally and anchored at the top.
+- Approved source crop: `left: 151`, `top: 0`, `width: 820`, `height: 820`.
 - Subject: horizontally centered.
 - Hair and face: fully retained inside the circular safe area.
-- Crossed-arm posture: visibly retained at standard profile sizes where the
-  platform crop allows it.
-- Small-size priority: facial recognition takes precedence over complete arm
-  visibility at 64 px and below.
+- Face priority: the head and facial features dominate the circular crop.
+- Posture cue: shoulders and upper torso may communicate authority, but the
+  crossed arms do not need to remain fully visible in the avatar.
+- Small-size priority: facial recognition takes precedence at every profile
+  size, especially at 64 px and below.
 - Edge treatment: preserve the intentional blue rim light while removing every
   white, grey or checkerboard-derived matte pixel at the cutout boundary.
 - Compositing order: crop at source resolution, flatten onto `#0D1117`, then
@@ -119,7 +121,8 @@ The implementation must verify:
 - identical composition across all three exports;
 - face recognition at 64 px and 32 px;
 - no clipping of hair, eyes, ears, nose, mouth or chin in a circular crop;
-- crossed-arm posture remains perceptible at 256 px and above;
+- face remains visually dominant at 256 px and above;
+- shoulders remain sufficient to avoid a floating-head effect;
 - no checkerboard residue, halo, text, symbol or decorative treatment;
 - the six approved founder cutouts remain byte-identical;
 - only intentional pipeline, documentation and canonical avatar files enter
