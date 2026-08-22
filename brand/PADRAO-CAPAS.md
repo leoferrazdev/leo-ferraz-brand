@@ -70,13 +70,17 @@ Levantamento do que existe em `brand-assets/thumbnails/src/`.
 | `take1`, `take2` | 840×1080 | mesma origem, mesma limitação |
 | `v2_frame_t70` | 1920×1080 | quadro cheio, a pessoa ocupa parte pequena dele |
 
-Três lacunas, todas medidas e não estimadas.
+Três lacunas reais, em ordem de peso. A resolução não é a principal, ao contrário do que parece à primeira vista.
 
-**Resolução.** O recorte precisa de 640×720 no horizontal e 1080×1040 no vertical. Para não ampliar, a fonte precisa entregar a pessoa nesse tamanho já, e o ideal é o dobro. Nenhum arquivo atual chega perto disso com a pessoa preenchendo o quadro.
+**Expressão, e é a que mais custa.** As duas referências mostram a pessoa sorrindo, olhando direto para a câmera, com o rosto aberto. `foto.jpg` tem expressão séria e fechada. Os quadros de vídeo pegam meio de fala, com a boca aberta em posição arbitrária. Miniatura vive de rosto legível a 200px de largura no feed, e expressão é o que carrega esse tamanho.
 
-**Definição real.** O diagnóstico de qualidade desta mesma semana provou por PSNR que o material de vídeo em 1080p com profundidade de campo rasa não carrega detalhe acima de cerca de 1152px equivalentes, e que cinco vezes mais bitrate move isso em menos de 1 dB. Recortar um rosto desses e ampliar para preencher metade de uma miniatura devolve exatamente a moleza que a plataforma sinalizou.
+**Variedade.** Existe uma única foto de estúdio utilizável. Sem alternativas de expressão não há como rodar teste A/B de miniatura, que é o único jeito de descobrir qual registro funciona no canal.
 
-**Recorte limpo.** Cabelo escuro contra fundo escuro não tem borda para o algoritmo de recorte encontrar. As referências têm luz de contorno separando cabelo do fundo, que é o que permite o corte limpo. As fotos atuais foram feitas em sala escura sem essa luz.
+**Recorte limpo.** Cabelo escuro contra fundo escuro não oferece borda para o recorte encontrar. As referências têm luz de contorno separando o cabelo do fundo, que é justamente o que permite o corte limpo. As fotos atuais foram feitas em sala escura sem essa luz, com monitores acesos atrás criando bordas complexas.
+
+**Sobre resolução, o quadro honesto.** `foto.jpg` tem 1024×1024 com a pessoa ocupando quase todo o quadro. Para a área horizontal de 640×720 isso é redução, ou seja, funciona. Para a área vertical de 1080×1040 exige ampliação em torno de 1,2x, que é apertado mas não fatal. Os quadros de vídeo são outra história, porque o diagnóstico desta semana provou por PSNR que o material 1080p com profundidade de campo rasa não carrega detalhe acima de cerca de 1152px equivalentes, e ampliar um rosto desses devolve a moleza que a plataforma sinalizou.
+
+Conclusão prática. Dá para montar uma primeira versão do padrão com `foto.jpg` recortada, aceitando expressão séria e um recorte trabalhoso. Fotos novas não são pré-requisito técnico, são o que separa uma capa aceitável de uma no nível das referências.
 
 ## Enquadramento necessário
 
