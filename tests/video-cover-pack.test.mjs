@@ -93,3 +93,39 @@ test('vertical renderer keeps all essential layout bounds inside the safe area',
   assert.ok(metrics.faceZoneBottom <= 1450);
   assert.equal(metrics.overflow, false);
 });
+
+test('renderer expands uniform line spacing for accented Portuguese glyph bounds', async () => {
+  const [entry] = await loadCoverManifest(manifestPath);
+  const { metrics } = await renderCoverSvg({
+    entry: {
+      ...entry,
+      category: 'ACENTOS ÀÇ',
+      headlineLines: ['ÇÇÇÇÇ', 'ÀÀÀÀÀ'],
+    },
+    format: 'horizontal',
+    rootDir: root,
+  });
+  assert.ok(metrics.headlineLineHeight > metrics.headlineSize * 0.95);
+  assert.ok(metrics.headlineLineHeight >= metrics.minimumSafeLineHeight);
+  assert.ok(metrics.headlineLineBounds[0].bottom <= metrics.headlineLineBounds[1].top);
+});
+
+test('renderer rejects .notdef glyphs in headline and category copy', async () => {
+  const [entry] = await loadCoverManifest(manifestPath);
+  await assert.rejects(
+    () => renderCoverSvg({
+      entry: { ...entry, category: '字' },
+      format: 'horizontal',
+      rootDir: root,
+    }),
+    /font has no glyph for "字"/,
+  );
+  await assert.rejects(
+    () => renderCoverSvg({
+      entry: { ...entry, headlineLines: ['字', 'VÁLIDO'] },
+      format: 'horizontal',
+      rootDir: root,
+    }),
+    /font has no glyph for "字"/,
+  );
+});

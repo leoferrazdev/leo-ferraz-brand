@@ -72,9 +72,11 @@ function measure(text, size, tracking, face) {
 }
 
 function assertGlyphs(text, face) {
-  const missing = [...new Set([...text])].filter((character) => (
-    character !== ' ' && !face.glyphForCodePoint(character.codePointAt(0))?.path?.commands?.length
-  ));
+  const missing = [...new Set([...text])].filter((character) => {
+    if (character === ' ') return false;
+    const glyph = face.glyphForCodePoint(character.codePointAt(0));
+    return !glyph?.path?.commands?.length || glyph.id === 0 || glyph.name === '.notdef';
+  });
   if (missing.length) throw new Error(`font has no glyph for ${missing.map((character) => `"${character}"`).join(', ')}`);
 }
 
@@ -138,6 +140,34 @@ function fitHeadline(lines, spec, face) {
   throw new Error(`headline does not fit approved bounds: ${lines.join(' / ')}`);
 }
 
+function lineInkBounds(text, size, face) {
+  const scale = size / face.unitsPerEm;
+  const bounds = [...text]
+    .filter((character) => character !== ' ')
+    .map((character) => face.glyphForCodePoint(character.codePointAt(0)).path.bbox);
+  return {
+    top: number(Math.min(...bounds.map((bbox) => -bbox.maxY * scale))),
+    bottom: number(Math.max(...bounds.map((bbox) => -bbox.minY * scale))),
+  };
+}
+
+function safeHeadlineLineHeight(lines, size, target, face) {
+  const inkBounds = lines.map((line) => lineInkBounds(line, size, face));
+  let minimumSafeLineHeight = 0;
+  for (let index = 1; index < inkBounds.length; index++) {
+    minimumSafeLineHeight = Math.max(
+      minimumSafeLineHeight,
+      inkBounds[index - 1].bottom - inkBounds[index].top,
+    );
+  }
+  minimumSafeLineHeight = number(minimumSafeLineHeight + size * 0.02);
+  return {
+    inkBounds,
+    lineHeight: Math.max(size * target, minimumSafeLineHeight),
+    minimumSafeLineHeight,
+  };
+}
+
 async function portraitDataUri(sourcePath, zone) {
   const buffer = await sharp(sourcePath)
     .resize(zone.width, zone.height, { fit: 'cover', position: 'top', kernel: sharp.kernel.lanczos3 })
@@ -195,17 +225,30 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
   assertGlyphs(entry.category, face);
   assertGlyphs(entry.headlineLines.join(''), face);
   const { size: headlineSize, widths } = fitHeadline(entry.headlineLines, layout.headline, face);
+  const { inkBounds, lineHeight, minimumSafeLineHeight } = safeHeadlineLineHeight(
+    entry.headlineLines,
+    headlineSize,
+    layout.headline.lineHeight,
+    face,
+  );
   const portrait = await portraitDataUri(portraitPath, layout.portrait);
   const categoryBadge = badge(entry.category, layout.badge, face);
   const firstBaseline = layout.headline.top + (face.ascent * headlineSize) / face.unitsPerEm;
+  const headlineLineBounds = inkBounds.map((bounds, index) => {
+    const baseline = firstBaseline + index * lineHeight;
+    return {
+      top: number(baseline + bounds.top),
+      bottom: number(baseline + bounds.bottom),
+    };
+  });
   const headline = entry.headlineLines.map((line, index) => outlined([{ text: line, fill: COLORS.text }], {
     size: headlineSize,
     tracking: -0.028,
     x: layout.headline.x,
-    baseline: firstBaseline + index * headlineSize * layout.headline.lineHeight,
+    baseline: firstBaseline + index * lineHeight,
     face,
   })).join('');
-  const headlineBottom = layout.headline.top + entry.headlineLines.length * headlineSize * layout.headline.lineHeight;
+  const headlineBottom = Math.max(...headlineLineBounds.map((bounds) => bounds.bottom));
   const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${formatSpec.width} ${formatSpec.height}" width="${formatSpec.width}" height="${formatSpec.height}">`
     + `<rect width="${formatSpec.width}" height="${formatSpec.height}" fill="${COLORS.background}"/>`
     + grid(formatSpec.width, formatSpec.height, formatSpec.grid)
@@ -221,6 +264,9 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
       width: formatSpec.width,
       height: formatSpec.height,
       headlineSize,
+      headlineLineHeight: lineHeight,
+      minimumSafeLineHeight,
+      headlineLineBounds,
       essentialRight: Math.max(
         layout.headline.x + Math.max(...widths),
         categoryBadge.right,
