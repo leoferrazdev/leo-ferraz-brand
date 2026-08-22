@@ -268,8 +268,7 @@ if (alvo === 'vertical' || alvo === 'ambos') {
 // badge already in frame, a blue word would put a third colour in a layout
 // whose references get their cleanliness from having exactly one.
 if (alvo === 'live' || alvo === 'ambos') {
-  await build({
-    id: 'live_4',
+  const liveCover = {
     W: 1280, H: 720, cell: 48,
     badgeSpec: { text: 'AO VIVO', x: 64, y: 56, size: 26, height: 56, fill: colors.live, ink: '#FFFFFF' },
     // Three lines, not the previous two. The standard's photo area is 640 wide
@@ -287,7 +286,14 @@ if (alvo === 'live' || alvo === 'ambos') {
     photo: 'leo-ferraz-cutout-arms-crossed.png',
     zone: { x: 640, y: 0, w: 640, h: 720 },
     outDir: path.join(root, 'brand-assets', 'thumbnails'),
-  });
+  };
+
+  // `live_1` is the operational Day-1 filename used by channel setup. Keep
+  // `live_4` as the historical/default alias from DECISAO-020, but derive both
+  // from the same object so the approved composition cannot drift by filename.
+  for (const id of ['live_1', 'live_4']) {
+    await build({ id, ...liveCover });
+  }
 }
 
 console.log('\nGerado.');
