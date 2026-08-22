@@ -10,25 +10,49 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export const AVATAR_BACKGROUND = [13, 17, 23];
 export const AVATAR_SIZES = [1024, 512, 256];
-export const SOURCE_CROP = Object.freeze({ left: 153, top: 0, width: 1014, height: 1014 });
+export const SOURCE_EXPECTATION = Object.freeze({
+  width: 1122,
+  height: 1402,
+  hasAlpha: true,
+});
+export const SOURCE_CROP = Object.freeze({ left: 0, top: 0, width: 1122, height: 1122 });
 
 const PNG_OPTIONS = Object.freeze({ compressionLevel: 9 });
+const DEFAULT_SOURCE_PATH = path.join(
+  root,
+  'brand-assets',
+  'profile',
+  'leo-ferraz',
+  'leo-ferraz-cutout-arms-crossed.png',
+);
 
 export async function buildFounderAvatar({
-  sourcePath = path.join(root, 'brand-assets', 'profile', 'leo-ferraz', 'leo-ferraz-cutout-neutral.png'),
+  sourcePath = DEFAULT_SOURCE_PATH,
   outputDir = path.join(root, 'brand-assets', 'profile', 'avatar'),
+  sourceExpectation = SOURCE_EXPECTATION,
+  sourceCrop = SOURCE_CROP,
 } = {}) {
   const metadata = await sharp(sourcePath).metadata();
-  if (metadata.width !== 1320 || metadata.height !== 1192 || !metadata.hasAlpha) {
-    throw new Error('Founder avatar source must be the approved 1320x1192 transparent cutout.');
+  if (
+    metadata.width !== sourceExpectation.width
+    || metadata.height !== sourceExpectation.height
+    || metadata.hasAlpha !== sourceExpectation.hasAlpha
+  ) {
+    throw new Error(
+      `Founder avatar source must be the approved ${sourceExpectation.width}x${sourceExpectation.height} transparent cutout.`,
+    );
   }
 
   await mkdir(outputDir, { recursive: true });
 
-  const master = await sharp(sourcePath)
-    .extract(SOURCE_CROP)
-    .resize(1024, 1024, { fit: 'fill', kernel: sharp.kernel.lanczos3 })
+  const nativeComposite = await sharp(sourcePath)
+    .extract(sourceCrop)
     .flatten({ background: { r: 13, g: 17, b: 23 } })
+    .png(PNG_OPTIONS)
+    .toBuffer();
+
+  const master = await sharp(nativeComposite)
+    .resize(1024, 1024, { fit: 'fill', kernel: sharp.kernel.lanczos3 })
     .png(PNG_OPTIONS)
     .toBuffer();
 

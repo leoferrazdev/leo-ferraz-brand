@@ -32,10 +32,12 @@ Symbol avatar (favicon, small sizes, non-photo surfaces):
 brand-assets/exports/day-1/01-profile/avatar-1024.png
 ```
 
-Derived from the founder-approved neutral cutout:
-`brand-assets/profile/leo-ferraz/leo-ferraz-cutout-neutral.png`.
-The composition and exports are governed by `DECISAO-021` in the vault and
-`docs/superpowers/specs/2026-08-22-founder-social-avatar-design.md`.
+Derived from the founder-approved Arms-Crossed Authority cutout:
+`brand-assets/profile/leo-ferraz/leo-ferraz-cutout-arms-crossed.png`.
+The historical/alternative portrait is:
+`brand-assets/profile/leo-ferraz/leo-ferraz-cutout-smile-three-quarter.png`.
+The composition and exports are governed by `DECISAO-022` in the vault and
+`docs/superpowers/specs/2026-08-22-arms-crossed-founder-social-avatar-design.md`.
 
 The avatar files live under `brand-assets/profile/` and not under
 `brand-assets/exports/`, because `scripts/build-brand-assets.mjs` deletes the
