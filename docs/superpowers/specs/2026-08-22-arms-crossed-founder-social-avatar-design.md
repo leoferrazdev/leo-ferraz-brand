@@ -2,7 +2,7 @@
 title: Arms-Crossed Founder Social Avatar Design
 date: 2026-08-22
 status: approved
-implementation_status: pending
+implementation_status: implemented
 supersedes: 2026-08-22-founder-social-avatar-design.md
 ---
 

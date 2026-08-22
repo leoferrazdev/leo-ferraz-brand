@@ -45,7 +45,7 @@ test('buildFounderAvatar creates deterministic opaque social exports', async () 
     assert.equal(source.width, 1122);
     assert.equal(source.height, 1402);
     assert.equal(source.hasAlpha, true);
-    assert.deepEqual(SOURCE_CROP, { left: 0, top: 0, width: 1122, height: 1122 });
+    assert.deepEqual(SOURCE_CROP, { left: 151, top: 0, width: 820, height: 820 });
 
     const outputs = await buildFounderAvatar({ sourcePath, outputDir });
     assert.deepEqual(outputs.map(({ size }) => size), AVATAR_SIZES);

@@ -15,7 +15,7 @@ export const SOURCE_EXPECTATION = Object.freeze({
   height: 1402,
   hasAlpha: true,
 });
-export const SOURCE_CROP = Object.freeze({ left: 0, top: 0, width: 1122, height: 1122 });
+export const SOURCE_CROP = Object.freeze({ left: 151, top: 0, width: 820, height: 820 });
 
 const PNG_OPTIONS = Object.freeze({ compressionLevel: 9 });
 const DEFAULT_SOURCE_PATH = path.join(
