@@ -38,6 +38,18 @@ Nas referências a headline é inteiramente branca e a cor vive só na pílula. 
 
 Corpo de 90px no horizontal e 118px no vertical, conferido contra a coluna disponível a cada build.
 
+**Entrelinha de 0,95 é o alvo, não o valor final.** Esse número funciona para maiúsculas sem acento e aperta demais assim que aparece português. Em corpo de 84px o `À` sobe 82,1px acima da linha de base enquanto 0,95 só oferece 79,8px, então o acento entra na linha de cima por 3,3px. O `Ç` piora pelo outro lado, descendo 17,8px abaixo da própria base.
+
+O gerador resolve a entrelinha a partir dos glifos que estão de fato compostos, par a par, e usa o maior valor entre 0,95 e o mínimo seguro. Uniforme no bloco inteiro, porque variar linha a linha vira outro defeito. O build avisa quando precisa ajustar.
+
+### Capa de transmissão ao vivo
+
+Duas diferenças em relação ao padrão genérico, ambas deliberadas.
+
+O selo é vermelho `#E5484D` com texto branco, porque sinaliza estado e não marca. É o significado que o vermelho já tem neste sistema e a convenção que toda plataforma usa. Aqui o texto é branco, ao contrário do selo azul, porque o vermelho é escuro o suficiente para isso.
+
+A headline fica inteiramente branca, sem a palavra em azul que as capas de live antigas usavam. Com o selo vermelho já no quadro, uma palavra azul colocaria uma terceira cor num layout cuja limpeza vem justamente de ter uma só.
+
 ### Foto
 
 Recortada, sem fundo, sangrando na base do quadro.

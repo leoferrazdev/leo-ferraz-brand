@@ -27,6 +27,9 @@ const colors = {
   text: '#F3F6FA',
   accent: '#4DA3FF',
   grid: '#405064',
+  // State, not brand. Reserved for the live badge and used nowhere else,
+  // the same rule the earlier live covers already follow.
+  live: '#E5484D',
 };
 
 const bold = createFont(fs.readFileSync(path.join(root, 'node_modules', '@fontsource', 'ibm-plex-sans', 'files', 'ibm-plex-sans-latin-700-normal.woff2')));
@@ -62,6 +65,33 @@ function outlined(runs, { size, tracking = 0, x, baseline, face }) {
   return paths.join('');
 }
 
+// The standard sets 0.95 line height, which is correct for unaccented capitals
+// and too tight the moment Portuguese shows up. "À" reaches 82.1px above its
+// baseline at 84px body while 0.95 only leaves 79.8px, so the accent lands
+// inside the line above by 3.3px. "Ç" makes it worse from the other direction,
+// dropping 17.8px below its own baseline.
+//
+// Rather than hand-tune each cover, the spacing is solved from the glyphs that
+// are actually set: for every consecutive pair, how far the lower line's ink
+// rises versus how far the upper line's ink drops. Uniform across the block,
+// because varying it per line reads as a mistake of its own.
+function safeLineHeight(lines, size, preferred) {
+  const scale = size / bold.unitsPerEm;
+  const extent = (text, pick) => Math.max(0, ...[...text].map((c) => {
+    const g = bold.glyphForCodePoint(c.codePointAt(0));
+    if (!g.path?.commands?.length) return 0;
+    return pick(g.path.bbox) * scale;
+  }));
+  let needed = 0;
+  for (let i = 1; i < lines.length; i++) {
+    const above = lines[i - 1].map((r) => r.text).join('');
+    const below = lines[i].map((r) => r.text).join('');
+    needed = Math.max(needed, extent(below, (b) => b.maxY) + extent(above, (b) => -b.minY));
+  }
+  const minimo = needed + size * 0.02;
+  return Math.max(preferred, minimo);
+}
+
 function grid(W, H, cell) {
   const l = [];
   for (let x = cell; x < W; x += cell) l.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="${colors.grid}" stroke-opacity="0.45" stroke-width="1"/>`);
@@ -70,8 +100,10 @@ function grid(W, H, cell) {
 }
 
 // Dark text on the accent, not white. #4DA3FF is light enough that white on it
-// lands near 2.5:1 contrast while the dark navy reaches about 7:1.
-function badge(text, { x, y, size, height }) {
+// lands near 2.5:1 contrast while the dark navy reaches about 7:1. The live
+// badge inverts this because #E5484D is dark enough for white to read on it,
+// which is also what every platform's own live badge does.
+function badge(text, { x, y, size, height, fill = colors.accent, ink = colors.background }) {
   const tracking = 0.06;
   const dot = Math.round(size * 0.6);
   const padL = Math.round(size * 0.85);
@@ -83,9 +115,9 @@ function badge(text, { x, y, size, height }) {
   const cap = bold.capHeight ?? bold.ascent * 0.7;
   const baseline = number(cy + (cap * fontScale(size, bold)) / 2);
   return [
-    `<rect x="${x}" y="${y}" width="${number(w)}" height="${height}" rx="${height / 2}" fill="${colors.accent}"/>`,
-    `<circle cx="${x + padL + dot / 2}" cy="${cy}" r="${dot / 2}" fill="${colors.background}"/>`,
-    outlined([{ text, fill: colors.background }], { size, tracking, x: x + padL + dot + gap, baseline, face: bold }),
+    `<rect x="${x}" y="${y}" width="${number(w)}" height="${height}" rx="${height / 2}" fill="${fill}"/>`,
+    `<circle cx="${x + padL + dot / 2}" cy="${cy}" r="${dot / 2}" fill="${ink}"/>`,
+    outlined([{ text, fill: ink }], { size, tracking, x: x + padL + dot + gap, baseline, face: bold }),
   ].join('');
 }
 
@@ -150,8 +182,9 @@ async function placeCutout(file, zone, textRight) {
 
 let W_FRAME = 1280;
 
-async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, headTop, photo, zone }) {
+async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, headTop, photo, zone, outDir = outRoot }) {
   W_FRAME = W;
+  fs.mkdirSync(outDir, { recursive: true });
   assertGlyphs(headline.flat().map((r) => r.text).join(''), bold);
 
   const limit = zone.x > 0 ? zone.x - headX - Math.round(W * 0.03) : W - headX * 2;
@@ -167,7 +200,10 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, hea
   console.log(`  ${id} figura ${fig.w}x${fig.h} em x=${fig.x} y=${fig.y}`);
   const b = badge(badgeSpec.text, badgeSpec);
 
-  const lineH = headSize * 0.95;
+  const lineH = safeLineHeight(headline, headSize, headSize * 0.95);
+  if (lineH > headSize * 0.95 + 0.01) {
+    console.log(`  ${id} entrelinha ajustada de ${(headSize * 0.95).toFixed(1)}px para ${lineH.toFixed(1)}px, por acento em maiuscula`);
+  }
   let baseline = headTop + bold.ascent * fontScale(headSize, bold);
   const head = [];
   for (const line of headline) {
@@ -184,8 +220,8 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, hea
     + `</svg>`;
 
   const buf = Buffer.from(svg);
-  await sharp(buf).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(outRoot, `${id}.png`));
-  await sharp(buf).resize(W, H, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(path.join(outRoot, `${id}.jpg`));
+  await sharp(buf).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(outDir, `${id}.png`));
+  await sharp(buf).resize(W, H, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(path.join(outDir, `${id}.jpg`));
 }
 
 const alvo = (process.argv[2] ?? 'ambos').toLowerCase();
@@ -221,4 +257,37 @@ if (alvo === 'vertical' || alvo === 'ambos') {
   });
 }
 
-console.log('\nGerado em brand-assets/capas/');
+// Live cover, day 1. Copy is the one DECISAO-020 made the default: it is
+// anchored to the method rather than to an artefact, so it holds whether the
+// stream is about code, video or anything else.
+//
+// Two departures from the generic standard, both deliberate. The badge is red
+// because it signals live state, a meaning already assigned in this system and
+// the convention every platform uses. And the headline stays entirely white,
+// dropping the blue accent word the previous live covers carried — with a red
+// badge already in frame, a blue word would put a third colour in a layout
+// whose references get their cleanliness from having exactly one.
+if (alvo === 'live' || alvo === 'ambos') {
+  await build({
+    id: 'live_4',
+    W: 1280, H: 720, cell: 48,
+    badgeSpec: { text: 'AO VIVO', x: 64, y: 56, size: 26, height: 56, fill: colors.live, ink: '#FFFFFF' },
+    // Three lines, not the previous two. The standard's photo area is 640 wide
+    // against the old live layout's 560, so the text column lost 160px and
+    // "DO ERRO À SOLUÇÃO" measured 810px against a 538px limit. Broken rather
+    // than shrunk: the standard sets one size for every headline line, and
+    // dropping the body to fit one long line would have made the whole
+    // headline smaller than the layout can carry.
+    headline: [
+      [{ text: 'SEM CORTES', fill: colors.text }],
+      [{ text: 'DO ERRO', fill: colors.text }],
+      [{ text: 'À SOLUÇÃO', fill: colors.text }],
+    ],
+    headSize: 84, headX: 64, headTop: 205,
+    photo: 'leo-ferraz-cutout-arms-crossed.png',
+    zone: { x: 640, y: 0, w: 640, h: 720 },
+    outDir: path.join(root, 'brand-assets', 'thumbnails'),
+  });
+}
+
+console.log('\nGerado.');
