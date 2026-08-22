@@ -1,0 +1,26 @@
+[
+  {
+    "id": "produtos-reais",
+    "category": "CONSTRUINDO COM IA",
+    "headlineLines": ["PRODUTOS", "REAIS, NÃO", "PROMESSA."],
+    "portrait": "leo-ferraz-cutout-front.png"
+  },
+  {
+    "id": "do-zero-ao-produto",
+    "category": "EM CONSTRUÇÃO",
+    "headlineLines": ["DO ZERO AO", "PRODUTO REAL."],
+    "portrait": "leo-ferraz-cutout-present-left.png"
+  },
+  {
+    "id": "isso-nao-funcionou",
+    "category": "EXPERIMENTO",
+    "headlineLines": ["ISSO NÃO", "FUNCIONOU."],
+    "portrait": "leo-ferraz-cutout-neutral.png"
+  },
+  {
+    "id": "coloquei-no-ar",
+    "category": "LANÇAMENTO",
+    "headlineLines": ["COLOQUEI NO", "AR. E AGORA?"],
+    "portrait": "leo-ferraz-cutout-smile-three-quarter.png"
+  }
+]
