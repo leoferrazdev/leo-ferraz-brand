@@ -34,3 +34,8 @@ videos/*
 # de fora, no mesmo espírito do resto desta regra.
 !videos/v2/
 videos/v2/**/*.mp4
+
+# Fotos de origem de evento familiar, com terceiros e uma menor de idade nos
+# quadros. Este repositório é público. Só os recortes do fundador, no nível
+# acima, entram no controle de versão.
+brand-assets/profile/leo-ferraz/reais/

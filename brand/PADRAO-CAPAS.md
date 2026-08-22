@@ -59,32 +59,22 @@ As capas atuais têm uma barra de 8px em `#4DA3FF` na base. Neste padrão ela sa
 | Legenda do Reels cobre a base | nada essencial abaixo de y 1620 |
 | Botões da interface ficam à direita | nada essencial à direita de x 930 |
 
-## Por que o material fotográfico atual não atende
+## Material fotográfico
 
-Levantamento do que existe em `brand-assets/thumbnails/src/`.
+Resolvido em 2026-08-22. O fundador entregou seis retratos recortados em `brand-assets/profile/leo-ferraz/`, PNG com canal alfa, camiseta preta, enquadramento até o peito.
 
-| Arquivo | Resolução | Problema para este padrão |
+| Arquivo | Resolução | Registro |
 | --- | --- | --- |
-| `foto.jpg` | 1024×1024 | enquadrado no peito alto, sem corpo para preencher 1040px de altura no vertical |
-| `ab1`, `ab2`, `ab3` | 840×1080 | quadros de vídeo, expressão de meio de fala |
-| `take1`, `take2` | 840×1080 | mesma origem, mesma limitação |
-| `v2_frame_t70` | 1920×1080 | quadro cheio, a pessoa ocupa parte pequena dele |
+| `leo-ferraz-cutout-front.png` | 1374×1145 | frontal, sorrindo, olhando para a câmera |
+| `leo-ferraz-cutout-smile-three-quarter.png` | 1360×1156 | sorriso em três quartos |
+| `leo-ferraz-cutout-present-right.png` | 1340×1174 | gesto apresentando à direita |
+| `leo-ferraz-cutout-neutral.png` | 1320×1192 | expressão contida |
+| `leo-ferraz-cutout-present-left.png` | 1319×1192 | gesto apresentando à esquerda |
+| `leo-ferraz-cutout-arms-crossed.png` | 1122×1402 | braços cruzados, o mais alto do conjunto |
 
-Três lacunas reais, em ordem de peso. A resolução não é a principal, ao contrário do que parece à primeira vista.
+Todos superam as duas áreas reservadas sem ampliação, o que encerra a limitação de resolução que travava o padrão. A variedade de expressão permite teste A/B de miniatura, que uma foto única nunca permitiu.
 
-**Expressão, e é a que mais custa.** As duas referências mostram a pessoa sorrindo, olhando direto para a câmera, com o rosto aberto. `foto.jpg` tem expressão séria e fechada. Os quadros de vídeo pegam meio de fala, com a boca aberta em posição arbitrária. Miniatura vive de rosto legível a 200px de largura no feed, e expressão é o que carrega esse tamanho.
-
-**Variedade.** Existe uma única foto de estúdio utilizável. Sem alternativas de expressão não há como rodar teste A/B de miniatura, que é o único jeito de descobrir qual registro funciona no canal.
-
-**Recorte limpo.** Cabelo escuro contra fundo escuro não oferece borda para o recorte encontrar. As referências têm luz de contorno separando o cabelo do fundo, que é justamente o que permite o corte limpo. As fotos atuais foram feitas em sala escura sem essa luz, com monitores acesos atrás criando bordas complexas.
-
-**A base não pode ser a `foto.jpg`.** Os hashes MD5 batem entre `brand-assets/thumbnails/src/foto.jpg`, `brand-assets/profile/leo-ferraz-avatar-darklab-headshot.jpg` e `leo-ferraz-founder-photo-provisional.jpg`. É o mesmo arquivo, e é justamente o que a [[DECISAO-011]] registra com sinais fortes de geração sintética, sem EXIF, em 1024×1024 exatos. Construir o padrão novo em cima dele propagaria uma pendência aberta do cofre para a peça mais visível do canal.
-
-As fotos reais verificadas por metadado são `leo-ferraz-founder-photo-a-1024.png` e `leo-ferraz-founder-photo-b-1024.png`, aprovadas na [[DECISAO-010]] justamente para uso em miniatura. São elas a base legítima. Têm a vantagem de já trazerem luz de contorno colorida do próprio setup de gravação, que é o mesmo recurso que separa a figura do fundo nas referências.
-
-**Sobre resolução, o quadro honesto.** `foto.jpg` tem 1024×1024 com a pessoa ocupando quase todo o quadro. Para a área horizontal de 640×720 isso é redução, ou seja, funciona. Para a área vertical de 1080×1040 exige ampliação em torno de 1,2x, que é apertado mas não fatal. Os quadros de vídeo são outra história, porque o diagnóstico desta semana provou por PSNR que o material 1080p com profundidade de campo rasa não carrega detalhe acima de cerca de 1152px equivalentes, e ampliar um rosto desses devolve a moleza que a plataforma sinalizou.
-
-Conclusão prática. Dá para montar uma primeira versão com as fotos reais verificadas recortadas, aceitando expressão séria e enquadramento fechado. Fotos novas não são pré-requisito técnico, são o que separa uma capa aceitável de uma no nível das referências.
+**Procedência.** A troca de terno azul por camiseta preta não é resultado de recorte, então houve geração ou edição de conteúdo na produção desses arquivos. A ressalva da [[DECISAO-010]] sobre retrato sintético e a pendência aberta da [[DECISAO-011]] continuam valendo e foram levantadas com o fundador antes do uso. A decisão de seguir é dele, com autoridade registrada em `brand/BRAND_FOUNDATION.md`.
 
 ## Enquadramento necessário
 
