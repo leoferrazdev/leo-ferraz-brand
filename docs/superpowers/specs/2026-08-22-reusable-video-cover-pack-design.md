@@ -208,9 +208,15 @@ Automated validation must confirm:
 
 ## Implementation evidence
 
-- `npm run video-cover-pack:test`: 9 of 9 focused tests passed, with 0
-  failures; the three-entry and five-entry rejection cases also confirmed that
-  no derivative output directory or files were written.
+- Implementation commit: `44f9623 fix: harden reusable video cover pack
+  pipeline`.
+- `npm run video-cover-pack:test`: 17 of 17 focused tests passed, with 0
+  failures. Coverage includes actual safe-zone rejection, normalized focal
+  configuration, transactional replacement and rollback, stale-file removal,
+  preserved 3/5 cardinality behavior, CLI line-height warning and literal
+  byte-for-byte comparison of two isolated 17-file builds.
+- `npm run video-cover-pack:build`: generated 16 cover derivatives and one
+  2400×2400 PNG contact sheet through validated same-volume staging.
 - `npm run brand-assets:validate`: 78 assets passed signature, pixel-safe-zone,
   mirror, format, transparency, color, font, URL and dimension validation.
 - Generated pack: 17 output files observed — 16 cover derivatives comprising
@@ -218,9 +224,11 @@ Automated validation must confirm:
 - `npm run build`: 86 required token paths validated with no drift, 78 brand
   assets generated, and Astro generated 6 static pages without error.
 - `git diff --check`: completed with no output.
-- Visual review: all 8 compositions in the contact sheet passed the complete
-  audit checklist at original detail; no visual defect or regeneration was
-  required.
+- Approved-output preservation: all 17 regenerated SHA-256 values matched the
+  pre-change baseline; no generated derivative changed bytes.
+- Visual review: all 8 regenerated compositions in the contact sheet passed the
+  complete audit checklist at original detail; the approved visual remained
+  unchanged.
 
 ## Governance and delivery
 
