@@ -47,6 +47,11 @@ alternative social-avatar source after implementation.
 
 - Canvas: square.
 - Background: solid `#0D1117`.
+- Background rationale: use the canonical `Precision / Product` foundation so
+  the portrait visually merges with the dark-neutral channel system.
+- Background texture: none. The Construction Grid remains appropriate for
+  banners and editorial surfaces, but is prohibited inside the compact avatar
+  because it would add noise and weaken the founder silhouette.
 - Crop source: full source width, using a square crop anchored at the top.
 - Expected source crop: `left: 0`, `top: 0`, `width: 1122`, `height: 1122`.
 - Subject: horizontally centered.
@@ -55,8 +60,15 @@ alternative social-avatar source after implementation.
   platform crop allows it.
 - Small-size priority: facial recognition takes precedence over complete arm
   visibility at 64 px and below.
-- Edge treatment: preserve the existing blue rim light; do not add a border,
-  halo or artificial contour.
+- Edge treatment: preserve the intentional blue rim light while removing every
+  white, grey or checkerboard-derived matte pixel at the cutout boundary.
+- Compositing order: crop at source resolution, flatten onto `#0D1117`, then
+  resize the opaque master. Resizing a still-transparent cutout before
+  flattening is prohibited because it can blend light hidden RGB values into
+  the visible silhouette.
+- Defringe boundary: edge decontamination may affect only the anti-aliased
+  transition pixels around the silhouette. It must not reshape hair, ears,
+  beard, shoulders, arms or hands.
 
 ## Prohibited treatments
 
@@ -70,6 +82,7 @@ alternative social-avatar source after implementation.
 - no artificial background objects;
 - no facial or body retouching;
 - no synthetic replacement of any part of the subject.
+- no light matte, white halo or checkerboard residue around the silhouette;
 
 ## Deliverables
 
@@ -101,6 +114,8 @@ The implementation must verify:
 - exact dimensions of 1024×1024, 512×512 and 256×256;
 - PNG output without unintended transparency;
 - background `#0D1117` at uncontested corner samples;
+- no light-pixel contamination in the cutout boundary after compositing;
+- natural hair and beard detail remain intact after edge decontamination;
 - identical composition across all three exports;
 - face recognition at 64 px and 32 px;
 - no clipping of hair, eyes, ears, nose, mouth or chin in a circular crop;
@@ -116,6 +131,8 @@ Implementation must:
 
 - update the deterministic avatar builder and its automated test to use the
   approved arms-crossed source and crop;
+- enforce native-resolution flattening before resize and validate the perimeter
+  against bright fringe contamination;
 - regenerate the three canonical exports;
 - update the source declaration in `brand/CHANNEL_SETUP_CHECKLIST.md`;
 - register the superseding decision in the Obsidian vault;
