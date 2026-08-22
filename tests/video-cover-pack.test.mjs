@@ -21,11 +21,31 @@ const manifestPath = path.join(root, 'brand-assets', 'capas', 'master-pack', 'co
 test('manifest declares four unique demonstrative PT-BR concepts', async () => {
   const entries = await loadCoverManifest(manifestPath);
   assert.equal(entries.length, 4);
-  assert.deepEqual(entries.map(({ id }) => id), [
-    'produtos-reais',
-    'do-zero-ao-produto',
-    'isso-nao-funcionou',
-    'coloquei-no-ar',
+  assert.deepEqual(entries, [
+    {
+      id: 'produtos-reais',
+      category: 'CONSTRUINDO COM IA',
+      headlineLines: ['PRODUTOS', 'REAIS, NÃO', 'PROMESSA.'],
+      portrait: 'leo-ferraz-cutout-front.png',
+    },
+    {
+      id: 'do-zero-ao-produto',
+      category: 'EM CONSTRUÇÃO',
+      headlineLines: ['DO ZERO AO', 'PRODUTO REAL.'],
+      portrait: 'leo-ferraz-cutout-present-left.png',
+    },
+    {
+      id: 'isso-nao-funcionou',
+      category: 'EXPERIMENTO',
+      headlineLines: ['ISSO NÃO', 'FUNCIONOU.'],
+      portrait: 'leo-ferraz-cutout-neutral.png',
+    },
+    {
+      id: 'coloquei-no-ar',
+      category: 'LANÇAMENTO',
+      headlineLines: ['COLOQUEI NO', 'AR. E AGORA?'],
+      portrait: 'leo-ferraz-cutout-smile-three-quarter.png',
+    },
   ]);
   assert.doesNotThrow(() => validateCoverManifest(entries));
 });
@@ -46,4 +66,30 @@ test('manifest rejects duplicate ids, unknown portraits and invalid line counts'
     () => validateCoverManifest([{ ...valid, headlineLines: ['ONE'] }]),
     /headlineLines must contain 2 or 3 lines/,
   );
+});
+
+test('renderer uses canonical palette, primary symbol and no forbidden treatment', async () => {
+  const [entry] = await loadCoverManifest(manifestPath);
+  const { svg, metrics } = await renderCoverSvg({ entry, format: 'horizontal', rootDir: root });
+  const markup = svg.toString('utf8');
+  assert.match(markup, /#0D1117/);
+  assert.match(markup, /#405064/);
+  assert.match(markup, /#4DA3FF/);
+  assert.match(markup, /data-mark="constructed-lf"/);
+  assert.doesNotMatch(markup, /linearGradient|radialGradient|filter|feGaussianBlur/);
+  assert.equal(metrics.width, 1280);
+  assert.equal(metrics.height, 720);
+  assert.equal(metrics.overflow, false);
+});
+
+test('vertical renderer keeps all essential layout bounds inside the safe area', async () => {
+  const [entry] = await loadCoverManifest(manifestPath);
+  const { metrics } = await renderCoverSvg({ entry, format: 'vertical', rootDir: root });
+  assert.equal(metrics.width, 1080);
+  assert.equal(metrics.height, 1920);
+  assert.ok(metrics.essentialBottom <= 1620);
+  assert.ok(metrics.essentialRight <= 930);
+  assert.ok(metrics.faceZoneTop >= 950);
+  assert.ok(metrics.faceZoneBottom <= 1450);
+  assert.equal(metrics.overflow, false);
 });
