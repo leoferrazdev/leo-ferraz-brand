@@ -78,9 +78,13 @@ Três lacunas reais, em ordem de peso. A resolução não é a principal, ao con
 
 **Recorte limpo.** Cabelo escuro contra fundo escuro não oferece borda para o recorte encontrar. As referências têm luz de contorno separando o cabelo do fundo, que é justamente o que permite o corte limpo. As fotos atuais foram feitas em sala escura sem essa luz, com monitores acesos atrás criando bordas complexas.
 
+**A base não pode ser a `foto.jpg`.** Os hashes MD5 batem entre `brand-assets/thumbnails/src/foto.jpg`, `brand-assets/profile/leo-ferraz-avatar-darklab-headshot.jpg` e `leo-ferraz-founder-photo-provisional.jpg`. É o mesmo arquivo, e é justamente o que a [[DECISAO-011]] registra com sinais fortes de geração sintética, sem EXIF, em 1024×1024 exatos. Construir o padrão novo em cima dele propagaria uma pendência aberta do cofre para a peça mais visível do canal.
+
+As fotos reais verificadas por metadado são `leo-ferraz-founder-photo-a-1024.png` e `leo-ferraz-founder-photo-b-1024.png`, aprovadas na [[DECISAO-010]] justamente para uso em miniatura. São elas a base legítima. Têm a vantagem de já trazerem luz de contorno colorida do próprio setup de gravação, que é o mesmo recurso que separa a figura do fundo nas referências.
+
 **Sobre resolução, o quadro honesto.** `foto.jpg` tem 1024×1024 com a pessoa ocupando quase todo o quadro. Para a área horizontal de 640×720 isso é redução, ou seja, funciona. Para a área vertical de 1080×1040 exige ampliação em torno de 1,2x, que é apertado mas não fatal. Os quadros de vídeo são outra história, porque o diagnóstico desta semana provou por PSNR que o material 1080p com profundidade de campo rasa não carrega detalhe acima de cerca de 1152px equivalentes, e ampliar um rosto desses devolve a moleza que a plataforma sinalizou.
 
-Conclusão prática. Dá para montar uma primeira versão do padrão com `foto.jpg` recortada, aceitando expressão séria e um recorte trabalhoso. Fotos novas não são pré-requisito técnico, são o que separa uma capa aceitável de uma no nível das referências.
+Conclusão prática. Dá para montar uma primeira versão com as fotos reais verificadas recortadas, aceitando expressão séria e enquadramento fechado. Fotos novas não são pré-requisito técnico, são o que separa uma capa aceitável de uma no nível das referências.
 
 ## Enquadramento necessário
 
