@@ -28,6 +28,8 @@ const COLORS = Object.freeze({
   grid: '#405064',
 });
 
+const PACK_DIRECTORIES = Object.freeze(['horizontal', 'vertical', 'review']);
+
 const LAYOUTS = Object.freeze({
   horizontal: Object.freeze({
     badge: { x: 64, y: 56, size: 26, height: 56 },
@@ -60,6 +62,10 @@ function faceFor(rootDir) {
 
 function number(value) {
   return Number(value.toFixed(3));
+}
+
+function clamp(value, minimum, maximum) {
+  return Math.max(minimum, Math.min(maximum, value));
 }
 
 function measure(text, size, tracking, face) {
@@ -151,6 +157,33 @@ function lineInkBounds(text, size, face) {
   };
 }
 
+function positionedTextInkBounds(text, { size, tracking, x, baseline, face }) {
+  const scale = size / face.unitsPerEm;
+  const trackingUnits = tracking * face.unitsPerEm;
+  let cursor = x / scale;
+  let left = Number.POSITIVE_INFINITY;
+  let top = Number.POSITIVE_INFINITY;
+  let right = Number.NEGATIVE_INFINITY;
+  let bottom = Number.NEGATIVE_INFINITY;
+  for (const character of text) {
+    const glyph = face.glyphForCodePoint(character.codePointAt(0));
+    if (glyph.path?.commands?.length) {
+      const bbox = glyph.path.bbox;
+      left = Math.min(left, (cursor + bbox.minX) * scale);
+      top = Math.min(top, baseline - bbox.maxY * scale);
+      right = Math.max(right, (cursor + bbox.maxX) * scale);
+      bottom = Math.max(bottom, baseline - bbox.minY * scale);
+    }
+    cursor += glyph.advanceWidth + trackingUnits;
+  }
+  return {
+    left: number(left),
+    top: number(top),
+    right: number(right),
+    bottom: number(bottom),
+  };
+}
+
 function safeHeadlineLineHeight(lines, size, target, face) {
   const inkBounds = lines.map((line) => lineInkBounds(line, size, face));
   let minimumSafeLineHeight = 0;
@@ -168,12 +201,43 @@ function safeHeadlineLineHeight(lines, size, target, face) {
   };
 }
 
-async function portraitDataUri(sourcePath, zone) {
+async function portraitDataUri(sourcePath, zone, focus) {
+  const { width: sourceWidth, height: sourceHeight } = await sharp(sourcePath).metadata();
+  if (!sourceWidth || !sourceHeight) throw new Error(`portrait dimensions unavailable: ${sourcePath}`);
+  const shrink = Math.min(sourceWidth / zone.width, sourceHeight / zone.height);
+  const resizedWidth = Math.round(sourceWidth / shrink);
+  const resizedHeight = Math.round(sourceHeight / shrink);
+  const left = clamp(
+    Math.round(focus.x * resizedWidth - zone.width / 2),
+    0,
+    resizedWidth - zone.width,
+  );
+  const top = clamp(
+    Math.round(focus.y * resizedHeight - zone.height / 2),
+    0,
+    resizedHeight - zone.height,
+  );
   const buffer = await sharp(sourcePath)
-    .resize(zone.width, zone.height, { fit: 'cover', position: 'top', kernel: sharp.kernel.lanczos3 })
+    .resize(zone.width, zone.height, { fit: 'outside', kernel: sharp.kernel.lanczos3 })
+    .extract({ left, top, width: zone.width, height: zone.height })
     .png({ compressionLevel: 9 })
     .toBuffer();
-  return `data:image/png;base64,${buffer.toString('base64')}`;
+  return {
+    dataUri: `data:image/png;base64,${buffer.toString('base64')}`,
+    crop: {
+      focus: { x: focus.x, y: focus.y },
+      sourceWidth,
+      sourceHeight,
+      resizedWidth,
+      resizedHeight,
+      left,
+      top,
+      width: zone.width,
+      height: zone.height,
+      focusCanvasX: number(zone.x + clamp(focus.x * resizedWidth - left, 0, zone.width)),
+      focusCanvasY: number(zone.y + clamp(focus.y * resizedHeight - top, 0, zone.height)),
+    },
+  };
 }
 
 function symbolBody({ x, y, width, height }) {
@@ -185,6 +249,38 @@ function symbolBody({ x, y, width, height }) {
     + `<path d="M28 8H56V20H40V28H48V36H40V56H28Z" fill="#F3F6FA"/>`
     + `<rect x="48" y="28" width="8" height="8" fill="#4DA3FF"/>`
     + `</g></g>`;
+}
+
+function symbolBounds({ x, y, width, height }) {
+  return {
+    left: number(x + width * 0.2),
+    top: number(y + height * 0.2),
+    right: number(x + width * 0.8),
+    bottom: number(y + height * 0.8),
+  };
+}
+
+function safeZoneViolations({ bounds, format, formatSpec, layout }) {
+  const violations = [];
+  for (const [name, box] of Object.entries(bounds)) {
+    if (box.left < 0) violations.push(`${name}.left<0`);
+    if (box.top < 0) violations.push(`${name}.top<0`);
+    if (box.right > formatSpec.width) violations.push(`${name}.right>${formatSpec.width}`);
+    if (box.bottom > formatSpec.height) violations.push(`${name}.bottom>${formatSpec.height}`);
+  }
+  if (format === 'horizontal') {
+    for (const name of ['badge', 'headline']) {
+      if (bounds[name].right > layout.portrait.x) {
+        violations.push(`${name}.right>${layout.portrait.x} text/photo boundary`);
+      }
+    }
+  } else {
+    for (const [name, box] of Object.entries(bounds)) {
+      if (box.right > 930) violations.push(`${name}.right>930`);
+      if (box.bottom > 1620) violations.push(`${name}.bottom>1620`);
+    }
+  }
+  return violations;
 }
 
 export async function loadCoverManifest(manifestPath) {
@@ -207,6 +303,28 @@ export function validateCoverManifest(entries) {
       throw new Error(`headline line must be non-empty: ${entry.id}`);
     }
     if (!APPROVED_PORTRAITS.includes(entry.portrait)) throw new Error(`unsupported portrait: ${entry.portrait}`);
+    if (!entry.focus || typeof entry.focus !== 'object' || Array.isArray(entry.focus)
+      || !Object.hasOwn(entry.focus, 'horizontal') || !Object.hasOwn(entry.focus, 'vertical')) {
+      throw new Error(`focus must declare horizontal and vertical: ${entry.id}`);
+    }
+    const unsupportedFocusKey = Object.keys(entry.focus)
+      .find((key) => !Object.hasOwn(COVER_FORMATS, key));
+    if (unsupportedFocusKey) throw new Error(`unsupported focus key: ${unsupportedFocusKey}`);
+    for (const format of Object.keys(COVER_FORMATS)) {
+      const point = entry.focus[format];
+      if (!point || typeof point !== 'object' || Array.isArray(point)
+        || !Object.hasOwn(point, 'x') || !Object.hasOwn(point, 'y')) {
+        throw new Error(`${format} focus must declare x and y: ${entry.id}`);
+      }
+      const unsupportedPointKey = Object.keys(point).find((key) => !['x', 'y'].includes(key));
+      if (unsupportedPointKey) throw new Error(`unsupported ${format} focus key: ${unsupportedPointKey}`);
+      for (const axis of ['x', 'y']) {
+        if (typeof point[axis] !== 'number' || !Number.isFinite(point[axis])
+          || point[axis] < 0 || point[axis] > 1) {
+          throw new Error(`${format} focus ${axis} must be between 0 and 1: ${entry.id}`);
+        }
+      }
+    }
   }
   return entries;
 }
@@ -216,6 +334,7 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
   const formatSpec = COVER_FORMATS[format];
   const layout = LAYOUTS[format];
   if (!formatSpec || !layout) throw new Error(`unsupported cover format: ${format}`);
+  const focus = entry.focus[format];
 
   const face = faceFor(rootDir);
   const portraitRoot = path.resolve(rootDir, 'brand-assets', 'profile', 'leo-ferraz');
@@ -224,23 +343,45 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
 
   assertGlyphs(entry.category, face);
   assertGlyphs(entry.headlineLines.join(''), face);
-  const { size: headlineSize, widths } = fitHeadline(entry.headlineLines, layout.headline, face);
+  const { size: headlineSize } = fitHeadline(entry.headlineLines, layout.headline, face);
   const { inkBounds, lineHeight, minimumSafeLineHeight } = safeHeadlineLineHeight(
     entry.headlineLines,
     headlineSize,
     layout.headline.lineHeight,
     face,
   );
-  const portrait = await portraitDataUri(portraitPath, layout.portrait);
   const categoryBadge = badge(entry.category, layout.badge, face);
   const firstBaseline = layout.headline.top + (face.ascent * headlineSize) / face.unitsPerEm;
-  const headlineLineBounds = inkBounds.map((bounds, index) => {
+  const headlineLineBounds = entry.headlineLines.map((line, index) => {
     const baseline = firstBaseline + index * lineHeight;
-    return {
-      top: number(baseline + bounds.top),
-      bottom: number(baseline + bounds.bottom),
-    };
+    return positionedTextInkBounds(line, {
+      size: headlineSize,
+      tracking: -0.028,
+      x: layout.headline.x,
+      baseline,
+      face,
+    });
   });
+  const bounds = {
+    badge: {
+      left: layout.badge.x,
+      top: layout.badge.y,
+      right: categoryBadge.right,
+      bottom: layout.badge.y + layout.badge.height,
+    },
+    headline: {
+      left: Math.min(...headlineLineBounds.map((lineBounds) => lineBounds.left)),
+      top: Math.min(...headlineLineBounds.map((lineBounds) => lineBounds.top)),
+      right: Math.max(...headlineLineBounds.map((lineBounds) => lineBounds.right)),
+      bottom: Math.max(...headlineLineBounds.map((lineBounds) => lineBounds.bottom)),
+    },
+    symbol: symbolBounds(layout.symbol),
+  };
+  const violations = safeZoneViolations({ bounds, format, formatSpec, layout });
+  const overflow = violations.length > 0;
+  if (overflow) {
+    throw new Error(`safe-zone overflow for ${entry.id} ${format}: ${violations.join(', ')}`);
+  }
   const headline = entry.headlineLines.map((line, index) => outlined([{ text: line, fill: COLORS.text }], {
     size: headlineSize,
     tracking: -0.028,
@@ -248,7 +389,11 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
     baseline: firstBaseline + index * lineHeight,
     face,
   })).join('');
-  const headlineBottom = Math.max(...headlineLineBounds.map((bounds) => bounds.bottom));
+  const { dataUri: portrait, crop: portraitCrop } = await portraitDataUri(
+    portraitPath,
+    layout.portrait,
+    focus,
+  );
   const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${formatSpec.width} ${formatSpec.height}" width="${formatSpec.width}" height="${formatSpec.height}">`
     + `<rect width="${formatSpec.width}" height="${formatSpec.height}" fill="${COLORS.background}"/>`
     + grid(formatSpec.width, formatSpec.height, formatSpec.grid)
@@ -267,47 +412,61 @@ export async function renderCoverSvg({ entry, format, rootDir }) {
       headlineLineHeight: lineHeight,
       minimumSafeLineHeight,
       headlineLineBounds,
-      essentialRight: Math.max(
-        layout.headline.x + Math.max(...widths),
-        categoryBadge.right,
-        layout.symbol.x + layout.symbol.width,
-      ),
-      essentialBottom: Math.max(
-        headlineBottom,
-        layout.badge.y + layout.badge.height,
-        layout.symbol.y + layout.symbol.height,
-      ),
-      faceZoneTop: format === 'vertical' ? 950 : 0,
-      faceZoneBottom: format === 'vertical' ? 1450 : formatSpec.height,
-      overflow: false,
+      bounds,
+      essentialRight: Math.max(...Object.values(bounds).map((box) => box.right)),
+      essentialBottom: Math.max(...Object.values(bounds).map((box) => box.bottom)),
+      portraitCrop,
+      overflow,
     },
   };
 }
 
-export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
-  const entries = validateCoverManifest(await loadCoverManifest(manifestPath));
-  if (entries.length !== 4) {
-    throw new Error(`master pack requires exactly 4 entries; received ${entries.length}`);
+async function pathExists(target) {
+  try {
+    await fs.promises.access(target);
+    return true;
+  } catch (error) {
+    if (error.code === 'ENOENT') return false;
+    throw error;
   }
-  const covers = [];
+}
 
-  for (const [format, { width, height }] of Object.entries(COVER_FORMATS)) {
-    const formatDir = path.join(outputDir, format);
-    await fs.promises.mkdir(formatDir, { recursive: true });
+function coverFileName(entry, format, extension) {
+  const { width, height } = COVER_FORMATS[format];
+  return `demo-${entry.id}-${width}x${height}.${extension}`;
+}
 
+async function preflightCoverPack({ entries, rootDir }) {
+  const renderings = [];
+  for (const format of Object.keys(COVER_FORMATS)) {
     for (const entry of entries) {
       const { svg, metrics } = await renderCoverSvg({ entry, format, rootDir });
-      const base = `demo-${entry.id}-${width}x${height}`;
-      const pngPath = path.join(formatDir, `${base}.png`);
-      const jpgPath = path.join(formatDir, `${base}.jpg`);
-      await sharp(svg).resize(width, height, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(pngPath);
-      await sharp(svg).resize(width, height, { fit: 'fill' }).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(jpgPath);
-      covers.push({ id: entry.id, format, extension: 'png', path: pngPath, metrics });
-      covers.push({ id: entry.id, format, extension: 'jpg', path: jpgPath, metrics });
+      renderings.push({ entry, format, svg, metrics });
     }
   }
+  return renderings;
+}
 
-  const reviewDir = path.join(outputDir, 'review');
+async function writeStagedDerivatives({ stagingDir, renderings }) {
+  for (const format of Object.keys(COVER_FORMATS)) {
+    const formatDir = path.join(stagingDir, format);
+    await fs.promises.mkdir(formatDir, { recursive: true });
+  }
+
+  for (const { entry, format, svg } of renderings) {
+    const { width, height } = COVER_FORMATS[format];
+    const formatDir = path.join(stagingDir, format);
+    const pngPath = path.join(formatDir, coverFileName(entry, format, 'png'));
+    const jpgPath = path.join(formatDir, coverFileName(entry, format, 'jpg'));
+    await sharp(svg).resize(width, height, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(pngPath);
+    await sharp(svg).resize(width, height, { fit: 'fill' })
+      .jpeg({ quality: 92, chromaSubsampling: '4:4:4' })
+      .toFile(jpgPath);
+  }
+}
+
+async function writeStagedContactSheet({ stagingDir, entries }) {
+  const reviewDir = path.join(stagingDir, 'review');
   const contactSheet = path.join(reviewDir, 'demo-master-pack-contact-sheet.png');
   const horizontalWidth = 960;
   const verticalWidth = 304;
@@ -317,12 +476,12 @@ export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
   const rowY = 48;
   await fs.promises.mkdir(reviewDir, { recursive: true });
   const composites = await Promise.all(entries.flatMap((entry, index) => [
-    sharp(path.join(outputDir, 'horizontal', `demo-${entry.id}-1280x720.png`))
+    sharp(path.join(stagingDir, 'horizontal', coverFileName(entry, 'horizontal', 'png')))
       .resize(horizontalWidth, rowHeight, { fit: 'fill' })
       .png()
       .toBuffer()
       .then((input) => ({ input, left: rowX, top: rowY + index * (rowHeight + gutter) })),
-    sharp(path.join(outputDir, 'vertical', `demo-${entry.id}-1080x1920.png`))
+    sharp(path.join(stagingDir, 'vertical', coverFileName(entry, 'vertical', 'png')))
       .resize(verticalWidth, rowHeight, { fit: 'fill' })
       .png()
       .toBuffer()
@@ -336,6 +495,134 @@ export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
       background: COLORS.background,
     },
   }).composite(composites).png({ compressionLevel: 9 }).toFile(contactSheet);
+  return contactSheet;
+}
+
+async function validateStagedPack({ stagingDir, entries }) {
+  let fileCount = 0;
+  for (const [format, expected] of Object.entries(COVER_FORMATS)) {
+    const formatDir = path.join(stagingDir, format);
+    const expectedNames = entries.flatMap((entry) => ['png', 'jpg']
+      .map((extension) => coverFileName(entry, format, extension))).sort();
+    const actualNames = (await fs.promises.readdir(formatDir)).sort();
+    if (JSON.stringify(actualNames) !== JSON.stringify(expectedNames)) {
+      throw new Error(`staged ${format} outputs do not match the expected complete set`);
+    }
+    fileCount += actualNames.length;
+    for (const entry of entries) {
+      for (const extension of ['png', 'jpg']) {
+        const file = path.join(formatDir, coverFileName(entry, format, extension));
+        const metadata = await sharp(file).metadata();
+        const expectedFormat = extension === 'jpg' ? 'jpeg' : 'png';
+        if (metadata.width !== expected.width || metadata.height !== expected.height
+          || metadata.format !== expectedFormat) {
+          throw new Error(`invalid staged derivative: ${path.relative(stagingDir, file)}`);
+        }
+      }
+    }
+  }
+
+  const reviewDir = path.join(stagingDir, 'review');
+  const expectedReviewName = 'demo-master-pack-contact-sheet.png';
+  const reviewNames = (await fs.promises.readdir(reviewDir)).sort();
+  if (JSON.stringify(reviewNames) !== JSON.stringify([expectedReviewName])) {
+    throw new Error('staged review outputs do not match the expected complete set');
+  }
+  fileCount += reviewNames.length;
+  const reviewMetadata = await sharp(path.join(reviewDir, expectedReviewName)).metadata();
+  if (reviewMetadata.format !== 'png' || reviewMetadata.width !== 2400 || reviewMetadata.height !== 2400) {
+    throw new Error('invalid staged contact sheet');
+  }
+  if (fileCount !== 17) throw new Error(`staged pack requires exactly 17 outputs; received ${fileCount}`);
+}
+
+export async function replacePackDirectories({
+  outputDir,
+  stagingDir,
+  rename = fs.promises.rename,
+}) {
+  await fs.promises.mkdir(outputDir, { recursive: true });
+  const backupDir = await fs.promises.mkdtemp(path.join(
+    path.dirname(outputDir),
+    `.${path.basename(outputDir)}-backup-`,
+  ));
+  const movedExisting = [];
+  const installed = [];
+  let preserveBackup = false;
+
+  try {
+    for (const directory of PACK_DIRECTORIES) {
+      const target = path.join(outputDir, directory);
+      if (await pathExists(target)) {
+        await rename(target, path.join(backupDir, directory));
+        movedExisting.push(directory);
+      }
+    }
+    for (const directory of PACK_DIRECTORIES) {
+      await rename(path.join(stagingDir, directory), path.join(outputDir, directory));
+      installed.push(directory);
+    }
+  } catch (error) {
+    const restorationErrors = [];
+    for (const directory of installed.reverse()) {
+      try {
+        await fs.promises.rm(path.join(outputDir, directory), { recursive: true, force: true });
+      } catch (restorationError) {
+        restorationErrors.push(restorationError);
+      }
+    }
+    for (const directory of movedExisting) {
+      try {
+        await rename(path.join(backupDir, directory), path.join(outputDir, directory));
+      } catch (restorationError) {
+        restorationErrors.push(restorationError);
+      }
+    }
+    if (restorationErrors.length) {
+      preserveBackup = true;
+      throw new AggregateError(
+        [error, ...restorationErrors],
+        `pack replacement and rollback failed: ${error.message}`,
+        { cause: error },
+      );
+    }
+    throw error;
+  } finally {
+    if (!preserveBackup) {
+      await fs.promises.rm(backupDir, { recursive: true, force: true });
+    }
+  }
+}
+
+export async function buildCoverPack({ rootDir, outputDir, manifestPath }) {
+  const entries = validateCoverManifest(await loadCoverManifest(manifestPath));
+  if (entries.length !== 4) {
+    throw new Error(`master pack requires exactly 4 entries; received ${entries.length}`);
+  }
+  const renderings = await preflightCoverPack({ entries, rootDir });
+  await fs.promises.mkdir(path.dirname(outputDir), { recursive: true });
+  const stagingDir = await fs.promises.mkdtemp(path.join(
+    path.dirname(outputDir),
+    `.${path.basename(outputDir)}-staging-`,
+  ));
+
+  try {
+    await writeStagedDerivatives({ stagingDir, renderings });
+    await writeStagedContactSheet({ stagingDir, entries });
+    await validateStagedPack({ stagingDir, entries });
+    await replacePackDirectories({ outputDir, stagingDir });
+  } finally {
+    await fs.promises.rm(stagingDir, { recursive: true, force: true });
+  }
+
+  const covers = renderings.flatMap(({ entry, format, metrics }) => ['png', 'jpg'].map((extension) => ({
+    id: entry.id,
+    format,
+    extension,
+    path: path.join(outputDir, format, coverFileName(entry, format, extension)),
+    metrics,
+  })));
+  const contactSheet = path.join(outputDir, 'review', 'demo-master-pack-contact-sheet.png');
 
   return { covers, contactSheet };
 }
