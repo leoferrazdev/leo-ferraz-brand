@@ -673,6 +673,15 @@ function syncReferencePatternVersions() {
   fs.writeFileSync(path.join(versionRoot, 'README.md'), readme);
 }
 
+function syncApprovedFounderThumbnailVariants() {
+  const sourceRoot = path.join(root, 'brand-assets', 'thumbnails', 'versions', 'v2-approved-founder-cutouts');
+  const targetRoot = path.join(exportsRoot, 'day-1', '05-youtube', 'versions', 'v2-approved-founder-cutouts');
+  if (!fs.existsSync(sourceRoot)) {
+    throw new Error('Approved founder thumbnail pack is missing. Run npm run thumbnails:approved:build first.');
+  }
+  fs.cpSync(sourceRoot, targetRoot, { recursive: true, force: true });
+}
+
 function liveAssemblyGuide() {
   const cfg = content.live;
   const table = (regions) => [
@@ -743,6 +752,7 @@ async function main() {
     '- YouTube thumbnail: day-1/05-youtube/youtube-thumbnail-1280x720.png',
     '- First demonstrative live example: day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png',
     '- Organized thumbnail comparisons: day-1/05-youtube/versions/v1-reference-pattern/',
+    '- Approved founder cutout variants: day-1/05-youtube/versions/v2-approved-founder-cutouts/',
     '- Instagram carousel: day-1/04-social/instagram-carousel-cover-1080x1350.png',
     '- Instagram Story/Reels: day-1/04-social/instagram-story-reels-1080x1920.png',
     '- OBS scenes: day-1/03-live/obs/',
@@ -947,6 +957,7 @@ async function main() {
   await writeBuffer('day-1/05-youtube/youtube-thumbnail-master-3840x2160.png', approvedFirstVideoMaster);
   await writeBuffer('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', fs.readFileSync(approvedLiveDayOne));
   syncReferencePatternVersions();
+  syncApprovedFounderThumbnailVariants();
   const ogPng = fs.readFileSync(path.join(exportsRoot, 'day-1/06-web/open-graph-1200x630.png'));
   copyPublic('brand-assets/exports/day-1/06-web/open-graph-1200x630.png', ogPng);
 
