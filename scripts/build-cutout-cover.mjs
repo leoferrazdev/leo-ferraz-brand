@@ -150,7 +150,7 @@ async function subjectBox(file) {
 // to the bottom right so any remaining gap opens away from the text.
 async function placeCutout(file, zone, textRight) {
   const box = await subjectBox(file);
-  let scale = zone.h / box.height;
+  let scale = (zone.h / box.height) * (zone.subjectScale ?? 1);
   let w = Math.round(box.width * scale);
 
   const roomRight = W_FRAME - zone.x;
@@ -182,7 +182,7 @@ async function placeCutout(file, zone, textRight) {
 
 let W_FRAME = 1280;
 
-async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, headTop, photo, zone, outDir = outRoot }) {
+async function build({ id, W, H, cell, badgeSpec, headline, headSize, headlineTracking = -0.028, headX, headTop, photo, zone, outDir = outRoot }) {
   W_FRAME = W;
   fs.mkdirSync(outDir, { recursive: true });
   assertGlyphs(headline.flat().map((r) => r.text).join(''), bold);
@@ -191,7 +191,7 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, hea
   let textRight = headX;
   for (const line of headline) {
     const t = line.map((r) => r.text).join('');
-    const w = measure(t, headSize, -0.028, bold);
+    const w = measure(t, headSize, headlineTracking, bold);
     textRight = Math.max(textRight, headX + w);
     console.log(`  ${id} "${t}" ${Math.round(w)}px / limite ${limit}px${w > limit ? '  <-- ESTOURA' : ''}`);
   }
@@ -207,7 +207,7 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headX, hea
   let baseline = headTop + bold.ascent * fontScale(headSize, bold);
   const head = [];
   for (const line of headline) {
-    head.push(outlined(line, { size: headSize, tracking: -0.028, x: headX, baseline, face: bold }));
+    head.push(outlined(line, { size: headSize, tracking: headlineTracking, x: headX, baseline, face: bold }));
     baseline += lineH;
   }
 
@@ -282,9 +282,9 @@ if (alvo === 'live' || alvo === 'ambos') {
       [{ text: 'DO ERRO', fill: colors.text }],
       [{ text: 'À SOLUÇÃO', fill: colors.text }],
     ],
-    headSize: 84, headX: 64, headTop: 205,
+    headSize: 94, headlineTracking: -0.055, headX: 64, headTop: 196,
     photo: 'leo-ferraz-cutout-arms-crossed.png',
-    zone: { x: 640, y: 0, w: 640, h: 720 },
+    zone: { x: 640, y: 0, w: 640, h: 720, subjectScale: 1.08 },
     outDir: path.join(root, 'brand-assets', 'thumbnails'),
   };
 
