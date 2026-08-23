@@ -92,10 +92,10 @@ function safeLineHeight(lines, size, preferred) {
   return Math.max(preferred, minimo);
 }
 
-function grid(W, H, cell) {
+function grid(W, H, cell, opacity = 0.45) {
   const l = [];
-  for (let x = cell; x < W; x += cell) l.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="${colors.grid}" stroke-opacity="0.45" stroke-width="1"/>`);
-  for (let y = cell; y < H; y += cell) l.push(`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="${colors.grid}" stroke-opacity="0.45" stroke-width="1"/>`);
+  for (let x = cell; x < W; x += cell) l.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="${colors.grid}" stroke-opacity="${opacity}" stroke-width="1"/>`);
+  for (let y = cell; y < H; y += cell) l.push(`<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="${colors.grid}" stroke-opacity="${opacity}" stroke-width="1"/>`);
   return l.join('');
 }
 
@@ -182,7 +182,7 @@ async function placeCutout(file, zone, textRight) {
 
 let W_FRAME = 1280;
 
-async function build({ id, W, H, cell, badgeSpec, headline, headSize, headlineTracking = -0.028, headX, headTop, photo, zone, outDir = outRoot }) {
+async function build({ id, W, H, cell, gridOpacity = 0.45, badgeSpec, headline, headSize, headlineTracking = -0.028, headX, headTop, photo, zone, outDir = outRoot }) {
   W_FRAME = W;
   fs.mkdirSync(outDir, { recursive: true });
   assertGlyphs(headline.flat().map((r) => r.text).join(''), bold);
@@ -213,7 +213,7 @@ async function build({ id, W, H, cell, badgeSpec, headline, headSize, headlineTr
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">`
     + `<rect width="${W}" height="${H}" fill="${colors.background}"/>`
-    + grid(W, H, cell)
+    + grid(W, H, cell, gridOpacity)
     + `<image x="${fig.x}" y="${fig.y}" width="${fig.w}" height="${fig.h}" xlink:href="${fig.uri}"/>`
     + b
     + head.join('')
@@ -270,7 +270,8 @@ if (alvo === 'vertical' || alvo === 'ambos') {
 if (alvo === 'live' || alvo === 'ambos') {
   const liveCover = {
     W: 1280, H: 720, cell: 48,
-    badgeSpec: { text: 'AO VIVO', x: 64, y: 56, size: 26, height: 56, fill: colors.live, ink: '#FFFFFF' },
+    gridOpacity: 0.28,
+    badgeSpec: { text: 'AO VIVO', x: 48, y: 48, size: 30, height: 64, fill: colors.live, ink: '#FFFFFF' },
     // Three lines, not the previous two. The standard's photo area is 640 wide
     // against the old live layout's 560, so the text column lost 160px and
     // "DO ERRO À SOLUÇÃO" measured 810px against a 538px limit. Broken rather
