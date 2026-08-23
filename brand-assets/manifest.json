@@ -1268,7 +1268,8 @@
       },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-1280x720.png",
-      "status": "approved"
+      "status": "approved",
+      "pixel_safe_zone_audit": "foreground-copy-only"
     },
     {
       "id": "youtube-thumbnail-master-3840x2160",
@@ -1314,7 +1315,8 @@
       },
       "usage": "upload/publication export",
       "export_path": "brand-assets/exports/day-1/05-youtube/youtube-thumbnail-master-3840x2160.png",
-      "status": "approved"
+      "status": "approved",
+      "pixel_safe_zone_audit": "foreground-copy-only"
     },
     {
       "id": "instagram-reels-cover-420x654",
@@ -1475,7 +1477,8 @@
       },
       "usage": "clearly demonstrative example only",
       "export_path": "brand-assets/exports/day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png",
-      "status": "approved"
+      "status": "approved",
+      "pixel_safe_zone_audit": "foreground-copy-only"
     },
     {
       "id": "01-comecando-em-breve",

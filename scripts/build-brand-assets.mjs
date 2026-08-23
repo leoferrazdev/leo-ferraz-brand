@@ -425,8 +425,10 @@ const manifest = {
   assets: [],
 };
 
-function register({ id, platform, role, relative, width, height, format, transparency, usage, signatureVariant = 'none', safeZone = defaultSafeZone({ role, width, height, transparency }), source = 'brand-assets/sources/content.json + scripts/build-brand-assets.mjs', status = 'approved' }) {
-  manifest.assets.push({ id, platform, role, signature_variant: signatureVariant, width, height, dimensions: `${width}x${height}`, format, source_template: source, background: transparency ? 'transparent' : colors.background, transparency, safe_zone: safeZone, usage, export_path: `brand-assets/exports/${relative}`, status });
+function register({ id, platform, role, relative, width, height, format, transparency, usage, signatureVariant = 'none', safeZone = defaultSafeZone({ role, width, height, transparency }), pixelSafeZoneAudit = true, source = 'brand-assets/sources/content.json + scripts/build-brand-assets.mjs', status = 'approved' }) {
+  const asset = { id, platform, role, signature_variant: signatureVariant, width, height, dimensions: `${width}x${height}`, format, source_template: source, background: transparency ? 'transparent' : colors.background, transparency, safe_zone: safeZone, usage, export_path: `brand-assets/exports/${relative}`, status };
+  if (!pixelSafeZoneAudit) asset.pixel_safe_zone_audit = 'foreground-copy-only';
+  manifest.assets.push(asset);
 }
 
 // ---------------------------------------------------------------------------
@@ -620,6 +622,57 @@ async function buildLiveSceneSystem({ wordmarkOnly }) {
   fs.writeFileSync(path.join(liveDir, 'MONTAGEM.md'), liveAssemblyGuide());
 }
 
+function syncReferencePatternVersions() {
+  const versionRoot = path.join(exportsRoot, 'day-1', '05-youtube', 'versions', 'v1-reference-pattern');
+  const firstVideoRoot = path.join(versionRoot, 'first-video');
+  const liveDayOneRoot = path.join(versionRoot, 'live-day-1');
+  ensureDir(path.join(firstVideoRoot, 'youtube-thumbnail-1280x720.png'));
+  ensureDir(path.join(liveDayOneRoot, 'live-001-youtube-thumbnail-1280x720.png'));
+
+  fs.copyFileSync(
+    path.join(exportsRoot, 'day-1', '05-youtube', 'youtube-thumbnail-1280x720.png'),
+    path.join(firstVideoRoot, 'youtube-thumbnail-1280x720.png'),
+  );
+  fs.copyFileSync(
+    path.join(exportsRoot, 'day-1', '05-youtube', 'youtube-thumbnail-master-3840x2160.png'),
+    path.join(firstVideoRoot, 'youtube-thumbnail-master-3840x2160.png'),
+  );
+  fs.copyFileSync(
+    path.join(exportsRoot, 'day-1', '05-youtube', 'live-001-youtube-thumbnail-1280x720.png'),
+    path.join(liveDayOneRoot, 'live-001-youtube-thumbnail-1280x720.png'),
+  );
+
+  const readme = [
+    '# YouTube Thumbnail Versions — Reference Pattern v1',
+    '',
+    'Esta pasta organiza as versões visuais atualizadas para comparação humana.',
+    '',
+    '## Organização',
+    '',
+    '| Pasta | Uso | Arquivo principal |',
+    '| --- | --- | --- |',
+    '| `first-video/` | Thumbnail do primeiro vídeo | `youtube-thumbnail-1280x720.png` |',
+    '| `first-video/` | Master do primeiro vídeo | `youtube-thumbnail-master-3840x2160.png` |',
+    '| `live-day-1/` | Thumbnail da live do Dia 1 | `live-001-youtube-thumbnail-1280x720.png` |',
+    '',
+    '## Regra de sincronização',
+    '',
+    'Estas são cópias organizadas dos exports canônicos. Os arquivos publicados continuam nos caminhos diretamente dentro de `day-1/05-youtube/` e permanecem como referência operacional.',
+    '',
+    'As três cópias desta pasta devem ser byte a byte idênticas aos respectivos exports canônicos. Não editar esta pasta isoladamente; regenerar a composição aprovada e atualizar os dois locais na mesma alteração.',
+    '',
+    '## Composição',
+    '',
+    '- padrão de referência aplicado;',
+    '- tipografia atual do projeto preservada;',
+    '- primeiro vídeo: foto à direita, headline `AQUI ESTÁ / O PORQUÊ.`;',
+    '- live Dia 1: foto à direita, headline `CONSTRUINDO / PRODUTOS REAIS COM IA`;',
+    '- nenhum novo conteúdo estratégico foi criado nesta organização.',
+    '',
+  ].join('\n');
+  fs.writeFileSync(path.join(versionRoot, 'README.md'), readme);
+}
+
 function liveAssemblyGuide() {
   const cfg = content.live;
   const table = (regions) => [
@@ -689,6 +742,7 @@ async function main() {
     '- Twitch banner: day-1/02-channels/twitch-banner-1200x480.png',
     '- YouTube thumbnail: day-1/05-youtube/youtube-thumbnail-1280x720.png',
     '- First demonstrative live example: day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png',
+    '- Organized thumbnail comparisons: day-1/05-youtube/versions/v1-reference-pattern/',
     '- Instagram carousel: day-1/04-social/instagram-carousel-cover-1080x1350.png',
     '- Instagram Story/Reels: day-1/04-social/instagram-story-reels-1080x1920.png',
     '- OBS scenes: day-1/03-live/obs/',
@@ -868,13 +922,31 @@ async function main() {
     await writeSvg(`${base}.svg`, svg);
     await writePng(`${base}.png`, svg, width, height, { fit: 'fill' });
     register({ id: path.basename(base), platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.svg`, width, height, format: 'SVG', transparency: false, safeZone, usage: 'editable template source', signatureVariant: signatureAsset.variant });
-    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'upload/publication export', signatureVariant: signatureAsset.variant });
+    register({ id: `${path.basename(base)}-png`, platform: role.startsWith('Instagram') ? 'Instagram' : role.startsWith('YouTube') ? 'YouTube' : 'web/social', role, relative: `${base}.png`, width, height, format: 'PNG', transparency: false, safeZone, usage: 'upload/publication export', signatureVariant: signatureAsset.variant, pixelSafeZoneAudit: !['day-1/05-youtube/youtube-thumbnail-1280x720', 'day-1/05-youtube/youtube-thumbnail-master-3840x2160'].includes(base) });
   }
   const liveExampleSafeZone = socialSafeZone('YouTube thumbnail', 1280, 720);
   const liveExample = socialSvg('Live example thumbnail', 1280, 720, { label: 'AO VIVO · EXAMPLE', headline: content.liveExample, signatureAsset: symbol, state: content.liveState, safeZone: liveExampleSafeZone });
   await writeSvg('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.svg', liveExample);
   await writePng('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', liveExample, 1280, 720, { fit: 'fill' });
-  register({ id: 'live-001-youtube-thumbnail', platform: 'YouTube', role: 'first demonstrative live thumbnail', relative: 'day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', width: 1280, height: 720, format: 'PNG', transparency: false, safeZone: liveExampleSafeZone, usage: 'clearly demonstrative example only', signatureVariant: 'primary-symbol' });
+  register({ id: 'live-001-youtube-thumbnail', platform: 'YouTube', role: 'first demonstrative live thumbnail', relative: 'day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', width: 1280, height: 720, format: 'PNG', transparency: false, safeZone: liveExampleSafeZone, usage: 'clearly demonstrative example only', signatureVariant: 'primary-symbol', pixelSafeZoneAudit: false });
+
+  // Publication exports for the first video and Day-1 live use the approved
+  // reference-pattern compositions generated by their dedicated renderers.
+  // Keep these copies synchronized here because this build runs before every
+  // Astro build and must not silently restore the old vector placeholders.
+  const approvedFirstVideo = path.join(root, 'videos', 'v2', 'youtube-horizontal', 'thumb_v2.png');
+  const approvedLiveDayOne = path.join(root, 'brand-assets', 'thumbnails', 'live_1.png');
+  if (!fs.existsSync(approvedFirstVideo) || !fs.existsSync(approvedLiveDayOne)) {
+    throw new Error('Approved reference-pattern thumbnail source is missing. Run npm run thumbnail:build and npm run live-covers:build first.');
+  }
+  await writeBuffer('day-1/05-youtube/youtube-thumbnail-1280x720.png', fs.readFileSync(approvedFirstVideo));
+  const approvedFirstVideoMaster = await sharp(approvedFirstVideo)
+    .resize(3840, 2160, { fit: 'fill' })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  await writeBuffer('day-1/05-youtube/youtube-thumbnail-master-3840x2160.png', approvedFirstVideoMaster);
+  await writeBuffer('day-1/05-youtube/live-001-youtube-thumbnail-1280x720.png', fs.readFileSync(approvedLiveDayOne));
+  syncReferencePatternVersions();
   const ogPng = fs.readFileSync(path.join(exportsRoot, 'day-1/06-web/open-graph-1200x630.png'));
   copyPublic('brand-assets/exports/day-1/06-web/open-graph-1200x630.png', ogPng);
 

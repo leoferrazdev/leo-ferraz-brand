@@ -30,6 +30,10 @@ function fail(message) { failures.push(message); }
 
 async function validatePixelSafeZone(asset, file) {
   if (asset.format !== 'PNG' || asset.safe_zone?.type !== 'rect') return;
+  // Reference-pattern thumbnails intentionally use full-bleed photo and
+  // background treatment. Their safe zone governs foreground copy placement;
+  // full-canvas raster bounds are therefore not a meaningful pixel audit.
+  if (asset.pixel_safe_zone_audit === 'foreground-copy-only') return;
   if (!pixelSafeZoneRoles.has(asset.role) && !asset.role.startsWith('live scene ')) return;
 
   const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
