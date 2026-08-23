@@ -161,20 +161,26 @@ const variants = [
   // software words, and the streams are not always about software — a session
   // on the quality of AI-generated video has no deploy. "Solução" holds for a
   // refactor and for a video pipeline alike.
-  { id: 'live_4', line1: 'SEM CORTES', size1: 104, size2: 46, line2: [{ text: 'DO ERRO À ', fill: colors.text }, { text: 'SOLUÇÃO', fill: colors.accent }] },
+  // Keep the operational Day-1 filename and its historical alias on the same
+  // approved reference composition so the two names cannot drift apart.
+  { id: 'live_4', line1: 'CONSTRUINDO', size1: 92, size2: 46, line2: [{ text: 'PRODUTOS ', fill: colors.text }, { text: 'REAIS', fill: colors.accent }, { text: ' COM IA', fill: colors.text }] },
 ];
+
+const requested = new Set((process.argv[2] ?? '').split(',').map((value) => value.trim()).filter(Boolean));
+const selectedVariants = requested.size ? variants.filter((variant) => requested.has(variant.id)) : variants;
+if (!selectedVariants.length) throw new Error(`Nenhuma variante encontrada para: ${[...requested].join(', ')}`);
 
 // Accented capitals live outside the ASCII range, and a missing glyph is
 // dropped silently by the outliner — the letter would just vanish from the
 // rendered cover. Fail loudly instead.
-for (const variant of variants) {
+for (const variant of selectedVariants) {
   const text = variant.line1 + variant.line2.map((r) => r.text).join('');
   const missing = [...new Set([...text])].filter((c) => c !== ' ' && !bold.glyphForCodePoint(c.codePointAt(0))?.path?.commands?.length);
   if (missing.length) throw new Error(`${variant.id}: fonte sem glifo para ${missing.map((c) => `"${c}"`).join(', ')}`);
 }
 
 const photo = await portraitDataUri();
-for (const variant of variants) {
+for (const variant of selectedVariants) {
   const svg = coverSvg(variant, photo);
   const buffer = Buffer.from(svg);
   await sharp(buffer).resize(W, H, { fit: 'fill' }).png({ compressionLevel: 9 }).toFile(path.join(thumbsRoot, `${variant.id}.png`));
@@ -185,4 +191,4 @@ for (const variant of variants) {
   const limit = PHOTO_X - 72;
   console.log(`${variant.id}: largura do texto ${Math.round(overrun)}px / limite ${limit}px${overrun > limit ? '  <-- ESTOURA' : ''}`);
 }
-console.log(`Geradas ${variants.length} capas de live.`);
+console.log(`Geradas ${selectedVariants.length} capas de live.`);
