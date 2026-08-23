@@ -284,7 +284,7 @@ if (alvo === 'live' || alvo === 'ambos') {
     ],
     headSize: 102, headlineTracking: -0.10, headX: 64, headTop: 184,
     photo: 'leo-ferraz-cutout-arms-crossed.png',
-    zone: { x: 640, y: 0, w: 640, h: 720, subjectScale: 1.08 },
+    zone: { x: 640, y: 0, w: 640, h: 720, subjectScale: 1.17 },
     outDir: path.join(root, 'brand-assets', 'thumbnails'),
   };
 
