@@ -78,6 +78,7 @@ Esse propósito não é uma promessa comercial e não deve ser convertido em pro
 - mostrar o produto, o processo e os números quando existirem;
 - acompanhar e documentar custo, receita, lucro ou prejuízo de cada produto quando esses dados existirem;
 - formar uma audiência própria em torno da construção pública e, posteriormente, monetizar essa audiência;
+- comercializar diretamente os próprios produtos — SaaS, apps, jogos e experimentos — sempre que houver viabilidade para isso;
 - registrar também falhas, hipóteses erradas, mudanças de direção e resultados negativos;
 - desenvolver uma presença própria em torno de `leoferraz.dev` e dos canais de distribuição;
 - documentar a jornada de forma localizada, sem transformar a comunicação em uma tradução automática ou em uma segunda identidade verbal.
@@ -112,15 +113,16 @@ Não inventar produtos, nomes, métricas, usuários, receita, validação ou res
 ## Propósito econômico e monetização
 
 > [!important] Intenção econômica existente
-> O projeto tem o propósito de construir produtos reais, colocá-los no mercado, documentar a jornada, formar uma audiência própria e monetizar essa audiência. A monetização não está orientada principalmente à venda direta de infoprodutos.
+> O projeto tem o propósito de construir produtos reais, colocá-los no mercado, documentar a jornada, formar uma audiência própria e monetizar essa audiência. Além disso, os próprios produtos poderão gerar receita por comercialização direta quando houver viabilidade. A monetização não está orientada principalmente à venda direta de infoprodutos.
 
-O encadeamento econômico pretendido é:
+Existem duas vias econômicas compatíveis:
 
 ```text
 Produtos reais → Experiência → Evidência → Documentação pública → Audiência própria → Monetização da audiência
+      └──────────────────────────────────────────────────────────────────────────────→ Comercialização direta do produto quando viável
 ```
 
-Isso não transforma conteúdo no produto principal. A construção de produtos continua sendo a origem da experiência, da evidência e da documentação. A audiência é formada como consequência da jornada pública e pode se tornar o ativo monetizado.
+Isso não transforma conteúdo no produto principal. A construção de produtos continua sendo a origem da experiência, da evidência e da documentação. A audiência é formada como consequência da jornada pública e pode se tornar um ativo monetizado. Os produtos também podem ser ativos comercializados diretamente, desde que exista viabilidade para isso.
 
 O modelo não deve ser resumido como:
 
@@ -142,11 +144,14 @@ Formulação operacional já registrada no cofre: se um produto gerar zero, isso
 
 ### O que permanece indefinido
 
-Existe propósito e intenção definidos de monetizar a própria audiência, mas ainda não existe um formato específico de monetização definido para executar essa intenção.
+Existe propósito e intenção definidos de monetizar a própria audiência e de comercializar diretamente produtos viáveis, mas ainda não existe um formato específico de monetização definido para executar cada uma dessas vias.
 
 Ainda não foram definidos:
 
 - plataforma, canal ou combinação de canais que será usada para monetizar a audiência;
+- quais produtos terão comercialização direta;
+- qual será o modelo comercial de cada produto;
+- quais critérios determinarão a viabilidade de comercialização;
 - publicidade, patrocínio, afiliados, licenciamento ou outras modalidades comerciais;
 - eventual assinatura, comunidade paga ou acesso premium;
 - eventual oferta de serviços relacionada à audiência;
@@ -161,7 +166,9 @@ Portanto, a leitura correta é:
 Propósito econômico: definido.
 Intenção de colocar produtos no mercado e medir receita/lucro/prejuízo: definida.
 Intenção de monetizar a própria audiência: definida.
+Intenção de comercializar diretamente produtos viáveis: definida.
 Formato de monetização da audiência: indefinido.
+Modelo comercial de cada produto: indefinido.
 Preços e metas financeiras: indefinidos.
 ```
 
@@ -188,11 +195,12 @@ Regras práticas:
 6. Não tratar conteúdo como o modelo econômico central.
 7. Reconhecer que a audiência própria é o ativo que o projeto pretende monetizar.
 8. Reconhecer que receita, lucro e prejuízo dos produtos também fazem parte do que o projeto pretende observar quando houver produto no mercado.
-9. Não presumir venda direta de infoprodutos.
-10. Não inventar um formato específico, preço ou meta financeira.
-11. Não criar um plano de monetização sem uma tarefa explícita de decisão estratégica.
-12. Preservar as distinções entre produto, conteúdo, audiência, canal e plataforma.
-13. Manter a comunicação baseada em construção, experimentação e experiência observada.
+9. Reconhecer que os próprios produtos poderão ser comercializados diretamente quando houver viabilidade.
+10. Não presumir venda direta de infoprodutos como mecanismo central.
+11. Não inventar um formato específico, modelo comercial, preço, critério de viabilidade ou meta financeira.
+12. Não criar um plano de monetização sem uma tarefa explícita de decisão estratégica.
+13. Preservar as distinções entre produto, conteúdo, audiência, canal e plataforma.
+14. Manter a comunicação baseada em construção, experimentação e experiência observada.
 
 ## Voz e comunicação
 
@@ -242,12 +250,12 @@ Para decisões de marca, consultar primeiro:
 ## Pendências
 
 - [ ] Definir, em tarefa estratégica separada, o formato de monetização da audiência.
-- [ ] Definir, quando aplicável, plataforma, canal, oferta, preços e evidências necessários para testar o formato escolhido.
+- [ ] Definir, quando aplicável, quais produtos serão comercializados diretamente, seus modelos, critérios de viabilidade, preços e evidências.
 - [ ] Definir o primeiro produto público sem tratá-lo antecipadamente como validado ou monetizado.
 
 ## Registro da criação
 
 - **Data:** 2026-08-23
 - **Motivo:** criar um contexto persistente para que IAs interpretem corretamente a proposta, os objetivos e o estado de monetização do projeto.
-- **Resultado:** nota criada no cofre; propósito econômico, monetização da audiência e distinção em relação à venda de infoprodutos registrados; o formato específico ainda está indefinido.
+- **Resultado:** nota criada no cofre; monetização da audiência e comercialização direta de produtos viáveis registradas como vias econômicas distintas; os formatos específicos ainda estão indefinidos.
 - **Escopo preservado:** nenhum documento canônico em `brand/` foi alterado.
