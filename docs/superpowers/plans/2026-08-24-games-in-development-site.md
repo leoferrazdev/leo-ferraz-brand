@@ -453,4 +453,3 @@ git status --short --branch
 ~~~
 
 Expected: origin/main points to the final implementation commit, no unrelated file is staged, and pre-existing untracked files remain preserved.
-
