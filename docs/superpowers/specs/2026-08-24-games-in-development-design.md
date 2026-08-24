@@ -1,7 +1,7 @@
 # Jogos em desenvolvimento no site — Design
 
-**Status:** approved  
-**Data:** 2026-08-24  
+**Status:** approved
+**Data:** 2026-08-24
 **Escopo:** homepage e `/laboratorio/` do site `leoferraz.dev`
 
 ## Objetivo
