@@ -4,6 +4,8 @@ import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import { socialLinks } from '../data/social-links';
 import { clientWork } from '../data/client-work';
+import GameCard from '../components/site/GameCard.astro';
+import { gamesInDevelopment } from '../data/games-in-development';
 import '../styles/global.css';
 
 // leoferraz.dev is the single bio link on every platform, so this page has to
@@ -56,6 +58,18 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
             <span class="proof-card__scope">{project.scope}</span>
           </a>
         ))}
+      </div>
+    </section>
+
+    <section class="homepage__products" aria-labelledby="games-title">
+      <div class="homepage__section-heading">
+        <div>
+          <p class="eyebrow">JOGOS EM DESENVOLVIMENTO</p>
+          <h2 id="games-title">Produtos próprios em construção.</h2>
+        </div>
+      </div>
+      <div class="games-in-development">
+        {gamesInDevelopment.map((game) => <GameCard game={game} />)}
       </div>
     </section>
 
