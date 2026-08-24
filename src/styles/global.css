@@ -1297,6 +1297,72 @@ code {
   }
 }
 
+.games-in-development {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+}
+
+.game-card {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+  padding-top: var(--lf-spacing-block-content);
+  border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+}
+
+.game-card__visual {
+  margin: 0;
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  background: var(--lf-color-surface-1);
+  line-height: 0;
+}
+
+.game-card__visual img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.game-card__body {
+  display: grid;
+  gap: var(--lf-spacing-inline-standard);
+  align-content: start;
+}
+
+.game-card__meta h3 {
+  margin: 0 0 var(--lf-spacing-inline-compact);
+  font-size: var(--lf-type-h3-size-large);
+  font-weight: var(--lf-type-h3-weight);
+}
+
+.game-card__status {
+  margin: 0;
+  color: var(--lf-color-experimental-primary);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+  text-transform: uppercase;
+}
+
+.game-card__description {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--lf-color-text-secondary);
+  font-size: var(--lf-type-body-size-large);
+  line-height: 1.55;
+}
+
+.game-card__cta {
+  justify-self: start;
+}
+
+@media (min-width: 900px) {
+  .game-card {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+    align-items: center;
+    gap: var(--lf-spacing-block-major);
+  }
+}
+
 /*
  * Client work (DECISAO-017). Each artifact is a live link, not a screenshot —
  * the reader verifies it themselves. The status chip is the honest half of the

@@ -1,0 +1,27 @@
+---
+import type { GameInDevelopment } from '../../data/games-in-development';
+
+interface Props {
+  game: GameInDevelopment;
+}
+
+const { game } = Astro.props;
+---
+
+<article class="game-card">
+  <figure class="game-card__visual">
+    <img src={game.image} alt={game.imageAlt} width="1280" height="720" loading="lazy" decoding="async" />
+  </figure>
+  <div class="game-card__body">
+    <div class="game-card__meta">
+      <h3>{game.name}</h3>
+      <p class="game-card__status">{game.status}</p>
+    </div>
+    <p class="game-card__description">{game.description}</p>
+    {game.platformUrl && (
+      <a class="game-card__cta" href={game.platformUrl} target="_blank" rel="noopener noreferrer">
+        Jogar na Plataforma →
+      </a>
+    )}
+  </div>
+</article>
