@@ -154,26 +154,26 @@ async function alphaBounds(file) {
   return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
 }
 
-async function photoUri(file) {
+async function photoUri(file, { width = PHOTO_W, fit = 'cover' } = {}) {
   const bounds = await alphaBounds(file);
   const buffer = await sharp(path.join(photoRoot, file))
     .extract(bounds)
-    // The approved cutout is the complete photo source. Cover would crop the
-    // gesture; contain keeps the full portrait and preserves transparency.
-    .resize(PHOTO_W, H, { fit: 'contain', position: 'south', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
+    // Portrait poses fill the editorial photo band. The presenting pose uses
+    // contain in a wider band so its complete hand remains visible.
+    .resize(width, H, { fit, position: 'south', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
     .png({ compressionLevel: 9 })
     .toBuffer();
   return `data:image/png;base64,${buffer.toString('base64')}`;
 }
 
-function coverSvg(kind, photo) {
+function coverSvg(kind, photo, { photoX = PHOTO_X, photoW = PHOTO_W } = {}) {
   const content = kind === 'first-video'
     ? `${kicker('PRODUTOS REAIS COM IA')}${headlineFirstVideo()}${subline()}`
     : `${badge()}${headlineLive()}`;
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">`
     + `<rect width="${W}" height="${H}" fill="${colors.background}"/>`
     + grid()
-    + `<image x="${PHOTO_X}" y="0" width="${PHOTO_W}" height="${H}" xlink:href="${photo}" preserveAspectRatio="xMidYMid meet"/>`
+    + `<image x="${photoX}" y="0" width="${photoW}" height="${H}" xlink:href="${photo}" preserveAspectRatio="xMidYMid meet"/>`
     + content
     + `<rect x="0" y="${H - 8}" width="${W}" height="8" fill="${colors.accent}"/>`
     + `</svg>`;
@@ -182,7 +182,7 @@ function coverSvg(kind, photo) {
 const variants = [
   { kind: 'first-video', dir: 'first-video/front', file: 'leo-ferraz-cutout-front.png', id: 'first-video-front' },
   { kind: 'first-video', dir: 'first-video/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'first-video-smile-three-quarter' },
-  { kind: 'first-video', dir: 'first-video/present-left', file: 'leo-ferraz-cutout-present-left.png', id: 'first-video-present-left' },
+  { kind: 'first-video', dir: 'first-video/present-left', file: 'leo-ferraz-cutout-present-left.png', id: 'first-video-present-left', photoX: 520, photoW: 760, fit: 'contain' },
   { kind: 'live-day-1', dir: 'live-day-1/arms-crossed', file: 'leo-ferraz-cutout-arms-crossed.png', id: 'live-day-1-arms-crossed' },
   { kind: 'live-day-1', dir: 'live-day-1/neutral', file: 'leo-ferraz-cutout-neutral.png', id: 'live-day-1-neutral' },
   { kind: 'live-day-1', dir: 'live-day-1/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'live-day-1-smile-three-quarter' },
@@ -192,8 +192,8 @@ fs.rmSync(outRoot, { recursive: true, force: true });
 
 for (const variant of variants) {
   assertGlyphs(variant.kind === 'first-video' ? 'PRODUTOS REAIS COM IA AQUI ESTÁ O PORQUÊ CUSTO RECEITA RESULTADO' : 'AO VIVO CONSTRUINDO PRODUTOS REAIS COM IA', bold);
-  const photo = await photoUri(variant.file);
-  const svg = coverSvg(variant.kind, photo);
+  const photo = await photoUri(variant.file, { width: variant.photoW ?? PHOTO_W, fit: variant.fit ?? 'cover' });
+  const svg = coverSvg(variant.kind, photo, { photoX: variant.photoX, photoW: variant.photoW });
   const outputDir = path.join(outRoot, variant.dir);
   fs.mkdirSync(outputDir, { recursive: true });
   await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path.join(outputDir, 'thumbnail-1280x720.png'));
@@ -223,6 +223,7 @@ const readme = [
   '',
   '- `#0D1117` e grid estrutural de 48px, sem redução de opacidade;',
   '- headline à esquerda, retrato ampliado à direita;',
+  '- retratos frontais preenchem a altura da faixa; `present-left` usa faixa ampliada de 760px para preservar o gesto completo;',
   '- headline, copy, safe zone e barra inferior do Reference Pattern;',
   '- IBM Plex Sans para headline e IBM Plex Mono para kicker/subline;',
   '- foto completa, sem fade, sombra, escurecimento ou recorte de gesto;',
