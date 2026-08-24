@@ -98,6 +98,9 @@ Todos superam as áreas reservadas para composições com recorte. As novas vari
 - `brand-assets/thumbnails/versions/v2-approved-founder-cutouts/` é o pack persistente de composição;
 - `brand-assets/exports/day-1/05-youtube/versions/v2-approved-founder-cutouts/` é o espelho de entrega para comparação;
 - cada arquivo deve preservar a mesma headline, grid, safe zone, barra inferior e hierarquia do Reference Pattern;
+- no pack de recortes v2, a foto é exibida completa, sem fade, sombra, escurecimento ou efeito de separação;
+- o grid permanece uniforme e visível no fundo, sem ser apagado por máscara de transição;
+- poses que apontam para a headline devem ser usadas quando houver copy à esquerda; gestos não podem ser cortados;
 - as variações são fontes aprovadas para produção, mas não alteram sozinhas qual composição está publicada em `day-1/05-youtube/`.
 
 **Procedência.** A troca de terno azul por camiseta preta não é resultado de recorte, então houve geração ou edição de conteúdo na produção desses arquivos. A ressalva da [[DECISAO-010]] sobre retrato sintético e a pendência aberta da [[DECISAO-011]] continuam valendo e foram levantadas com o fundador antes do uso. A decisão de seguir é dele, com autoridade registrada em `brand/BRAND_FOUNDATION.md`.
