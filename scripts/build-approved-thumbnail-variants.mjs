@@ -180,9 +180,9 @@ function coverSvg(kind, photo, { photoX = PHOTO_X, photoW = PHOTO_W } = {}) {
 }
 
 const variants = [
-  { kind: 'first-video', dir: 'first-video/front', file: 'leo-ferraz-cutout-front.png', id: 'first-video-front' },
-  { kind: 'first-video', dir: 'first-video/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'first-video-smile-three-quarter' },
-  { kind: 'first-video', dir: 'first-video/present-left', file: 'leo-ferraz-cutout-present-left.png', id: 'first-video-present-left', photoX: 520, photoW: 760, fit: 'contain' },
+  { kind: 'first-video', dir: 'first-video/front', file: 'leo-ferraz-cutout-front.png', id: 'first-video-front', photoX: 520, photoW: 760 },
+  { kind: 'first-video', dir: 'first-video/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'first-video-smile-three-quarter', photoX: 520, photoW: 760 },
+  { kind: 'first-video', dir: 'first-video/present-left', file: 'leo-ferraz-cutout-present-left.png', id: 'first-video-present-left', photoX: 580, photoW: 700, fit: 'contain' },
   { kind: 'live-day-1', dir: 'live-day-1/arms-crossed', file: 'leo-ferraz-cutout-arms-crossed.png', id: 'live-day-1-arms-crossed' },
   { kind: 'live-day-1', dir: 'live-day-1/neutral', file: 'leo-ferraz-cutout-neutral.png', id: 'live-day-1-neutral' },
   { kind: 'live-day-1', dir: 'live-day-1/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'live-day-1-smile-three-quarter' },
@@ -223,7 +223,7 @@ const readme = [
   '',
   '- `#0D1117` e grid estrutural de 48px, sem redução de opacidade;',
   '- headline à esquerda, retrato ampliado à direita;',
-  '- retratos frontais preenchem a altura da faixa; `present-left` usa faixa ampliada de 760px para preservar o gesto completo;',
+  '- retratos frontais usam faixa de 760px; `present-left` usa faixa de 700px deslocada à direita para preservar o gesto completo sem cobrir a headline;',
   '- headline, copy, safe zone e barra inferior do Reference Pattern;',
   '- IBM Plex Sans para headline e IBM Plex Mono para kicker/subline;',
   '- foto completa, sem fade, sombra, escurecimento ou recorte de gesto;',
