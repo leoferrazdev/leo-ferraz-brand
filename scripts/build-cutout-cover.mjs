@@ -135,16 +135,18 @@ function badge(text, { y, size, height, fill = colors.accent, ink = colors.backg
   ].join('');
 }
 
-// Where the subject actually sits inside the PNG. The canvas is not the
-// subject: these files carry transparent margin that varies per pose, so
-// scaling the canvas scales the wrong thing.
-async function subjectBox(file) {
-  const img = sharp(findPhoto(file));
-  const { data, info } = await img.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+// Subject bounds plus, per row, the leftmost opaque pixel. The row profile is
+// what makes an honest collision check possible: the figure's widest point is
+// the shoulders, near the bottom, while the headline sits high on the left. A
+// single bounding box would report a collision the eye never sees.
+async function subjectProfile(file) {
+  const { data, info } = await sharp(findPhoto(file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   let minX = Infinity; let maxX = -1; let minY = Infinity; let maxY = -1;
+  const rowLeft = new Int32Array(info.height).fill(-1);
   for (let y = 0; y < info.height; y++) {
     for (let x = 0; x < info.width; x++) {
       if (data[(y * info.width + x) * info.channels + 3] > 16) {
+        if (rowLeft[y] < 0) rowLeft[y] = x;
         if (x < minX) minX = x;
         if (x > maxX) maxX = x;
         if (y < minY) minY = y;
@@ -152,37 +154,39 @@ async function subjectBox(file) {
       }
     }
   }
-  return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
+  return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1, rowLeft };
 }
 
-// Scaled to fill the area's height so the body runs off the bottom edge, which
-// is the bleed the reference layouts get their depth from. Never cropped
-// horizontally: the first build did that and sliced a shoulder off at the
-// area's left boundary, a cut that reads as a mistake because it lands
-// mid-frame instead of at the frame edge. When the subject is wider than the
-// area, the scale drops until the full width fits, and the piece is anchored
-// to the bottom right so any remaining gap opens away from the text.
-async function placeCutout(file, zone, textRight) {
-  const box = await subjectBox(file);
-  let scale = (zone.h / box.height) * (zone.subjectScale ?? 1);
-  let w = Math.round(box.width * scale);
+// The references scale the person well past the frame height so the head reads
+// large and the torso is cut by the bottom edge. That is the whole difference
+// in presence: a figure fitted inside the frame puts the face at roughly a
+// third of the height, where the references put it near two thirds.
+//
+// zone.fill is the figure height as a multiple of frame height, so values above
+// 1 bleed off the bottom on purpose. The figure anchors to the top rather than
+// the bottom, because the head is the fixed point the composition is built on.
+async function placeCutout(file, zone, band) {
+  const box = await subjectProfile(file);
+  const scale = (zone.h * (zone.fill ?? 1)) / box.height;
+  const w = Math.round(box.width * scale);
+  const h = Math.round(box.height * scale);
+  const left = W_FRAME - w + (zone.bleedRight ?? 0);
+  const top = zone.top ?? 0;
 
-  const roomRight = W_FRAME - zone.x;
-  const maxW = Math.max(zone.w, roomRight);
-  if (w > maxW) {
-    scale = maxW / box.width;
-    w = maxW;
-  }
-  let h = Math.round(box.height * scale);
-
-  const left = W_FRAME - w;
-  const top = zone.y + zone.h - h;
-
-  // Only meaningful when the photo sits beside the text. In the vertical
-  // layout it sits below, so comparing horizontal extents there flags an
-  // overlap that does not exist.
-  if (zone.x > 0 && left < textRight) {
-    console.log(`  AVISO a figura comeca em x=${left}, o texto termina em x=${textRight}. Sobreposicao de ${textRight - left}px.`);
+  // Collision measured only across the rows the headline actually occupies,
+  // mapped back into source pixels.
+  if (band) {
+    let mostLeft = Infinity;
+    for (let y = Math.max(0, band.top); y < Math.min(H_FRAME, band.bottom); y++) {
+      const srcY = box.top + Math.round((y - top) / scale);
+      if (srcY < 0 || srcY >= box.rowLeft.length) continue;
+      const rl = box.rowLeft[srcY];
+      if (rl < 0) continue;
+      mostLeft = Math.min(mostLeft, left + (rl - box.left) * scale);
+    }
+    if (mostLeft < band.right) {
+      console.log(`  AVISO figura invade a faixa da headline em ${Math.round(band.right - mostLeft)}px`);
+    }
   }
 
   const buf = await sharp(findPhoto(file))
@@ -195,9 +199,11 @@ async function placeCutout(file, zone, textRight) {
 }
 
 let W_FRAME = 1280;
+let H_FRAME = 720;
 
 async function build({ id, W, H, cell, gridOpacity = 0.45, badgeSpec, headline, headSize, headlineTracking = -0.028, headX, headTop, photo, zone, outDir = outRoot }) {
   W_FRAME = W;
+  H_FRAME = H;
   fs.mkdirSync(outDir, { recursive: true });
   assertGlyphs(headline.flat().map((r) => r.text).join(''), bold);
 
@@ -210,7 +216,15 @@ async function build({ id, W, H, cell, gridOpacity = 0.45, badgeSpec, headline, 
     console.log(`  ${id} "${t}" ${Math.round(w)}px / limite ${limit}px${w > limit ? '  <-- ESTOURA' : ''}`);
   }
 
-  const fig = await placeCutout(photo, zone, Math.round(textRight) + Math.round(W * 0.02));
+  // The headline's own vertical extent, so the collision check knows which
+  // rows of the figure can actually reach it.
+  const lineHprev = safeLineHeight(headline, headSize, headSize * 0.95);
+  const band = {
+    top: headTop,
+    bottom: headTop + lineHprev * (headline.length - 1) + headSize * 1.1,
+    right: Math.round(textRight) + Math.round(W * 0.02),
+  };
+  const fig = await placeCutout(photo, zone, band);
   console.log(`  ${id} figura ${fig.w}x${fig.h} em x=${fig.x} y=${fig.y}`);
   const b = badge(badgeSpec.text, badgeSpec);
 
@@ -332,7 +346,7 @@ if (alvo === 'entregas' || alvo === 'ambos') {
     ],
     headSize: 125, headX: 64, headTop: 232,
     photo: 'leo-ferraz-cutout-arms-crossed.png',
-    zone: { x: 740, y: 0, w: 540, h: 720 },
+    zone: { x: 740, y: 0, w: 540, h: 720, fill: 1.62, top: 4, bleedRight: 125 },
   });
 
   // Recurring live template. The hand was removed from this pose on purpose,
@@ -351,7 +365,7 @@ if (alvo === 'entregas' || alvo === 'ambos') {
     ],
     headSize: 88, headX: 64, headTop: 238,
     photo: 'leo-ferraz-cutout-present-left-no-hand.png',
-    zone: { x: 720, y: 0, w: 560, h: 720 },
+    zone: { x: 720, y: 0, w: 560, h: 720, fill: 1.55, top: 4, bleedRight: 130 },
   });
 }
 
