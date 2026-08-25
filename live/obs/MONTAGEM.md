@@ -45,6 +45,18 @@ Fundo: `04-construcao.png` em 0, 0 · 1920×1080. Confira as coordenadas com `04
 | CÂMERA | video | 1592 | 140 | 288 | 162 |
 | CHAT / NOTAS | livre | 1592 | 326 | 288 | 669 |
 
+### Pausa para o café
+
+`04-cafe.gif` substitui a webcam quando você sai da mesa. Adicione como fonte de imagem na cena 04, **nas mesmas coordenadas da câmera**, e deixe oculto até precisar.
+
+| Fonte | Tipo | X | Y | Largura | Altura |
+| --- | --- | --- | --- | --- | --- |
+| PAUSA CAFÉ | imagem | 1592 | 140 | 288 | 162 |
+
+Ligue o GIF e desligue a câmera, nessa ordem. A tela capturada continua no ar o tempo todo, que é o ponto de usar a cena 04 para isso em vez de trocar de cena.
+
+O arquivo é 576×324, o dobro do slot, e o Streamlabs reduz na exibição. Gerado por `node scripts/build-cafe-gif.mjs`.
+
 ## 05 — Já volto
 
 Fundo: `05-ja-volto.png` em 0, 0 · 1920×1080. Nada a posicionar.
