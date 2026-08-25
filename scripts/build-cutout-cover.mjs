@@ -19,6 +19,8 @@ sharp.cache(false);
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const photoRoot = path.join(root, 'brand-assets', 'profile', 'leo-ferraz');
+const photoDerived = path.join(photoRoot, 'thumbnail-derived');
+const findPhoto = (f) => (fs.existsSync(path.join(photoRoot, f)) ? path.join(photoRoot, f) : path.join(photoDerived, f));
 const outRoot = path.join(root, 'brand-assets', 'capas');
 fs.mkdirSync(outRoot, { recursive: true });
 
@@ -125,7 +127,7 @@ function badge(text, { x, y, size, height, fill = colors.accent, ink = colors.ba
 // subject: these files carry transparent margin that varies per pose, so
 // scaling the canvas scales the wrong thing.
 async function subjectBox(file) {
-  const img = sharp(path.join(photoRoot, file));
+  const img = sharp(findPhoto(file));
   const { data, info } = await img.ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   let minX = Infinity; let maxX = -1; let minY = Infinity; let maxY = -1;
   for (let y = 0; y < info.height; y++) {
@@ -171,7 +173,7 @@ async function placeCutout(file, zone, textRight) {
     console.log(`  AVISO a figura comeca em x=${left}, o texto termina em x=${textRight}. Sobreposicao de ${textRight - left}px.`);
   }
 
-  const buf = await sharp(path.join(photoRoot, file))
+  const buf = await sharp(findPhoto(file))
     .extract({ left: box.left, top: box.top, width: box.width, height: box.height })
     .resize(w, h, { fit: 'fill', kernel: 'lanczos3' })
     .png()
@@ -295,6 +297,50 @@ if (alvo === 'live' || alvo === 'ambos') {
   for (const id of ['live_1', 'live_4']) {
     await build({ id, ...liveCover });
   }
+}
+
+// The two finished covers.
+//
+// Photo area is sized per pose rather than fixed at the standard's 640. A pose
+// only needs as much width as its own proportion demands at full frame height
+// — arms-crossed at 0.75 needs 540px, present-left-no-hand at 0.83 needs 598 —
+// and every pixel not spent on the figure goes to the headline column, which
+// is what carries the thumbnail at small size.
+if (alvo === 'entregas' || alvo === 'ambos') {
+  // Positioning video. Arms crossed reads conviction, which is the register a
+  // channel's opening statement needs, and at 0.75 it is the most vertical
+  // pose available so it fills the frame without any scale reduction.
+  await build({
+    id: 'capa-primeiro-video',
+    W: 1280, H: 720, cell: 48,
+    badgeSpec: { text: 'PRODUTOS REAIS COM IA', x: 64, y: 56, size: 26, height: 56 },
+    headline: [
+      [{ text: 'AQUI ESTÁ', fill: colors.text }],
+      [{ text: 'O PORQUÊ.', fill: colors.text }],
+    ],
+    headSize: 118, headX: 64, headTop: 250,
+    photo: 'leo-ferraz-cutout-arms-crossed.png',
+    zone: { x: 740, y: 0, w: 540, h: 720 },
+  });
+
+  // Recurring live template. The hand was removed from this pose on purpose,
+  // and that is exactly what a reusable base needs: a gesture would tie every
+  // future live to one meaning. Copy carries no topic, per DECISAO-020, so the
+  // cover never needs regenerating before going on air. Swapping it is one
+  // edit here if a specific stream ever justifies the cost.
+  await build({
+    id: 'capa-live-recorrente',
+    W: 1280, H: 720, cell: 48,
+    badgeSpec: { text: 'AO VIVO', x: 64, y: 56, size: 26, height: 56, fill: colors.live, ink: '#FFFFFF' },
+    headline: [
+      [{ text: 'CONSTRUINDO', fill: colors.text }],
+      [{ text: 'PRODUTOS', fill: colors.text }],
+      [{ text: 'REAIS COM IA', fill: colors.text }],
+    ],
+    headSize: 88, headX: 64, headTop: 195,
+    photo: 'leo-ferraz-cutout-present-left-no-hand.png',
+    zone: { x: 720, y: 0, w: 560, h: 720 },
+  });
 }
 
 console.log('\nGerado.');
