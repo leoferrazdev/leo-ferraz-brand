@@ -105,21 +105,33 @@ function grid(W, H, cell, opacity = 0.45) {
 // lands near 2.5:1 contrast while the dark navy reaches about 7:1. The live
 // badge inverts this because #E5484D is dark enough for white to read on it,
 // which is also what every platform's own live badge does.
-function badge(text, { x, y, size, height, fill = colors.accent, ink = colors.background }) {
+// Three things the references do that the first build did not.
+//
+// The pill runs off the left edge of the frame instead of sitting inset with a
+// margin. Its left rounding is drawn off-canvas so the shape reads as cut by
+// the frame, which is what gives it the weight of a banner rather than a
+// button. Its text still starts on the same x as the headline below, so the
+// left type edge stays aligned even though the shape behind it does not.
+//
+// The dot follows the text rather than preceding it.
+//
+// And the pill is taller in proportion to the frame, near 11% against the 8%
+// the first build used, which is most of why the references read louder.
+function badge(text, { y, size, height, fill = colors.accent, ink = colors.background, textX = 64 }) {
   const tracking = 0.06;
-  const dot = Math.round(size * 0.6);
-  const padL = Math.round(size * 0.85);
-  const gap = Math.round(size * 0.54);
-  const padR = Math.round(size * 1.08);
+  const dot = Math.round(size * 0.62);
+  const gapDot = Math.round(size * 0.6);
+  const padR = Math.round(size * 0.95);
   const tw = measure(text, size, tracking, bold);
-  const w = padL + dot + gap + tw + padR;
+  const left = -height / 2;
+  const right = textX + tw + gapDot + dot + padR;
   const cy = y + height / 2;
   const cap = bold.capHeight ?? bold.ascent * 0.7;
   const baseline = number(cy + (cap * fontScale(size, bold)) / 2);
   return [
-    `<rect x="${x}" y="${y}" width="${number(w)}" height="${height}" rx="${height / 2}" fill="${fill}"/>`,
-    `<circle cx="${x + padL + dot / 2}" cy="${cy}" r="${dot / 2}" fill="${ink}"/>`,
-    outlined([{ text, fill: ink }], { size, tracking, x: x + padL + dot + gap, baseline, face: bold }),
+    `<rect x="${left}" y="${y}" width="${number(right - left)}" height="${height}" rx="${height / 2}" fill="${fill}"/>`,
+    outlined([{ text, fill: ink }], { size, tracking, x: textX, baseline, face: bold }),
+    `<circle cx="${number(textX + tw + gapDot + dot / 2)}" cy="${cy}" r="${dot / 2}" fill="${ink}"/>`,
   ].join('');
 }
 
@@ -313,12 +325,12 @@ if (alvo === 'entregas' || alvo === 'ambos') {
   await build({
     id: 'capa-primeiro-video',
     W: 1280, H: 720, cell: 48,
-    badgeSpec: { text: 'PRODUTOS REAIS COM IA', x: 64, y: 56, size: 26, height: 56 },
+    badgeSpec: { text: 'PRODUTOS REAIS COM IA', y: 52, size: 34, height: 80 },
     headline: [
       [{ text: 'AQUI ESTÁ', fill: colors.text }],
       [{ text: 'O PORQUÊ.', fill: colors.text }],
     ],
-    headSize: 118, headX: 64, headTop: 250,
+    headSize: 125, headX: 64, headTop: 232,
     photo: 'leo-ferraz-cutout-arms-crossed.png',
     zone: { x: 740, y: 0, w: 540, h: 720 },
   });
@@ -331,13 +343,13 @@ if (alvo === 'entregas' || alvo === 'ambos') {
   await build({
     id: 'capa-live-recorrente',
     W: 1280, H: 720, cell: 48,
-    badgeSpec: { text: 'AO VIVO', x: 64, y: 56, size: 26, height: 56, fill: colors.live, ink: '#FFFFFF' },
+    badgeSpec: { text: 'AO VIVO', y: 52, size: 34, height: 80, fill: colors.live, ink: '#FFFFFF' },
     headline: [
       [{ text: 'CONSTRUINDO', fill: colors.text }],
       [{ text: 'PRODUTOS', fill: colors.text }],
       [{ text: 'REAIS COM IA', fill: colors.text }],
     ],
-    headSize: 88, headX: 64, headTop: 195,
+    headSize: 88, headX: 64, headTop: 238,
     photo: 'leo-ferraz-cutout-present-left-no-hand.png',
     zone: { x: 720, y: 0, w: 560, h: 720 },
   });
