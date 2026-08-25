@@ -19,7 +19,7 @@ Este pack não substitui os exports publicados em `day-1/05-youtube/` nem sobres
 
 - `#0D1117` e grid estrutural de 48px, sem redução de opacidade;
 - headline à esquerda, retrato ampliado à direita;
-- retratos frontais e `present-left` usam faixa dominante de 760px; a variante `present-left` remove o gesto manual para manter somente o corpo do fundador;
+- toda foto de fundador usa `fit: contain` dentro da faixa de 760px: a imagem é ajustada sem cortar ombro, braço, cabeça ou mão;
 - headline, copy, safe zone e barra inferior do Reference Pattern;
 - IBM Plex Sans para headline e IBM Plex Mono para kicker/subline;
 - foto completa, sem fade, sombra, escurecimento ou recorte de gesto;

@@ -155,13 +155,13 @@ async function alphaBounds(file) {
   return { left: minX, top: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
 }
 
-async function photoUri(file, { width = PHOTO_W, fit = 'cover' } = {}) {
+async function photoUri(file, { width = PHOTO_W } = {}) {
   const bounds = await alphaBounds(file);
   const buffer = await sharp(path.join(photoRoot, file))
     .extract(bounds)
-    // Approved founder portraits fill the editorial photo band. Derived
-    // variants may change the silhouette, but not the dominant scale.
-    .resize(width, H, { fit, position: 'south', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
+    // Founder photography is always contained. The full alpha bounds must
+    // remain visible: no shoulder, arm, head or hand may be cropped.
+    .resize(width, H, { fit: 'contain', position: 'south', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
     .png({ compressionLevel: 9 })
     .toBuffer();
   return `data:image/png;base64,${buffer.toString('base64')}`;
@@ -183,7 +183,7 @@ function coverSvg(kind, photo, { photoX = PHOTO_X, photoW = PHOTO_W } = {}) {
 const variants = [
   { kind: 'first-video', dir: 'first-video/front', file: 'thumbnail-derived/leo-ferraz-cutout-front-shoulder-extended.png', id: 'first-video-front', photoX: 520, photoW: 760 },
   { kind: 'first-video', dir: 'first-video/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'first-video-smile-three-quarter', photoX: 520, photoW: 760 },
-  { kind: 'first-video', dir: 'first-video/present-left', file: 'thumbnail-derived/leo-ferraz-cutout-present-left-no-hand.png', id: 'first-video-present-left', photoX: 520, photoW: 760, fit: 'contain' },
+  { kind: 'first-video', dir: 'first-video/present-left', file: 'thumbnail-derived/leo-ferraz-cutout-present-left-no-hand.png', id: 'first-video-present-left', photoX: 520, photoW: 760 },
   { kind: 'live-day-1', dir: 'live-day-1/arms-crossed', file: 'leo-ferraz-cutout-arms-crossed.png', id: 'live-day-1-arms-crossed' },
   { kind: 'live-day-1', dir: 'live-day-1/neutral', file: 'leo-ferraz-cutout-neutral.png', id: 'live-day-1-neutral' },
   { kind: 'live-day-1', dir: 'live-day-1/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'live-day-1-smile-three-quarter' },
@@ -194,7 +194,7 @@ fs.rmSync(deliveryRoot, { recursive: true, force: true });
 
 for (const variant of variants) {
   assertGlyphs(variant.kind === 'first-video' ? 'PRODUTOS REAIS COM IA AQUI ESTÁ O PORQUÊ CUSTO RECEITA RESULTADO' : 'AO VIVO CONSTRUINDO PRODUTOS REAIS COM IA', bold);
-  const photo = await photoUri(variant.file, { width: variant.photoW ?? PHOTO_W, fit: variant.fit ?? 'cover' });
+  const photo = await photoUri(variant.file, { width: variant.photoW ?? PHOTO_W });
   const svg = coverSvg(variant.kind, photo, { photoX: variant.photoX, photoW: variant.photoW });
   const outputDir = path.join(outRoot, variant.dir);
   const deliveryDir = path.join(deliveryRoot, variant.dir);
@@ -231,7 +231,7 @@ const readme = [
   '',
   '- `#0D1117` e grid estrutural de 48px, sem redução de opacidade;',
   '- headline à esquerda, retrato ampliado à direita;',
-  '- retratos frontais e `present-left` usam faixa dominante de 760px; a variante `present-left` remove o gesto manual para manter somente o corpo do fundador;',
+  '- toda foto de fundador usa `fit: contain` dentro da faixa de 760px: a imagem é ajustada sem cortar ombro, braço, cabeça ou mão;',
   '- headline, copy, safe zone e barra inferior do Reference Pattern;',
   '- IBM Plex Sans para headline e IBM Plex Mono para kicker/subline;',
   '- foto completa, sem fade, sombra, escurecimento ou recorte de gesto;',
