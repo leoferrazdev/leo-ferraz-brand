@@ -16,6 +16,7 @@ sharp.cache(false);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const photoRoot = path.join(root, 'brand-assets', 'profile', 'leo-ferraz');
 const outRoot = path.join(root, 'brand-assets', 'thumbnails', 'versions', 'v2-approved-founder-cutouts');
+const deliveryRoot = path.join(root, 'brand-assets', 'exports', 'day-1', '05-youtube', 'versions', 'v2-approved-founder-cutouts');
 
 const W = 1280;
 const H = 720;
@@ -158,8 +159,8 @@ async function photoUri(file, { width = PHOTO_W, fit = 'cover' } = {}) {
   const bounds = await alphaBounds(file);
   const buffer = await sharp(path.join(photoRoot, file))
     .extract(bounds)
-    // Portrait poses fill the editorial photo band. The presenting pose uses
-    // contain in a wider band so its complete hand remains visible.
+    // Approved founder portraits fill the editorial photo band. Derived
+    // variants may change the silhouette, but not the dominant scale.
     .resize(width, H, { fit, position: 'south', background: { r: 0, g: 0, b: 0, alpha: 0 }, kernel: 'lanczos3' })
     .png({ compressionLevel: 9 })
     .toBuffer();
@@ -180,24 +181,31 @@ function coverSvg(kind, photo, { photoX = PHOTO_X, photoW = PHOTO_W } = {}) {
 }
 
 const variants = [
-  { kind: 'first-video', dir: 'first-video/front', file: 'leo-ferraz-cutout-front.png', id: 'first-video-front', photoX: 520, photoW: 760 },
+  { kind: 'first-video', dir: 'first-video/front', file: 'thumbnail-derived/leo-ferraz-cutout-front-shoulder-extended.png', id: 'first-video-front', photoX: 520, photoW: 760 },
   { kind: 'first-video', dir: 'first-video/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'first-video-smile-three-quarter', photoX: 520, photoW: 760 },
-  { kind: 'first-video', dir: 'first-video/present-left', file: 'leo-ferraz-cutout-present-left.png', id: 'first-video-present-left', photoX: 580, photoW: 700, fit: 'contain' },
+  { kind: 'first-video', dir: 'first-video/present-left', file: 'thumbnail-derived/leo-ferraz-cutout-present-left-no-hand.png', id: 'first-video-present-left', photoX: 520, photoW: 760, fit: 'contain' },
   { kind: 'live-day-1', dir: 'live-day-1/arms-crossed', file: 'leo-ferraz-cutout-arms-crossed.png', id: 'live-day-1-arms-crossed' },
   { kind: 'live-day-1', dir: 'live-day-1/neutral', file: 'leo-ferraz-cutout-neutral.png', id: 'live-day-1-neutral' },
   { kind: 'live-day-1', dir: 'live-day-1/smile-three-quarter', file: 'leo-ferraz-cutout-smile-three-quarter.png', id: 'live-day-1-smile-three-quarter' },
 ];
 
 fs.rmSync(outRoot, { recursive: true, force: true });
+fs.rmSync(deliveryRoot, { recursive: true, force: true });
 
 for (const variant of variants) {
   assertGlyphs(variant.kind === 'first-video' ? 'PRODUTOS REAIS COM IA AQUI ESTÁ O PORQUÊ CUSTO RECEITA RESULTADO' : 'AO VIVO CONSTRUINDO PRODUTOS REAIS COM IA', bold);
   const photo = await photoUri(variant.file, { width: variant.photoW ?? PHOTO_W, fit: variant.fit ?? 'cover' });
   const svg = coverSvg(variant.kind, photo, { photoX: variant.photoX, photoW: variant.photoW });
   const outputDir = path.join(outRoot, variant.dir);
+  const deliveryDir = path.join(deliveryRoot, variant.dir);
   fs.mkdirSync(outputDir, { recursive: true });
-  await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(path.join(outputDir, 'thumbnail-1280x720.png'));
-  await sharp(Buffer.from(svg)).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(path.join(outputDir, 'thumbnail-1280x720.jpg'));
+  fs.mkdirSync(deliveryDir, { recursive: true });
+  const pngPath = path.join(outputDir, 'thumbnail-1280x720.png');
+  const jpgPath = path.join(outputDir, 'thumbnail-1280x720.jpg');
+  await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(pngPath);
+  await sharp(Buffer.from(svg)).jpeg({ quality: 92, chromaSubsampling: '4:4:4' }).toFile(jpgPath);
+  fs.copyFileSync(pngPath, path.join(deliveryDir, 'thumbnail-1280x720.png'));
+  fs.copyFileSync(jpgPath, path.join(deliveryDir, 'thumbnail-1280x720.jpg'));
   console.log(`${variant.id}: ${variant.file}`);
 }
 
@@ -212,9 +220,9 @@ const readme = [
   '',
   '| Aplicação | Fonte | Saída |',
   '| --- | --- | --- |',
-  '| Primeiro vídeo | `leo-ferraz-cutout-front.png` | `first-video/front/` |',
+  '| Primeiro vídeo | `thumbnail-derived/leo-ferraz-cutout-front-shoulder-extended.png` | `first-video/front/` |',
   '| Primeiro vídeo | `leo-ferraz-cutout-smile-three-quarter.png` | `first-video/smile-three-quarter/` |',
-  '| Primeiro vídeo | `leo-ferraz-cutout-present-left.png` | `first-video/present-left/` |',
+  '| Primeiro vídeo | `thumbnail-derived/leo-ferraz-cutout-present-left-no-hand.png` | `first-video/present-left/` |',
   '| Live Dia 1 | `leo-ferraz-cutout-arms-crossed.png` | `live-day-1/arms-crossed/` |',
   '| Live Dia 1 | `leo-ferraz-cutout-neutral.png` | `live-day-1/neutral/` |',
   '| Live Dia 1 | `leo-ferraz-cutout-smile-three-quarter.png` | `live-day-1/smile-three-quarter/` |',
@@ -223,7 +231,7 @@ const readme = [
   '',
   '- `#0D1117` e grid estrutural de 48px, sem redução de opacidade;',
   '- headline à esquerda, retrato ampliado à direita;',
-  '- retratos frontais usam faixa de 760px; `present-left` usa faixa de 700px deslocada à direita para preservar o gesto completo sem cobrir a headline;',
+  '- retratos frontais e `present-left` usam faixa dominante de 760px; a variante `present-left` remove o gesto manual para manter somente o corpo do fundador;',
   '- headline, copy, safe zone e barra inferior do Reference Pattern;',
   '- IBM Plex Sans para headline e IBM Plex Mono para kicker/subline;',
   '- foto completa, sem fade, sombra, escurecimento ou recorte de gesto;',
@@ -231,4 +239,6 @@ const readme = [
   '',
 ].join('\n');
 fs.writeFileSync(path.join(outRoot, 'README.md'), readme);
+fs.mkdirSync(deliveryRoot, { recursive: true });
+fs.copyFileSync(path.join(outRoot, 'README.md'), path.join(deliveryRoot, 'README.md'));
 console.log(`Geradas ${variants.length} variações aprovadas.`);
