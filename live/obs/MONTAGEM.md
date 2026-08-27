@@ -57,6 +57,22 @@ Ligue o GIF e desligue a câmera, nessa ordem. A tela capturada continua no ar o
 
 O arquivo é 576×324, o dobro do slot, e o Streamlabs reduz na exibição. Gerado por `node scripts/build-cafe-gif.mjs`.
 
+### Chamada de inscrição
+
+`04-inscreva-se.gif` é o CTA de inscrição. Fundo transparente, entra e sai sozinho. Adicione como fonte de imagem e **deixe ligado**, não precisa de gatilho manual.
+
+| Fonte | Tipo | X | Y | Largura | Altura |
+| --- | --- | --- | --- | --- | --- |
+| INSCREVA-SE | imagem | 1592 | 845 | 288 | 150 |
+
+Ciclo de 27,7s. O cartão fica visível 5,7s e some nos 22s seguintes, ou seja 21% do tempo. Não cobre o rosto nem a tela capturada, porque a cena 04 não tem retângulo livre e um CTA permanente sobre qualquer um dos dois seria pior que não ter CTA.
+
+Ele repousa sobre a base da coluna direita, que é a área de chat. Se você estiver exibindo chat, o cartão cobre as mensagens mais recentes durante esses 5,7s. Para espaçar mais, aumente `IDLE_SECONDS` no script e regenere.
+
+O handle gravado é `@leoferrazdev`. Se o canal mudar de handle, o arquivo precisa ser regerado, porque o texto é traçado como vetor e não é editável.
+
+Gerado por `node scripts/build-inscreva-gif.mjs`.
+
 ## 05 — Já volto
 
 Fundo: `05-ja-volto.png` em 0, 0 · 1920×1080. Nada a posicionar.
