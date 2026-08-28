@@ -40,13 +40,13 @@
 - Consumes: contrato de prompt, riscos e critérios de aceitação da especificação aprovada; função editorial das dez peças no `COPY-001`; regras canônicas de construção, evidência, contenção e `builder not guru`.
 - Produces: prompt-base copiável e dez prompts adicionais, cada um com cena, enquadramento, câmera, ação e expressão originais, sem vídeo-base.
 
-- [ ] **Step 1: Confirmar o contrato de entradas**
+- [x] **Step 1: Confirmar o contrato de entradas**
 
 Registrar no frontmatter e na instrução de uso que o único anexo visual desta modalidade é o conjunto autorizado de fotos reais do Léo Ferraz. A operação deve declarar `vídeo-base: nenhum` e não pode usar screenshots como referência facial.
 
 Expected: o arquivo não contém qualquer instrução que faça o vídeo 08 comandar duração, câmera, enquadramento, ação, cenário ou ritmo.
 
-- [ ] **Step 2: Escrever o prompt-base comum**
+- [x] **Step 2: Escrever o prompt-base comum**
 
 Usar este bloco como base literal para cada peça:
 
@@ -60,7 +60,7 @@ Não adicione texto, headline, legenda, CTA, logo, avatar, elementos de interfac
 
 Expected: o prompt-base separa identidade e direção de cena, e a copy continua explicitamente fora da geração.
 
-- [ ] **Step 3: Adicionar os dez prompts de cena**
+- [x] **Step 3: Adicionar os dez prompts de cena**
 
 Usar a seguinte matriz como direção concreta, sem anexar vídeo de referência:
 
@@ -81,13 +81,13 @@ Para cada peça, repetir as restrições do prompt-base e declarar que a câmera
 
 Expected: as dez peças são visualmente diferenciadas por ação e câmera, mas continuam pertencendo ao mesmo território de laboratório de produto e builder.
 
-- [ ] **Step 4: Adicionar o teste controlado da peça 01**
+- [x] **Step 4: Adicionar o teste controlado da peça 01**
 
 Registrar que a primeira operação externa deve gerar somente `reel-01-demo-v01.mp4`, usando o prompt-base mais o bloco da peça 01, sem vídeo 08 anexado. O objetivo do teste é comparar se cena, enquadramento e movimento deixam de reproduzir o vídeo 08; não comparar apenas a semelhança facial.
 
 Expected: o primeiro teste fica isolado, auditável e sem custo de dez gerações simultâneas.
 
-- [ ] **Step 5: Commit do pacote de prompts**
+- [x] **Step 5: Commit do pacote de prompts**
 
 ```powershell
 git add -f -- "cofre-leoferraz-dev/03_CONTEUDO/PROMPT-002 - Léo Digital Cenas Originais.md"
