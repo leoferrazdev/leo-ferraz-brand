@@ -27,7 +27,8 @@ O objetivo não é vender um infoproduto agora, nem vender alcance. O objetivo �
 - Reel vertical 9:16;
 - aproximadamente 6–10 segundos;
 - sem fala sintética ou lip-sync;
-- headline única no vídeo;
+- headline principal isolada no início;
+- segunda headline posterior apontando para o complemento na legenda;
 - legenda com contexto e conteúdo;
 - um CTA por peça;
 - transparência sobre a utilização de IA quando aplicável;
@@ -37,6 +38,12 @@ O objetivo não é vender um infoproduto agora, nem vender alcance. O objetivo �
 ## Evidência de origem do ativo
 
 As capturas analisadas mostram um fluxo especializado de face swap/video variation com vídeo-base, fotos reais do Léo, créditos pagos, variações e fila de processamento. Essa evidência sustenta a decisão de tratar o Léo Digital como pipeline de produção com custo e controle de qualidade, não como mecanismo universal de um clique.
+
+## Refinamento de formato
+
+O fundador especificou que o Reel deve utilizar duas headlines: a primeira funciona como gancho e permanece sozinha durante os primeiros segundos; a segunda entra depois, indicando que o complemento está na legenda. A segunda headline conduz à legenda, mas não substitui o CTA comercial que deve existir dentro dela.
+
+As screenshots são referência da mecânica de headline e de handoff para legenda. Seus elementos específicos de perfil, interface, molduras e tratamento de texto não foram promovidos como identidade visual canônica da Leo Ferraz.
 
 ## Riscos registrados
 

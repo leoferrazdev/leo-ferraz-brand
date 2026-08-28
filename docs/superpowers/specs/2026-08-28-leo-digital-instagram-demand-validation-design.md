@@ -41,7 +41,8 @@ Esse conjunto ainda não constitui um ICP final. A primeira série pode testar a
 - duração inicial de aproximadamente 6–10 segundos;
 - vídeo sem fala do personagem digital;
 - sem lip-sync artificial;
-- headline única, curta e central;
+- headline principal, curta e central, apresentada sozinha no início;
+- segunda headline de transição, apresentada depois de alguns segundos, apontando para o complemento na legenda;
 - legenda como camada principal de explicação;
 - um CTA por peça;
 - uso de áudio ambiente, musical ou trend somente como apoio, nunca como dependência da mensagem;
@@ -49,6 +50,19 @@ Esse conjunto ainda não constitui um ICP final. A primeira série pode testar a
 - transparência sobre o uso de IA quando for relevante ao contexto e às regras da plataforma.
 
 O formato não é um talking head sintético. Ele é uma peça visual silenciosa que conduz para texto, legenda e ação.
+
+### Mecânica de duas headlines
+
+Cada Reel deve possuir duas camadas textuais em sequência:
+
+1. **Headline principal / hook:** aparece sozinha no início por alguns segundos e interrompe a atenção com uma pergunta, tensão, observação ou promessa factual sustentada pela legenda.
+2. **Headline de transição / caption handoff:** entra depois da primeira, mantendo a primeira visível quando isso favorecer a leitura, e indica que o complemento está na legenda.
+
+O timing exato será testado nos primeiros renders. A regra estrutural é que a primeira headline tenha um período inicial de leitura isolada; a segunda não pode aparecer simultaneamente desde o primeiro frame.
+
+A segunda headline não substitui o CTA comercial. Ela encaminha para a legenda. O CTA real deve estar na legenda e pode convidar para salvar, responder, enviar DM, visitar uma página ou entrar no piloto.
+
+As screenshots anexadas definem essa mecânica editorial. O tratamento visual específico de outros perfis — molduras pretas ou brancas, emojis, nomes, avatares, ícones e elementos da interface — não é automaticamente parte da identidade Leo Ferraz. A adaptação deve respeitar os tokens e a contenção visual aprovados.
 
 ## 5. Arquitetura editorial
 
@@ -81,18 +95,18 @@ Essa proporção é uma hipótese editorial, não um resultado medido.
 
 Os exemplos de headline são hipóteses de trabalho. Não constituem copy canônica e deverão ser validados antes da publicação.
 
-| # | Tipo | Direção visual | Função | Ação inicial |
+| # | Tipo | Headline principal / hook | Headline de transição | Função e ação inicial |
 |---|---|---|---|---|
-| 1 | Demonstração | Léo Digital em close e expressão reconhecível | Gerar curiosidade e apresentar a capacidade visual | Ler a legenda |
-| 2 | Transparência | Variação do Léo Digital em cena gerada | Explicar que a referência é real e a cena é sintética | Ler a legenda |
-| 3 | Bastidor | Close ou plano de trabalho | Mostrar fotos, créditos, tentativas e seleção | Comentar sobre o desafio |
-| 4 | Dor | Léo trabalhando | Perguntar se o conteúdo depende de o fundador aparecer | Responder ou enviar DM |
-| 5 | Gargalo | Teclado, monitor e concentração | Nomear o problema de manter ritmo de publicação | Ler a legenda |
-| 6 | Formato | Plano simples com headline dominante | Explicar que o Reel chama e a legenda desenvolve | Salvar ou comentar |
-| 7 | Estratégia | Léo junto de tela ou artefato real | Mostrar que atenção precisa conduzir para uma oferta | Visitar o contexto indicado |
-| 8 | Aplicação | Cena visual associada a uma situação de fundador ou especialista | Demonstrar uso sem inventar cliente ou resultado | Avaliar o próprio cenário |
-| 9 | Pesquisa | Expressão direta ou gesto de pergunta | Testar se o formato sem fala resolve uma dor real | Responder à pergunta |
-| 10 | Convite | Léo Digital em plano de fechamento | Filtrar pessoas com oferta existente para o piloto | Enviar DM com `PILOTO` |
+| 1 | Demonstração | Hipótese sobre presença visual consistente | Complemento na legenda | Gerar curiosidade e iniciar a leitura |
+| 2 | Transparência | A referência é real; a cena é gerada | O processo está na legenda | Explicar sem vender mágica |
+| 3 | Bastidor | Isso não foi um clique | Fotos, créditos e tentativas na legenda | Mostrar o trabalho e abrir conversa |
+| 4 | Dor | Seu conteúdo depende de você aparecer? | A pergunta completa está na legenda | Fazer o comprador se reconhecer |
+| 5 | Gargalo | Você tem algo a dizer, mas não publica? | O gargalo está na legenda | Nomear o problema de ritmo |
+| 6 | Formato | O Reel chama atenção | A estratégia continua na legenda | Explicar a lógica do formato |
+| 7 | Estratégia | Atenção não é uma oferta | Veja o próximo passo na legenda | Conectar conteúdo e negócio |
+| 8 | Aplicação | Como um fundador usaria isso? | Um exemplo está na legenda | Demonstrar sem inventar cliente |
+| 9 | Pesquisa | Você usaria um Reel sem fala? | Responda depois de ler a legenda | Testar a dor e a intenção |
+| 10 | Convite | Estou testando este formato com quem já vende | Se esse é seu gargalo, envie `PILOTO` | Filtrar conversas qualificadas |
 
 Não publicar os dez vídeos como uma sequência visual indistinta. Os ativos existentes devem ser alternados por função, headline, legenda e contexto comercial.
 
@@ -105,6 +119,8 @@ Cada legenda deve conter, conforme o caso:
 3. limite factual do formato;
 4. relação com publicação ou negócio;
 5. um CTA único.
+
+O Reel deve ser compreendido em duas passagens: a primeira headline cria a interrupção; a segunda orienta o consumo da legenda. A legenda precisa cumprir a promessa do hook antes de pedir qualquer ação.
 
 Enquanto não existir um material real para entrega, não usar “comente para receber um material”. O CTA de validação deve convidar para uma conversa ou para um piloto, sem criar uma promessa de entrega inexistente.
 
@@ -163,6 +179,7 @@ Quando um produto, tela, teste ou resultado real existir, ele deve assumir prior
 - definir preço final sem evidência de custo e demanda;
 - garantir alcance ou vendas para terceiros;
 - publicar os Reels sem revisar headline, legenda, CTA e contexto;
+- tratar a segunda headline como o CTA completo ou como substituta da legenda;
 - alterar `brand/*.md` ou criar uma nova decisão de identidade.
 
 ## 12. Próximo passo
