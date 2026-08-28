@@ -4,6 +4,17 @@ document_type: render_spec
 status: draft
 date: 2026-08-28
 project: Leo Ferraz
+tags:
+  - cofre/execucao
+  - tema/conteudo
+  - tema/marca-ativos
+  - projeto/leo-ferraz-dev
+evidence: "Especificação derivada do formato aprovado de duas headlines, safe zones e regras visuais canônicas consultadas em 2026-08-28."
+next_action: "Aplicar a montagem determinística somente após o retorno dos vídeos gerados externamente."
+related:
+  - "[[../../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
+  - "[[2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
 ---
 
 # Léo Digital — Especificação de montagem da Série 001

@@ -4,7 +4,17 @@ document_type: production_manifest
 status: draft
 date: 2026-08-28
 project: Leo Ferraz
-source_spec: "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"
+tags:
+  - cofre/execucao
+  - tema/conteudo
+  - tema/identidade-founder
+  - projeto/leo-ferraz-dev
+evidence: "ffprobe confirmou dez fontes 720x1280, 24 fps, aproximadamente 10 segundos, H.264 e AAC estéreo em 2026-08-28."
+next_action: "Usar o manifesto para anexar cada vídeo-base ao prompt correspondente na plataforma externa."
+related:
+  - "[[../../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
+  - "[[2026-08-28 — Especificação de Montagem do Léo Digital]]"
 ---
 
 # Léo Digital — Manifesto da Série 001

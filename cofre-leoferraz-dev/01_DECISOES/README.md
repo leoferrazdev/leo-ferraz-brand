@@ -36,7 +36,12 @@ Cada decisão deve indicar contexto, alternativas consideradas, decisão tomada,
 - [[DECISAO-017 - Uso de Trabalho de Cliente como Prova no Site]] — approved, execução pendente de capturas
 - [[DECISAO-018 - Foto do Fundador como Avatar Social]] — approved
 - [[DECISAO-019 - Cenas ao Vivo em Português e Copy como Dado]] — accepted
-- [[DECISAO-025 - Arquitetura Operacional do Cofre v2]] — review
+- [[DECISAO-020 - Título Serializado das Transmissões ao Vivo]] — approved
+- [[DECISAO-021 - Retrato Neutro como Novo Avatar Social]] — approved
+- [[DECISAO-022 - Arms-Crossed Authority como Avatar Social Canonico]] — approved
+- [[DECISAO-023 - Close Crop Tight para Avatar Social]] — approved
+- [[DECISAO-024 - Pack Mestre Reutilizavel de Capas de Video]] — approved
+- [[DECISAO-025 - Arquitetura Operacional do Cofre v2]] — implemented
 
 ## Modelo
 

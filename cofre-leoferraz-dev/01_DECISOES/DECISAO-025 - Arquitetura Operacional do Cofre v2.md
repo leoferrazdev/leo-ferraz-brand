@@ -2,7 +2,7 @@
 title: "Decisão 025 — Arquitetura Operacional do Cofre v2"
 document_type: decision
 decision_id: DECISAO-025
-status: review
+status: implemented
 authority: Leo Ferraz
 date: 2026-08-28
 tags:
@@ -20,7 +20,7 @@ related:
 
 O fundador solicitou uma auditoria determinística da arquitetura de pastas e da navegabilidade do cofre `cofre-leoferraz-dev`, especialmente porque o pacote de copy e prompts do Léo Digital foi preparado fora do vault e apenas referenciado por uma nota de execução.
 
-## Evidência observada em 2026-08-28
+## Evidência observada antes da implementação em 2026-08-28
 
 - o CLI do Obsidian reportou 8 entradas de pasta incluindo a raiz e `.obsidian`; a estrutura operacional efetiva possui 6 pastas: `01_DECISOES`, `02_EXECUCAO`, `03_CONTEUDO`, `04_REFERENCIAS`, `99_ARQUIVO` e `templates`;
 - 81 notas Markdown;
@@ -113,4 +113,14 @@ O cofre continuará simples no nível principal, mas passará a ter um caminho c
 
 ## Estado da decisão
 
-`review`: recomendação determinística preparada para aprovação do fundador. Nenhuma pasta histórica foi movida e nenhum link legado foi alterado nesta auditoria.
+`implemented`: decisão aprovada pelo fundador e aplicada no cofre.
+
+## Estado da implementação em 2026-08-28
+
+- `00_INICIO.md`, `01_DECISOES/README.md`, `02_EXECUCAO/README.md` e `03_CONTEUDO/README.md` agora roteiam para o estado atual;
+- `02_EXECUCAO/2026-08/README.md` indexa as notas do mês por data e status;
+- o pacote operacional do Léo Digital foi migrado para notas navegáveis em `03_CONTEUDO/` e `02_EXECUCAO/2026-08/`;
+- as referências externas a `brand/*.md` foram preservadas como caminhos explícitos, enquanto os links internos passaram a usar o basename exato;
+- as notas históricas que não possuíam `document_type` ou as tags operacionais mínimas receberam apenas esses campos no frontmatter;
+- a validação do CLI após a implementação reportou zero links não resolvidos e zero notas órfãs;
+- a geração externa, o retorno dos arquivos, o QA de vídeo e a publicação continuam pendentes e não são declarados como realizados.

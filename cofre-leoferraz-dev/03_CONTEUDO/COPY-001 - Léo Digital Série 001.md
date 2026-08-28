@@ -4,8 +4,15 @@ document_type: editorial_package
 status: approved
 date: 2026-08-28
 project: Leo Ferraz
-source_spec: "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"
-manifest: "docs/content/leodigital/2026-08/series-001/series-manifest.md"
+tags:
+  - cofre/conteudo
+  - tema/conteudo
+  - projeto/leo-ferraz-dev
+evidence: "Copy aprovada pelo fundador em 2026-08-28."
+next_action: "Usar como base para a montagem das peças após o retorno dos vídeos externos."
+related:
+  - "[[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
+  - "[[../02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital]]"
 ---
 
 # Léo Digital — Pacote editorial da Série 001

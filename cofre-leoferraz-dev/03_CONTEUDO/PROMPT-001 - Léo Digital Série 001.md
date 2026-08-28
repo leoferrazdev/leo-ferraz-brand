@@ -1,10 +1,20 @@
 ---
 title: "Léo Digital — Prompts de geração externa da Série 001"
 document_type: external_generation_prompts
-status: review
+status: approved
 date: 2026-08-28
 project: Leo Ferraz
-manifest: "docs/content/leodigital/2026-08/series-001/series-manifest.md"
+tags:
+  - cofre/conteudo
+  - tema/conteudo
+  - tema/identidade-founder
+  - projeto/leo-ferraz-dev
+evidence: "Prompts preparados a partir da operação externa de face swap/video variation observada nas screenshots e da copy aprovada."
+next_action: "Copiar cada prompt na plataforma externa e registrar modelo, custo e resultado devolvido."
+related:
+  - "[[COPY-001 - Léo Digital Série 001]]"
+  - "[[GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
+  - "[[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
 ---
 
 # Léo Digital — Prompts de geração externa da Série 001
@@ -13,7 +23,7 @@ manifest: "docs/content/leodigital/2026-08/series-001/series-manifest.md"
 
 Estes prompts devem ser copiados para a plataforma externa de geração de vídeos. Anexar, em cada operação, o vídeo-base indicado e o mesmo conjunto autorizado de fotos reais do Léo Ferraz usado no teste de referência. Não usar as screenshots da interface como referência facial.
 
-A plataforma externa deve gerar a camada visual do vídeo. As headlines e o CTA ficam fora do prompt e serão aplicados como copy determinística conforme `editorial-package.md` e `render-spec.md`.
+A plataforma externa deve gerar a camada visual do vídeo. As headlines e o CTA ficam fora do prompt e serão aplicados como copy determinística conforme [[COPY-001 - Léo Digital Série 001]] e [[../02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital]].
 
 ## Prompt-base obrigatório
 

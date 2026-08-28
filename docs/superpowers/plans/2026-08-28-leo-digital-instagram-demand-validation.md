@@ -30,12 +30,12 @@
 
 O pacote de execução deverá separar documentação editorial, fontes visuais, exports e evidência de publicação:
 
-- Create: `docs/content/leodigital/2026-08/series-001/series-manifest.md` — inventário, função editorial, ativo primário, ativo reserva e estado de cada peça.
-- Create: `docs/content/leodigital/2026-08/series-001/editorial-package.md` — headlines finais, legendas, CTAs e instruções de qualificação das dez peças.
-- Create: `docs/content/leodigital/2026-08/series-001/render-spec.md` — especificação visual, timing, safe zones, tratamento tipográfico e checklist de renderização.
-- Create: `docs/content/leodigital/2026-08/series-001/generation-prompts.md` — prompts e instruções para gerar externamente os dez vídeos, sem inserir copy por geração visual.
-- Create: `docs/content/leodigital/2026-08/series-001/external-handoff.md` — checklist de anexos, ordem de operação na plataforma externa e critérios para devolver os resultados.
-- Create: `docs/content/leodigital/2026-08/series-001/validation-log.md` — publicação, sinais observados, classificação dos contatos e decisão de continuidade.
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md` — inventário, função editorial, ativo primário, ativo reserva e estado de cada peça.
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/COPY-001 - Léo Digital Série 001.md` — headlines finais, legendas, CTAs e instruções de qualificação das dez peças.
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital.md` — especificação visual, timing, safe zones, tratamento tipográfico e checklist de renderização.
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/PROMPT-001 - Léo Digital Série 001.md` — prompts e instruções para gerar externamente os dez vídeos, sem inserir copy por geração visual.
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo.md` — checklist de anexos, ordem de operação na plataforma externa e critérios para devolver os resultados.
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md` — publicação, sinais observados, classificação dos contatos e decisão de continuidade.
 - Optional after external return: `videos/reels/leodigital/2026-08/series-001/exports/` — somente cópias locais dos exports aprovados devolvidos pela plataforma externa, com nomes numerados e versão explícita.
 - Optional after external return: `videos/reels/leodigital/2026-08/series-001/rejected/` — cópias locais de resultados rejeitados por qualidade, enquadramento, texto, sincronização ou inadequação editorial, preservados para auditoria.
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md` — registrar execução, evidências, decisões e pendências sem substituir a especificação canônica.
@@ -45,7 +45,7 @@ Não modificar os dez arquivos-fonte atuais em `videos/reels/`; eles são refer�
 ## Task 1: Congelar o inventário dos dez ativos
 
 **Files:**
-- Create: `docs/content/leodigital/2026-08/series-001/series-manifest.md`
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md`
 - Read: `videos/reels/01_leo_ferraz_typing_on_laptop_202608271707.mp4`
 - Read: `videos/reels/02_leo_ferraz_typing_on_laptop_202608271710.mp4`
 - Read: `videos/reels/03_leo_ferraz_typing_on_laptop_202608271724.mp4`
@@ -99,14 +99,14 @@ Expected: cada fonte é usada uma vez na primeira montagem; os ativos `08`, `10`
 - [ ] **Step 4: Commit do inventário**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/series-manifest.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md"
 git commit -m "docs: map Leo Digital Reel production assets"
 ```
 
 ## Task 2: Fechar a matriz editorial e de conversão
 
 **Files:**
-- Create: `docs/content/leodigital/2026-08/series-001/editorial-package.md`
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/COPY-001 - Léo Digital Série 001.md`
 - Read: `docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md`
 - Read: `brand/VOICE_AND_LANGUAGE.md`
 - Read: `brand/LANGUAGE_ARCHITECTURE.md`
@@ -162,16 +162,16 @@ Registrar segmento, oferta existente, gargalo e interesse em conversar; não rep
 - [ ] **Step 4: Commit do pacote editorial**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/editorial-package.md"
+git add -- "cofre-leoferraz-dev/03_CONTEUDO/COPY-001 - Léo Digital Série 001.md"
 git commit -m "docs: define Leo Digital Reel copy package"
 ```
 
 ## Task 3: Definir a especificação visual e o pacote de prompts externos
 
 **Files:**
-- Create: `docs/content/leodigital/2026-08/series-001/render-spec.md`
-- Create: `docs/content/leodigital/2026-08/series-001/generation-prompts.md`
-- Create: `docs/content/leodigital/2026-08/series-001/external-handoff.md`
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital.md`
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/PROMPT-001 - Léo Digital Série 001.md`
+- Create: `cofre-leoferraz-dev/03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo.md`
 - Read: `brand/BRAND_SYSTEM.md`
 - Read: `brand/VISUAL_DIRECTION.md`
 - Read: `brand/Color.md`
@@ -197,7 +197,7 @@ Registrar no render spec:
 
 - [ ] **Step 2: Separar geração visual de copy exata**
 
-Registrar que a plataforma externa deve gerar somente o movimento e a aparência do vídeo. A primeira e a segunda headlines, além de qualquer CTA, permanecem no `editorial-package.md` e não devem ser solicitadas como texto dentro do prompt visual, porque geração de imagem/vídeo pode deformar, reescrever ou ocultar conteúdo literal.
+Registrar que a plataforma externa deve gerar somente o movimento e a aparência do vídeo. A primeira e a segunda headlines, além de qualquer CTA, permanecem no `COPY-001 - Léo Digital Série 001.md` e não devem ser solicitadas como texto dentro do prompt visual, porque geração de imagem/vídeo pode deformar, reescrever ou ocultar conteúdo literal.
 
 Prompt-base para cada geração:
 
@@ -221,11 +221,11 @@ O intervalo de 2,50 segundos é uma hipótese inicial de montagem, não um dado 
 
 - [ ] **Step 4: Escrever um prompt específico para cada ativo**
 
-Cada prompt deve repetir o filename exato do vídeo-base, a ação que deve ser preservada e as restrições do prompt-base. Usar o `generation-prompts.md` como fonte operacional para copiar e colar na plataforma externa.
+Cada prompt deve repetir o filename exato do vídeo-base, a ação que deve ser preservada e as restrições do prompt-base. Usar o `PROMPT-001 - Léo Digital Série 001.md` como fonte operacional para copiar e colar na plataforma externa.
 
 - [ ] **Step 5: Preparar a operação externa e a devolução dos arquivos**
 
-O `external-handoff.md` deve instruir o responsável a anexar o vídeo-base correto, anexar o conjunto autorizado de fotos reais, confirmar créditos/custo antes de gerar, salvar o resultado e devolver o arquivo com o nome de peça e versão. A operação externa não será simulada nem considerada concluída neste repositório.
+O `GUIA-001 - Léo Digital Série 001 Handoff Externo.md` deve instruir o responsável a anexar o vídeo-base correto, anexar o conjunto autorizado de fotos reais, confirmar créditos/custo antes de gerar, salvar o resultado e devolver o arquivo com o nome de peça e versão. A operação externa não será simulada nem considerada concluída neste repositório.
 
 - [ ] **Step 6: Definir nomes de export e rejeição após o retorno externo**
 
@@ -244,7 +244,7 @@ Preservar renders rejeitados em `videos/reels/leodigital/2026-08/series-001/reje
 - [ ] **Step 7: Commit da especificação, prompts e handoff**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/render-spec.md" "docs/content/leodigital/2026-08/series-001/generation-prompts.md" "docs/content/leodigital/2026-08/series-001/external-handoff.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital.md" "cofre-leoferraz-dev/03_CONTEUDO/PROMPT-001 - Léo Digital Série 001.md" "cofre-leoferraz-dev/03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo.md"
 git commit -m "docs: prepare external Leo Digital video generation"
 ```
 
@@ -254,8 +254,8 @@ git commit -m "docs: prepare external Leo Digital video generation"
 - Receive externally: `reel-01-demo-v01.mp4` até `reel-10-convite-piloto-v01.mp4`
 - Optional local copy: `videos/reels/leodigital/2026-08/series-001/exports/`
 - Optional local copy: `videos/reels/leodigital/2026-08/series-001/rejected/`
-- Modify: `docs/content/leodigital/2026-08/series-001/series-manifest.md`
-- Modify: `docs/content/leodigital/2026-08/series-001/render-spec.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital.md`
 
 **Interfaces:**
 - Consumes: fontes MP4, copy final e render spec.
@@ -263,7 +263,7 @@ git commit -m "docs: prepare external Leo Digital video generation"
 
 - [ ] **Step 1: Entregar o pacote à plataforma externa**
 
-Usar `external-handoff.md` e `generation-prompts.md` para gerar externamente os dez vídeos. Esta etapa depende da plataforma e da operação do responsável; não executar uma substituição local nem inventar um resultado ausente.
+Usar `GUIA-001 - Léo Digital Série 001 Handoff Externo.md` e `PROMPT-001 - Léo Digital Série 001.md` para gerar externamente os dez vídeos. Esta etapa depende da plataforma e da operação do responsável; não executar uma substituição local nem inventar um resultado ausente.
 
 - [ ] **Step 2: Registrar os arquivos devolvidos**
 
@@ -301,15 +301,15 @@ Mover qualquer arquivo que falhe em um critério para `rejected/` e registrar o 
 - [ ] **Step 7: Commit dos resultados recebidos e do QA**
 
 ```powershell
-git add -- "videos/reels/leodigital/2026-08/series-001" "docs/content/leodigital/2026-08/series-001/series-manifest.md" "docs/content/leodigital/2026-08/series-001/render-spec.md"
+git add -- "videos/reels/leodigital/2026-08/series-001" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital.md"
 git commit -m "feat: render and validate Leo Digital Reel series"
 ```
 
 ## Task 5: Selecionar a ordem de publicação inicial
 
 **Files:**
-- Modify: `docs/content/leodigital/2026-08/series-001/series-manifest.md`
-- Modify: `docs/content/leodigital/2026-08/series-001/editorial-package.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md`
+- Modify: `cofre-leoferraz-dev/03_CONTEUDO/COPY-001 - Léo Digital Série 001.md`
 
 **Interfaces:**
 - Consumes: renders aprovados, QA da Task 4 e matriz editorial.
@@ -337,14 +337,14 @@ Publicar as peças 02, 05, 06, 07, 08 e 09 após a leitura do primeiro ciclo, ma
 - [ ] **Step 4: Commit da ordem de publicação**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/series-manifest.md" "docs/content/leodigital/2026-08/series-001/editorial-package.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital.md" "cofre-leoferraz-dev/03_CONTEUDO/COPY-001 - Léo Digital Série 001.md"
 git commit -m "docs: order Leo Digital Reel validation sequence"
 ```
 
 ## Task 6: Publicar com registro de evidência e qualificar conversas
 
 **Files:**
-- Create: `docs/content/leodigital/2026-08/series-001/validation-log.md`
+- Create: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md`
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md`
 
 **Interfaces:**
@@ -382,14 +382,14 @@ Registrar separadamente decisão, execução, evidência direta, inferência est
 - [ ] **Step 6: Commit do registro de execução**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/validation-log.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
 git commit -m "docs: record Leo Digital Reel validation evidence"
 ```
 
 ## Task 7: Publicar as seis peças restantes e comparar sinais
 
 **Files:**
-- Modify: `docs/content/leodigital/2026-08/series-001/validation-log.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md`
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md`
 
 **Interfaces:**
@@ -411,14 +411,14 @@ Agrupar contatos por fundador/empresário, criador e especialista, registrando q
 - [ ] **Step 4: Commit do ciclo completo**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/validation-log.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
 git commit -m "docs: compare Leo Digital Reel demand signals"
 ```
 
 ## Task 8: Executar o gate econômico e decidir o próximo experimento
 
 **Files:**
-- Modify: `docs/content/leodigital/2026-08/series-001/validation-log.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md`
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md`
 
 **Interfaces:**
@@ -452,7 +452,7 @@ Não escolher um infoproduto, preço final ou promessa de escala apenas com base
 - [ ] **Step 4: Commit e publicação do resultado operacional**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/validation-log.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
+git add -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Registro de Validação do Léo Digital.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md"
 git commit -m "docs: close Leo Digital demand validation gate"
 ```
 

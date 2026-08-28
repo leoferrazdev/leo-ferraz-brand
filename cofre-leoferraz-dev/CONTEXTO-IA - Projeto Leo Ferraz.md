@@ -234,15 +234,15 @@ Não criar bios canônicas alternativas nem transformar estas frases em promessa
 
 Para decisões de marca, consultar primeiro:
 
-- [Brand Foundation](../brand/BRAND_FOUNDATION.md) — propósito, tese, identidade e princípios;
-- [Brand Architecture](../brand/BRAND_ARCHITECTURE.md) — relação entre Master Brand, laboratório, produtos e canais;
-- [Language Architecture](../brand/LANGUAGE_ARCHITECTURE.md) — idioma, locale e termos invariantes;
-- [Voice and Language](../brand/VOICE_AND_LANGUAGE.md) — voz, evidência e limites de copy;
+- Fonte canônica: `brand/BRAND_FOUNDATION.md` — propósito, tese, identidade e princípios;
+- Fonte canônica: `brand/BRAND_ARCHITECTURE.md` — relação entre Master Brand, laboratório, produtos e canais;
+- Fonte canônica: `brand/LANGUAGE_ARCHITECTURE.md` — idioma, locale e termos invariantes;
+- Fonte canônica: `brand/VOICE_AND_LANGUAGE.md` — voz, evidência e limites de copy;
 - [[01_DECISOES/DECISAO-012 - Nomes e Bios das Redes Sociais]] — escopo documentado da jornada, incluindo usuários e receita;
 - [[01_DECISOES/DECISAO-015 - Link Único de Bio em Todas as Plataformas]] — princípio de manter a porta de entrada, o tráfego e os dados da audiência sob controle próprio;
 - [[01_DECISOES/DECISAO-017 - Uso de Trabalho de Cliente como Prova no Site]] — distinção entre laboratório e trabalho de cliente, e métricas de custo, receita, lucro e prejuízo;
 - [[03_CONTEUDO/ROTEIRO-001 - Primeiro Vídeo (Texto Completo)]] — intenção de mostrar custo, receita, lucro ou prejuízo dos produtos;
-- [Brand Foundation — relação entre produto, conteúdo e infoproduto](../brand/BRAND_FOUNDATION.md) — a monetização da audiência não deve ser reduzida à venda de infoprodutos;
+- `brand/BRAND_FOUNDATION.md` — relação entre produto, conteúdo e infoproduto; a monetização da audiência não deve ser reduzida à venda de infoprodutos;
 - [[00_INICIO]] — regras operacionais do cofre.
 
 `brand/*.md` continua sendo a fonte canônica da marca. Esta nota serve para orientar a interpretação da IA e deve ser atualizada quando houver uma decisão explícita que altere esse contexto.

@@ -26,6 +26,12 @@ Este é o cofre Obsidian operacional do projeto Leo Ferraz. Ele registra context
 - [[01_DECISOES/DECISAO-013 - Reorganização da Arquitetura do Cofre|Decisão 013: reorganização da arquitetura do cofre]].
 - [[01_DECISOES/DECISAO-025 - Arquitetura Operacional do Cofre v2|Decisão 025: auditoria e arquitetura operacional v2]].
 
+## Estado atual
+
+- Execução corrente: [[02_EXECUCAO/2026-08/README|índice de agosto de 2026]].
+- Conteúdo reutilizável: [[03_CONTEUDO/COPY-001 - Léo Digital Série 001|copy da Série 001]], [[03_CONTEUDO/PROMPT-001 - Léo Digital Série 001|prompts externos]] e [[03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo|handoff]].
+- Contexto operacional: [[CONTEXTO-IA - Projeto Leo Ferraz]].
+
 ## Regras de registro
 
 1. Registrar fatos observáveis antes de interpretações.

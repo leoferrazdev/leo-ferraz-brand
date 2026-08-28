@@ -5,9 +5,21 @@ status: approved
 authority: Leo Ferraz
 date: 2026-08-28
 project: Leo Ferraz
+tags:
+  - cofre/execucao
+  - tema/conteudo
+  - tema/identidade-founder
+  - projeto/leo-ferraz-dev
+evidence: "Plano aprovado; a produção permanece separada entre preparação no cofre e geração/QA em plataforma externa."
+next_action: "Executar os gates externos somente após os dez vídeos retornarem para inspeção e montagem."
 related:
   - "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"
   - "docs/superpowers/plans/2026-08-28-leo-digital-instagram-demand-validation.md"
+  - "[[../../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
+  - "[[2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
+  - "[[2026-08-28 — Especificação de Montagem do Léo Digital]]"
 ---
 
 # Plano de implementação do Léo Digital no Instagram

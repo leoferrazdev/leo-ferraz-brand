@@ -4,6 +4,16 @@ document_type: external_handoff
 status: draft
 date: 2026-08-28
 project: Leo Ferraz
+tags:
+  - cofre/conteudo
+  - tema/conteudo
+  - tema/identidade-founder
+  - projeto/leo-ferraz-dev
+evidence: "Handoff definido a partir da operação externa observada nas screenshots e dos requisitos de preservação da identidade."
+next_action: "Executar a geração externa somente após anexar o vídeo-base e as fotos autorizadas."
+related:
+  - "[[PROMPT-001 - Léo Digital Série 001]]"
+  - "[[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
 ---
 
 # Léo Digital — Handoff para geração externa
@@ -15,9 +25,9 @@ A geração dos vídeos ocorre em uma plataforma externa. Este arquivo organiza 
 ## Preparação por peça
 
 1. abrir a função de face swap/video variation da plataforma externa;
-2. anexar o vídeo-base exato indicado no `series-manifest.md`;
+2. anexar o vídeo-base exato indicado no [[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]];
 3. anexar o conjunto autorizado de fotos reais do Léo Ferraz, com ângulos frontal, 3/4 e perfil quando disponíveis;
-4. colar o prompt-base e o prompt adicional da peça em `generation-prompts.md`;
+4. colar o prompt-base e o prompt adicional da peça em [[PROMPT-001 - Léo Digital Série 001]];
 5. confirmar que o prompt não pede texto, voz, lip-sync ou resultado comercial;
 6. confirmar o custo atual em créditos antes de aprovar a geração;
 7. gerar uma versão por peça e salvar o resultado com o nome de peça e versão;

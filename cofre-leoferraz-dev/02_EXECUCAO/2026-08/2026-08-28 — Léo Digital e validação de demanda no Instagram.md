@@ -5,12 +5,21 @@ status: approved
 authority: Leo Ferraz
 date: 2026-08-28
 project: Leo Ferraz
+tags:
+  - cofre/execucao
+  - tema/conteudo
+  - tema/identidade-founder
+  - projeto/leo-ferraz-dev
+evidence: "Copy e prompts foram aprovados e migrados para notas navegáveis do cofre; nenhum vídeo externo foi recebido ou publicado."
+next_action: "Gerar externamente os dez vídeos, devolver os arquivos e registrar o QA antes de qualquer publicação."
 related:
   - "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"
   - "docs/superpowers/plans/2026-08-28-leo-digital-instagram-demand-validation.md"
-  - "docs/content/leodigital/2026-08/series-001/editorial-package.md"
-  - "docs/content/leodigital/2026-08/series-001/generation-prompts.md"
-  - "docs/content/leodigital/2026-08/series-001/external-handoff.md"
+  - "[[../../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
+  - "[[../../03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
+  - "[[2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
+  - "[[2026-08-28 — Especificação de Montagem do Léo Digital]]"
   - "[[../../01_DECISOES/DECISAO-016 - Sistema de Formatos de Vídeo]]"
 ---
 
