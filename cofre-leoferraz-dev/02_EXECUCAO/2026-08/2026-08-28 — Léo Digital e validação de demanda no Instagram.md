@@ -18,6 +18,9 @@ related:
   - "[[../../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"
   - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
   - "[[../../03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
+  - "[[../../03_CONTEUDO/PROMPT-002 - Léo Digital Cenas Originais]]"
+  - "[[../../03_CONTEUDO/GUIA-002 - Léo Digital Cenas Originais Handoff Externo]]"
+  - "[[../../01_DECISOES/DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento]]"
   - "[[2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
   - "[[2026-08-28 — Especificação de Montagem do Léo Digital]]"
   - "[[../../01_DECISOES/DECISAO-016 - Sistema de Formatos de Vídeo]]"
@@ -58,6 +61,12 @@ O fundador especificou que o Reel deve utilizar duas headlines: a primeira funci
 
 As screenshots são referência da mecânica de headline e de handoff para legenda. Seus elementos específicos de perfil, interface, molduras e tratamento de texto não foram promovidos como identidade visual canônica da Leo Ferraz.
 
+## Atualização da arquitetura de geração
+
+O primeiro fluxo documentado em `PROMPT-001` e `GUIA-001` preserva deliberadamente a cena do vídeo-base. O teste do vídeo 08 demonstrou que esse fluxo não serve para criar cena e movimento novos: ele entregou uma cópia visual da referência porque essa era a instrução operacional recebida.
+
+Para o objetivo de cena original, o pacote vigente passa a ser `PROMPT-002` + `GUIA-002`. A identidade vem das fotos autorizadas; a cena, a câmera e a ação vêm do prompt; o vídeo 08 não é anexado. O primeiro teste será a peça 01, e o resultado externo ainda não existe.
+
 ## Riscos registrados
 
 - qualidade facial não necessariamente replicável para qualquer pessoa;
@@ -73,7 +82,7 @@ As screenshots são referência da mecânica de headline e de handoff para legen
 
 `copy_approved`: a copy da Série 001 foi aprovada pelo fundador; o pacote editorial contém as headlines, legendas, CTAs e fluxo de qualificação definidos para a primeira execução.
 
-`prompts_ready_for_external_generation`: os prompts de geração externa e as instruções de handoff estão preparados para uso na plataforma externa; nenhum vídeo foi gerado aqui.
+`prompts_ready_for_external_generation`: o PROMPT-001 permanece disponível para variação de cena existente e o PROMPT-002/GUIA-002 estão preparados para o teste de cena original; nenhum vídeo foi gerado aqui.
 
 `not_generated_here`: a geração dos vídeos ocorrerá em uma plataforma externa específica. Nenhum export externo foi recebido ou validado nesta etapa.
 

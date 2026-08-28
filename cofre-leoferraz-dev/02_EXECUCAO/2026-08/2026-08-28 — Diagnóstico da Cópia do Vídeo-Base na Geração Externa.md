@@ -11,7 +11,7 @@ tags:
   - tema/identidade-founder
   - projeto/leo-ferraz-dev
 evidence: "Duas screenshots da operação externa e relato do resultado da peça 01; o vídeo devolvido reproduziu a cena e o movimento do vídeo 08."
-next_action: "Revisar a especificação, criar o PROMPT-002 e testar uma cena original sem anexar o vídeo 08 como referência primária."
+next_action: "Confirmar o modo externo, executar somente a peça 01 sem anexar o vídeo 08 e registrar o QA."
 related:
   - "[[../../01_DECISOES/DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento]]"
   - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
@@ -54,14 +54,24 @@ As entradas não tinham papéis separados. O vídeo-base era simultaneamente a f
 - montar as duas headlines depois, fora da geração visual;
 - rejeitar resultado que replique o vídeo 08, mesmo com rosto correto.
 
+## Estado documental após aprovação
+
+- `PROMPT-002 - Léo Digital Cenas Originais` foi criado com prompt-base e dez cenas originais;
+- `GUIA-002 - Léo Digital Cenas Originais Handoff Externo` foi criado com procedimento, ficha de operação e regra de parada;
+- `PROMPT-001` e `GUIA-001` continuam delimitados ao fluxo que preserva uma cena existente;
+- o pacote local está `ready_for_external_test`;
+- nenhuma geração externa, devolução de arquivo, QA audiovisual ou publicação foi realizada.
+
 ## Estado
 
 - [x] diagnóstico da cópia realizado;
 - [x] causa-raiz registrada;
 - [x] decisão operacional registrada em [[DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento]];
 - [x] especificação de nova arquitetura criada;
-- [ ] especificação escrita revisada pelo fundador;
-- [ ] `PROMPT-002` criado;
+- [x] especificação escrita revisada pelo fundador;
+- [x] `PROMPT-002` criado;
+- [x] `GUIA-002` criado;
+- [x] pacote local pronto para teste externo;
 - [ ] peça 01 gerada externamente;
 - [ ] QA facial, de cena e de movimento realizado;
 - [ ] qualquer publicação realizada.

@@ -2,7 +2,8 @@
 title: "Léo Digital — Geração de Cena e Movimento Originais"
 document_type: generation_architecture_design
 status: approved
-implementation_status: pending_spec_review
+implementation_status: implemented
+external_test_status: pending
 authority: Leo Ferraz
 date: 2026-08-28
 project: Leo Ferraz

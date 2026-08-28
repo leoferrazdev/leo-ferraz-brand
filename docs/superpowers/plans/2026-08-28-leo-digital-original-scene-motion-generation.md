@@ -162,6 +162,7 @@ git commit -m "docs: define original-scene external handoff"
 - Modify: `cofre-leoferraz-dev/03_CONTEUDO/README.md`
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Diagnóstico da Cópia do Vídeo-Base na Geração Externa.md`
 - Modify: `cofre-leoferraz-dev/01_DECISOES/DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento.md`
+- Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md`
 - Modify: `docs/superpowers/specs/2026-08-28-leo-digital-original-scene-motion-generation-design.md`
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/README.md`
 
@@ -169,19 +170,19 @@ git commit -m "docs: define original-scene external handoff"
 - Consumes: dois novos artefatos de conteúdo, resultado da revisão da especificação e estado atual do diagnóstico.
 - Produces: cofre navegável, sem ambiguidade sobre qual prompt usar, com implementação documental distinguida da geração audiovisual ainda pendente.
 
-- [ ] **Step 1: Indexar `PROMPT-002` e `GUIA-002`**
+- [x] **Step 1: Indexar `PROMPT-002` e `GUIA-002`**
 
 Adicionar os dois wikilinks ao índice de `03_CONTEUDO`, classificando `PROMPT-002` como geração de cena original e `GUIA-002` como handoff externo correspondente.
 
-- [ ] **Step 2: Atualizar os estados sem declarar vídeo gerado**
+- [x] **Step 2: Atualizar os estados sem declarar vídeo gerado**
 
 Marcar a especificação como documentalmente implementada somente depois que `PROMPT-002` e `GUIA-002` existirem. Manter no diagnóstico as caixas de geração externa e QA audiovisual desmarcadas. Atualizar `DECISAO-026` para registrar que o pacote local está preparado, mas o teste externo continua pendente.
 
-- [ ] **Step 3: Confirmar links internos**
+- [x] **Step 3: Confirmar links internos**
 
 Usar wikilinks para notas internas do cofre e caminhos Markdown/textuais para a especificação fora do cofre. Não transformar caminho de Windows ou screenshot temporário em wikilink Obsidian.
 
-- [ ] **Step 4: Commit do estado do cofre**
+- [x] **Step 4: Commit do estado do cofre**
 
 ```powershell
 git add -f -- "cofre-leoferraz-dev/03_CONTEUDO/README.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Diagnóstico da Cópia do Vídeo-Base na Geração Externa.md" "cofre-leoferraz-dev/01_DECISOES/DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento.md" "cofre-leoferraz-dev/02_EXECUCAO/2026-08/README.md" "docs/superpowers/specs/2026-08-28-leo-digital-original-scene-motion-generation-design.md"

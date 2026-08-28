@@ -26,6 +26,8 @@ Tipos usados até agora: `ROTEIRO`, `COPY`, `PROMPT` e `GUIA`. Novos tipos (`POS
 - [[COPY-001 - Léo Digital Série 001]] — aprovado para a primeira série de Reels silenciosos
 - [[PROMPT-001 - Léo Digital Série 001]] — prompts aprovados para geração externa
 - [[GUIA-001 - Léo Digital Série 001 Handoff Externo]] — handoff da plataforma externa, aguardando geração
+- [[PROMPT-002 - Léo Digital Cenas Originais]] — prompts em revisão para gerar cena e movimento originais
+- [[GUIA-002 - Léo Digital Cenas Originais Handoff Externo]] — handoff em revisão sem vídeo-base
 
 ## Nota histórica
 

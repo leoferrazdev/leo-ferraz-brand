@@ -3,6 +3,8 @@ title: "Decisão 026 — Fonte de Identidade Separada da Cena e do Movimento"
 document_type: decision
 decision_id: DECISAO-026
 status: approved
+implementation_status: documented
+external_test_status: pending
 authority: Leo Ferraz
 date: 2026-08-28
 project: Leo Ferraz
@@ -39,7 +41,7 @@ O resultado não contradiz o pedido enviado. A arquitetura selecionada fazia o v
 
 Para cenas e movimentos originais, usar fotos reais autorizadas como referência de identidade e gerar a cena a partir de um prompt próprio em modo `image-to-video` ou `text-to-video` equivalente. Não anexar o vídeo 08 como fonte primária nesse teste.
 
-O `Face Swap Video Variations` permanece reservado para operações em que a preservação deliberada da cena original seja o objetivo. O `PROMPT-001` não será sobrescrito. A nova arquitetura será operacionalizada em um `PROMPT-002` depois da revisão da especificação escrita.
+O `Face Swap Video Variations` permanece reservado para operações em que a preservação deliberada da cena original seja o objetivo. O `PROMPT-001` não será sobrescrito. A nova arquitetura foi operacionalizada documentalmente em `PROMPT-002` e `GUIA-002`; a geração audiovisual externa permanece pendente.
 
 ## Impacto
 
@@ -48,10 +50,15 @@ O `Face Swap Video Variations` permanece reservado para operações em que a pre
 - O Léo Digital continua sendo uma camada visual para Reels silenciosos; headlines, legenda e CTA permanecem fora do prompt visual.
 - O primeiro teste controlado será a peça 01, com uma única variação, antes de expandir para as dez peças.
 
+## Estado da execução documental
+
+- `PROMPT-002`: criado, em revisão, com dez direções de cena originais;
+- `GUIA-002`: criado, em revisão, com regra de parada para modo incompatível;
+- teste externo da peça 01: pendente;
+- arquivo externo, QA, montagem e publicação: pendentes.
+
 ## Pendências
 
-- revisar a especificação em `docs/superpowers/specs/2026-08-28-leo-digital-original-scene-motion-generation-design.md`;
-- criar o `PROMPT-002` com a matriz das dez cenas originais;
 - confirmar na plataforma externa qual modo aceita fotos como identidade sem vídeo-base;
 - gerar a peça 01 externamente e registrar custo, modelo, arquivo e QA;
 - não declarar a arquitetura validada antes de comparar o resultado com o vídeo 08.
