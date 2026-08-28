@@ -7,6 +7,10 @@ date: 2026-08-28
 project: Leo Ferraz
 related:
   - "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"
+  - "docs/superpowers/plans/2026-08-28-leo-digital-instagram-demand-validation.md"
+  - "docs/content/leodigital/2026-08/series-001/editorial-package.md"
+  - "docs/content/leodigital/2026-08/series-001/generation-prompts.md"
+  - "docs/content/leodigital/2026-08/series-001/external-handoff.md"
   - "[[../../01_DECISOES/DECISAO-016 - Sistema de Formatos de Vídeo]]"
 ---
 
@@ -58,15 +62,20 @@ As screenshots são referência da mecânica de headline e de handoff para legen
 
 `approved`: direção editorial aprovada pelo fundador.
 
-`not_implemented`: nenhum Reel, legenda, CTA ou fluxo de qualificação foi publicado como parte desta decisão.
+`copy_and_prompts_prepared`: o pacote editorial, os prompts de geração externa e as instruções de handoff foram preparados para revisão; nenhum vídeo foi gerado aqui.
+
+`not_generated_here`: a geração dos vídeos ocorrerá em uma plataforma externa específica. Nenhum export externo foi recebido ou validado nesta etapa.
+
+`not_published`: nenhum Reel, legenda, CTA ou fluxo de qualificação foi publicado como parte desta decisão.
 
 `not_validated`: ainda não há resultado de audiência, conversa qualificada, piloto pago, receita ou margem.
 
 ## Pendências
 
-- revisar a especificação escrita;
 - escolher e registrar o segmento prioritário do primeiro piloto;
 - definir a oferta do piloto sem prometer distribuição;
-- finalizar headlines, legendas e CTAs;
+- revisar e aprovar o pacote final de headlines, legendas e CTAs;
+- gerar os dez vídeos na plataforma externa usando os prompts registrados;
+- devolver os arquivos externos para QA de aparência, movimento e montagem;
 - definir o destino de qualificação e o registro das conversas;
-- publicar somente depois da revisão editorial e da aprovação dos conteúdos finais.
+- publicar somente depois da revisão editorial, do QA e da aprovação dos conteúdos finais.

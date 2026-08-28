@@ -6,7 +6,7 @@
 
 **Architecture:** A série será organizada como um pacote editorial separado da identidade canônica da marca. Cada peça terá um ativo visual, uma headline principal isolada, uma headline posterior de encaminhamento para a legenda, uma legenda que cumpre a promessa do hook e um único CTA. A produção será feita em gates: preparação editorial → renderização → QA → publicação controlada → registro de sinais → decisão.
 
-**Tech Stack:** Vídeos MP4 verticais existentes em `videos/reels/`; pipeline de geração de face swap/video variation evidenciado nas screenshots; editor de vídeo aprovado pelo responsável; tipografia e tokens aprovados da marca; Instagram; Markdown compatível com Obsidian; `ffprobe`/`ffmpeg` para inspeção técnica e validação local.
+**Tech Stack:** Vídeos MP4 verticais existentes em `videos/reels/`; pipeline externo de geração de face swap/video variation evidenciado nas screenshots; plataforma externa específica escolhida pelo responsável; copy e prompts preparados localmente; tipografia e tokens aprovados da marca; Instagram; Markdown compatível com Obsidian; `ffprobe`/`ffmpeg` somente para inspeção de arquivos devolvidos pela plataforma externa.
 
 ## Global Constraints
 
@@ -21,6 +21,7 @@
 - Não inventar clientes, resultados, depoimentos, materiais para entrega, métricas, alcance ou promessa de viralização.
 - Não alterar `brand/*.md`, tokens ou decisões canônicas durante a produção desta série.
 - O uso de IA deve ser tratado com transparência quando for relevante ao contexto e às regras da plataforma.
+- Nesta execução local serão produzidos somente copy, prompts, instruções e registros; a geração do vídeo ocorrerá fora deste repositório, na plataforma externa escolhida pelo responsável.
 - Nenhuma hipótese será considerada validada por visualizações, curtidas ou elogios à semelhança facial; o gate econômico exige comprador independente pagando por um piloto e evidência de margem positiva ou continuidade clara.
 
 ---
@@ -32,12 +33,14 @@ O pacote de execução deverá separar documentação editorial, fontes visuais,
 - Create: `docs/content/leodigital/2026-08/series-001/series-manifest.md` — inventário, função editorial, ativo primário, ativo reserva e estado de cada peça.
 - Create: `docs/content/leodigital/2026-08/series-001/editorial-package.md` — headlines finais, legendas, CTAs e instruções de qualificação das dez peças.
 - Create: `docs/content/leodigital/2026-08/series-001/render-spec.md` — especificação visual, timing, safe zones, tratamento tipográfico e checklist de renderização.
+- Create: `docs/content/leodigital/2026-08/series-001/generation-prompts.md` — prompts e instruções para gerar externamente os dez vídeos, sem inserir copy por geração visual.
+- Create: `docs/content/leodigital/2026-08/series-001/external-handoff.md` — checklist de anexos, ordem de operação na plataforma externa e critérios para devolver os resultados.
 - Create: `docs/content/leodigital/2026-08/series-001/validation-log.md` — publicação, sinais observados, classificação dos contatos e decisão de continuidade.
-- Create: `videos/reels/leodigital/2026-08/series-001/exports/` — somente os exports aprovados para publicação, com nomes numerados e versão explícita.
-- Create: `videos/reels/leodigital/2026-08/series-001/rejected/` — renders rejeitados por qualidade, enquadramento, texto, sincronização ou inadequação editorial, preservados para auditoria.
+- Optional after external return: `videos/reels/leodigital/2026-08/series-001/exports/` — somente cópias locais dos exports aprovados devolvidos pela plataforma externa, com nomes numerados e versão explícita.
+- Optional after external return: `videos/reels/leodigital/2026-08/series-001/rejected/` — cópias locais de resultados rejeitados por qualidade, enquadramento, texto, sincronização ou inadequação editorial, preservados para auditoria.
 - Modify: `cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Léo Digital e validação de demanda no Instagram.md` — registrar execução, evidências, decisões e pendências sem substituir a especificação canônica.
 
-Não modificar os dez arquivos-fonte atuais em `videos/reels/`; eles são referências de produção e devem permanecer preservados.
+Não modificar os dez arquivos-fonte atuais em `videos/reels/`; eles são referências de produção e devem permanecer preservados. Não declarar geração concluída enquanto a plataforma externa não devolver os arquivos.
 
 ## Task 1: Congelar o inventário dos dez ativos
 
@@ -163,10 +166,12 @@ git add -- "docs/content/leodigital/2026-08/series-001/editorial-package.md"
 git commit -m "docs: define Leo Digital Reel copy package"
 ```
 
-## Task 3: Definir a especificação visual e o teste de timing
+## Task 3: Definir a especificação visual e o pacote de prompts externos
 
 **Files:**
 - Create: `docs/content/leodigital/2026-08/series-001/render-spec.md`
+- Create: `docs/content/leodigital/2026-08/series-001/generation-prompts.md`
+- Create: `docs/content/leodigital/2026-08/series-001/external-handoff.md`
 - Read: `brand/BRAND_SYSTEM.md`
 - Read: `brand/VISUAL_DIRECTION.md`
 - Read: `brand/Color.md`
@@ -175,7 +180,7 @@ git commit -m "docs: define Leo Digital Reel copy package"
 
 **Interfaces:**
 - Consumes: manifesto da Task 1, copy da Task 2 e tokens/regras canônicas da marca.
-- Produces: instrução única para renderizar as dez peças e matriz de timing para comparação.
+- Produces: instrução visual única, prompts por ativo, matriz de timing e checklist de operação na plataforma externa.
 
 - [ ] **Step 1: Fixar o tratamento visual permitido**
 
@@ -190,9 +195,21 @@ Registrar no render spec:
 - headline dominante sem cobrir olhos, mãos, teclado ou evidência visual relevante;
 - nenhum avatar, nome de outro perfil, ícone de interface, moldura de screenshot ou emoji copiado das referências anexadas.
 
-- [ ] **Step 2: Fixar a sequência de aparição**
+- [ ] **Step 2: Separar geração visual de copy exata**
 
-Renderizar a primeira versão de cada peça nesta estrutura inicial:
+Registrar que a plataforma externa deve gerar somente o movimento e a aparência do vídeo. A primeira e a segunda headlines, além de qualquer CTA, permanecem no `editorial-package.md` e não devem ser solicitadas como texto dentro do prompt visual, porque geração de imagem/vídeo pode deformar, reescrever ou ocultar conteúdo literal.
+
+Prompt-base para cada geração:
+
+```text
+Use o vídeo-base anexado como referência de duração, movimento de câmera, enquadramento e ação. Substitua somente a identidade visual da pessoa pela pessoa presente no conjunto de fotos reais de referência autorizado. Preserve rosto, formato dos olhos, cor dos olhos, cabelo, barba, rugas, proporções, expressão natural, moletom, mesa, teclado, monitores, iluminação, cenário e ritmo do vídeo-base. Gere movimento humano discreto e coerente com a ação original. Não adicione texto, legendas, logo, avatar, elementos de interface, pessoas novas, objetos novos, fala, voz, lip-sync ou movimento exagerado. O resultado deve ser um vídeo vertical 9:16, natural, realista e sem marcas d'água.
+```
+
+Expected: o prompt não pede que o modelo escreva a headline, não atribui cliente ou resultado inexistente e preserva a identidade da pessoa e a ação observada no vídeo-base.
+
+- [ ] **Step 3: Fixar a sequência de aparição das headlines para a montagem posterior**
+
+Descrever a montagem posterior de cada peça nesta estrutura inicial:
 
 ```text
 0.00–2.50 s: vídeo sem a segunda headline; headline principal isolada.
@@ -200,9 +217,17 @@ Renderizar a primeira versão de cada peça nesta estrutura inicial:
 8.00–10.00 s: preservar a composição final sem introduzir uma terceira mensagem.
 ```
 
-O intervalo de 2,50 segundos é uma hipótese inicial de produção, não um dado validado. Para as peças 01 e 10, produzir uma comparação adicional com entrada da segunda headline em 3,00 segundos e registrar qual versão é mais legível.
+O intervalo de 2,50 segundos é uma hipótese inicial de montagem, não um dado validado. Quando os vídeos retornarem da plataforma externa, produzir uma comparação adicional das peças 01 e 10 com entrada da segunda headline em 3,00 segundos e registrar qual versão é mais legível.
 
-- [ ] **Step 3: Definir nomes de export e rejeição**
+- [ ] **Step 4: Escrever um prompt específico para cada ativo**
+
+Cada prompt deve repetir o filename exato do vídeo-base, a ação que deve ser preservada e as restrições do prompt-base. Usar o `generation-prompts.md` como fonte operacional para copiar e colar na plataforma externa.
+
+- [ ] **Step 5: Preparar a operação externa e a devolução dos arquivos**
+
+O `external-handoff.md` deve instruir o responsável a anexar o vídeo-base correto, anexar o conjunto autorizado de fotos reais, confirmar créditos/custo antes de gerar, salvar o resultado e devolver o arquivo com o nome de peça e versão. A operação externa não será simulada nem considerada concluída neste repositório.
+
+- [ ] **Step 6: Definir nomes de export e rejeição após o retorno externo**
 
 Usar o padrão:
 
@@ -216,34 +241,39 @@ reel-10-convite-piloto-v01.mp4
 
 Preservar renders rejeitados em `videos/reels/leodigital/2026-08/series-001/rejected/` com o motivo no nome ou no manifesto.
 
-- [ ] **Step 4: Commit da especificação de render**
+- [ ] **Step 7: Commit da especificação, prompts e handoff**
 
 ```powershell
-git add -- "docs/content/leodigital/2026-08/series-001/render-spec.md"
-git commit -m "docs: specify Leo Digital Reel rendering"
+git add -- "docs/content/leodigital/2026-08/series-001/render-spec.md" "docs/content/leodigital/2026-08/series-001/generation-prompts.md" "docs/content/leodigital/2026-08/series-001/external-handoff.md"
+git commit -m "docs: prepare external Leo Digital video generation"
 ```
 
-## Task 4: Produzir os renders e executar QA técnico-editorial
+## Task 4: Receber os resultados externos e executar QA técnico-editorial
 
 **Files:**
-- Create: `videos/reels/leodigital/2026-08/series-001/exports/reel-01-demo-v01.mp4` até `reel-10-convite-piloto-v01.mp4`
-- Create: `videos/reels/leodigital/2026-08/series-001/rejected/`
+- Receive externally: `reel-01-demo-v01.mp4` até `reel-10-convite-piloto-v01.mp4`
+- Optional local copy: `videos/reels/leodigital/2026-08/series-001/exports/`
+- Optional local copy: `videos/reels/leodigital/2026-08/series-001/rejected/`
 - Modify: `docs/content/leodigital/2026-08/series-001/series-manifest.md`
 - Modify: `docs/content/leodigital/2026-08/series-001/render-spec.md`
 
 **Interfaces:**
 - Consumes: fontes MP4, copy final e render spec.
-- Produces: dez renders revisáveis, duas variações de timing para as peças 01 e 10 e registro de QA por arquivo.
+- Produces: registro de recebimento, QA dos arquivos devolvidos e indicação de quais resultados podem seguir para a montagem das headlines.
 
-- [ ] **Step 1: Gerar as dez composições visuais**
+- [ ] **Step 1: Entregar o pacote à plataforma externa**
 
-Aplicar a mesma estrutura de duas headlines, adaptando posição e quebra de linha ao enquadramento de cada fonte. Não usar fala sintética, lip-sync, promessa de voz ou texto que exija o áudio.
+Usar `external-handoff.md` e `generation-prompts.md` para gerar externamente os dez vídeos. Esta etapa depende da plataforma e da operação do responsável; não executar uma substituição local nem inventar um resultado ausente.
 
-- [ ] **Step 2: Renderizar as duas variações de timing**
+- [ ] **Step 2: Registrar os arquivos devolvidos**
 
-Para as peças 01 e 10, gerar `v01` com entrada em 2,50 s e `v02-timing-3s` com entrada em 3,00 s. Selecionar por legibilidade e não por preferência estética isolada.
+Quando os arquivos forem disponibilizados, copiar somente os resultados necessários para o diretório local opcional, sem alterar as fontes. Registrar nome, versão, data, custo em créditos informado pela plataforma e eventual erro observado.
 
-- [ ] **Step 3: Validar propriedades do export**
+- [ ] **Step 3: Montar e comparar as duas variações de timing**
+
+Para as peças 01 e 10, montar `v01` com entrada em 2,50 s e `v02-timing-3s` com entrada em 3,00 s. Selecionar por legibilidade e não por preferência estética isolada.
+
+- [ ] **Step 4: Validar propriedades do arquivo externo**
 
 Run:
 
@@ -251,9 +281,9 @@ Run:
 ffprobe -v error -select_streams v:0 -show_entries stream=width,height,r_frame_rate,codec_name -of csv=p=0 "videos/reels/leodigital/2026-08/series-001/exports/reel-01-demo-v01.mp4"
 ```
 
-Repetir para os dez arquivos e confirmar: 1080×1920, vídeo H.264 ou codec aceito pelo fluxo de publicação, duração entre 6 e 10 segundos, imagem sem barras e sem crop do rosto.
+Repetir para cada arquivo devolvido e confirmar: 1080×1920 quando a plataforma permitir export final, vídeo H.264 ou codec aceito pelo fluxo de publicação, duração entre 6 e 10 segundos, imagem sem barras e sem crop do rosto. Se a plataforma devolver outra resolução, registrar a divergência antes de converter.
 
-- [ ] **Step 4: Revisar visualmente frame inicial, transição e frame final**
+- [ ] **Step 5: Revisar visualmente frame inicial, transição e frame final**
 
 Para cada arquivo, verificar:
 
@@ -264,11 +294,11 @@ Para cada arquivo, verificar:
 - não há terceira headline, CTA duplicado ou promessa incompatível com a legenda;
 - a composição preserva contenção e não replica literalmente a estética das screenshots.
 
-- [ ] **Step 5: Rejeitar e registrar falhas**
+- [ ] **Step 6: Rejeitar e registrar falhas**
 
 Mover qualquer arquivo que falhe em um critério para `rejected/` e registrar o motivo no manifesto. Motivos válidos incluem: texto ilegível, headline simultânea no início, erro facial, crop, timing confuso, excesso de texto, artefato de IA, áudio necessário ou ausência de correspondência entre Reel e legenda.
 
-- [ ] **Step 6: Commit dos renders aprovados e do QA**
+- [ ] **Step 7: Commit dos resultados recebidos e do QA**
 
 ```powershell
 git add -- "videos/reels/leodigital/2026-08/series-001" "docs/content/leodigital/2026-08/series-001/series-manifest.md" "docs/content/leodigital/2026-08/series-001/render-spec.md"
