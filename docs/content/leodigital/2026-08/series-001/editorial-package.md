@@ -1,7 +1,7 @@
 ---
 title: "Léo Digital — Pacote editorial da Série 001"
 document_type: editorial_package
-status: review
+status: approved
 date: 2026-08-28
 project: Leo Ferraz
 source_spec: "docs/superpowers/specs/2026-08-28-leo-digital-instagram-demand-validation-design.md"

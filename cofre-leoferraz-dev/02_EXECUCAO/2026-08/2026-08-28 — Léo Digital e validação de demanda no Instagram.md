@@ -62,7 +62,9 @@ As screenshots são referência da mecânica de headline e de handoff para legen
 
 `approved`: direção editorial aprovada pelo fundador.
 
-`copy_and_prompts_prepared`: o pacote editorial, os prompts de geração externa e as instruções de handoff foram preparados para revisão; nenhum vídeo foi gerado aqui.
+`copy_approved`: a copy da Série 001 foi aprovada pelo fundador; o pacote editorial contém as headlines, legendas, CTAs e fluxo de qualificação definidos para a primeira execução.
+
+`prompts_ready_for_external_generation`: os prompts de geração externa e as instruções de handoff estão preparados para uso na plataforma externa; nenhum vídeo foi gerado aqui.
 
 `not_generated_here`: a geração dos vídeos ocorrerá em uma plataforma externa específica. Nenhum export externo foi recebido ou validado nesta etapa.
 
@@ -74,7 +76,6 @@ As screenshots são referência da mecânica de headline e de handoff para legen
 
 - escolher e registrar o segmento prioritário do primeiro piloto;
 - definir a oferta do piloto sem prometer distribuição;
-- revisar e aprovar o pacote final de headlines, legendas e CTAs;
 - gerar os dez vídeos na plataforma externa usando os prompts registrados;
 - devolver os arquivos externos para QA de aparência, movimento e montagem;
 - definir o destino de qualificação e o registro das conversas;
