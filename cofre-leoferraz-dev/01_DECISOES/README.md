@@ -42,6 +42,7 @@ Cada decisão deve indicar contexto, alternativas consideradas, decisão tomada,
 - [[DECISAO-023 - Close Crop Tight para Avatar Social]] — approved
 - [[DECISAO-024 - Pack Mestre Reutilizavel de Capas de Video]] — approved
 - [[DECISAO-025 - Arquitetura Operacional do Cofre v2]] — implemented
+- [[DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento]] — approved
 
 ## Modelo
 

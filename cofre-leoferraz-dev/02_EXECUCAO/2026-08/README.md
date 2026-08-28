@@ -6,7 +6,7 @@ date: 2026-08-28
 tags:
   - cofre/execucao
   - cofre/indice
-evidence: "Índice gerado a partir das 48 notas Markdown datadas existentes em 02_EXECUCAO/2026-08."
+evidence: "Índice gerado a partir das 49 notas Markdown datadas existentes em 02_EXECUCAO/2026-08."
 next_action: "Adicionar cada nova nota do mês a este índice ou regenerar o índice após uma nova execução."
 related:
   - "[[../README]]"
@@ -19,6 +19,7 @@ related:
 
 ## Notas do mês
 
+- [[2026-08-28 — Diagnóstico da Cópia do Vídeo-Base na Geração Externa]] — `approved`
 - [[2026-08-28 — Configuração Cromática do Grafo do Cofre]] — `implemented`
 - [[2026-08-28 — Plano de implementação do Léo Digital no Instagram]] — `approved`
 - [[2026-08-28 — Manifesto dos Ativos do Léo Digital]] — `draft`
