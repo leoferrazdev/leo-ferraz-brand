@@ -12,6 +12,7 @@ tags:
   - projeto/leo-ferraz-dev
 evidence: "Duas screenshots da operação externa e relato do resultado da peça 01; o vídeo devolvido reproduziu a cena e o movimento do vídeo 08."
 next_action: "Confirmar o modo externo, executar somente a peça 01 sem anexar o vídeo 08 e registrar o QA."
+validation_status: ready_for_external_test
 related:
   - "[[../../01_DECISOES/DECISAO-026 - Fonte de Identidade Separada da Cena e do Movimento]]"
   - "[[../../03_CONTEUDO/PROMPT-001 - Léo Digital Série 001]]"
@@ -79,3 +80,11 @@ As entradas não tinham papéis separados. O vídeo-base era simultaneamente a f
 ## Limite da evidência
 
 As screenshots comprovam o modo de operação e o preview observado, mas não comprovam o funcionamento de outros modos da plataforma, a replicabilidade para outras pessoas, o custo atual ou qualquer efeito de distribuição no Instagram. Esses pontos continuam dependentes de teste e registro específico.
+
+## Validação documental local — 2026-08-28
+
+- `git diff --check`: aprovado;
+- links não resolvidos no cofre: `0`;
+- notas órfãs no cofre: `0`;
+- `PROMPT-002` e `GUIA-002`: prontos para teste externo, sem vídeo-base como entrada;
+- vídeo externo, QA audiovisual, montagem e publicação: não realizados.

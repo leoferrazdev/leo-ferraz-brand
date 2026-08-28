@@ -203,7 +203,7 @@ git commit -m "docs: index original-scene Leo Digital workflow"
 - Consumes: pacote local completo.
 - Produces: evidência de que o pacote está pronto para ser copiado na ferramenta externa, sem alegar que a ferramenta já foi testada.
 
-- [ ] **Step 1: Executar auditoria textual de cópia indevida**
+- [x] **Step 1: Executar auditoria textual de cópia indevida**
 
 Run:
 
@@ -213,7 +213,7 @@ rg -n -i "vídeo-base|video-base|preserve a progressão|mantenha o mesmo cenári
 
 Expected: menções a vídeo-base aparecem somente como proibição, como `nenhum` no registro ou como regra de parada; não aparecem como instrução de preservação ou anexo obrigatório.
 
-- [ ] **Step 2: Validar o frontmatter e a higiene do cofre**
+- [x] **Step 2: Validar o frontmatter e a higiene do cofre**
 
 Run:
 
@@ -225,7 +225,7 @@ obsidian vault="cofre-leoferraz-dev" orphans total
 
 Expected: `git diff --check` sem saída, `0` links não resolvidos e `0` notas órfãs.
 
-- [ ] **Step 3: Auditar o escopo do commit**
+- [x] **Step 3: Auditar o escopo do commit**
 
 Run:
 
@@ -236,11 +236,11 @@ git log --oneline --name-only --format="COMMIT %h %s" 77bcc40..HEAD
 
 Expected: os commits novos listam somente os arquivos deste plano; `brand-assets/capas/capa-live-recorrente.png`, `.claude/`, `brand-assets/profile/`, `create_cutout.py`, `live/descricao live.txt` e `referencias/` permanecem preservados fora do escopo. A confirmação remota do último commit deve ser feita separadamente com `git ls-remote origin refs/heads/main`.
 
-- [ ] **Step 4: Registrar o gate externo**
+- [x] **Step 4: Registrar o gate externo**
 
 Deixar explícito no diagnóstico que o pacote local está `ready_for_external_test`, enquanto geração, recebimento, QA audiovisual, montagem e publicação permanecem pendentes. O próximo arquivo esperado é `reel-01-demo-v01.mp4`, gerado sem anexar o vídeo 08.
 
-- [ ] **Step 5: Commit final do registro de validação**
+- [x] **Step 5: Commit final do registro de validação**
 
 ```powershell
 git add -f -- "cofre-leoferraz-dev/02_EXECUCAO/2026-08/2026-08-28 — Diagnóstico da Cópia do Vídeo-Base na Geração Externa.md"
