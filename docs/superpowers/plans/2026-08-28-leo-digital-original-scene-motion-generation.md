@@ -108,7 +108,7 @@ git commit -m "docs: add original-scene Leo Digital prompts"
 - Consumes: prompts `PROMPT-002`, diagnóstico da cópia e nomenclatura já aprovada para devolução.
 - Produces: procedimento copiável que impede confundir criação de cena original com face swap e uma ressalva explícita no guia histórico.
 
-- [ ] **Step 1: Definir a preparação correta da operação**
+- [x] **Step 1: Definir a preparação correta da operação**
 
 Escrever no `GUIA-002` a sequência abaixo:
 
@@ -124,11 +124,11 @@ Escrever no `GUIA-002` a sequência abaixo:
 
 Expected: o procedimento torna impossível tratar a presença de um vídeo-base como requisito desta modalidade.
 
-- [ ] **Step 2: Definir a regra de parada**
+- [x] **Step 2: Definir a regra de parada**
 
 Registrar que a geração deve ser interrompida se a ferramenta só aceitar o fluxo `Face Swap Video Variations` ou insistir em copiar a cena anexada. O resultado deve ser classificado como `não gerado — modo incompatível` ou `rejeitado — cópia da cena/movimento`; não iniciar uma segunda tentativa sem registrar o custo da primeira.
 
-- [ ] **Step 3: Definir nomenclatura e ficha de devolução**
+- [x] **Step 3: Definir nomenclatura e ficha de devolução**
 
 Usar `reel-01-demo-v01.mp4` no primeiro teste e exigir, junto do arquivo:
 
@@ -143,11 +143,11 @@ Usar `reel-01-demo-v01.mp4` no primeiro teste e exigir, junto do arquivo:
 - defeitos faciais, de cena, câmera ou movimento;
 - confirmação de que não há texto nem elementos não solicitados.
 
-- [ ] **Step 4: Delimitar o guia histórico**
+- [x] **Step 4: Delimitar o guia histórico**
 
 Adicionar ao `GUIA-001` uma nota no início informando que ele serve somente para variações que preservam deliberadamente a cena original. Encaminhar o leitor ao `GUIA-002` quando o objetivo for mudar cena ou movimento.
 
-- [ ] **Step 5: Commit do handoff**
+- [x] **Step 5: Commit do handoff**
 
 ```powershell
 git add -f -- "cofre-leoferraz-dev/03_CONTEUDO/GUIA-002 - Léo Digital Cenas Originais Handoff Externo.md" "cofre-leoferraz-dev/03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo.md"

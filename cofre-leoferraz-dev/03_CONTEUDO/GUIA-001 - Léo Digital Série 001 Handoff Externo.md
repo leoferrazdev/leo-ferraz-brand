@@ -10,13 +10,17 @@ tags:
   - tema/identidade-founder
   - projeto/leo-ferraz-dev
 evidence: "Handoff definido a partir da operação externa observada nas screenshots e dos requisitos de preservação da identidade."
-next_action: "Executar a geração externa somente após anexar o vídeo-base e as fotos autorizadas."
+next_action: "Usar somente quando a intenção for preservar deliberadamente a cena do vídeo-base; para cena original, seguir GUIA-002."
 related:
   - "[[PROMPT-001 - Léo Digital Série 001]]"
+  - "[[GUIA-002 - Léo Digital Cenas Originais Handoff Externo]]"
   - "[[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
 ---
 
 # Léo Digital — Handoff para geração externa
+
+> [!warning] Escopo deste guia
+> Este guia serve somente para a modalidade em que a cena e o movimento do vídeo-base devem ser preservados. Para criar cena e movimento originais com identidade baseada em fotos, usar [[GUIA-002 - Léo Digital Cenas Originais Handoff Externo]] e [[PROMPT-002 - Léo Digital Cenas Originais]].
 
 ## Limite
 
