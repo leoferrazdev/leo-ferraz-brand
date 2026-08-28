@@ -29,6 +29,7 @@ Este é o cofre Obsidian operacional do projeto Leo Ferraz. Ele registra context
 ## Estado atual
 
 - Execução corrente: [[02_EXECUCAO/2026-08/README|índice de agosto de 2026]].
+- Visualização do cofre: [[02_EXECUCAO/2026-08/2026-08-28 — Configuração Cromática do Grafo do Cofre|grafo por áreas e cores]].
 - Conteúdo reutilizável: [[03_CONTEUDO/COPY-001 - Léo Digital Série 001|copy da Série 001]], [[03_CONTEUDO/PROMPT-001 - Léo Digital Série 001|prompts externos]] e [[03_CONTEUDO/GUIA-001 - Léo Digital Série 001 Handoff Externo|handoff]].
 - Contexto operacional: [[CONTEXTO-IA - Projeto Leo Ferraz]].
 

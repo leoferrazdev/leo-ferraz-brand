@@ -1,0 +1,59 @@
+/* Leo Ferraz — cores operacionais das pastas do cofre Obsidian. */
+
+.nav-folder-title[data-path="01_DECISOES"] {
+  --lf-folder-color: #e76f51;
+}
+
+.nav-folder-title[data-path^="02_EXECUCAO"] {
+  --lf-folder-color: #4da3ff;
+}
+
+.nav-folder-title[data-path="03_CONTEUDO"] {
+  --lf-folder-color: #43a047;
+}
+
+.nav-folder-title[data-path="04_REFERENCIAS"] {
+  --lf-folder-color: #f2c94c;
+}
+
+.nav-folder-title[data-path="99_ARQUIVO"] {
+  --lf-folder-color: #8a8f98;
+}
+
+.nav-folder-title[data-path="templates"] {
+  --lf-folder-color: #9b8afb;
+}
+
+.nav-folder-title[data-path="01_DECISOES"],
+.nav-folder-title[data-path^="02_EXECUCAO"],
+.nav-folder-title[data-path="03_CONTEUDO"],
+.nav-folder-title[data-path="04_REFERENCIAS"],
+.nav-folder-title[data-path="99_ARQUIVO"],
+.nav-folder-title[data-path="templates"] {
+  color: var(--lf-folder-color);
+  border-inline-start: 3px solid var(--lf-folder-color);
+}
+
+.nav-folder-title[data-path="01_DECISOES"] .nav-folder-title-content,
+.nav-folder-title[data-path^="02_EXECUCAO"] .nav-folder-title-content,
+.nav-folder-title[data-path="03_CONTEUDO"] .nav-folder-title-content,
+.nav-folder-title[data-path="04_REFERENCIAS"] .nav-folder-title-content,
+.nav-folder-title[data-path="99_ARQUIVO"] .nav-folder-title-content,
+.nav-folder-title[data-path="templates"] .nav-folder-title-content,
+.nav-folder-title[data-path="01_DECISOES"] .collapse-icon,
+.nav-folder-title[data-path^="02_EXECUCAO"] .collapse-icon,
+.nav-folder-title[data-path="03_CONTEUDO"] .collapse-icon,
+.nav-folder-title[data-path="04_REFERENCIAS"] .collapse-icon,
+.nav-folder-title[data-path="99_ARQUIVO"] .collapse-icon,
+.nav-folder-title[data-path="templates"] .collapse-icon {
+  color: var(--lf-folder-color);
+}
+
+.nav-folder-title[data-path="01_DECISOES"]:hover,
+.nav-folder-title[data-path^="02_EXECUCAO"]:hover,
+.nav-folder-title[data-path="03_CONTEUDO"]:hover,
+.nav-folder-title[data-path="04_REFERENCIAS"]:hover,
+.nav-folder-title[data-path="99_ARQUIVO"]:hover,
+.nav-folder-title[data-path="templates"]:hover {
+  background-color: color-mix(in srgb, var(--lf-folder-color) 12%, transparent);
+}

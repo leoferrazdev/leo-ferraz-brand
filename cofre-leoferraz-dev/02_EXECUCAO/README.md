@@ -39,9 +39,10 @@ Lista fechada — não criar novo tema sem necessidade real. Tags adicionais e m
 - `tema/lancamento` — prontidão de lançamento, configuração de canais/redes sociais
 - `tema/identidade-founder` — foto, direção de arte, avatar do fundador
 - `tema/conteudo` — roteiros, copywriting, ferramentas de geração de conteúdo
+- `tema/cofre` — arquitetura, índices, navegação e governança do cofre Obsidian
 
 Uma nota pode carregar mais de um tema quando genuinamente cruza domínios (ex.: uma auditoria que cobre marca-ativos e site ao mesmo tempo).
 
 ## Índices mensais
 
-- [[2026-08/README|Agosto de 2026]] — 47 notas datadas de execução, manifesto e especificação do Léo Digital incluídos.
+- [[2026-08/README|Agosto de 2026]] — 48 notas datadas de execução, manifesto, especificação e configuração do cofre.
