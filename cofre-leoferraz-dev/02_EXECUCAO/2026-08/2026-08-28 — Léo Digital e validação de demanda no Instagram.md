@@ -65,7 +65,7 @@ As screenshots são referência da mecânica de headline e de handoff para legen
 
 O primeiro fluxo documentado em `PROMPT-001` e `GUIA-001` preserva deliberadamente a cena do vídeo-base. O teste do vídeo 08 demonstrou que esse fluxo não serve para criar cena e movimento novos: ele entregou uma cópia visual da referência porque essa era a instrução operacional recebida.
 
-Para o objetivo de cena original, o pacote vigente passa a ser `PROMPT-002` + `GUIA-002`. A identidade vem das fotos autorizadas; a cena, a câmera e a ação vêm do prompt; o vídeo 08 não é anexado. O primeiro teste será a peça 01, e o resultado externo ainda não existe.
+Para o objetivo de cena original, o pacote vigente passa a ser `PROMPT-002` + `GUIA-002`. A identidade vem das fotos autorizadas; a cena, a câmera e a ação vêm do prompt; o vídeo 08 não é anexado. A peça 01 foi relatada como correta pelo fundador usando o prompt-base vigente; o arquivo não está no workspace para QA audiovisual direto.
 
 ## Riscos registrados
 
@@ -82,9 +82,11 @@ Para o objetivo de cena original, o pacote vigente passa a ser `PROMPT-002` + `G
 
 `copy_approved`: a copy da Série 001 foi aprovada pelo fundador; o pacote editorial contém as headlines, legendas, CTAs e fluxo de qualificação definidos para a primeira execução.
 
-`prompts_ready_for_external_generation`: o PROMPT-001 permanece disponível para variação de cena existente e o PROMPT-002/GUIA-002 estão preparados para o teste de cena original; nenhum vídeo foi gerado aqui.
+`prompts_ready_for_external_generation`: o PROMPT-001 permanece disponível para variação de cena existente e o PROMPT-002/GUIA-002 estão preparados para o teste de cena original; a peça 01 foi gerada externamente segundo relato do fundador, sem arquivo disponível aqui.
 
-`not_generated_here`: a geração dos vídeos ocorrerá em uma plataforma externa específica. Nenhum export externo foi recebido ou validado nesta etapa.
+`generation_location`: a geração dos vídeos ocorre em uma plataforma externa específica.
+
+`external_export_status`: a peça 01 foi relatada como gerada corretamente, mas nenhum export externo foi recebido no workspace ou validado diretamente nesta etapa.
 
 `not_published`: nenhum Reel, legenda, CTA ou fluxo de qualificação foi publicado como parte desta decisão.
 

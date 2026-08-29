@@ -51,14 +51,14 @@ Expected: o arquivo não contém qualquer instrução que faça o vídeo 08 coma
 Usar este bloco como base literal para cada peça:
 
 ```text
-Use somente as fotos reais autorizadas do Léo Ferraz como referência de identidade. Gere uma cena original. Não use, não copie e não reproduza nenhum vídeo-base, enquadramento, trajetória de câmera, cenário ou sequência de ação de um vídeo de referência.
+Agora uma nova variação do vídeo, gere uma cena original, não use e não copie o enquadramento, trajetória de câmera, cenário ou sequência de ação de outro vídeo já feito anteriormente.
 
-Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo. A cena deve parecer um momento de construção de produto digital em um laboratório escuro e preciso, sem telas legíveis e sem aparência de anúncio de resultado. Preserve a identidade facial das fotos: formato do rosto, olhos, cor dos olhos, cabelo, barba, rugas e proporções.
+Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo. A cena deve parecer um momento de construção de produto digital em um laboratório escuro e preciso, sem telas legíveis e sem aparência de anúncio de resultado. Preserve rosto, formato dos olhos, cor dos olhos, cabelo, barba, rugas, proporções, expressão natural, moletom, mesa, teclado, monitores, iluminação e cenário.
 
 Não adicione texto, headline, legenda, CTA, logo, avatar, elementos de interface, marca d'água, pessoas novas, fala, voz, movimento de boca, lip-sync, cliente, produto, dinheiro, contrato, depoimento, métrica ou resultado. Não transforme a expressão em euforia, choque, autoridade artificial ou promessa comercial. Entregue somente o vídeo, com composição limpa para receber a copy na montagem posterior.
 ```
 
-Expected: o prompt-base separa identidade e direção de cena, e a copy continua explicitamente fora da geração.
+Expected: o prompt-base comprovado preserva as âncoras visuais do Léo, proíbe a cópia da composição anterior e mantém a copy explicitamente fora da geração.
 
 - [x] **Step 3: Adicionar os dez prompts de cena**
 

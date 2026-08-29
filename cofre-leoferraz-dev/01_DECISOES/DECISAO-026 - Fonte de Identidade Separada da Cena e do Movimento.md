@@ -4,7 +4,7 @@ document_type: decision
 decision_id: DECISAO-026
 status: approved
 implementation_status: documented
-external_test_status: pending
+external_test_status: piece_01_reported_correct_unverified
 authority: Leo Ferraz
 date: 2026-08-28
 project: Leo Ferraz
@@ -31,6 +31,7 @@ O teste da peça 01 utilizou o fluxo externo `Face Swap Video Variations` com o 
 - O prompt-base ordenava preservar duração, câmera, enquadramento, ação, cenário, iluminação, ritmo e progressão do vídeo-base.
 - O prompt adicional da peça 01 ordenava preservar as aproximações e o fechamento com gesto de aprovação.
 - A segunda captura mostra um preview que mantém a cena de trabalho no laptop do vídeo de referência.
+- O fundador forneceu posteriormente o prompt-base exato que, segundo seu relato, gerou corretamente a versão 01 — Demonstração. O arquivo ainda não está disponível no workspace para QA audiovisual direto.
 - A primeira captura mostra o fluxo de face swap/video variation e um thumbnail de vídeo anexado; não há evidência visual suficiente para confirmar que as fotos foram selecionadas como entrada de identidade naquela operação.
 
 ## Diagnóstico
@@ -41,7 +42,7 @@ O resultado não contradiz o pedido enviado. A arquitetura selecionada fazia o v
 
 Para cenas e movimentos originais, usar fotos reais autorizadas como referência de identidade e gerar a cena a partir de um prompt próprio em modo `image-to-video` ou `text-to-video` equivalente. Não anexar o vídeo 08 como fonte primária nesse teste.
 
-O `Face Swap Video Variations` permanece reservado para operações em que a preservação deliberada da cena original seja o objetivo. O `PROMPT-001` não será sobrescrito. A nova arquitetura foi operacionalizada documentalmente em `PROMPT-002` e `GUIA-002`; a geração audiovisual externa permanece pendente.
+O `Face Swap Video Variations` permanece reservado para operações em que a preservação deliberada da cena original seja o objetivo. O `PROMPT-001` não será sobrescrito. A nova arquitetura foi operacionalizada documentalmente em `PROMPT-002` e `GUIA-002`, usando como base o prompt fornecido pelo fundador. A peça 01 foi relatada como correta, mas a validação audiovisual direta permanece pendente.
 
 ## Impacto
 
@@ -54,7 +55,8 @@ O `Face Swap Video Variations` permanece reservado para operações em que a pre
 
 - `PROMPT-002`: criado, em revisão, com dez direções de cena originais;
 - `GUIA-002`: criado, em revisão, com regra de parada para modo incompatível;
-- teste externo da peça 01: pendente;
+- teste externo da peça 01: realizado e relatado como correto;
+- arquivo da peça 01 no workspace e QA audiovisual direto: pendentes;
 - arquivo externo, QA, montagem e publicação: pendentes.
 
 ## Pendências

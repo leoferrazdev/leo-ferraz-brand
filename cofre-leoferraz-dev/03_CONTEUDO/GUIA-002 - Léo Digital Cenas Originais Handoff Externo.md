@@ -5,7 +5,7 @@ status: review
 date: 2026-08-28
 project: Leo Ferraz
 evidence: "Procedimento derivado da DECISAO-026 para impedir que o fluxo de cena original volte a copiar o vídeo-base."
-next_action: "Executar somente a peça 01 com fotos autorizadas e sem vídeo-base; registrar o resultado para QA."
+next_action: "Usar o prompt-base comprovado na próxima variação; registrar o arquivo externo e o QA."
 related:
   - "[[PROMPT-002 - Léo Digital Cenas Originais]]"
   - "[[GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
@@ -31,6 +31,10 @@ Referência de movimento: prompt da peça
 ```
 
 Não anexar o vídeo 08, qualquer outro Reel, frame extraído ou screenshot como referência de movimento. O vídeo 08 permanece apenas como comparação histórica no QA, não como entrada da plataforma.
+
+## Prompt-base vigente
+
+Usar literalmente o prompt-base comprovado no teste dentro de [[PROMPT-002 - Léo Digital Cenas Originais]]. Não substituir a lista de âncoras `moletom, mesa, teclado, monitores, iluminação e cenário`. Essas âncoras preservam o universo visual do Léo; a instrução inicial continua proibindo copiar a composição exata, a trajetória de câmera e a sequência de ação de vídeos anteriores.
 
 ## Procedimento por peça
 

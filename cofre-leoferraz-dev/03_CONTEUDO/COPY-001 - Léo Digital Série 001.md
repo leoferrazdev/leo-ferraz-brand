@@ -2,6 +2,7 @@
 title: "Léo Digital — Pacote editorial da Série 001"
 document_type: editorial_package
 status: approved
+hashtags_status: proposed
 date: 2026-08-28
 project: Leo Ferraz
 tags:
@@ -39,6 +40,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   O teste só faz sentido se a imagem conduzir para uma ideia útil e para uma ação concreta.
 
   **CTA:** Salve este Reel para comparar presença visual e mensagem nos seus próximos conteúdos.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #ConteudoComIA #PresencaDigital`
 - Transparência recomendada: `Vídeo gerado/alterado com IA a partir de referências reais.`
 
 ### 02 — Transparência
@@ -53,6 +55,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   O resultado depende de seleção, créditos, variações e revisão. A ferramenta ajuda na produção, mas não elimina o trabalho de direção.
 
   **CTA:** Comente `PROCESSO` se você quer discutir o que tornou este resultado convincente e o que ainda limita o formato.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #TransparenciaNaIA #ProducaoDeConteudo`
 - Transparência recomendada: `Este conteúdo foi gerado/alterado com IA usando referências visuais autorizadas.`
 
 ### 03 — Bastidor
@@ -69,6 +72,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   O ganho está em criar uma camada visual reaproveitável. O limite está em tempo, custo e controle de qualidade.
 
   **CTA:** Salve este post se você está avaliando o custo real de produzir conteúdo com IA.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #BastidoresDaCriacao #CustoDeProducao`
 - Transparência recomendada: `O vídeo foi gerado/alterado com IA e passou por seleção humana.`
 
 ### 04 — Dor
@@ -85,6 +89,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   A pergunta é: qual parte da sua presença precisa ser real em cada publicação?
 
   **CTA:** Responda nos comentários: `depende` ou `não depende`.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #PresencaDigital #ConteudoParaNegocios`
 
 ### 05 — Gargalo
 
@@ -100,6 +105,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   Antes de procurar mais uma ferramenta, vale identificar exatamente onde a produção para.
 
   **CTA:** Descreva em uma frase o ponto em que você mais trava.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #CriacaoDeConteudo #ConsistenciaDeConteudo`
 
 ### 06 — Formato
 
@@ -115,6 +121,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   Atenção é uma entrada. Não é uma oferta, uma venda ou uma prova de demanda.
 
   **CTA:** Salve esta distinção para revisar antes de publicar um conteúdo.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #EstrategiaDeConteudo #ConteudoComProposito`
 - Transparência recomendada: `A camada visual deste teste foi gerada/alterada com IA.`
 
 ### 07 — Estratégia
@@ -131,6 +138,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   Por isso o objetivo desta série não é vender alcance. É descobrir se existe uma dor comercial por trás do interesse visual.
 
   **CTA:** Se você já vende algo, descreva sua oferta em uma frase.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #OfertaDigital #DemandaReal`
 
 ### 08 — Aplicação
 
@@ -146,6 +154,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   A aplicação precisa nascer de uma necessidade real do negócio.
 
   **CTA:** Salve este Reel e pense em uma cena real do seu processo que poderia virar conteúdo.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #Fundadores #ProdutosReais`
 
 ### 09 — Pesquisa
 
@@ -161,6 +170,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   Estou testando em quais situações a ausência de fala ajuda e em quais ela atrapalha.
 
   **CTA:** Responda `SIM` ou `NÃO` nos comentários.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #ConteudoSemFala #PesquisaDeFormato`
 
 ### 10 — Convite ao piloto
 
@@ -176,6 +186,7 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
   Ainda não existe preço final, promessa de alcance ou produto fechado. Primeiro preciso entender o cenário e o custo da operação.
 
   **CTA:** Envie `PILOTO` por DM se você já vende algo e quer descrever seu gargalo.
+- Hashtags: `#LeoFerraz #LeoDigital #BuildingWithAI #PilotoPago #ConteudoParaNegocios`
 - Transparência recomendada: `O formato utiliza geração/alteração visual com IA e revisão humana.`
 
 ## Regras de CTA
@@ -185,3 +196,10 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
 - Não pedir visita ao site e DM na mesma peça.
 - Não transformar a segunda headline em CTA completo.
 - Para `PILOTO`, qualificar uma pergunta por vez e não apresentar preço final sem entender oferta, gargalo e contexto.
+
+## Regras de hashtags
+
+- Cada peça possui exatamente cinco hashtags propostas.
+- `#LeoFerraz`, `#LeoDigital` e `#BuildingWithAI` funcionam como continuidade editorial da série, sem alterar os termos institucionais da marca.
+- As hashtags não constituem promessa de alcance, tendência, descoberta orgânica ou validação de demanda.
+- Revisar a pertinência das hashtags antes da publicação, caso o tema, a legenda ou o canal sejam alterados.

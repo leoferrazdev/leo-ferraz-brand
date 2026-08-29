@@ -1,11 +1,13 @@
 ---
 title: "Léo Digital — Prompts de Cenas Originais"
 document_type: external_generation_prompts
-status: review
+status: approved
 date: 2026-08-28
 project: Leo Ferraz
-evidence: "Pacote derivado da DECISAO-026 e da especificação aprovada para separar identidade facial de cena e movimento."
-next_action: "Revisar as dez direções de cena e executar externamente somente a peça 01 como teste controlado."
+operational_evidence: user_reported_working
+external_test_status: piece_01_reported_correct_unverified_locally
+evidence: "Prompt-base fornecido pelo fundador e relatado como funcional na geração externa da versão 01 — Demonstração; arquivo ainda não disponível no workspace para QA direto."
+next_action: "Usar este prompt-base literalmente na próxima variação e registrar o arquivo externo para QA."
 related:
   - "[[COPY-001 - Léo Digital Série 001]]"
   - "[[GUIA-002 - Léo Digital Cenas Originais Handoff Externo]]"
@@ -36,15 +38,19 @@ Screenshots utilizadas como referência facial: nenhuma.
 
 Não anexar o vídeo 08, qualquer outro vídeo da série, screenshots da interface ou frames do vídeo como referência de movimento nesta modalidade.
 
-## Prompt-base obrigatório
+## Prompt-base obrigatório comprovado no teste
 
 ```text
-Use somente as fotos reais autorizadas do Léo Ferraz como referência de identidade. Gere uma cena original. Não use, não copie e não reproduza nenhum vídeo-base, enquadramento, trajetória de câmera, cenário ou sequência de ação de um vídeo de referência.
+Agora uma nova variação do vídeo, gere uma cena original, não use e não copie o enquadramento, trajetória de câmera, cenário ou sequência de ação de outro vídeo já feito anteriormente.
 
-Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo. A cena deve parecer um momento de construção de produto digital em um laboratório escuro e preciso, sem telas legíveis e sem aparência de anúncio de resultado. Preserve a identidade facial das fotos: formato do rosto, olhos, cor dos olhos, cabelo, barba, rugas e proporções.
+Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo. A cena deve parecer um momento de construção de produto digital em um laboratório escuro e preciso, sem telas legíveis e sem aparência de anúncio de resultado. Preserve rosto, formato dos olhos, cor dos olhos, cabelo, barba, rugas, proporções, expressão natural, moletom, mesa, teclado, monitores, iluminação e cenário.
 
 Não adicione texto, headline, legenda, CTA, logo, avatar, elementos de interface, marca d'água, pessoas novas, fala, voz, movimento de boca, lip-sync, cliente, produto, dinheiro, contrato, depoimento, métrica ou resultado. Não transforme a expressão em euforia, choque, autoridade artificial ou promessa comercial. Entregue somente o vídeo, com composição limpa para receber a copy na montagem posterior.
 ```
+
+### Interpretação operacional do prompt-base
+
+`moletom`, `mesa`, `teclado`, `monitores`, `iluminação` e `cenário` são âncoras de continuidade visual do universo do Léo. Não autorizam reproduzir a composição exata, o enquadramento, a trajetória de câmera ou a sequência de ação de um vídeo anterior. A frase inicial do prompt prevalece para essas dimensões.
 
 ## Prompts complementares por peça
 
@@ -138,8 +144,9 @@ Rejeitar e registrar como `rejeitado — cópia da cena/movimento` se o resultad
 
 ## Estado operacional
 
-- `status`: `review`;
+- `status`: `approved`;
 - `vídeo gerado aqui`: não;
-- `vídeo externo recebido`: não;
+- `versão 01 — Demonstração`: gerada corretamente segundo relato do fundador;
+- `vídeo externo recebido no workspace`: não;
 - `QA audiovisual`: pendente;
 - `publicação`: não autorizada nesta etapa.
