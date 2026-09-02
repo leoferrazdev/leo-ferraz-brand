@@ -20,6 +20,7 @@ A homepage deve tornar o próximo passo explícito com uma CTA que nomeia o What
 ## Execução
 
 - CTA atualizada para `Descrever meu gargalo no WhatsApp →`.
+- Copy ajustada para refletir a operação individual: `Descreva o seu gargalo para eu entender se uma conversa inicial faz sentido.`
 - Diagrama semântico de três etapas adicionado ao bloco de conversão.
 - Sproutbound removido da homepage e de `/laboratorio/`.
 - Imagem pública exclusiva do Sproutbound removida.
