@@ -5,7 +5,7 @@ status: review
 date: 2026-08-28
 project: Leo Ferraz
 evidence: "Procedimento derivado da DECISAO-026 para impedir que o fluxo de cena original volte a copiar o vídeo-base."
-next_action: "Usar o prompt-base comprovado na próxima variação; registrar o arquivo externo e o QA."
+next_action: "Usar o prompt-base operacional v2 na próxima variação; registrar o arquivo externo e o QA."
 related:
   - "[[PROMPT-002 - Léo Digital Cenas Originais]]"
   - "[[GUIA-001 - Léo Digital Série 001 Handoff Externo]]"
@@ -34,7 +34,9 @@ Não anexar o vídeo 08, qualquer outro Reel, frame extraído ou screenshot como
 
 ## Prompt-base vigente
 
-Usar literalmente o prompt-base comprovado no teste dentro de [[PROMPT-002 - Léo Digital Cenas Originais]]. Não substituir a lista de âncoras `moletom, mesa, teclado, monitores, iluminação e cenário`. Essas âncoras preservam o universo visual do Léo; a instrução inicial continua proibindo copiar a composição exata, a trajetória de câmera e a sequência de ação de vídeos anteriores.
+Usar literalmente o prompt-base operacional v2 dentro de [[PROMPT-002 - Léo Digital Cenas Originais]]. Preservar a identidade do Léo e a linguagem visual tecnológica, não um cenário específico. O ambiente deve ser um escritório ou estúdio de desenvolvimento de produto digital e software, não um laboratório científico. Mesa, teclado, monitores desfocados, atmosfera escura e iluminação fria são referências contextuais; a disposição, a composição, a câmera, a configuração de luz e a ação devem ser novas.
+
+Não solicitar manipulação de folhas, cartões, papéis, documentos, placas, quadros ou objetos finos. Priorizar ações corporais simples e objetos já estacionários no ambiente.
 
 ## Procedimento por peça
 
@@ -43,14 +45,15 @@ Usar literalmente o prompt-base comprovado no teste dentro de [[PROMPT-002 - Lé
 3. Anexar somente o conjunto autorizado de fotos reais do Léo Ferraz, preferencialmente com ângulos frontal, 3/4 e perfil.
 4. Confirmar visualmente que nenhum vídeo-base, frame ou screenshot entrou na lista de referências.
 5. Copiar o prompt-base e um único bloco complementar de peça de [[PROMPT-002 - Léo Digital Cenas Originais]].
-6. Confirmar que o pedido descreve cena, enquadramento, trajetória de câmera e ação originais.
+6. Confirmar que o pedido descreve cena, enquadramento, trajetória de câmera, configuração de iluminação e ação originais.
 7. Confirmar que o pedido não solicita texto, headline, legenda, CTA, logo, avatar, interface, fala, voz, lip-sync ou marca d'água.
-8. Selecionar saída vertical 9:16 e duração curta, inicialmente entre 6 e 10 segundos, se a plataforma permitir essa configuração.
-9. Confirmar o modelo, o modo e o custo atual em créditos antes de aprovar a geração.
-10. Gerar somente a versão solicitada. A primeira operação deve ser a peça 01, sem gerar as outras nove simultaneamente.
-11. Salvar o arquivo externo com o nome da peça e da versão.
-12. Registrar os dados da operação abaixo antes de iniciar qualquer nova tentativa.
-13. Devolver o arquivo para QA de identidade, cena, câmera e movimento antes de montar as headlines.
+8. Confirmar que o pedido não solicita folhas, cartões, papéis, documentos, placas, quadros ou objetos finos para serem segurados ou reposicionados.
+9. Selecionar saída vertical 9:16 e duração curta, inicialmente entre 6 e 10 segundos, se a plataforma permitir essa configuração.
+10. Confirmar o modelo, o modo e o custo atual em créditos antes de aprovar a geração.
+11. Gerar somente a versão solicitada. A primeira operação deve ser a peça 01, sem gerar as outras nove simultaneamente.
+12. Salvar o arquivo externo com o nome da peça e da versão.
+13. Registrar os dados da operação abaixo antes de iniciar qualquer nova tentativa.
+14. Devolver o arquivo para QA de identidade, ambiente, cena, câmera e movimento antes de montar as headlines.
 
 ## Primeiro teste
 
@@ -121,6 +124,8 @@ reel-10-convite-piloto-v01.mp4
 - não anexar o vídeo 08 para tentar obter uma cena nova;
 - não pedir à ferramenta para escrever as headlines;
 - não aceitar texto gerado pela plataforma como copy final;
+- não tratar laboratório científico como representação padrão do trabalho do Léo;
+- não aceitar papel, cartão, documento ou outro objeto fino com deformação temporal visível;
 - não introduzir clientes, produtos, contratos, dinheiro, receita, depoimentos, métricas ou resultados;
 - não publicar o vídeo antes do QA e da montagem determinística;
 - não afirmar replicabilidade para outras pessoas a partir do teste do Léo Ferraz.

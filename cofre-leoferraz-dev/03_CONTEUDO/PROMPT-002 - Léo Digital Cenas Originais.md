@@ -7,7 +7,7 @@ project: Leo Ferraz
 operational_evidence: user_reported_working
 external_test_status: piece_01_reported_correct_unverified_locally
 evidence: "Prompt-base fornecido pelo fundador e relatado como funcional na geração externa da versão 01 — Demonstração; arquivo ainda não disponível no workspace para QA direto."
-next_action: "Usar este prompt-base literalmente na próxima variação e registrar o arquivo externo para QA."
+next_action: "Usar o prompt-base operacional v2 em uma geração externa controlada e registrar o arquivo para QA."
 related:
   - "[[COPY-001 - Léo Digital Série 001]]"
   - "[[GUIA-002 - Léo Digital Cenas Originais Handoff Externo]]"
@@ -38,19 +38,33 @@ Screenshots utilizadas como referência facial: nenhuma.
 
 Não anexar o vídeo 08, qualquer outro vídeo da série, screenshots da interface ou frames do vídeo como referência de movimento nesta modalidade.
 
-## Prompt-base obrigatório comprovado no teste
+## Prompt-base operacional v2 aprovado
 
 ```text
-Agora uma nova variação do vídeo, gere uma cena original, não use e não copie o enquadramento, trajetória de câmera, cenário ou sequência de ação de outro vídeo já feito anteriormente.
+Agora uma nova variação do vídeo. Gere uma cena original e autônoma. Não reutilize nem copie o enquadramento, a trajetória de câmera, a composição, o cenário, a configuração de iluminação ou a sequência de ação de nenhum vídeo anterior.
 
-Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo. A cena deve parecer um momento de construção de produto digital em um laboratório escuro e preciso, sem telas legíveis e sem aparência de anúncio de resultado. Preserve rosto, formato dos olhos, cor dos olhos, cabelo, barba, rugas, proporções, expressão natural, moletom, mesa, teclado, monitores, iluminação e cenário.
+Crie um vídeo vertical 9:16, realista, silencioso e curto, com movimento humano contido e contínuo.
 
-Não adicione texto, headline, legenda, CTA, logo, avatar, elementos de interface, marca d'água, pessoas novas, fala, voz, movimento de boca, lip-sync, cliente, produto, dinheiro, contrato, depoimento, métrica ou resultado. Não transforme a expressão em euforia, choque, autoridade artificial ou promessa comercial. Entregue somente o vídeo, com composição limpa para receber a copy na montagem posterior.
+A cena deve parecer um momento real de construção de produto digital e desenvolvimento de software em um escritório ou estúdio tecnológico escuro, preciso e funcional. O ambiente deve transmitir desenvolvimento de software, construção de negócios e trabalho de produto digital. Não represente um laboratório científico, sala de pesquisa, ambiente futurista, cyberpunk, holográfico ou experimental.
+
+Mantenha apenas a linguagem visual da série: atmosfera escura, iluminação fria e controlada, sensação tecnológica, estação de trabalho real e estética cinematográfica discreta. Crie uma nova disposição de ambiente, câmera, composição e ação em cada vídeo.
+
+Preserve a identidade visual do Léo: rosto, formato dos olhos, cor dos olhos, cabelo, barba, rugas, proporções, expressão natural e o moletom utilizado nos vídeos anteriores. Utilize mesa, teclado e monitores apenas como elementos contextuais de uma estação de trabalho, sem exigir a mesma posição ou composição dos vídeos anteriores. As telas devem permanecer desfocadas e sem texto legível.
+
+Não adicione texto, headline, legenda, CTA, logo, avatar, elementos de interface, marca d'água, pessoas novas, fala, voz, movimento de boca, lip-sync, cliente, produto, dinheiro, contrato, depoimento, métrica ou resultado.
+
+Não introduza folhas, cartões, papéis, documentos, placas, quadros, hologramas ou outros objetos finos para serem segurados, posicionados, virados ou colocados diante da câmera. Priorize ações simples e estáveis, como olhar, pausar, ajustar a postura, apoiar as mãos no teclado ou realizar um movimento discreto de câmera.
+
+Não transforme a expressão em euforia, choque, autoridade artificial ou promessa comercial. Entregue somente o vídeo, com composição limpa para receber a copy na montagem posterior.
 ```
 
 ### Interpretação operacional do prompt-base
 
-`moletom`, `mesa`, `teclado`, `monitores`, `iluminação` e `cenário` são âncoras de continuidade visual do universo do Léo. Não autorizam reproduzir a composição exata, o enquadramento, a trajetória de câmera ou a sequência de ação de um vídeo anterior. A frase inicial do prompt prevalece para essas dimensões.
+`rosto`, `olhos`, `cabelo`, `barba`, `rugas`, `proporções`, `expressão` e `moletom` são âncoras de identidade. `mesa`, `teclado`, `monitores`, atmosfera escura e iluminação fria são referências de linguagem visual e contexto, não um cenário a ser copiado. A disposição, a composição, a câmera, a configuração de luz e a ação devem ser novas em cada peça.
+
+### Política de objetos
+
+Não solicitar manipulação de folhas, cartões, papéis, documentos, placas ou objetos finos. Esses elementos são instáveis na geração temporal e não são necessários para comunicar a headline. Quando a peça precisar de uma ação, preferir olhar, pausa, postura, mãos apoiadas e movimento de câmera. Se um objeto for indispensável, ele deve permanecer rígido, estacionário e já presente no ambiente, sem ser segurado ou reposicionado.
 
 ## Prompts complementares por peça
 
@@ -59,19 +73,19 @@ Cole um único bloco abaixo depois do prompt-base. Não combinar dois blocos na 
 ### 01 — Demonstração
 
 ```text
-Para esta peça, crie uma cena nova em plano médio 3/4, com o Léo sentado diante de uma bancada escura e limpa. Ele examina uma folha sem texto legível, fecha um caderno, olha brevemente para a câmera com expressão concentrada e retorna o olhar para a bancada. Faça uma única aproximação lenta da câmera, sem cortes bruscos e sem reproduzir a composição, a câmera ou a ação do vídeo 08. Mantenha a boca imóvel e o movimento discreto. Não adicione objetos além da folha e do caderno fechável já descritos.
+Para esta peça, crie uma cena nova em plano médio 3/4, com o Léo sentado diante de uma estação de trabalho escura e limpa. Ele mantém as mãos apoiadas no teclado, pausa a ação por um instante, olha brevemente para a câmera com expressão concentrada e retorna o olhar para o monitor desfocado. Faça uma única aproximação lenta da câmera, sem cortes bruscos e sem reproduzir a composição, a câmera ou a ação do vídeo 08. Mantenha a boca imóvel e o movimento discreto.
 ```
 
 ### 02 — Transparência
 
 ```text
-Para esta peça, crie uma cena nova em plano lateral médio, diante de uma mesa de laboratório. O Léo organiza três cartões completamente sem escrita, observa um deles e os coloca lado a lado. A câmera faz um deslocamento lateral curto e contínuo. Use iluminação escura com um acento azul de precisão, sem projeção de código, sem telas legíveis e sem repetir qualquer plano do vídeo 06. A expressão permanece observadora e natural, com a boca imóvel.
+Para esta peça, crie uma cena nova em plano lateral médio, diante de uma estação de trabalho de desenvolvimento de software. O Léo mantém as mãos apoiadas na mesa, alterna o olhar entre o monitor desfocado e um ponto à frente e faz uma pequena pausa de reflexão. A câmera realiza um deslocamento lateral curto e contínuo. Use iluminação escura com um acento azul de precisão, sem projeção de código, sem telas legíveis e sem repetir qualquer plano do vídeo 06. A expressão permanece observadora e natural, com a boca imóvel.
 ```
 
 ### 03 — Bastidor
 
 ```text
-Para esta peça, crie uma cena nova começando em plano alto diagonal de uma estação de trabalho. O Léo posiciona uma folha em branco, ajusta uma luminária pequena e muda um passo de lugar para observar a composição. A câmera desce suavemente até um plano médio, sem montagem rápida e sem copiar a sequência de monitor, teclado e rosto do vídeo 03. Não mostrar texto legível, interface ou produto. O gesto deve parecer uma revisão de processo, sem pose de apresentação.
+Para esta peça, crie uma cena nova começando em plano alto diagonal de uma estação de trabalho tecnológica. O Léo ajusta a postura diante do teclado, observa os monitores desfocados e muda um passo de lugar para avaliar o ambiente. A câmera desce suavemente até um plano médio, sem montagem rápida e sem copiar a sequência de monitor, teclado e rosto do vídeo 03. Não mostrar texto legível, interface ou produto. O gesto deve parecer uma revisão de processo, sem pose de apresentação.
 ```
 
 ### 04 — Dor
@@ -83,13 +97,15 @@ Para esta peça, crie uma cena nova em close médio 3/4, junto a uma janela escu
 ### 05 — Gargalo
 
 ```text
-Para esta peça, crie uma cena nova em plano aberto dentro de um corredor interno de laboratório. O Léo caminha até uma mesa vazia, para, olha para a cadeira e se senta. Faça um travelling curto acompanhando a entrada e termine em plano médio. Não copie o ambiente, a perspectiva ou a ação de digitação do vídeo 05. Não usar gesto dramático, fala, movimento de boca, tela legível ou qualquer indicação de resultado comercial.
+Para esta peça, crie uma cena nova em plano aberto dentro de um escritório ou estúdio de desenvolvimento de produto digital. O Léo caminha até uma estação de trabalho vazia, para por um instante e se senta. Faça um travelling curto acompanhando a entrada e termine em plano médio. Não copie o ambiente, a perspectiva ou a ação de digitação do vídeo 05. Não usar gesto dramático, fala, movimento de boca, tela legível ou qualquer indicação de resultado comercial.
 ```
 
 ### 06 — Formato
 
 ```text
-Para esta peça, crie uma cena nova em plano médio frontal, com uma mesa limpa e sem telas. O Léo posiciona um cartão sem texto diante da câmera, recua a mão e olha para o cartão. A câmera faz um pequeno movimento de afastamento para revelar o contexto. Não reproduza o plano amplo, as mãos ou o retorno ao rosto do vídeo 01. Mantenha o cartão sem qualquer escrita, logo ou símbolo e preserve a expressão neutra e curiosa.
+Para esta peça, crie uma cena nova em plano médio frontal, dentro de um escritório ou estúdio escuro de desenvolvimento de produto digital e software. O Léo está sentado diante de uma estação de trabalho real, com teclado e dois monitores ao fundo. As telas devem estar desfocadas, sem texto legível e sem elementos de interface reconhecíveis. O Léo mantém as mãos apoiadas no teclado, faz uma pausa natural sem pegar ou mover nenhum objeto, levanta o olhar para a câmera e mantém uma expressão neutra e curiosa. A câmera realiza um afastamento curto, suave e contínuo para revelar o contexto do ambiente de trabalho tecnológico.
+
+Não reproduza o enquadramento, a trajetória de câmera, a composição ou a sequência de ação de nenhum vídeo anterior da série. Não introduza cartão, folha, papel, documento, placa, quadro, holograma ou qualquer objeto fino para ser manipulado. Mantenha a boca imóvel e o movimento humano discreto.
 ```
 
 ### 07 — Estratégia
@@ -101,13 +117,13 @@ Para esta peça, crie uma cena nova em plano médio 3/4, com o Léo em pé diant
 ### 08 — Aplicação
 
 ```text
-Para esta peça, crie uma cena nova em plano médio lateral, com duas bancadas simples e próximas em um laboratório escuro. O Léo pega um caderno fechado em uma bancada, atravessa apenas um passo e o coloca na outra. A câmera acompanha com um pan curto e termina no rosto. Não reproduza a rotina, a pausa para café ou o retorno à tarefa do vídeo 09. O caderno não deve conter texto visível e a ação não deve parecer uma demonstração de produto ou depoimento.
+Para esta peça, crie uma cena nova em plano médio lateral, com duas estações de trabalho simples e próximas em um escritório escuro de desenvolvimento de software. O Léo se levanta de uma estação, atravessa apenas um passo e apoia as mãos na outra estação. A câmera acompanha com um pan curto e termina no rosto. Não reproduza a rotina, a pausa para café ou o retorno à tarefa do vídeo 09. A ação não deve parecer uma demonstração de produto ou depoimento.
 ```
 
 ### 09 — Pesquisa
 
 ```text
-Para esta peça, crie uma cena nova em plano americano, em uma sala escura com poucos cartões abstratos e sem texto ao fundo. O Léo observa o conjunto, aproxima-se um passo e inclina a cabeça. Faça uma mudança de foco suave do fundo abstrato para o rosto, sem criar gráficos, números, dashboards ou dados fictícios. Não reproduza a reflexão, o ajuste de óculos ou o plano amplo do vídeo 04. Mantenha a expressão contemplativa e a boca imóvel.
+Para esta peça, crie uma cena nova em plano americano, em uma sala escura com monitores desfocados e sem texto ao fundo. O Léo observa o ambiente, aproxima-se um passo e inclina a cabeça. Faça uma mudança de foco suave do fundo tecnológico para o rosto, sem criar gráficos, números, dashboards ou dados fictícios. Não reproduza a reflexão, o ajuste de óculos ou o plano amplo do vídeo 04. Mantenha a expressão contemplativa e a boca imóvel.
 ```
 
 ### 10 — Convite ao piloto
