@@ -9,8 +9,8 @@ tags:
   - cofre/conteudo
   - tema/conteudo
   - projeto/leo-ferraz-dev
-evidence: "Copy aprovada pelo fundador em 2026-08-28."
-next_action: "Usar como base para a montagem das peças após o retorno dos vídeos externos."
+evidence: "Copy aprovada pelo fundador em 2026-08-28; padrão de bloco pronto para copiar e colar atualizado e aprovado em 2026-09-02."
+next_action: "Usar o bloco pronto para copiar e colar de cada peça na publicação, após o QA do vídeo externo."
 related:
   - "[[../02_EXECUCAO/2026-08/2026-08-28 — Manifesto dos Ativos do Léo Digital]]"
   - "[[../02_EXECUCAO/2026-08/2026-08-28 — Especificação de Montagem do Léo Digital]]"
@@ -23,6 +23,10 @@ related:
 Cada Reel usa duas headlines em sequência. A primeira interrompe a atenção e aparece sozinha no início. A segunda entra depois e conduz para a legenda. A legenda entrega o complemento antes do CTA.
 
 As headlines abaixo são copy de teste para esta série. Não são frases canônicas da marca e devem ser revisadas antes de qualquer publicação.
+
+## Padrão de entrega para publicação
+
+Cada peça deve conter um bloco final com somente o texto que será usado na publicação: headline principal, headline de transição, legenda completa e hashtags. Não incluir dentro desse bloco rótulos editoriais como `Headline principal`, `CTA`, `Hashtags`, `Fonte` ou `Transparência recomendada`. A pessoa deve conseguir copiar o bloco sem tratamento adicional.
 
 ## Peças
 
@@ -110,19 +114,37 @@ As headlines abaixo são copy de teste para esta série. Não são frases canôn
 ### 06 — Formato
 
 - Fonte: `01_leo_ferraz_typing_on_laptop_202608271707.mp4`
-- Headline principal: `O Reel chama atenção`
+- Headline principal: `O Vídeo chama atenção`
 - Headline de transição: `A estratégia continua na legenda`
 - Legenda:
 
-  Um Reel pode interromper o scroll e ainda assim não produzir nenhum próximo passo.
+  Um vídeo pode interromper o scroll e ainda assim não produzir nenhum próximo passo.
 
   Nesta série, o vídeo cumpre uma função curta: abrir uma pergunta ou uma tensão. A legenda desenvolve a ideia. O CTA testa se existe interesse em continuar a conversa.
 
   Atenção é uma entrada. Não é uma oferta, uma venda ou uma prova de demanda.
 
-  **CTA:** Salve esta distinção para revisar antes de publicar um conteúdo.
-- Hashtags: `#EstrategiaDeConteudo #ConteudoParaNegocios #MarketingDeConteudo #JornadaDeCompra #ConteudoComProposito`
+  Salve esta distinção para revisar antes de publicar um conteúdo.
+- Hashtags: `#publicidade #propaganda #producaodeconteudo #conteudo #marketing`
 - Transparência recomendada: `A camada visual deste teste foi gerada/alterada com IA.`
+
+#### Bloco pronto para copiar e colar
+
+```text
+O Vídeo chama atenção
+
+A estratégia continua na legenda
+
+Um vídeo pode interromper o scroll e ainda assim não produzir nenhum próximo passo.
+
+Nesta série, o vídeo cumpre uma função curta: abrir uma pergunta ou uma tensão. A legenda desenvolve a ideia. O CTA testa se existe interesse em continuar a conversa.
+
+Atenção é uma entrada. Não é uma oferta, uma venda ou uma prova de demanda.
+
+Salve esta distinção para revisar antes de publicar um conteúdo.
+
+#publicidade #propaganda #producaodeconteudo #conteudo #marketing
+```
 
 ### 07 — Estratégia
 
