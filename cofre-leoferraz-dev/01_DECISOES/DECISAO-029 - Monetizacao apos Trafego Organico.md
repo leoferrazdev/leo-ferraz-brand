@@ -17,6 +17,7 @@ tags:
   - projeto/leo-ferraz-dev
 related:
   - "[[../02_EXECUCAO/2026-09/2026-09-02 — Diagnóstico do Funil Instagram-Site e Oferta]]"
+  - "[[../02_EXECUCAO/2026-09/2026-09-02 — Revisão da CTA da Homepage e Remoção do Sproutbound]]"
   - "[[../02_EXECUCAO/2026-09/2026-09-02 — Especificação da Camada de Conversão da Homepage]]"
   - "[[../02_EXECUCAO/2026-08/2026-08-28 — Plano de implementação do Léo Digital no Instagram]]"
   - "[[../03_CONTEUDO/COPY-001 - Léo Digital Série 001]]"

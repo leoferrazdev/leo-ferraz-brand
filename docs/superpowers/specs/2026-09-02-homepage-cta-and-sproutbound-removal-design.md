@@ -1,6 +1,6 @@
 # Homepage CTA and Sproutbound Removal — Design Specification
 
-> Status: review
+> Status: approved
 
 ## Objective
 

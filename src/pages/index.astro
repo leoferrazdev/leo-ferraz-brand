@@ -4,8 +4,6 @@ import SiteHeader from '../components/site/SiteHeader.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import { socialLinks } from '../data/social-links';
 import { clientWork } from '../data/client-work';
-import GameCard from '../components/site/GameCard.astro';
-import { gamesInDevelopment } from '../data/games-in-development';
 import '../styles/global.css';
 
 // leoferraz.dev is the single bio link on every platform, so this page has to
@@ -41,28 +39,40 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
     </section>
 
     <section class="homepage__conversion" aria-labelledby="conversion-title">
-      <div class="homepage__section-heading">
-        <div>
+      <div class="homepage__conversion-layout">
+        <div class="homepage__conversion-copy">
           <p class="eyebrow">PRÓXIMO PASSO</p>
           <h2 id="conversion-title">Você já vende, mas trava na produção de conteúdo?</h2>
+          <p>
+            Estou conversando com fundadores, empresários, criadores e especialistas que já possuem uma oferta e enfrentam um gargalo recorrente de presença ou produção.
+          </p>
+          <p>
+            Descreva o seu gargalo para avaliarmos se uma conversa ou um piloto faz sentido.
+          </p>
+          <a
+            class="homepage__conversion-cta"
+            data-pilot-interest
+            href="https://wa.me/5551992568861?text=Ol%C3%A1%2C%20Leo.%20Eu%20j%C3%A1%20vendo%20algo%20e%20quero%20descrever%20meu%20gargalo%20de%20presen%C3%A7a%20ou%20produ%C3%A7%C3%A3o%20de%20conte%C3%BAdo."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Descrever meu gargalo no WhatsApp →
+          </a>
         </div>
-      </div>
-      <div class="homepage__conversion-body">
-        <p>
-          Estou conversando com fundadores, empresários, criadores e especialistas que já possuem uma oferta e enfrentam um gargalo recorrente de presença ou produção.
-        </p>
-        <p>
-          Descreva o seu gargalo para avaliarmos se uma conversa ou um piloto faz sentido.
-        </p>
-        <a
-          class="homepage__conversion-cta"
-          data-pilot-interest
-          href="https://wa.me/5551992568861?text=Ol%C3%A1%2C%20Leo.%20Eu%20j%C3%A1%20vendo%20algo%20e%20quero%20descrever%20meu%20gargalo%20de%20presen%C3%A7a%20ou%20produ%C3%A7%C3%A3o%20de%20conte%C3%BAdo."
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Descrever meu gargalo →
-        </a>
+        <ol class="homepage__conversion-diagram" aria-label="Próximos passos da conversa">
+          <li>
+            <span class="homepage__conversion-step">01</span>
+            <span class="homepage__conversion-step-label">Oferta existente</span>
+          </li>
+          <li>
+            <span class="homepage__conversion-step">02</span>
+            <span class="homepage__conversion-step-label">Gargalo de presença ou produção</span>
+          </li>
+          <li>
+            <span class="homepage__conversion-step">03</span>
+            <span class="homepage__conversion-step-label">Conversa inicial</span>
+          </li>
+        </ol>
       </div>
     </section>
 
@@ -84,18 +94,6 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
             <span class="proof-card__scope">{project.scope}</span>
           </a>
         ))}
-      </div>
-    </section>
-
-    <section class="homepage__products" aria-labelledby="games-title">
-      <div class="homepage__section-heading">
-        <div>
-          <p class="eyebrow">JOGOS EM DESENVOLVIMENTO</p>
-          <h2 id="games-title">Produtos próprios em construção.</h2>
-        </div>
-      </div>
-      <div class="games-in-development">
-        {gamesInDevelopment.map((game) => <GameCard game={game} />)}
       </div>
     </section>
 

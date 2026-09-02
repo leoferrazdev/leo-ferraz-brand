@@ -1224,14 +1224,29 @@ code {
   border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
 }
 
-.homepage__conversion-body {
+.homepage__conversion-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+  gap: var(--lf-spacing-block-major);
+  align-items: start;
+}
+
+.homepage__conversion-copy {
   display: grid;
   gap: var(--lf-spacing-inline-standard);
   max-width: 62ch;
 }
 
-.homepage__conversion-body p {
+.homepage__conversion-copy h2,
+.homepage__conversion-copy p {
   margin: 0;
+}
+
+.homepage__conversion-copy h2 {
+  max-width: 18ch;
+}
+
+.homepage__conversion-copy p:not(.eyebrow) {
   color: var(--lf-color-text-secondary);
   font-size: var(--lf-type-body-size-large);
   line-height: 1.55;
@@ -1254,6 +1269,57 @@ code {
 .homepage__conversion-cta:focus-visible {
   background: var(--lf-color-accent-primary);
   color: var(--lf-color-background);
+}
+
+.homepage__conversion-diagram {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: var(--lf-spacing-block-content);
+  background: var(--lf-color-surface-1);
+  border: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+  list-style: none;
+}
+
+.homepage__conversion-diagram li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--lf-spacing-inline-standard);
+  align-items: center;
+  min-height: 72px;
+  padding-block: var(--lf-spacing-inline-standard);
+  border-bottom: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+}
+
+.homepage__conversion-diagram li:last-child {
+  border-bottom: 0;
+}
+
+.homepage__conversion-step {
+  color: var(--lf-color-accent-primary);
+  font-family: var(--lf-font-family-mono);
+  font-size: var(--lf-type-label-size-large);
+  letter-spacing: var(--lf-type-label-tracking);
+}
+
+.homepage__conversion-step-label {
+  color: var(--lf-color-text-primary);
+  font-size: var(--lf-type-body-size-large);
+}
+
+@media (max-width: 767px) {
+  .homepage__conversion-layout {
+    grid-template-columns: 1fr;
+    gap: var(--lf-spacing-block-content);
+  }
+
+  .homepage__conversion-copy h2 {
+    max-width: none;
+  }
+
+  .homepage__conversion-cta {
+    max-width: 100%;
+  }
 }
 
 /*
