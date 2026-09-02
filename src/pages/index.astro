@@ -40,6 +40,32 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
       </aside>
     </section>
 
+    <section class="homepage__conversion" aria-labelledby="conversion-title">
+      <div class="homepage__section-heading">
+        <div>
+          <p class="eyebrow">PRÓXIMO PASSO</p>
+          <h2 id="conversion-title">Você já vende, mas trava na produção de conteúdo?</h2>
+        </div>
+      </div>
+      <div class="homepage__conversion-body">
+        <p>
+          Estou conversando com fundadores, empresários, criadores e especialistas que já possuem uma oferta e enfrentam um gargalo recorrente de presença ou produção.
+        </p>
+        <p>
+          Descreva o seu gargalo para avaliarmos se uma conversa ou um piloto faz sentido.
+        </p>
+        <a
+          class="homepage__conversion-cta"
+          data-pilot-interest
+          href="https://wa.me/5551992568861?text=Ol%C3%A1%2C%20Leo.%20Eu%20j%C3%A1%20vendo%20algo%20e%20quero%20descrever%20meu%20gargalo%20de%20presen%C3%A7a%20ou%20produ%C3%A7%C3%A3o%20de%20conte%C3%BAdo."
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Descrever meu gargalo →
+        </a>
+      </div>
+    </section>
+
     <section class="homepage__proof" aria-labelledby="proof-title">
       <div class="homepage__section-heading">
         <div>
@@ -115,4 +141,20 @@ const otherChannels = socialLinks.filter((link) => !link.primary);
     </section>
   </main>
   <SiteFooter />
+
+  <script>
+    const pilotCta = document.querySelector<HTMLAnchorElement>('[data-pilot-interest]');
+
+    pilotCta?.addEventListener('click', () => {
+      const gtag = (window as typeof window & {
+        gtag?: (...args: unknown[]) => void;
+      }).gtag;
+
+      gtag?.('event', 'pilot_interest_click', {
+        channel: 'whatsapp',
+        location: 'homepage_conversion_block',
+        campaign: 'leo_digital_s001',
+      });
+    });
+  </script>
 </BaseLayout>

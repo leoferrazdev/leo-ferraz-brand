@@ -3,8 +3,9 @@ title: "Decisão 029 — Monetização após Tráfego Orgânico"
 document_type: decision
 decision_id: DECISAO-029
 status: review
-implementation_status: proposed
+implementation_status: implemented
 external_test_status: pending
+validation_status: build_passed
 authority: Leo Ferraz
 date: 2026-09-02
 project: Leo Ferraz
@@ -69,7 +70,13 @@ Visualização, visita ao perfil, clique no link da bio, elogio à aparência do
 
 ## Pendências para aprovação
 
-- definir a ação única do site e sua copy pública;
 - implementar UTMs no link da bio para separar Instagram de acessos diretos;
-- medir clique no CTA, início de contato, contato qualificado e eventual pagamento;
-- aprovar a proposta antes de qualquer alteração no site ou criação de produto.
+- observar o evento de clique no CTA, o início de contato, o contato qualificado e eventual pagamento;
+- registrar as conversas e os aprendizados antes de decidir sobre piloto pago ou produto educacional.
+
+## Estado de implementação
+
+- A homepage agora apresenta a ação única aprovada: descrever o gargalo de presença ou produção de conteúdo pelo WhatsApp.
+- O CTA usa a mensagem pré-preenchida aprovada e permanece funcional sem JavaScript ou GA4.
+- O clique dispara o evento `pilot_interest_click` com os parâmetros não pessoais `channel`, `location` e `campaign`.
+- O build está aprovado; conversas, leads qualificados, pilotos pagos e vendas continuam não observados até a produção de tráfego real.

@@ -1217,6 +1217,45 @@ code {
   border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
 }
 
+.homepage__conversion {
+  display: grid;
+  gap: var(--lf-spacing-block-content);
+  padding-block: var(--lf-spacing-section-standard);
+  border-top: var(--lf-border-width-standard) solid var(--lf-color-border-default);
+}
+
+.homepage__conversion-body {
+  display: grid;
+  gap: var(--lf-spacing-inline-standard);
+  max-width: 62ch;
+}
+
+.homepage__conversion-body p {
+  margin: 0;
+  color: var(--lf-color-text-secondary);
+  font-size: var(--lf-type-body-size-large);
+  line-height: 1.55;
+}
+
+.homepage__conversion-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  margin-top: var(--lf-spacing-inline-compact);
+  padding: var(--lf-spacing-inline-standard) var(--lf-spacing-block-content);
+  background: var(--lf-color-accent-subtle);
+  border: var(--lf-border-width-standard) solid var(--lf-color-accent-primary);
+  border-radius: var(--lf-radius-control);
+  color: var(--lf-color-text-primary);
+  text-decoration: none;
+}
+
+.homepage__conversion-cta:hover,
+.homepage__conversion-cta:focus-visible {
+  background: var(--lf-color-accent-primary);
+  color: var(--lf-color-background);
+}
+
 /*
  * leoferraz.dev is the single bio link across every platform, so the homepage
  * doubles as the routing hub. YouTube carries primary weight (long-form lives
