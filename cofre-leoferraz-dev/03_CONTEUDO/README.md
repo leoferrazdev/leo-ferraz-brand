@@ -12,6 +12,12 @@ Use esta área para o texto integral de conteúdo produzido — roteiros, copy p
 
 A decisão sobre o conteúdo (por que esse ângulo, alternativas consideradas, aprovação) continua em [[../01_DECISOES/README|01_DECISOES]]. Esta pasta guarda só o artefato final, versionado quando houver revisão relevante (ex.: `ROTEIRO-001`, v1 → v2).
 
+## Regra permanente para copy publicável
+
+Toda nova copy destinada às redes sociais deve terminar com um bloco pronto para copiar e colar. O bloco contém somente as duas headlines, a legenda completa com o CTA integrado e as hashtags finais. Não incluir rótulos editoriais, campos de fonte, transparência ou instruções de operação dentro do bloco público.
+
+Para iniciar uma nova copy, usar [[../templates/Copy Publicável|Copy Publicável]] como estrutura mínima.
+
 ## Convenção de nomes
 
 ```text

@@ -47,6 +47,24 @@ Cada peça deve conter um bloco final com somente o texto que será usado na pub
 - Hashtags: `#Fundadores #Empresarios #ProducaoDeConteudo #PresencaDigital #MarketingComIA`
 - Transparência recomendada: `Vídeo gerado/alterado com IA a partir de referências reais.`
 
+#### Bloco pronto para copiar e colar
+
+```text
+Hipótese sobre presença visual consistente
+
+O complemento está na legenda
+
+Estou testando uma hipótese: quando a presença visual aparece com consistência, a pessoa pode reconhecer a série antes mesmo de ler tudo.
+
+Este vídeo foi gerado a partir de uma referência real minha. Isso demonstra qualidade visual; ainda não demonstra que o formato funciona para qualquer negócio.
+
+O teste só faz sentido se a imagem conduzir para uma ideia útil e para uma ação concreta.
+
+Salve este Reel para comparar presença visual e mensagem nos seus próximos conteúdos.
+
+#fundadores #empresarios #producaodeconteudo #presencadigital #marketingcomia
+```
+
 ### 02 — Transparência
 
 - Fonte: `06_leo_ferraz_typing_on_laptop_202608271724.mp4`
@@ -61,6 +79,22 @@ Cada peça deve conter um bloco final com somente o texto que será usado na pub
   **CTA:** Comente `PROCESSO` se você quer discutir o que tornou este resultado convincente e o que ainda limita o formato.
 - Hashtags: `#Empresarios #CriadoresDeConteudo #Especialistas #MarketingComIA #ProducaoDeConteudo`
 - Transparência recomendada: `Este conteúdo foi gerado/alterado com IA usando referências visuais autorizadas.`
+
+#### Bloco pronto para copiar e colar
+
+```text
+A referência é real; a cena é gerada
+
+O processo está na legenda
+
+O rosto não saiu de um prompt isolado. Neste teste, foram usadas fotos reais em ângulos diferentes como referência, além de um vídeo-base para orientar a cena e o movimento.
+
+O resultado depende de seleção, créditos, variações e revisão. A ferramenta ajuda na produção, mas não elimina o trabalho de direção.
+
+Comente PROCESSO se você quer discutir o que tornou este resultado convincente e o que ainda limita o formato.
+
+#empresarios #criadoresdeconteudo #especialistas #marketingcomia #producaodeconteudo
+```
 
 ### 03 — Bastidor
 
@@ -79,6 +113,24 @@ Cada peça deve conter um bloco final com somente o texto que será usado na pub
 - Hashtags: `#BastidoresDoConteudo #ProducaoDeConteudo #MarketingDeConteudo #Empreendedores #ConteudoComIA`
 - Transparência recomendada: `O vídeo foi gerado/alterado com IA e passou por seleção humana.`
 
+#### Bloco pronto para copiar e colar
+
+```text
+Isso não foi um clique
+
+Fotos, créditos e tentativas estão na legenda
+
+Uma aparência consistente exige mais do que escolher uma ferramenta.
+
+Existe um conjunto de fotos reais, um vídeo-base, custo em créditos, variações e uma triagem para separar o que ficou utilizável do que precisa ser descartado.
+
+O ganho está em criar uma camada visual reaproveitável. O limite está em tempo, custo e controle de qualidade.
+
+Salve este post se você está avaliando o custo real de produzir conteúdo com IA.
+
+#bastidoresdoconteudo #producaodeconteudo #marketingdeconteudo #empreendedores #conteudocomia
+```
+
 ### 04 — Dor
 
 - Fonte: `02_leo_ferraz_typing_on_laptop_202608271710.mp4`
@@ -95,6 +147,24 @@ Cada peça deve conter um bloco final com somente o texto que será usado na pub
   **CTA:** Responda nos comentários: `depende` ou `não depende`.
 - Hashtags: `#Fundadores #Especialistas #MarcaPessoal #PresencaDigital #ConteudoParaNegocios`
 
+#### Bloco pronto para copiar e colar
+
+```text
+Seu conteúdo depende de você aparecer?
+
+A pergunta completa está na legenda
+
+Para muitos fundadores e especialistas, o problema não é falta de assunto. É precisar interromper o trabalho, preparar cenário, gravar e repetir tudo para manter uma frequência mínima.
+
+Um vídeo sem fala pode aliviar parte desse gargalo visual. Não substitui voz, opinião, prova ou relacionamento quando esses elementos são necessários.
+
+A pergunta é: qual parte da sua presença precisa ser real em cada publicação?
+
+Responda nos comentários: depende ou não depende.
+
+#fundadores #especialistas #marcapessoal #presencadigital #conteudoparanegocios
+```
+
 ### 05 — Gargalo
 
 - Fonte: `05_leo_ferraz_typing_on_laptop_202608271724.mp4`
@@ -110,6 +180,24 @@ Cada peça deve conter um bloco final com somente o texto que será usado na pub
 
   **CTA:** Descreva em uma frase o ponto em que você mais trava.
 - Hashtags: `#Empresarios #CriadoresDeConteudo #ConsistenciaDeConteudo #CriacaoDeConteudo #MarketingDeConteudo`
+
+#### Bloco pronto para copiar e colar
+
+```text
+Você tem algo a dizer, mas não publica?
+
+O gargalo está na legenda
+
+Ter ideias não é o mesmo que conseguir transformá-las em publicações recorrentes.
+
+O gargalo pode estar em aparecer, editar, escolher uma cena, escrever a legenda ou decidir qual ação o conteúdo deve provocar.
+
+Antes de procurar mais uma ferramenta, vale identificar exatamente onde a produção para.
+
+Descreva em uma frase o ponto em que você mais trava.
+
+#empresarios #criadoresdeconteudo #consistenciadeconteudo #criacaodeconteudo #marketingdeconteudo
+```
 
 ### 06 — Formato
 
@@ -162,6 +250,24 @@ Salve esta distinção para revisar antes de publicar um conteúdo.
   **CTA:** Se você já vende algo, descreva sua oferta em uma frase.
 - Hashtags: `#OfertaDigital #ValidacaoDeDemanda #EstrategiaDeMarketing #Fundadores #NegociosDigitais`
 
+#### Bloco pronto para copiar e colar
+
+```text
+Atenção não é uma oferta
+
+Veja o próximo passo na legenda
+
+Uma visualização mostra que alguém recebeu uma impressão. Não mostra, sozinha, intenção de compra.
+
+A intenção aparece quando existe uma oferta real, uma dor reconhecida e disposição para conversar sobre uma solução, um escopo ou um piloto.
+
+Por isso o objetivo desta série não é vender alcance. É descobrir se existe uma dor comercial por trás do interesse visual.
+
+Se você já vende algo, descreva sua oferta em uma frase.
+
+#ofertadigital #validacaodedemanda #estrategiademarketing #fundadores #negociosdigitais
+```
+
 ### 08 — Aplicação
 
 - Fonte: `09_leo_ferraz_typing_on_laptop_202608271724.mp4`
@@ -177,6 +283,24 @@ Salve esta distinção para revisar antes de publicar um conteúdo.
 
   **CTA:** Salve este Reel e pense em uma cena real do seu processo que poderia virar conteúdo.
 - Hashtags: `#ProdutosDigitais #Fundadores #Empresarios #ConteudoEstrategico #MarketingComIA`
+
+#### Bloco pronto para copiar e colar
+
+```text
+Como um fundador usaria isso?
+
+Um exemplo está na legenda
+
+Eu não começaria pelo avatar. Começaria pelo problema que precisa ser explicado, pelo produto que existe e pelo próximo passo que o conteúdo deve provocar.
+
+O Léo Digital pode funcionar como continuidade visual de um processo, de um bastidor ou de uma hipótese. Ele não cria, sozinho, uma oferta nem uma razão para comprar.
+
+A aplicação precisa nascer de uma necessidade real do negócio.
+
+Salve este Reel e pense em uma cena real do seu processo que poderia virar conteúdo.
+
+#produtosdigitais #fundadores #empresarios #conteudoestrategico #marketingcomia
+```
 
 ### 09 — Pesquisa
 
@@ -194,6 +318,24 @@ Salve esta distinção para revisar antes de publicar um conteúdo.
   **CTA:** Responda `SIM` ou `NÃO` nos comentários.
 - Hashtags: `#ConteudoSemFala #FormatosDeConteudo #VideoParaNegocios #CriadoresDeConteudo #MarketingComIA`
 
+#### Bloco pronto para copiar e colar
+
+```text
+Você usaria um Reel sem fala?
+
+Responda depois de ler a legenda
+
+O formato atual não depende de áudio falado nem de sincronização labial. Ele usa uma cena curta, duas headlines e uma legenda mais completa.
+
+Isso reduz a complexidade de produção, mas também limita a profundidade da mensagem. Algumas ideias precisam de voz, demonstração ou explicação longa.
+
+Estou testando em quais situações a ausência de fala ajuda e em quais ela atrapalha.
+
+Responda SIM ou NÃO nos comentários.
+
+#conteudosemfala #formatosdeconteudo #videoparanegocios #criadoresdeconteudo #marketingcomia
+```
+
 ### 10 — Convite ao piloto
 
 - Fonte: `10_leo_ferraz_typing_on_laptop_202608271724.mp4`
@@ -210,6 +352,24 @@ Salve esta distinção para revisar antes de publicar um conteúdo.
   **CTA:** Envie `PILOTO` por DM se você já vende algo e quer descrever seu gargalo.
 - Hashtags: `#MarketingParaFundadores #ConteudoParaEspecialistas #ProducaoDeConteudo #OfertaDigital #PilotoDeConteudo`
 - Transparência recomendada: `O formato utiliza geração/alteração visual com IA e revisão humana.`
+
+#### Bloco pronto para copiar e colar
+
+```text
+Estou testando este formato com quem já vende
+
+Se esse é seu gargalo, envie PILOTO
+
+Estou conversando com fundadores, empresários, criadores e especialistas que já possuem uma oferta e reconhecem um gargalo recorrente de presença ou produção de conteúdo.
+
+A ideia não é vender um método universal de avatar. É entender se um piloto enxuto, ligado a uma necessidade comercial real, pode fazer sentido para alguém que já vende.
+
+Ainda não existe preço final, promessa de alcance ou produto fechado. Primeiro preciso entender o cenário e o custo da operação.
+
+Envie PILOTO por DM se você já vende algo e quer descrever seu gargalo.
+
+#marketingparafundadores #conteudoparaespecialistas #producaodeconteudo #ofertadigital #pilotodeconteudo
+```
 
 ## Regras de CTA
 

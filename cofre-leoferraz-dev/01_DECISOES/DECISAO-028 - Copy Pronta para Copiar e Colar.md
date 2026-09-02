@@ -3,7 +3,7 @@ title: "Decisão 028 — Copy Pronta para Copiar e Colar"
 document_type: decision
 decision_id: DECISAO-028
 status: approved
-implementation_status: documented
+implementation_status: implemented
 authority: Leo Ferraz
 date: 2026-09-02
 project: Leo Ferraz
@@ -46,7 +46,9 @@ A peça 06 passa a usar o texto fornecido pelo fundador, com a headline “O Ví
 - mantém a mecânica de duas headlines e legenda complementar;
 - preserva hashtags estratégicas de conteúdo, sem hashtags pessoais.
 
-## Pendências
+## Estado
 
-- aplicar o mesmo bloco pronto para copiar e colar às demais peças da Série 001;
-- revisar cada bloco antes da publicação junto com o QA audiovisual.
+- padrão aplicado às dez peças da Série 001;
+- regra permanente adicionada ao índice de conteúdo;
+- modelo reutilizável adicionado em `templates/Copy Publicável.md`;
+- revisão de cada bloco junto ao QA audiovisual continua obrigatória antes da publicação.
